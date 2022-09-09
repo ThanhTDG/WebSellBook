@@ -17,11 +17,22 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(morgan("tiny"));
+app.use(
+  morgan(":date - :method: :url :status  :res[content-length] - :response-time ms")
+);
 
 app.use("/", router);
 
-mongoose.connect(process.env.MONGO_URI).then(() => {
-  const port = process.env.PORT || 5000;
-  app.listen(port, () => console.log(`Starting on port ${port}...`));
-});
+const mongoString = process.env.MONGO_URI;
+mongoose
+  .connect(mongoString)
+  .then(() => {
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => console.log(`Starting on port ${port}...`));
+  })
+  .catch((err) => console.log(err));
+
+const conn = mongoose.connection;
+
+conn.on("error", (error) => console.log(error));
+conn.once("connected", () => console.log("Database connected"));

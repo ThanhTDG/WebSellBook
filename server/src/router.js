@@ -1,7 +1,10 @@
-const Router = require("express");
+const express = require("express");
 
-const router = Router();
+const book = require("./routes/book.routes");
 
-// TODO: write routes is here
+const router = express.Router();
+
+// TODO: write routes here
+router.use(book);
 
 module.exports = router;
