@@ -1,0 +1,105 @@
+.footer-component-contain{
+    margin-left: 48px;
+    margin-right: 48px;
+    margin-top: 48px;
+    font-family: 'MontserratRegular';
+    margin-bottom: 12px;
+    color: var(--Darkest);
+    .footer-logo{
+        width: calc(100vw - 296px - 296px - 48px - 48px);
+        font-size: 24px;
+        img{
+            width: 280px;
+        }
+        .footer-description{
+            width: 420px;
+        }
+    }
+    .footer-contact-us .footer-menus{
+        width: 296px;
+        
+    }
+    .footer-title{
+        font-family: 'MontserratBold';
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+    .footer-contact-us {
+        .footer-phone-number{
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: var(--Pink);
+        }
+        .footer-contact-us-info{
+            font-size: 16px;
+        }
+        .footer-contact-us-social-medias{
+            margin-top: 12px;
+            .social-icon{
+                margin-right: 8px;
+            }
+        }
+        
+    }
+    .footer-menus{
+        a{
+            text-decoration: none;
+            color: var(--Darkest);
+        }
+    }
+    
+}
+
+@media only screen and (max-width:600px ) {
+    .footer-component-contain{
+        margin-left: 48px;
+        margin-right: 48px;
+        margin-top: 48px;
+        font-family: 'MontserratRegular';
+        margin-bottom: 12px;
+        color: var(--Darkest);
+        .footer-logo{
+            width: 100%;
+            font-size: 24px;
+            img{
+                width: 280px;
+            }
+            .footer-description{
+                width: 100%;
+            }
+        }
+        .footer-contact-us .footer-menus{
+            width: 100%;
+        }
+        .footer-title{
+            font-family: 'MontserratBold';
+            font-size: 24px;
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+        .footer-contact-us {
+            .footer-phone-number{
+                font-size: 24px;
+                margin-bottom: 12px;
+                color: var(--Pink);
+            }
+            .footer-contact-us-info{
+                font-size: 16px;
+            }
+            .footer-contact-us-social-medias{
+                margin-top: 12px;
+                .social-icon{
+                    margin-right: 8px;
+                }
+            }
+            
+        }
+        .footer-menus{
+            a{
+                text-decoration: none;
+                color: var(--Darkest);
+            }
+        }
+        
+    }
+}

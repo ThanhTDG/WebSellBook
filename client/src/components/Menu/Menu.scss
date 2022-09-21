@@ -1,0 +1,118 @@
+#menu-bounder{
+    margin-left: 48px;
+    margin-right: 48px;
+}
+#menu-header{
+    height: 104px;
+    #logo-container{
+        img{
+            width: 400px;
+            height: 104px;
+            object-fit: contain;
+        }
+    }
+    #search-bar-container{
+        padding-top: 20px;
+        position: relative;
+        input{
+            height: 48px;
+            width: calc(100vw - 720px - 48px - 48px);
+            min-width: 400px;
+            border-radius: 24px;
+            background-color: var(--LightGray);
+            border-style: none;
+            padding-left: 24px;
+            padding-right: 24px;
+            font-family: 'MontserratRegular';
+            font-size: 16px;
+            color: var(--Darkest);
+        }
+        input:focus{
+            outline: none;
+            outline-offset: 0px;
+            border: 2px solid var(--Blue);
+            color: var(--Blue);
+        }
+        img:hover{
+            filter: invert(35%) sepia(85%) saturate(3667%) hue-rotate(161deg) brightness(98%) contrast(92%);
+        } 
+        img{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            filter: invert(8%) sepia(11%) saturate(4199%) hue-rotate(147deg) brightness(100%) contrast(110%);
+        }
+    }
+    #btn-login-container{
+        padding-top: 20px;
+        button{
+            font-family: 'Montserrat';
+            font-size: 24px;
+            color: var(--White);
+            width: 180px;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--Pink);
+            float: right;
+        }
+    }
+}
+.menu-component{
+    font-family: 'MontserratMedium';
+    font-size: 24px;
+    background-color: var(--LightBlue);
+    border-radius: 12px;
+
+    .menu-parent-content{
+        width: 180px;
+        height: 52px;
+        a{
+            text-decoration: none;
+            color: var(--Darkest);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    #active-menu-parent{
+        background-color: var(--DarkBlue)!important;
+        border-radius: 12px;
+        a{
+            color: var(--White);
+        }
+    }
+}
+
+@media only screen and (max-width:600px ) {
+    #btn-login-container{
+        display: flex;
+        justify-content: center;
+    }
+    #search-bar-container{
+        input{
+            width: 100%;
+            min-width: 300px;
+        }
+    }
+    #logo-container{
+        display: flex;
+        justify-content: center;
+        img{
+            width: 90%;
+        }
+    }
+    .menu-component{
+        margin-top: 156px;
+        .menu-parent-content{
+            width: 50%;
+        }
+    }
+}
+
+

@@ -1,0 +1,20 @@
+{
+  "menu": [
+    {
+      "title": "Trang Chủ",
+      "image": ""
+    },
+    {
+      "title": "Sách",
+      "image": ""
+    },
+    {
+      "title": "Giỏ Hàng",
+      "image": ""
+    },
+    {
+      "title": "Liên Hệ",
+      "image": ""
+    }
+  ]
+}
