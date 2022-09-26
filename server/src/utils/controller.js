@@ -13,11 +13,10 @@ const controller = (obj) => {
       const id = req.params.id;
       const data = await obj.findById(id);
 
-      if (data !== null) {
-        res.json(data);
-      } else {
+      if (!data) {
         res.status(404).send(`Document with {_id: '${id}'} not found`);
       }
+      res.json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -42,11 +41,10 @@ const controller = (obj) => {
       const options = { new: true };
       const data = await obj.findByIdAndUpdate(id, body, options);
 
-      if (data !== null) {
-        res.send(data);
-      } else {
+      if (!data) {
         res.status(404).send(`Document with {_id: '${id}'} not found`);
       }
+      res.json(data);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -57,13 +55,10 @@ const controller = (obj) => {
       const id = req.params.id;
       const data = await obj.findByIdAndDelete(id);
 
-      if (data !== null) {
-        res
-          .status(204)
-          .send(`Document with {_id: '${id}'} has been deleted...`);
-      } else {
+      if (!data) {
         res.status(404).send(`Document with {_id: '${id}'} not found`);
       }
+      res.status(204).send(`Document with {_id: '${id}'} has been deleted...`);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

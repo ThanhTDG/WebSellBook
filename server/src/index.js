@@ -4,8 +4,12 @@ const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 const router = require("./router");
+
+const swaggerDocument = require("./docs/swagger.json");
 
 dotenv.config();
 
@@ -25,7 +29,9 @@ app.use(
   )
 );
 
-app.use("/", router);
+app.use("/api", router);
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const mongoString = process.env.MONGO_URI;
 mongoose
