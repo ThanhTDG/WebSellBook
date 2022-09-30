@@ -12,7 +12,7 @@
             width: 280px;
         }
         .footer-description{
-            width: 420px;
+            width: 100%;
         }
     }
     .footer-contact-us .footer-menus{
@@ -50,7 +50,7 @@
     
 }
 
-@media only screen and (max-width:600px ) {
+@media only screen and (max-width:800px ) {
     .footer-component-contain{
         margin-left: 48px;
         margin-right: 48px;

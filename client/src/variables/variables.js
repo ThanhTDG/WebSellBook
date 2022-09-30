@@ -48,8 +48,8 @@ export const MyVariable = {
         contactUs: {
             title: 'Liên hệ chúng tôi tại',
             phoneNumber: '0911 111 205',
-            address: 'Địa chỉ: 112 - Nguyễn Công Trứ - Phường 8 - TP.Đà Lạt',
-            email: 'Email: 1910127@dlu.edu.vn',
+            address: 'Địa chỉ: 01 Phù Đổng Thiên Vương - Phường 8 - Đà Lạt',
+            email: 'Email: toimuasach@gmail.com',
             social: [
                 {
                     path:'/',
@@ -68,4 +68,20 @@ export const MyVariable = {
             title: 'Hổ trợ khách hàng'
         }
     },
+    BookTopics:[
+        'Tìm kiếm nhiều nhất', 'Bán chạy nhất'
+    ],
+    BookDetailTitle:{
+        mainTitle: 'Đánh giá',
+        toRatingTitle: 'Xếp hạng tựa sách này',
+        toRatingGuid:'Cho người khác biết suy nghĩ của bạn',
+        reviewedTitle:'Những bài đánh giá khác'
+    },
+    ToRatingButtons:[
+        {active: 'false', inactiveImage: '/assets/icons/ic-none-star.png', activeImage:'/assets/icons/ic-active-star.png', order:1},
+        {active: 'false', inactiveImage: '/assets/icons/ic-none-star.png', activeImage:'/assets/icons/ic-active-star.png', order:2},
+        {active: 'false', inactiveImage: '/assets/icons/ic-none-star.png', activeImage:'/assets/icons/ic-active-star.png', order:3},
+        {active: 'false', inactiveImage: '/assets/icons/ic-none-star.png', activeImage:'/assets/icons/ic-active-star.png', order:4},
+        {active: 'false', inactiveImage: '/assets/icons/ic-none-star.png', activeImage:'/assets/icons/ic-active-star.png', order:5},
+    ]
 }

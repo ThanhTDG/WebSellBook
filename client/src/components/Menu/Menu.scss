@@ -16,8 +16,8 @@
         position: relative;
         input{
             height: 48px;
-            width: calc(100vw - 720px - 48px - 48px);
-            min-width: 400px;
+            width: 100%;
+            // min-width: 400px;
             border-radius: 24px;
             background-color: var(--LightGray);
             border-style: none;
@@ -64,9 +64,8 @@
 .menu-component{
     font-family: 'MontserratMedium';
     font-size: 24px;
-    background-color: var(--LightBlue);
+    background-color: var(--LightGray);
     border-radius: 12px;
-
     .menu-parent-content{
         width: 180px;
         height: 52px;
@@ -89,7 +88,7 @@
     }
 }
 
-@media only screen and (max-width:600px ) {
+@media only screen and (max-width:800px ) {
     #btn-login-container{
         display: flex;
         justify-content: center;
@@ -97,7 +96,6 @@
     #search-bar-container{
         input{
             width: 100%;
-            min-width: 300px;
         }
     }
     #logo-container{
@@ -112,6 +110,11 @@
         .menu-parent-content{
             width: 50%;
         }
+    }
+}
+@media only screen and (max-width:1200px ) {
+    .menu-component{
+        margin-top: 156px;
     }
 }
 

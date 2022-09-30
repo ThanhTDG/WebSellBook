@@ -1,0 +1,280 @@
+.book-detail-container {
+  margin-left: 48px;
+  margin-right: 48px;
+  margin-bottom: 100px;
+  position: relative;
+}
+.book-image {
+  width: 100%;
+  min-height: 480px;
+  position: relative;
+}
+.book-content {
+    font-family: 'MontserratRegular';
+    color: var(--Darkest);
+  .book-title {
+    font-family: 'MontserratMedium';
+    font-size: 36px;
+  }
+  .book-author{
+    font-size: 24px;
+  }
+  .book-description{
+    font-size: 16px;
+    text-align: justify;
+    margin-top: 8px;
+    max-height: 312px;
+  }
+  
+  
+}
+.book-prices-container{
+  margin-bottom: 24px;
+    .book-prv-price{
+        font-size: 24px;
+        span{
+          color: var(--Pink);
+          text-decoration: none;
+        }
+        .prv-prices{
+          text-decoration: line-through;
+          color: var(--Gray);
+          margin-right: 12px;
+        }
+    }
+    .book-cur-price{
+        font-size: 36px;
+        color: var(--Orange);
+    }
+}
+.book-award-container{
+    width: 124px;
+    height: 124px;
+    padding:12px;
+    border-radius: 62px;
+    position: absolute;
+    bottom: -52px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: var(--White);
+    border: 4px dashed var(--Orange);
+    img{
+      width: 100%;
+      height: 100%;
+    }
+}
+#book-favorite{
+    position: absolute;
+    bottom: 60px;
+    left: 70px;
+}
+
+.book-discount-container{
+  font-size: 24px;
+  margin-bottom: 24px;
+  .discount-image{
+    width: 120px;
+  }
+  .discount-content{
+    font-size: 12px;
+    position:absolute;
+    top:55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--Pink);
+  }
+}
+.buttons-container{
+  margin-top: 0;
+  width: 40%;
+  position: absolute;
+  top:412px;
+}
+.book-stars{
+  width: 24px;
+  height: 24px;
+}
+.book-stars-container{
+  color: var(--Gray);
+  height: 24px;
+  line-height: 100%;
+  
+}
+.book-comment {
+  margin-top: 6px;
+}
+.book-saler{
+  margin-top: 6px;
+}
+
+
+.book-description-container{
+  margin-left: 48px;
+  margin-right: 48px;
+  font-family: 'MontserratRegular';
+  color: var(--Darkest);
+  span{
+    font-size: 36px;
+    font-family: 'MontserratMedium';
+  }
+  .book-description {
+    -ms-overflow-style: none !important; 
+    scrollbar-width: none !important;
+    text-align: justify;
+    margin-top: 12px;
+
+  }
+  .book-description::-webkit-scrollbar {
+    display: none;
+  }
+  .btn-showmore{
+    border: none;
+    background-color: var(--White);
+    color: var(--Gray);
+  }
+  .book-description-info{
+    margin-top: 12px;
+    .book-info-title{
+      font-family: 'MontserratMedium';
+    }
+    .book-info-row{
+      min-height: 40px;
+    }
+  }
+}
+
+#book-rating-title{
+  font-size: 36px;
+  color: var(--Darkest);
+  font-family: 'MontserratMedium';
+  margin-left: 48px;
+  margin-top: 48px;
+}
+.book-rating-container{
+  margin-left: 48px;
+  margin-right: 48px;
+  margin-top: 24px;
+  #book-rating-point-container{
+    margin-top: -32px;
+  }
+  .book-total-review{
+    span{
+      padding-left: 12px;
+      color: var(--Gray);
+    }
+  }
+  #book-rating-stars{
+    background-color: var(--LightGray);
+    width: 240px;
+    padding: 0;
+    position: relative;
+    img{
+      width: 240px;
+      padding: 0;
+      margin: 0;
+      z-index: 2;
+    }
+  }
+  .rating-detail{
+    height: 24px;
+    margin-bottom: 8px;
+    color: var(--Gray);
+    .rating-persent{
+      color: var(--Darkest);
+    }
+    .rating-review{
+      text-align: right;
+    }
+  }
+  .rating-detail-container{
+    background-color: var(--LightGray);
+    border-radius: 4px ;
+    padding: 0;
+  }
+}
+
+
+.book-your-rating-container{
+  .book-your-rating{
+    font-family: 'MontserratRegular';
+    color: var(--Darkest);
+    font-size: 16px;
+    margin-bottom: 24px;
+    span{
+      display: block;
+    }
+  }
+  .book-your-rating :first-child{
+    font-size: 30px;
+    font-family: 'MontserratMedium';
+  }
+  .book-your-rating-stars{
+    margin-bottom: 24px;
+  }
+}
+
+
+@media only screen and (max-width:800px ) {
+    .book-btn-add-to-cart{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 24px;
+        width: 100%;
+        margin-left: 8px;
+    }
+    .book-award-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .book-content{
+      margin-top: 52px;
+    }
+    .book-prices-container{
+        text-align: center;
+    }
+    #book-favorite{
+        position: absolute;
+        bottom: 60px;
+        left: 120px;
+    }
+    .buttons-container{
+      width: 100%;
+      position: inherit;
+    }
+    .book-discount-container{
+      text-align: center;
+    }
+    .book-react{
+      width: 33%;
+    }
+    .book-stars-container{
+      margin-bottom: 24px;
+    }
+    .book-detail-container {
+      margin-left: 48px;
+      margin-right: 48px;
+      margin-bottom: 0;
+    }
+
+
+    .book-description-container{
+      .book-description-info{
+        margin-top: 12px;
+        margin-bottom: 24px;
+        .book-info-title{
+          font-family: 'MontserratMedium';
+        }
+        .book-info-row{
+          height: 40px;
+          margin-bottom: 12px;
+        }
+      }
+    }
+    #book-rating-stars-container{
+      margin-bottom: 24px;
+    }
+}

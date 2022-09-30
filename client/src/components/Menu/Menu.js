@@ -7,14 +7,14 @@ const Menu = (props) => {
     return (
         <div id='menu-bounder'>
             <div id='menu-header' class="row">
-                <div id='logo-container' class="col-sm">
+                <div id='logo-container' class="col-xl-4">
                     <img src={require('../../assets/Logo.gif')} alt='Logo' />
                 </div>
-                <div id='search-bar-container' class="col-sm ">
+                <div id='search-bar-container' class="col-xl-5">
                     <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} />
                     <img src={require('../../assets/icons/ic-search.png')} alt='search icon' />
                 </div>
-                <div id='btn-login-container' class="col-sm ">
+                <div id='btn-login-container' class="col-xl-3">
                     <button id='btn-login'>Đăng nhập</button>
                 </div>
             </div>

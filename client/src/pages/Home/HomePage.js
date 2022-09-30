@@ -5,12 +5,9 @@ import Menu from '../../components/Menu/Menu';
 import ImageSlider from '../../components/Carousel/ImageSlider';
 import MyFooter from '../../components/Footer/MyFooter';
 import { MyVariable } from '../../variables/variables';
+import Books from '../../components/Book/Books';
+import { FakeData } from '../../variables/FakeData';
 const HomePage = () => {
-    // const slides = [
-    //     { url: `${MyVariable.hostName}/assets/banners/banner0.png`, title: "beach" },
-    //     { url: `${MyVariable.hostName}/assets/banners/banner1.gif`, title: "boat" },
-    //     { url: `${MyVariable.hostName}/assets/banners/banner2.gif`, title: "forest" },
-    //   ];
     var banners = []
     MyVariable.Banners.forEach((banner)=>(
       banners.push({
@@ -25,6 +22,8 @@ const HomePage = () => {
           <div className='homepage-banner'>
             <ImageSlider slides={banners} />
           </div>
+          <Books bookData={FakeData.books} title={MyVariable.BookTopics[0]} color={'var(--Orange)'}/>
+          <Books bookData={FakeData.books} title={MyVariable.BookTopics[1]} color={'var(--Pink)'}/>
           <MyFooter />
         </div>
       );
