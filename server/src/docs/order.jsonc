@@ -1,0 +1,16 @@
+{
+  "id": "ObjectId", // id, khóa chính
+  "orderId": "string", // mã mua hàng, bắt buộc
+  "userId": "ObjectId", // id người dùng, bắt buộc
+  "status": "string", // trạng thái mua hàng (đang xử lý, đang vận chuyển, đang giao hàng, hoàn tất)
+  "date": "date", // ngày mua hàng
+  "items": [
+    {
+      "bookId": "ObjectId", // id sách, bắt buộc
+      "quantity": "number", // số lượng, bắt buộc, ít nhất 1, mặc định 1
+      "total": "number" // tổng tiền
+    }
+  ], // danh sách mặt hàng
+  "discount": "number", // giảm giá
+  "total": "number" // tổng tiền
+}
