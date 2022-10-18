@@ -158,16 +158,67 @@ const importUsers = async (users) => {
   });
 };
 
-// startMongo(importUsers, users);
+/**
+ * @param {Array} attributes
+ * @param {String} name
+ * @param {String} code
+ */
+const getAttribute = (attributes, name, code) => {
+  const obj = {};
+  const value = attributes.find((attr) => attr.code === code) || {};
+  obj[name] = value.value || "";
+  return obj;
+};
 
-const set = new Set();
+const getAttributes = (attributes) => {
+  return {
+    ...getAttribute(attributes, "supplier", "publisher_vn"),
+    ...getAttribute(attributes, "publisher", "manufacturer"),
+    ...getAttribute(attributes, "bookCover", "book_cover"),
+    ...getAttribute(attributes, "isbn13", "isbn13"),
+    ...getAttribute(attributes, "isbn", "isbn10"),
+    ...getAttribute(attributes, "translators", "dich_gia"),
+  };
+};
+
+/**
+ * @param {Array} comments
+ * @param {String} book
+ */
+const importComments = (comments, book) => {
+  comments.forEach(async (value, index) => {
+    let { id, rate, content, userId, images } = value;
+    images = images.map((v) => v.full_path);
+    try {
+      const user = await User.findOne({ fakeId: userId });
+      const data = new Comment({
+        rate,
+        content,
+        user: user.id,
+        book,
+        images,
+      });
+      // console.log({ id, rate, content, user: user.id, book, images });
+      // console.log(data);
+      await data.save();
+    } catch (error) {
+      console.error({
+        type: "comment",
+        index,
+        id,
+        message: error.message,
+      });
+    }
+  });
+};
 
 /**
  * @param {Array} products
  */
-const importProducts = (products, category = null) => {
-  products.forEach((value) => {
+const importProducts = (products, category) => {
+  products.forEach(async (value, index) => {
     const {
+      id,
       name,
       shortDescription,
       description,
@@ -177,18 +228,19 @@ const importProducts = (products, category = null) => {
       attributes = [],
       comments = [],
     } = value;
-    // const data = new Book({
-    //   name,
-    //   shortDescription,
-    //   description,
-    //   originalPrice: prePrice,
-    //   discountRate,
-    //   images: img,
-    //   category,
-    // });
-    attributes.forEach((v) => {
-      set.add(v.code);
-    });
+    try {
+      const book = await Book.findOne({ name });
+      if (comments.length) {
+        importComments(comments, book.id);
+      }
+    } catch (error) {
+      console.error({
+        type: "book",
+        index,
+        name,
+        message: error.message,
+      });
+    }
   });
 };
 
@@ -196,42 +248,26 @@ const importProducts = (products, category = null) => {
  * @param {Array} products
  */
 const getCategories = (products) => {
-  products.forEach((value) => {
-    importProducts(value.products);
+  products.forEach(async (value, index) => {
+    setTimeout(async () => {
+      const { idCore, products } = value;
+      try {
+        const category = await Category.findOne({ fakeId: idCore });
+        importProducts(products, category.id);
+      } catch (error) {
+        console.error({
+          name: "category",
+          index,
+          idCore,
+          message: error.message,
+        });
+      }
+    }, 60000);
   });
-  console.log(set);
-  // const p = products[0].products;
-  // importProducts(p);
 };
 
 // p => 38202
 // c => 217034
 
-// const cp_keys = [
-//   "language", x
-//   "idCategory", x
-//   "idTag", x
-//   "idCore",
-//   "products",
-//   "link", x
-// ];
-
-const p_keys = [
-  "id",
-  "name",
-  "shortDescription",
-  "currentPrice",
-  "discountRate",
-  "prePrice",
-  "dayAgoCreated",
-  "sold",
-  "reviewCount",
-  "img",
-  "attributes",
-  "commentCount",
-  "seller",
-  "description",
-  "comments",
-];
-
-getCategories(products);
+// getCategories(products);
+startMongo(getCategories, products);
