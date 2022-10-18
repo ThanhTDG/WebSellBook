@@ -13,7 +13,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 const images = {
 
     'dashboard': <DashboardIcon className="icon" />,
-    'product': <StorefrontIcon className="icon" />,
+    'products': <StorefrontIcon className="icon" />,
     'orders': <CreditCardIcon className="icon" />,
     'users': <PeopleOutlineIcon className="icon" />,
     'delivery': <LocalShippingIcon className="icon" />,

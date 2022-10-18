@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react'
+import { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -13,74 +14,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import TablePagination from '@mui/material/TablePagination';
-import TableFooter from '@mui/material/TableFooter';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import { useTheme } from '@mui/material/styles';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-function TablePaginationActions(props) {
-    const theme = useTheme();
-    const { count, page, rowsPerPage, onPageChange } = props;
-
-    const handleFirstPageButtonClick = (event) => {
-        onPageChange(event, 0);
-    };
-
-    const handleBackButtonClick = (event) => {
-        onPageChange(event, page - 1);
-    };
-
-    const handleNextButtonClick = (event) => {
-        onPageChange(event, page + 1);
-    };
-
-    const handleLastPageButtonClick = (event) => {
-        onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-    };
-
-    return (
-        <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-            <IconButton
-                onClick={handleFirstPageButtonClick}
-                disabled={page === 0}
-                aria-label="first page"
-            >
-                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-            </IconButton>
-            <IconButton
-                onClick={handleBackButtonClick}
-                disabled={page === 0}
-                aria-label="previous page"
-            >
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            </IconButton>
-            <IconButton
-                onClick={handleNextButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="next page"
-            >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-            </IconButton>
-            <IconButton
-                onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="last page"
-            >
-                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-            </IconButton>
-        </Box>
-    );
-}
-
-TablePaginationActions.propTypes = {
-    count: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-};
-
+import { HeaderProduct } from '../../listProduct/TitleListProduct';
+import { Link } from 'react-router-dom';
 function createData(name, calories, fat, carbs, protein, price) {
     return {
         name,
@@ -106,10 +41,17 @@ function createData(name, calories, fat, carbs, protein, price) {
 
 function Row(props) {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
-
+    const [open, setOpen] = useState(false);
+    const [isHovering, setIsHovering] = useState(false);
+    const handleMouseOut = () => {
+        setIsHovering(false);
+    };
+    const handleMouseOver = () => {
+        setIsHovering(true);
+    };
+    let curentUrl = window.location.pathname;
     return (
-        <React.Fragment>
+        <Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell>
                     <IconButton
@@ -120,10 +62,11 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.name}
+
+                <TableCell component="th" scope="row" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} >
+                    <Link to={curentUrl + "/1"}>   {row.name}</Link>
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.calories} </TableCell>
                 <TableCell align="right">{row.fat}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
@@ -163,7 +106,7 @@ function Row(props) {
                     </Collapse>
                 </TableCell>
             </TableRow>
-        </React.Fragment>
+        </Fragment >
     );
 }
 
@@ -185,71 +128,40 @@ Row.propTypes = {
     }).isRequired,
 };
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+const products = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
     createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
     createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
     createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
     createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 ];
-
-export default function CollapsibleTable() {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+function renderHeaderTable() {
     return (
-        <TableContainer component={Paper}>
+        <TableHead>
+            <TableRow>
+                <TableCell />
+                {HeaderProduct.map((header, index) => {
+                    return <TableCell key={header.key + index} align={index === 0 ? "left" : "right"} >{header.nameVN}</TableCell>
+                })
+                }
+            </TableRow>
+        </TableHead>
+    )
+}
+
+function TableProduct() {
+    return (
+        <TableContainer >
             <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                </TableHead>
+                {renderHeaderTable()}
                 <TableBody>
-                    {rows.map((row) => (
+                    {products.map((row) => (
                         <Row key={row.name} row={row} />
                     ))}
                 </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                            colSpan={3}
-                            count={rows.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {
-                                    'aria-label': 'rows per page',
-                                },
-                                native: true,
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
             </Table>
-
         </TableContainer>
-    );
+    )
 }
+
+export default TableProduct

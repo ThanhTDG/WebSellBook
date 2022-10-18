@@ -15,9 +15,9 @@ export const sidebarOptions = [
         item: [
             {
 
-                link: "/product",
-                key: "product",
-                name: "Product",
+                link: "/products",
+                key: "products",
+                name: "Products",
             },
             {
 
