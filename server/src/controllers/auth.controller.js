@@ -1,15 +1,25 @@
-const jwt = require("jsonwebtoken");
-
 const User = require("../models/user");
+const generateAvatar = require("../utils/generateAvatar");
 
-const signUp = async (req, res) => {};
+const signUp = async (req, res) => {
+  try {
+    const body = req.body;
+    const avatar = generateAvatar(body.firstName);
+    const data = new User({ ...body, avatar });
+    const newData = await data.save();
+    res.status(201).json(newData);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 const signIn = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findByCredentials(username, password);
-    const token = await user.generateAuthToken();
-    res.send({ token });
+    const token = user.generateAuthToken();
+    // req.signedCookies.token = token;
+    res.json({ token });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -17,11 +27,8 @@ const signIn = async (req, res) => {
 
 const signOut = async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter(
-      (token) => token.token !== req.token
-    );
-    await teq.user.save();
-    res.send();
+    delete req.signedCookies.token;
+    res.redirect("/");
   } catch (error) {
     res.status(500).send();
   }

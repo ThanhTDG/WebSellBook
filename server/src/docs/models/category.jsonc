@@ -1,0 +1,15 @@
+{
+  "id": "ObjectId", // id, khóa chính
+  "name": "string", // tên danh mục, bắt buộc
+  "description": "string", // mô tả
+  // "parents": [
+  //   {
+  //     "parentId": "ObjectId" // id danh mục cha ông, bắt buộc
+  //   }
+  // ], // danh sách danh mục cha ông
+  "children": [
+    {
+      "childId": "ObjectId" // id danh mục con, bắt buộc
+    }
+  ] // danh sách danh mục con
+}
