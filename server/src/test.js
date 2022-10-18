@@ -4,9 +4,11 @@ const validator = require("validator").default;
 
 // const categories = require("./data/data/categories.json");
 const products = require("./data/data/products.json");
-const users = require("./data/data/user.json");
+// const users = require("./data/data/user.json");
 
+const Book = require("./models/book");
 const Category = require("./models/category");
+const Comment = require("./models/comment");
 const User = require("./models/user");
 
 dotenv.config();
@@ -158,27 +160,52 @@ const importUsers = async (users) => {
 
 // startMongo(importUsers, users);
 
+const set = new Set();
+
 /**
  * @param {Array} products
  */
-const importProducts = (products) => {
-  
+const importProducts = (products, category = null) => {
+  products.forEach((value) => {
+    const {
+      name,
+      shortDescription,
+      description,
+      discountRate,
+      prePrice,
+      img = [],
+      attributes = [],
+      comments = [],
+    } = value;
+    // const data = new Book({
+    //   name,
+    //   shortDescription,
+    //   description,
+    //   originalPrice: prePrice,
+    //   discountRate,
+    //   images: img,
+    //   category,
+    // });
+    attributes.forEach((v) => {
+      set.add(v.code);
+    });
+  });
 };
 
 /**
  * @param {Array} products
  */
 const getCategories = (products) => {
-  // products.forEach((value) => {
-  //   if (value.idTag !== value.idCore) {
-  //     console.log(value.idTag, value.idCore);
-  //   }
-  // });
-  const p = products[0].products;
-  p.forEach((value) => {
-    console.log(value.img);
+  products.forEach((value) => {
+    importProducts(value.products);
   });
+  console.log(set);
+  // const p = products[0].products;
+  // importProducts(p);
 };
+
+// p => 38202
+// c => 217034
 
 // const cp_keys = [
 //   "language", x

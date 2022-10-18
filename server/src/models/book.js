@@ -56,6 +56,7 @@ const bookSchema = new Schema(
       width: Number,
     },
     page: Number,
+    bookCover: String,
     status: {
       type: String,
       enum: Object.values(BOOK_STATUS),
