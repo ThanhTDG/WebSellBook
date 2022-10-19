@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate");
-const validator = require("validator");
+const validator = require("validator").default;
 
 mongoose.plugin(paginate);
 
@@ -111,12 +111,13 @@ const userSchema = new Schema(
       type: Date,
       default: Date.now,
     },
+    fakeId: String,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
 userSchema.virtual("fullName").get(function () {
-  return `${this.firstName} ${this.lastName}`;
+  return `${this.lastName} ${this.firstName}`;
 });
 
 userSchema.methods.generateAuthToken = function () {

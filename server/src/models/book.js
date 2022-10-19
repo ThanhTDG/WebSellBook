@@ -19,42 +19,51 @@ const bookSchema = new Schema(
       trim: true,
       unique: true,
     },
+    shortDescription: String,
     description: String,
     slug: {
       type: String,
       slug: "name",
     },
     authors: {
-      type: [String],
-      get: (value) => value.join(", "),
-      set: (value) => value.split(",").map((ele) => ele.trim()),
+      type: String,
+      // type: [String],
+      // get: (value) => value.join(", "),
+      // set: (value) => value.split(",").map((ele) => ele.trim()),
     },
     translators: {
-      type: [String],
-      get: (value) => value.join(", "),
-      set: (value) => value.split(",").map((ele) => ele.trim()),
+      type: String,
+      // type: [String],
+      // get: (value) => value.join(", "),
+      // set: (value) => value.split(",").map((ele) => ele.trim()),
     },
     sku: {
       type: String,
-      required: true,
-      unique: true,
+      // required: true,
+      // unique: true,
     },
-    isbn: {
+    isbn13: {
       type: String,
-      required: true,
-      unique: true,
+      // required: true,
+      // unique: true,
+    },
+    isbn10: {
+      type: String,
+      // required: true,
+      // unique: true,
     },
     supplier: String,
     publisher: String,
     publishDate: Date,
-    language: String,
+    // language: String,
     images: [String],
     weight: Number,
-    size: {
+    dimension: {
       height: Number,
       width: Number,
     },
     page: Number,
+    bookCover: String,
     status: {
       type: String,
       enum: Object.values(BOOK_STATUS),
@@ -62,8 +71,19 @@ const bookSchema = new Schema(
     },
     expectedDate: Date,
     countInStock: Number,
-    price: Number,
+    originalPrice: Number,
     discountRate: Number,
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+    },
+    tree: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Category",
+      },
+    ],
+    fakeId: String,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
@@ -73,7 +93,19 @@ bookSchema.virtual("image").get(function () {
 });
 
 bookSchema.virtual("total").get(function () {
-  return this.price * (1 - this.discountRate / 100);
+  return this.originalPrice * (1 - this.discountRate / 100);
+});
+
+bookSchema.pre("save", async function (next) {
+  try {
+    if (this.category) {
+      await this.populate("category");
+      this.tree = [this.category.id, ...this.category.tree];
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = mongoose.model("Book", bookSchema);
