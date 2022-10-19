@@ -1,8 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
+import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
+
+// pages
+
+// fonts
+import './fonts/montserrat/Montserrat-Medium.otf';
+import './fonts/montserrat/Montserrat-Regular.otf';
+import './fonts/montserrat/Montserrat-Bold.otf';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

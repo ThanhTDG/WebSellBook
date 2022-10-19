@@ -1,66 +1,117 @@
-const controller = (obj) => {
+const mongoose = require("mongoose");
+
+const ErrorHandler = require("./errorHandler");
+
+/**
+ * Model controllers for admin pages
+ * @param {mongoose.Model} model
+ * @returns The methods for control routes
+ */
+const controller = (model) => {
+  /**
+   * Get array of documents
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
   const getAll = async function (req, res) {
     try {
-      const data = await obj.find();
-      res.json(data);
+      const query = req.query;
+      const page = query.page || 0;
+      const limit = query.limit || 0;
+
+      const options = {
+        page,
+        limit,
+        pagination: page && limit,
+      };
+      const data = await model.paginate({}, options);
+
+      await res.json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      await res.status(400).json({ message: error.message });
     }
   };
 
+  /**
+   * Get document by id
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
   const get = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await obj.findById(id);
+      const data = await model.findById(id).exec();
 
       if (!data) {
-        res.status(404).send(`Document with {_id: '${id}'} not found`);
+        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      res.json(data);
+      await res.json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 
+  /**
+   * Insert new data
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
   const create = async (req, res) => {
-    const body = req.body;
-    const data = new obj(body);
-
     try {
+      const body = model.getData(req.body);
+      const data = new model(body);
       const newData = await data.save();
-      res.status(201).json(newData);
+      await res.status(201).json(newData);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      await res.status(400).json({ message: error.message });
     }
   };
 
+  /**
+   * Update data
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
   const update = async (req, res) => {
     try {
       const id = req.params.id;
       const body = req.body;
       const options = { new: true };
-      const data = await obj.findByIdAndUpdate(id, body, options);
+      const data = await model.findByIdAndUpdate(id, body, options).exec();
 
       if (!data) {
-        res.status(404).send(`Document with {_id: '${id}'} not found`);
+        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      res.json(data);
+      await res.json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 
+  /**
+   * Delete data by id
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
   const remove = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await obj.findByIdAndDelete(id);
+      const data = await model.findByIdAndDelete(id).exec();
 
       if (!data) {
-        res.status(404).send(`Document with {_id: '${id}'} not found`);
+        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      res.status(204).send(`Document with {_id: '${id}'} has been deleted...`);
+      await res
+        .status(204)
+        .send(`Document with {_id: '${id}'} has been deleted...`);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 

@@ -4,11 +4,11 @@ const controller = require("../controllers/user.controller");
 
 const router = express.Router();
 
-router.get("/users", controller.getAll);
-router.post("/users", controller.create);
+router.get("/", controller.getAll);
+router.post("/", controller.create);
 
-router.get("/users/:id", controller.get);
-router.patch("/users/:id", controller.update);
-router.delete("/users/:id", controller.remove);
+router.get("/:id", controller.get);
+router.put("/:id", controller.update);
+router.delete("/:id", controller.remove);
 
 module.exports = router;

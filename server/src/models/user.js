@@ -1,11 +1,47 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const validator = require("validator");
+const paginate = require("mongoose-paginate");
+const validator = require("validator").default;
 
-const Book = require("./book");
+mongoose.plugin(paginate);
+
+const { ROLE } = require("../utils/constants");
+const { generateAvatar } = require("../utils/generateAvatar");
+const { hashPassword, validatePassword } = require("../utils/hashPassword");
+const { signToken } = require("../utils/jwt");
 
 const Schema = mongoose.Schema;
+
+const addressSchema = new Schema({
+  phone: {
+    type: String,
+    require: true,
+    trim: true,
+    validate(value) {
+      if (!validator.isMobilePhone(value, "vi-VN")) {
+        throw new Error("Phone number is invalid");
+      }
+    },
+  },
+  region: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  district: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  ward: {
+    type: String,
+    require: true,
+    trim: true,
+  },
+  address: {
+    type: String,
+    trim: true,
+  },
+});
 
 const userSchema = new Schema(
   {
@@ -38,8 +74,8 @@ const userSchema = new Schema(
     phone: {
       type: String,
       require: true,
-      unique: true,
       trim: true,
+      unique: true,
       validate(value) {
         if (!validator.isMobilePhone(value, "vi-VN")) {
           throw new Error("Phone number is invalid");
@@ -48,101 +84,55 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      minLength: 8,
-      maxLength: 255,
       required: true,
       select: false,
     },
     sex: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     birthday: {
       type: Date,
-      required: true,
+      default: new Date("01/01/2001"),
     },
-    addresses: [
-      {
-        region: {
-          type: String,
-          required: true,
-        },
-        district: {
-          type: String,
-          required: true,
-        },
-        ward: {
-          type: String,
-          required: true,
-        },
-        address: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
-    tokens: [
-      {
-        token: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
-    cart: {
-      items: [
-        {
-          bookId: {
-            type: Schema.Types.ObjectId,
-            required: true,
-          },
-          quantity: {
-            type: Number,
-            default: 1,
-            min: 1,
-            required: true,
-          },
-          select: {
-            type: Boolean,
-            default: false,
-            required: true,
-          },
-          total: {
-            type: Number,
-            get: async function () {},
-          },
-        },
-      ],
-      total: {
-        type: Number,
-        get: function () {},
+    avatar: {
+      type: String,
+      default: function () {
+        return generateAvatar(this.firstName);
       },
     },
+    addresses: [addressSchema],
+    role: {
+      type: String,
+      enum: Object.values(ROLE),
+      default: ROLE.MEMBER,
+    },
+    lastSession: {
+      type: Date,
+      default: Date.now,
+    },
+    fakeId: String,
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
 userSchema.virtual("fullName").get(function () {
-  return `${this.firstName} ${this.lastName}`;
+  return `${this.lastName} ${this.firstName}`;
 });
 
-userSchema.methods.generateAuthToken = async function () {
-  const token = jwt.sign({ id: this.id }, process.env.SECRET, {
-    expiresIn: "7d",
-  });
-  this.tokens.push({ token });
-  await this.save();
+userSchema.methods.generateAuthToken = function () {
+  const token = signToken({ id: this.id });
   return token;
 };
 
-userSchema.methods.toJSON = function () {
-  var obj = this.toObject();
-  delete obj.password;
-  return obj;
-};
+// userSchema.methods.toJSON = function () {
+//   var obj = this.toObject();
+//   delete obj.password;
+//   return obj;
+// };
 
 userSchema.methods.validatePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  return await validatePassword(password, this.password);
 };
 
 userSchema.statics.findByCredentials = async (username, password) => {
@@ -167,14 +157,24 @@ userSchema.pre("save", async function (next) {
   }
 
   try {
-    const SALT = parseInt(process.env.SALT);
-    const salt = await bcrypt.genSalt(SALT);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await hashPassword(this.password);
     next();
   } catch (error) {
     next(error);
   }
 });
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  // if (!this.isModified("password")) {
+  //   return next();
+  // }
+
+  const { password } = this.getUpdate()?.$set;
+  console.log(password);
+  // await hashPassword(this, next);
+});
+
+// /^(save|findOneAndUpdate)/
 
 const User = mongoose.model("User", userSchema);
 

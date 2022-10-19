@@ -1,0 +1,15 @@
+export const MyColors={
+    Darkest : '001219',
+    DarkBlue: '005f73',
+    Blue: '0a9396',
+    LightBlue: '94d2bd',
+    DarkOrange: 'ca6702',
+    Orange: 'ee9b00',
+    LightOrange: 'e9d8a6',
+    Pink: 'FF6C6C',
+    White: 'ffffff',
+    SmokeWhite: 'f2e8cf',
+    Black: '000000',
+    Gray: 'c4c4c4',
+    LightGray: 'f3f3f3',
+}

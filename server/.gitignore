@@ -5,3 +5,6 @@
 
 # enviroment
 .env
+
+#data
+/src/data
