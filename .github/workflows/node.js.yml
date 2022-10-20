@@ -43,6 +43,8 @@ jobs:
       uses: appleboy/ssh-action@v0.1.5
       with:
         host: 32.108.74.2
+        username: admin
+        password: admin
         script: |
           pm2 delete all
           cd /var/app/toi-mua-sach
