@@ -46,8 +46,4 @@ jobs:
         username: admin
         password: admin
         script: |
-          cd /var/app/WebSellBook
-          git pull
-          cd server
-          npm i
-          npm start
+          ls
