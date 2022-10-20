@@ -33,9 +33,9 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - name: Remote command
-      uses: actions/ssh-action@v3
+      uses: appleboy/ssh-action@v0.1.5
       with:
-        host: 32.3.74.2
+        host: 32.108.74.2
         script: |
           pm2 delete all
           cd /var/app/toi-mua-sach
