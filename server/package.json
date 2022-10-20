@@ -8,9 +8,16 @@
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "node.js",
+    "express",
+    "api"
+  ],
   "author": "DuongHieu",
   "license": "ISC",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.32.0",
