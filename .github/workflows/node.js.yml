@@ -46,9 +46,8 @@ jobs:
         username: admin
         password: admin
         script: |
-          pm2 delete all
-          cd /var/app/toi-mua-sach
+          cd /var/app/WebSellBook
           git pull
           cd server
-          npm install
-          pm2 start npm -- start
+          npm i
+          npm start
