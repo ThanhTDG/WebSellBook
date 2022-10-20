@@ -4,12 +4,10 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 const router = require("./router");
-
-const docs = require("./docs");
 
 dotenv.config();
 
@@ -47,8 +45,9 @@ app.use(
 // Routes
 app.use("/api", router);
 
-// const swaggerDocs = swaggerJsDoc(docs);
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(docs));
+// API documents
+const swaggerDoc = YAML.load("./swagger.yaml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV === "production") {
