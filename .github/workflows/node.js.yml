@@ -49,5 +49,6 @@ jobs:
           pm2 delete all
           cd /var/app/toi-mua-sach
           git pull
+          cd server
           npm install
           pm2 start npm -- start
