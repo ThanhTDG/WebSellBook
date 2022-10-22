@@ -49,14 +49,14 @@ app.use("/api", router);
 const swaggerDoc = YAML.load("./swagger.yaml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}`);
-if (process.env.NODE_ENV === "production") {
-  // TODO
-  // app.use();
-  app.get("*", (req, res) => {
-    // TODO
-  });
-}
+// console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}`);
+// if (process.env.NODE_ENV === "production") {
+//   // TODO
+//   app.use();
+//   app.get("*", (req, res) => {
+//     // TODO
+//   });
+// }
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>

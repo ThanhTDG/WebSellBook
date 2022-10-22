@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit"
   },
   "keywords": [
     "node.js",
@@ -38,6 +38,8 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.0"
   }
 }
