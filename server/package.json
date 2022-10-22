@@ -6,11 +6,18 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit"
   },
-  "keywords": [],
+  "keywords": [
+    "node.js",
+    "express",
+    "api"
+  ],
   "author": "DuongHieu",
   "license": "ISC",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.32.0",
@@ -26,11 +33,13 @@
     "mongoose-slug-updater": "^3.3.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.5.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.0"
   }
 }

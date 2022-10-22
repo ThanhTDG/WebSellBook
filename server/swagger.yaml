@@ -1,0 +1,749 @@
+---
+openapi: 3.0.0
+info:
+  title: API Document của website ToiMuaSach
+  description: |
+    API này được sử dụng cho team dev để phát triển hệ thống.
+    Không được để lộ API với mọi hình thức.<br>
+    Hệ thống được tạo bởi Dương Hiếu.
+  contact:
+    name: Dương Hiếu
+    url: https://github.com/DuongHieu0712z
+    email: 1914745@dlu.edu.vn
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:5000/api
+  description: Development API server
+tags:
+- name: Quản lý danh mục
+  description: Quản lý danh mục, dành cho phân hệ quản trị
+- name: Quản lý sách
+  description: Quản lý sách, dành cho phân hệ quản trị
+- name: Quản lý người dùng
+  description: Quản lý người dùng, dành cho phân hệ quản trị
+- name: Quản lý hóa đơn
+  description: Quản lý hóa đơn, dành cho phân hệ quản trị
+- name: Tài khoản
+  description: Quản lý tài khoản, các vấn đề liên quan đến tài khoản và xác thực người dùng
+paths:
+  /categories:
+    get:
+      tags:
+      - Quản lý danh mục
+      summary: Sử dụng để lấy danh sách danh mục
+      description: |
+        Lấy danh sách danh mục theo trang và giới hạn số lượng lấy.
+        Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả danh mục.
+      parameters:
+      - name: page
+        in: query
+        description: Trang
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pagination.Category'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Quản lý danh mục
+      summary: Sử dụng để thêm danh mục mới
+      description: Thêm danh mục mới
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.Category'
+        required: true
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /categories/{id}:
+    get:
+      tags:
+      - Quản lý danh mục
+      summary: Sử dụng để lấy danh mục
+      description: Lấy danh mục theo ID danh mục cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 63412da2f0dd862e790a187f
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Quản lý danh mục
+      summary: Sử dụng để sửa thông tin danh mục
+      description: Sửa thông tin danh mục theo ID danh mục cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 63412da2f0dd862e790a187f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.Category'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Quản lý danh mục
+      summary: Sử dụng để xóa danh mục
+      description: Xóa danh mục theo ID danh mục cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 63412da2f0dd862e790a187f
+      responses:
+        "204":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /books:
+    get:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để lấy danh sách sách
+      description: |
+        Lấy danh sách sách theo trang và giới hạn số lượng lấy.
+        Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả sách.
+      parameters:
+      - name: page
+        in: query
+        description: Trang
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pagination.Book'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để thêm sách mới
+      description: Thêm sách mới
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.Book'
+        required: true
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /books/{id}:
+    get:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để lấy sách
+      description: Lấy sách theo ID sách cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để sửa thông tin sách
+      description: Sửa thông tin sách theo ID sách cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.Book'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để xóa sách
+      description: Xóa sách theo ID sách cho trước
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      responses:
+        "204":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Category:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID danh mục
+          format: ObjectId
+          readOnly: true
+          example: 63412da2f0dd862e790a187f
+        name:
+          type: string
+          description: Tên danh mục
+          example: Light novel
+        description:
+          type: string
+          description: Mô tả danh mục
+        slug:
+          type: string
+          description: Slug danh mục
+          example: light-novel
+        image:
+          type: string
+          description: Link hình ảnh danh mục
+          format: link
+        parent:
+          type: string
+          description: ID danh mục cha
+          format: ObjectId
+          example: 63412a2dd1431450628fde93
+    Book:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID sách
+          format: ObjectId
+          readOnly: true
+          example: 634ed8e4f6a3a7266d992614
+        name:
+          type: string
+          description: Tên sách
+          example: OVERLORD - Tập 2
+        shortDescription:
+          type: string
+          description: Mô tả ngắn
+          example: |
+            OVERLORD - Tập 2: Chiến Binh Bóng Tối
+        description:
+          type: string
+          description: Mô tả
+          example: |
+            Vào ngày hoạt động cuối cùng của game YGGDRASIL, do hiện tượng bí ẩn nào đó, một người chơi là Momonga trong tạo hình nhân vật bộ xương tự nhiên bị dịch chuyển tới một thế giới xa lạ.
+            Đã tám ngày trôi qua. Suốt tám ngày này, Momonga, giờ đổi tên thành Ainz, đã thăm thú toàn bộ lăng mộ Nazarick, xem xét tình hình các thuộc hạ của mình. Sau khi xác nhận rằng nơi đây chẳng khác mấy so với thế giới game, Ainz quyết định đã đến lúc tiến hành bước tiếp theo, là mở rộng phạm vi khám phá và chinh phục.
+            Dẫn theo một hầu gái hộ vệ, anh tìm đến thành phố trong vai trò người chuyên diệt quái, mà người ta vẫn gọi là "mạo hiểm giả".
+        slug:
+          type: string
+          description: Slug sách
+          example: overlord-tap-2
+        authors:
+          type: string
+          description: Các tác giả
+          example: Maruyama Kugane
+        translators:
+          type: string
+          description: Các dịch giả
+          example: Mỹ Trinh
+        sku:
+          type: string
+          description: Mã kho hàng
+          format: number
+          example: "8935250704472"
+        isbn13:
+          type: string
+          description: Mã ISBN 13
+          format: isbn13
+          example: 978-0134494166
+        isbn10:
+          type: string
+          description: Mã ISBN 10
+          format: isbn10
+          example: "134494164"
+        supplier:
+          type: string
+          description: Nhà cung cấp/nhà phát hành
+          example: IPM
+        publisher:
+          type: string
+          description: Nhà xuất bản
+          example: NXB Hồng Đức
+        publisherDate:
+          type: string
+          description: Ngày xuất bản
+          format: date
+          example: 2020-04-30
+        images:
+          type: array
+          description: Các link hình ảnh danh mục
+          items:
+            type: string
+            description: Link hình ảnh danh mục
+            format: link
+            example: https://cdn0.fahasa.com/media/catalog/product/o/v/overlord-2---bia1_1.jpg
+        weight:
+          type: number
+          description: Trọng lượng (gram)
+          example: 300
+        dimension:
+          $ref: '#/components/schemas/Book_dimension'
+        page:
+          type: number
+          description: Số trang
+          example: 426
+        bookCover:
+          type: string
+          description: Loại bìa
+          example: Bìa mềm
+        status:
+          type: string
+          description: Trạng thái sách
+          example: available
+          enum:
+          - coming_soon
+          - available
+          - out_of_stock
+        expectedDate:
+          type: string
+          description: Ngày dự kiến có hàng
+          format: date
+          example: 2020-04-30
+        countInStock:
+          type: number
+          description: Tồn kho
+          example: 100
+        originalPrice:
+          type: number
+          description: Giá bìa
+          example: 135000
+        discountRate:
+          type: number
+          description: Giảm giá (%)
+          example: 25
+        currentPrice:
+          type: number
+          description: Giá hiện tại
+          readOnly: true
+          example: 100000
+        category:
+          type: string
+          description: ID danh mục cha
+          format: ObjectId
+          example: 63412da2f0dd862e790a187f
+    Error:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+          description: Thông tin lỗi
+          example: Error
+    form.Category:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Tên danh mục
+          example: Light novel
+        description:
+          type: string
+          description: Mô tả danh mục
+        image:
+          type: string
+          description: Link hình ảnh danh mục
+          format: link
+        parent:
+          type: string
+          description: ID danh mục cha
+          format: ObjectId
+          example: 63412a2dd1431450628fde93
+    form.Book:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Tên sách
+          example: OVERLORD - Tập 2
+        shortDescription:
+          type: string
+          description: Mô tả ngắn
+          example: |
+            OVERLORD - Tập 2: Chiến Binh Bóng Tối
+        description:
+          type: string
+          description: Mô tả
+          example: |
+            Vào ngày hoạt động cuối cùng của game YGGDRASIL, do hiện tượng bí ẩn nào đó, một người chơi là Momonga trong tạo hình nhân vật bộ xương tự nhiên bị dịch chuyển tới một thế giới xa lạ.
+            Đã tám ngày trôi qua. Suốt tám ngày này, Momonga, giờ đổi tên thành Ainz, đã thăm thú toàn bộ lăng mộ Nazarick, xem xét tình hình các thuộc hạ của mình. Sau khi xác nhận rằng nơi đây chẳng khác mấy so với thế giới game, Ainz quyết định đã đến lúc tiến hành bước tiếp theo, là mở rộng phạm vi khám phá và chinh phục.
+            Dẫn theo một hầu gái hộ vệ, anh tìm đến thành phố trong vai trò người chuyên diệt quái, mà người ta vẫn gọi là "mạo hiểm giả".
+        authors:
+          type: string
+          description: Các tác giả
+          example: Maruyama Kugane
+        translators:
+          type: string
+          description: Các dịch giả
+          example: Mỹ Trinh
+        sku:
+          type: string
+          description: Mã kho hàng
+          format: number
+          example: "8935250704472"
+        isbn13:
+          type: string
+          description: Mã ISBN 13
+          format: isbn13
+          example: 978-0134494166
+        isbn10:
+          type: string
+          description: Mã ISBN 10
+          format: isbn10
+          example: "134494164"
+        supplier:
+          type: string
+          description: Nhà cung cấp/nhà phát hành
+          example: IPM
+        publisher:
+          type: string
+          description: Nhà xuất bản
+          example: NXB Hồng Đức
+        publisherDate:
+          type: string
+          description: Ngày xuất bản
+          format: date
+          example: 2020-04-30
+        images:
+          type: array
+          description: Các link hình ảnh danh mục
+          items:
+            type: string
+            description: Link hình ảnh danh mục
+            format: link
+            example: https://cdn0.fahasa.com/media/catalog/product/o/v/overlord-2---bia1_1.jpg
+        weight:
+          type: number
+          description: Trọng lượng (gram)
+          example: 300
+        dimension:
+          $ref: '#/components/schemas/Book_dimension'
+        page:
+          type: number
+          description: Số trang
+          example: 426
+        bookCover:
+          type: string
+          description: Loại bìa
+          example: Bìa mềm
+        status:
+          type: string
+          description: Trạng thái sách
+          example: available
+          enum:
+          - coming_soon
+          - available
+          - out_of_stock
+        expectedDate:
+          type: string
+          description: Ngày dự kiến có hàng
+          format: date
+          example: 2020-04-30
+        countInStock:
+          type: number
+          description: Tồn kho
+          example: 100
+        originalPrice:
+          type: number
+          description: Giá bìa
+          example: 135000
+        discountRate:
+          type: number
+          description: Giảm giá (%)
+          example: 25
+        category:
+          type: string
+          description: ID danh mục cha
+          format: ObjectId
+          example: 63412da2f0dd862e790a187f
+    pagination.Category:
+      type: object
+      properties:
+        docs:
+          type: array
+          description: Mảng document
+          items:
+            $ref: '#/components/schemas/Category'
+        totalDocs:
+          type: number
+          description: Tổng số document
+          example: 100
+        limit:
+          type: number
+          description: Giới hạn số document trả về
+          example: 12
+        totalPages:
+          type: number
+          description: Tổng số trang
+          example: 9
+        page:
+          type: number
+          description: Trang hiện tại
+          example: 2
+        pagingCounter:
+          type: number
+          description: Index của document đầu tiên trong trang hiện tại
+          example: 13
+        hasPrevPage:
+          type: boolean
+          description: Có trang trước không
+          example: true
+        hasNextPage:
+          type: boolean
+          description: Có trang sau không
+          example: true
+        prevPage:
+          type: number
+          description: Trang trước, nếu không có trả null
+          example: 1
+        nextPage:
+          type: number
+          description: Trang sau, nếu không có trả null
+          example: 3
+    pagination.Book:
+      type: object
+      properties:
+        docs:
+          type: array
+          description: Mảng document
+          items:
+            $ref: '#/components/schemas/Book'
+        totalDocs:
+          type: number
+          description: Tổng số document
+          example: 100
+        limit:
+          type: number
+          description: Giới hạn số document trả về
+          example: 12
+        totalPages:
+          type: number
+          description: Tổng số trang
+          example: 9
+        page:
+          type: number
+          description: Trang hiện tại
+          example: 2
+        pagingCounter:
+          type: number
+          description: Index của document đầu tiên trong trang hiện tại
+          example: 13
+        hasPrevPage:
+          type: boolean
+          description: Có trang trước không
+          example: true
+        hasNextPage:
+          type: boolean
+          description: Có trang sau không
+          example: true
+        prevPage:
+          type: number
+          description: Trang trước, nếu không có trả null
+          example: 1
+        nextPage:
+          type: number
+          description: Trang sau, nếu không có trả null
+          example: 3
+    Book_dimension:
+      type: object
+      properties:
+        height:
+          type: number
+          description: Chiều cao (cm)
+          example: 18
+        width:
+          type: number
+          description: Chiều rộng (cm)
+          example: 13
+      description: Kích thước (cao x rộng (cm))
