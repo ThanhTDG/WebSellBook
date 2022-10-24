@@ -827,7 +827,9 @@ components:
         children:
         - id: 63412da2f0dd862e790a187f
           name: Light novel
+          description: string
           slug: light-novel
+          image: string
           children: []
     Book_dimension:
       type: object
