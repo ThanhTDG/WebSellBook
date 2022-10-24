@@ -43,7 +43,7 @@ app.use(
 );
 
 // Routes
-app.use("/", (req, res) => res.send("Welcome to ToiMuaSach API"));
+app.get("/", (req, res) => res.send("Welcome to ToiMuaSach API"));
 app.use("/api", router);
 
 // API documents
