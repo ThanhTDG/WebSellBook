@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "mocha --exit"
+    "test": "mocha src/test/*.js --exit"
   },
   "keywords": [
-    "node.js",
+    "nodejs",
     "express",
     "api"
   ],
