@@ -823,7 +823,9 @@ components:
       example:
         id: 63412a2dd1431450628fde93
         name: Văn học
+        description: string
         slug: van-hoc
+        image: string
         children:
         - id: 63412da2f0dd862e790a187f
           name: Light novel
