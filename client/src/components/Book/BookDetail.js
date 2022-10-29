@@ -8,8 +8,29 @@ import Menu from '../Menu/Menu';
 import './BookDetail.scss';
 import discountImage from '../../assets/icons/discount.png'
 import SendComment from '../Button/SendComment';
+import CommentComponent from '../Comment/commentComponent';
+import { FakeData } from '../../variables/FakeData';
+import Books from './Books';
+import VerticalSlider from '../Carousel/verticalSlider';
 
 const BookDetail = () => {
+    var banners = []
+    MyVariable.VerticalBanners.forEach((banner)=>(
+      banners.push({
+        url: `${MyVariable.hostName}${banner.url}`,
+        order: `${banner.order}`
+      })
+    ))
+
+    for(let index =1;index<5;index++){
+        banners.push({
+            url: `${FakeData.books[index].image}}`,
+            order: `${index}`,
+            title: `${FakeData.books[index].title}`,
+            discountrate: `${FakeData.books[index].discountrate}`,
+            detail: FakeData.books[index]
+        })
+    }
     const location = useLocation();
     const { book } = location.state;
     const bookDescription = book.description.length > 200 ? book.description.substr(0, 1200) : book.description
@@ -78,7 +99,7 @@ const BookDetail = () => {
         var color = book.rating.ratingPoint >= 3.5 ? 'var(--Orange)' : 'var(--Blue)'
         return {
             'font-family': 'MontserratMedium',
-            'font-size': '94px',
+            'font-size': '84px',
             color: `${color}`
         }
     }
@@ -103,7 +124,7 @@ const BookDetail = () => {
                 bgColor = 'var(--DarkOrange)'
                 break;
             case 2:
-                bgColor = 'var(--Orange)'
+                bgColor = 'var(--DarkBlue)'
                 break;
             case 3:
                 bgColor = 'var(--Blue)'
@@ -112,7 +133,7 @@ const BookDetail = () => {
                 bgColor = 'var(--LightBlue)'
                 break;
             case 5:
-                bgColor = 'var(--DarkBlue)'
+                bgColor = 'var(--Orange)'
                 break;
         }
         return {
@@ -208,7 +229,7 @@ const BookDetail = () => {
                         </div>
                         <div className='row buttons-container'>
                             <div className='col-xl-6 book-btn-add-to-cart'>
-                                <AddToCardButton />
+                                <AddToCardButton bookData={book} />
                             </div>
                             <div className='col-xl-6 book-btn-add-to-cart'>
                                 <AddToFavoriteButton />
@@ -276,8 +297,25 @@ const BookDetail = () => {
                         ))}
                     </div>
                     <SendComment />
+                    
+                </div>
+                <div className='row book-more-comment-container'>
+                    <div className='col-sm-4 vertical-banners-container'>
+                        <VerticalSlider slides={banners}/>
+                    </div>
+                    <div className='col-sm-8'>
+                        <div className='book-more-comment'>
+                            <span>{MyVariable.BookDetailTitle.reviewedTitle}</span>
+                        </div>
+                            <CommentComponent comment={FakeData.comments[0]} user={FakeData.users[0]}/>
+                            <CommentComponent comment={FakeData.comments[1]} user={FakeData.users[1]}/>
+                            <CommentComponent comment={FakeData.comments[2]} user={FakeData.users[2]}/>
+                            <CommentComponent comment={FakeData.comments[0]} user={FakeData.users[0]}/>
+                        <button id='btn-showmore-rating'>Xem thêm</button>
+                    </div>
                 </div>
             </div>
+            <Books bookData={FakeData.books} title={MyVariable.BookTopics[2]} color={'var(--Blue)'}/>
             <MyFooter />
         </div>
     );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const slideStyles = {
   width: "100%",
@@ -6,7 +6,8 @@ const slideStyles = {
   borderRadius: "10px",
   backgroundSize: "contain",
   backgroundPosition: "center",
-  'background-repeat': 'no-repeat'
+  'background-repeat': 'no-repeat',
+  transitionDuration: '0.8s'
 };
 
 const rightArrowStyles = {
@@ -16,7 +17,7 @@ const rightArrowStyles = {
   right: "32px",
   fontSize: "45px",
   color: "#fff",
-  zIndex: 1,
+  zIndex: 0,
   cursor: "pointer",
 };
 
@@ -27,7 +28,7 @@ const leftArrowStyles = {
   left: "32px",
   fontSize: "45px",
   color: "#fff",
-  zIndex: 1,
+  zIndex: 0,
   cursor: "pointer",
 };
 
@@ -41,12 +42,7 @@ const dotsContainerStyles = {
   justifyContent: "center",
 };
 
-const dotStyle = {
-  margin: "0 3px",
-  cursor: "pointer",
-  fontSize: "20px",
-  color: 'var(--Pink)',
-};
+
 
 const ImageSlider = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -69,21 +65,39 @@ const ImageSlider = ({ slides }) => {
     'background-color': `${slides[currentIndex].backColor}`,
   };
 
+  function dotStyle(index) {
+    return {
+      margin: "0 3px",
+      cursor: "pointer",
+      fontSize: "20px",
+      color: currentIndex === index ? 'var(--Pink)' : 'var(--LightOrange)',
+    }
+  }
+
+  useEffect(() => {
+    while (true) {
+      const timer = setTimeout(() => {
+        setCurrentIndex(slides.length - 1 === currentIndex ? 0 : currentIndex + 1)
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex]);
+
   return (
     <div style={sliderStyles}>
       <div>
         <div onClick={goToPrevious} style={leftArrowStyles}>
-          <img src={require('../../assets/icons/ic-previou.png')} alt='left arrow'/>
+          <img src={require('../../assets/icons/ic-previou-white.png')} alt='left arrow' />
         </div>
         <div onClick={goToNext} style={rightArrowStyles}>
-        <img src={require('../../assets/icons/ic-next.png')} alt='right arrow'/>
+          <img src={require('../../assets/icons/ic-next-white.png')} alt='right arrow' />
         </div>
       </div>
       <div style={slideStylesWidthBackground}></div>
       <div style={dotsContainerStyles}>
         {slides.map((slide, slideIndex) => (
           <div
-            style={dotStyle}
+            style={dotStyle(slideIndex)}
             key={slideIndex}
             onClick={() => goToSlide(slideIndex)}
           >

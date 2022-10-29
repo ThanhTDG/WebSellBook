@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './AddToCartButton.scss'
+import { useStore, actions } from '../../store'
+import { BooksInShoppingCart } from '../ShoppingCart/BooksInShoppingCart';
 
-const AddToCardButton = () => {
+const AddToCardButton = (props) => {
+    const [state, dispatch] = useStore()
+    const [isAddBook, setIsAddBook] = useState(false)
     const buttonStyle = {
         'font-family': "Montserrat",
         'font-size': '16px',
@@ -9,11 +14,45 @@ const AddToCardButton = () => {
         width: '200px',
         border: 'none',
         'border-radius': '24px',
-        'background-color': 'var(--Pink)',
+        'background-color': 'var(--DarkBlue)',
+        transitionDuration: '0.4s'
     }
+    // function addToCart(book,e){
+    //     e.preventDefault();
+    //     dispatch(actions.addBookToCart({book: book, amount: 1, isSelected: false}))
+    // }
+    function onClickAddBookToCart() {
+        var isHaveBook = false
+        BooksInShoppingCart.forEach(element => {
+            if (element.book.id === props.bookData.id) {
+                element.amount += 1
+                isHaveBook = true
+            }
+        });
+        if (isHaveBook === false) {
+            BooksInShoppingCart.push({
+                book: props.bookData,
+                amount: 1,
+                isSelected: false
+            })
+            dispatch(actions.addBookToCart({
+                book: props.bookData,
+                amount: 1,
+                isSelected: false
+            }))
+        }
+        // setIsAddBook(true)
+        // if (isAddBook === true) {
+        //     dispatch(actions.addBookToCart({ book: props.bookData, amount: 1, isSelected: false }))
+        // }
+        //dispatch(actions.addBookToCart({ book: props.bookData, amount: 1, isSelected: false }))
+    }
+    // useEffect(()=>{
+    //     dispatch(actions.addBookToCart({book: props.bookData, amount: 1, isSelected: false}))
+    // }, [dispatch, isAddBook, props.bookData])
     return (
         <div>
-            <button style={buttonStyle}>Thêm vào giỏ hàng</button>
+            <button className='btn-add-book-to-cart' onClick={onClickAddBookToCart} style={buttonStyle}>Thêm vào giỏ hàng</button>
         </div>
     );
 }

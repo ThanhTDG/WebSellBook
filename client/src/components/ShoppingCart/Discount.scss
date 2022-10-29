@@ -1,0 +1,50 @@
+.discount-container{
+    width: 100%;
+    transition-duration: 0.4s;
+    background-color: var(--Pink);
+    display: inline-grid;
+    padding: 12px;
+    border-radius: 12px;
+    .discount-container-top{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 32%;
+        }
+        .discount-content-container{
+            padding-left: 12px;
+        }
+        .discount-value{
+            font-family: 'MontserratMedium';
+            font-size: 24px;
+        }
+        .discount-name{
+            font-size: 12px;
+        }
+    }
+    .discount-container-desciption{
+        font-size: 12px;
+        text-align: left;
+        width: 100%;
+        margin-top: 12px;
+    }
+    .discount-container-option{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        font-size: 10px;
+        margin-top: 12px;
+        position: relative;
+        button{
+            position: absolute;
+            right: -8px;
+            border: none;
+            background-color: transparent;
+            img{
+                width: 48px;
+            }
+        }
+    }
+    
+}

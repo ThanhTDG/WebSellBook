@@ -1,0 +1,31 @@
+.vertical-banner{
+    padding: 8px;
+    border-radius: 12px;
+    width: 100%;
+    object-fit: contain;
+}
+.vertical-banner-content{
+    width: 100%;
+    p{
+        width: 100%;
+        font-family: 'MontserratRegular';
+        font-size: 12px;
+        line-height: 1.2 !important;
+        color: var(--Darkest);
+        padding-top: 8px;
+    }
+}
+.vertical-banner-hight-light{
+    color: var(--Red);
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+}
+.vertical-banner-hight-light-icon{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top:0;
+    right: 0;
+}

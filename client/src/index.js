@@ -4,9 +4,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
-import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+import 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
+import { StoreProvider } from './store'
 
 // pages
 
@@ -19,7 +20,9 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <StoreProvider>
+      <App />
+    </StoreProvider>
   </React.StrictMode>
 );
 

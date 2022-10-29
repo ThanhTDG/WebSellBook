@@ -5,6 +5,7 @@ import AddToCardButton from '../Button/AddToCardButton';
 import AddToFavoriteButton from '../Button/AddToFavoriteButton';
 import './Book.scss'
 import { RenderedBook } from './BookRecognization';
+import { useEffect, useState } from "react";
 const Book = (props) => {
     const bookData = props.bookData;
     var favoriteIconSrc = RenderedBook.favoriteIcon;
@@ -14,8 +15,19 @@ const Book = (props) => {
     const bookImage = new Image();
     bookImage.src = bookData.image
     const displayElement = document.querySelector('div.book-item')
-    const displayWidth = displayElement === null ? 294 : displayElement.offsetWidth
-    const displayHeight = ((displayWidth * bookImage.height / bookImage.width) + ((displayWidth * bookImage.height / bookImage.width) * 34 / 100))
+    const [stateW, setstateW] = useState(window.innerWidth);
+    // useEffect(() => {
+    //     function handleResize() {
+    //       setstateW()
+    //     }
+    //     window.addEventListener("resize", handleResize);
+    //     return () => window.removeEventListener("resize", handleResize);
+    //   }, []);
+
+    var detalW = stateW < 600? 168: 294;
+    // var detalGridH = window.innerWidth < 600? 10: 30;
+    const displayWidth = displayElement === null ? detalW : displayElement.offsetWidth
+    const displayHeight = ((displayWidth * bookImage.height / bookImage.width) + ((displayWidth * bookImage.height / bookImage.width) * 30 / 100))
     const bookImageContainStyle = {
         width: '100%',
         'min-width': '200px',
@@ -24,23 +36,23 @@ const Book = (props) => {
         'border-radius': '24px',
         'backgroundColor': 'var(--Blue)',
         'background': `url(${bookData.image}) center center`,
-        'background-size': '144% 110%',
+        'background-size': '152% 116%',
     }
     const bookTitleContainStyle = {
         width: '100%',
         'min-width': '200px',
         'max-width': '294px',
         'font-family': 'MontserratMedium',
-        'padding-right': '12px',
-        'padding-left': '12px',
-        'padding-top': '24px'
+        'padding-right': '8px',
+        'padding-left': '8px',
+        'padding-top': '12px'
     }
     const bookTitleStyle = {
-        'font-size': '24px',
+        'font-size': '20px',
     }
     const bookAuthorStyle = {
         'font-family': 'MontserratRegular',
-        'font-size': '16px'
+        'font-size': '14px'
     }
     var optionsStyle = {
         position: 'absolute',
@@ -85,11 +97,11 @@ const Book = (props) => {
 
     }
 
-    function showOptions(e, h) {
+    function showOptions(e, h, detalW) {
         var target = e.target.id.toString()
         var options = getOptionsByBook(target)
         options.style = `display: block; position: absolute; top: ${h - 48 - 12}px; left: 50%; -ms-transform: translate(-50%, -50%); transform:translate(-50%, -50%);`
-
+        //console.log('w: '+detalW)
     }
     function hideOptions(e) {
         var target = e.target.id.toString()
@@ -123,18 +135,18 @@ const Book = (props) => {
     }
     return (
 
-        <div style={bookContainStyle} onMouseLeave={(e) => hideOptions(e)}>
-            <div style={bookImageContainStyle} id={renderIDBook()} onMouseOver={(e) => showOptions(e, displayHeight)} >
+        <div style={bookContainStyle} className='book-container-effect' onMouseLeave={(e) => hideOptions(e)}>
+            <div style={bookImageContainStyle} className='book-image-effect' id={renderIDBook()} onMouseOver={(e) => showOptions(e, displayHeight, detalW)} >
             </div>
             <div id={renderIDOptions()} className='options' style={optionsStyle} >
-                <AddToCardButton />
+                <AddToCardButton bookData={bookData} />
                 
                 <AddToFavoriteButton top={8}/>
                 {/* <div id={renderIDIcon()} style={favoriteOptionStyle(displayHeight, favoriteIconSrc, bookData)} onClick={(e) => onClickFavoriteOption(e, displayHeight, bookData)}></div> */}
             </div>
             <Link to='/bookdetail' state={{ book: packageDataToSend(bookData)}}>
-                <div style={bookTitleContainStyle}>
-                    <div style={bookTitleStyle}>{bookData.title}</div>
+                <div style={bookTitleContainStyle} className='book-container-effect'>
+                    <div style={bookTitleStyle} className='book-context-title-effect'>{bookData.title}</div>
                     <div style={bookAuthorStyle}>{bookData.author}</div>
                 </div>
             </Link>
