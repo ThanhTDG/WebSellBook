@@ -1,7 +1,8 @@
 const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
-const session = require("express-session");
+const session = require("cookie-session");
+// const session = require("express-session");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
@@ -30,10 +31,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
+    cookie: { secure: true, maxAge: 60000 },
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: { secure: true },
   })
 );
 app.use(

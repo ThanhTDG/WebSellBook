@@ -1,18 +1,20 @@
-FROM node:16
+FROM node:lts-alpine
+
+ENV NODE_ENV=production
+
 LABEL authors="Duong Hieu"
+LABEL description="API website ToiMuaSach"
+LABEL version="0.0.4"
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/app/toi-mua-sach/server
 
-# Install app dependencies
 COPY package*.json ./
 
-RUN npm i
-# If you are building your code for production
-# RUN npm ci --only=production
+RUN npm i --production --silent && mv node_modules ../
 
-# Bundle app source
 COPY . .
 
 EXPOSE 5000
-CMD [ "node", "src/index.js" ]
+RUN chown -R node /usr/app/toi-mua-sach/server
+USER node
+CMD [ "npm", "start" ]

@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  client:
+    image: toi-mua-sach/client
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+  server:
+    image: toi-mua-sach/server
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./server/.env
+    environment:
+      NODE_ENV: production
+    ports:
+      - 5000:5000
