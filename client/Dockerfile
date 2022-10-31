@@ -10,7 +10,7 @@ WORKDIR /usr/app/toi-mua-sach/client
 
 COPY package*.json ./
 
-RUN npm i --production --silent && mv node_modules ../
+RUN npm i --production --silent
 
 COPY . .
 
