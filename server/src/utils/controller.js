@@ -16,6 +16,7 @@ const ErrorHandler = require("./errorHandler");
 /**
  * Callback get model to json
  * @callback ToJson
+ * @param {mongoose.Model} data
  * @returns {Object}
  */
 
@@ -36,7 +37,7 @@ const Controller = class {
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  getAll = async function (req, res) {
+  getAll = async (req, res) => {
     try {
       const query = req.query;
       const page = query.page || 0;
@@ -47,7 +48,10 @@ const Controller = class {
         limit,
         pagination: page && limit,
       };
-      const data = await model.paginate({}, options);
+      const data = await this.model.paginate({}, options);
+      if (this.toJson) {
+        data.docs = data.docs.map((value) => this.toJson(value));
+      }
 
       await res.json(data);
     } catch (error) {
@@ -63,7 +67,7 @@ const Controller = class {
   get = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await model.findById(id);
+      const data = await this.model.findById(id);
 
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
@@ -84,7 +88,7 @@ const Controller = class {
   create = async (req, res) => {
     try {
       const body = this.getData(req.body);
-      const data = new model(body);
+      const data = new this.model(body);
       const newData = await data.save();
       await res.status(201).json(newData);
     } catch (error) {
@@ -102,7 +106,7 @@ const Controller = class {
       const id = req.params.id;
       const body = this.getData(req.body);
       const options = { new: true };
-      const data = await model.findByIdAndUpdate(id, body, options);
+      const data = await this.model.findByIdAndUpdate(id, body, options);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
@@ -123,7 +127,7 @@ const Controller = class {
   remove = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await model.findByIdAndDelete(id);
+      const data = await this.model.findByIdAndDelete(id);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
@@ -147,126 +151,4 @@ const Controller = class {
   });
 };
 
-/**
- * Model controllers for admin pages
- * @param {mongoose.Model} model
- * @returns The methods for control routes
- */
-const controller = (model) => {
-  /**
-   * Get array of documents
-   * @param {Request} req Request
-   * @param {Response} res Response
-   */
-  const getAll = async function (req, res) {
-    try {
-      const query = req.query;
-      const page = query.page || 0;
-      const limit = query.limit || 0;
-
-      const options = {
-        page,
-        limit,
-        pagination: page && limit,
-      };
-      const data = await model.paginate({}, options);
-
-      await res.json(data);
-    } catch (error) {
-      await res.status(400).json({ message: error.message });
-    }
-  };
-
-  /**
-   * Get document by id
-   * @param {Request} req Request
-   * @param {Response} res Response
-   */
-  const get = async (req, res) => {
-    try {
-      const id = req.params.id;
-      const data = await model.findById(id).exec();
-
-      if (!data) {
-        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
-      }
-      await res.json(data);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 400)
-        .json({ message: error.message });
-    }
-  };
-
-  /**
-   * Insert new data
-   * @param {Request} req Request
-   * @param {Response} res Response
-   */
-  const create = async (req, res) => {
-    try {
-      const body = model.getData(req.body);
-      const data = new model(body);
-      const newData = await data.save();
-      await res.status(201).json(newData);
-    } catch (error) {
-      await res.status(400).json({ message: error.message });
-    }
-  };
-
-  /**
-   * Update data
-   * @param {Request} req Request
-   * @param {Response} res Response
-   */
-  const update = async (req, res) => {
-    try {
-      const id = req.params.id;
-      const body = req.body;
-      const options = { new: true };
-      const data = await model.findByIdAndUpdate(id, body, options).exec();
-
-      if (!data) {
-        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
-      }
-      await res.json(data);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 400)
-        .json({ message: error.message });
-    }
-  };
-
-  /**
-   * Delete data by id
-   * @param {Request} req Request
-   * @param {Response} res Response
-   */
-  const remove = async (req, res) => {
-    try {
-      const id = req.params.id;
-      const data = await model.findByIdAndDelete(id).exec();
-
-      if (!data) {
-        throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
-      }
-      await res
-        .status(204)
-        .send(`Document with {_id: '${id}'} has been deleted...`);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 400)
-        .json({ message: error.message });
-    }
-  };
-
-  return {
-    getAll,
-    get,
-    create,
-    update,
-    remove,
-  };
-};
-
-module.exports = controller;
+module.exports = Controller;

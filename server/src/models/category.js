@@ -37,16 +37,6 @@ const categorySchema = new Schema(
   { timestamps: true }
 );
 
-categorySchema.statics.getData = (body) => {
-  const { name, description, image, parent } = body;
-  return {
-    name,
-    description,
-    image,
-    parent,
-  };
-};
-
 categorySchema.pre("save", async function (next) {
   try {
     if (this.parent) {

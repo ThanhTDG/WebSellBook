@@ -85,12 +85,8 @@ const bookSchema = new Schema(
     ],
     fakeId: String,
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
-
-bookSchema.virtual("image").get(function () {
-  return this.images[0] || null;
-});
 
 bookSchema.virtual("total").get(function () {
   return this.originalPrice * (1 - this.discountRate / 100);
