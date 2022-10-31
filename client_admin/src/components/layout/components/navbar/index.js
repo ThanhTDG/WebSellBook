@@ -1,5 +1,5 @@
 import "./navbar.scss"
-import icons from '../../assets/images/ImagesNavbar.js'
+import icons from '../../../../assets/images/ImagesNavbar.js'
 import { navbarOptions } from './navbarOption.js'
 
 function Navbar() {

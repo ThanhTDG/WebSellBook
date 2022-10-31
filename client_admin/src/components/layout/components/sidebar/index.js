@@ -1,7 +1,7 @@
 import "./sidebar.scss"
 import { sidebarOptions } from './sidebarOptions.js';
-import images from '../../assets/images/ImagesSidebar.js';
-import { ReactComponent as Logo } from '../../assets/images/Logo.svg';
+import images from '~/assets/images/ImagesSidebar';
+import { ReactComponent as Logo } from '~/assets/images/Logo.svg';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,6 @@ function Sidebar() {
           }
         </ul>
       </div>
-      <div className="bottom">color options</div>
     </div>
   )
 }

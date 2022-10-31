@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { HeaderProduct } from '../../listProduct/TitleListProduct';
+import { TitleListProduct } from './TitleTableProducts';
 import { Link } from 'react-router-dom';
 function createData(name, calories, fat, carbs, protein, price) {
     return {
@@ -140,7 +140,7 @@ function renderHeaderTable() {
         <TableHead>
             <TableRow>
                 <TableCell />
-                {HeaderProduct.map((header, index) => {
+                {TitleListProduct.map((header, index) => {
                     return <TableCell key={header.key + index} align={index === 0 ? "left" : "right"} >{header.nameVN}</TableCell>
                 })
                 }

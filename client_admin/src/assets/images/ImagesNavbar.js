@@ -1,4 +1,4 @@
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import LanguageIcon from '@mui/icons-material/Language';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';

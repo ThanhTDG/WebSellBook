@@ -1,13 +1,21 @@
 import * as React from 'react';
-import CustomTab from '../tab/CustomTab';
 import TabProduct from '../tab/product/TabProduct';
-import { TitleListProduct } from '../table/product/TitleTableProducts'
-
+import { ProductMgtProvider } from '../../store'
+import { Button } from '@mui/material';
 function ListProduct() {
     return (
-        <TabProduct>
+        <ProductMgtProvider>
+            <div>
+                <h2>
+                    Quản lý sách
+                </h2>
+                <button onclick="activateLasers()">
+                    Thêm mới
+                </button>
+            </div>
+            < TabProduct />
+        </ProductMgtProvider>
 
-        </TabProduct>
     )
 
 }

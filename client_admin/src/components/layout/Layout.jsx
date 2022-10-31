@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../navbar/Navbar'
-import Sidebar from '../sidebar/Sidebar'
+import Navbar from './components/navbar'
+import Sidebar from './components/sidebar'
 import "./layout.scss"
 
 function Layout(props) {

@@ -1,80 +1,92 @@
-.sidebar{
+.sidebar {
     overflow-x: auto;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; 
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
     display: flex;
     flex-direction: column;
     position: relative;
     padding-top: 0.8rem;
     transition: all 300ms ease;
     min-height: 100vh;
-    .top{
+
+    .top {
         height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        .logo{
-        font-size: 20px;
-        font-weight: bold;
-        color: chartreuse;
+        padding: 10px;
+        .logo {
+            font-size: 10px;
+            font-weight: bold;
+            color: chartreuse;
         }
     }
-  
-    .center{
+
+    .center {
         padding-left: 10px;
-        ul{
+
+        ul {
             list-style: none;
             margin: 0;
             padding: 0;
+
             .title {
                 font-size: 10px;
                 font-weight: bold;
-                color:  #999;
+                color: #999;
                 margin-top: 15px;
                 margin-bottom: 5px;
             }
         }
     }
 }
-.menuItem{
+
+.menuItem {
     display: flex;
     align-items: center;
     position: relative;
-    gap:1rem;
+    gap: 1rem;
     height: 2.5rem;
     margin-left: 1 rem;
     font-size: 14px;
     transition: all 300ms ease;
     border-radius: 0.7rem;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background-color: var(--holdItem);
     }
-    .icon{
-        
+
+    .icon {
+
         padding-left: 8px;
         font-size: 18px;
         fill: #3e3eac;
         stroke: #e5e5e5;
     }
-    span{
+
+    span {
         font-weight: 600;
         color: #888;
 
-        
+
     }
 }
-.active{
+
+.active {
     margin-top: 0.3rem;
     background: var(--activeItem);
     border-radius: 0.7rem;
-    .icon{
+
+    .icon {
         padding-left: 0;
     }
 }
 
-.active::before{
+.active::before {
     content: "";
     width: 8px;
     height: 100%;
