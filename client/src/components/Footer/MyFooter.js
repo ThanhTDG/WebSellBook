@@ -2,6 +2,7 @@ import React from 'react';
 import './MyFooter.scss'
 import { MyVariable } from '../../variables/variables';
 import { Link } from 'react-router-dom';
+import { MyConstVariable } from '../../variables/MyConstVaeiable';
 
 const MyFooter = () => {
     return (
@@ -9,8 +10,8 @@ const MyFooter = () => {
             <div className='row'>
                 <div className='col-sm '>
                     <div className='footer-logo'>
-                        <img src={require('../../assets/Logo.gif')} alt='Logo' />
-                        <div className='footer-description'>{MyVariable.FooterData.description}</div>
+                        <img src={require('../../assets/LogoMain.png')} alt='Logo' />
+                        {/* <div className='footer-description'>{MyVariable.FooterData.description}</div> */}
                     </div>
                 </div>
                 <div className='col-sm '>
@@ -29,7 +30,7 @@ const MyFooter = () => {
                         <div className='footer-title'>{MyVariable.FooterData.cutomerHelper.title}</div>
                         {MyVariable.MenuData.map((menu)=> (
                             <div className='footer-menu'>
-                                <Link to={menu.path}><a href='/'>{menu.title}</a></Link>
+                                <Link to={menu.path} state={{stateName: MyConstVariable.myNullVariable}}><a href='/'>{menu.title}</a></Link>
                             </div>
                         ))}
                     </div>

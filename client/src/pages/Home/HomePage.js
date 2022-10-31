@@ -16,8 +16,18 @@ const HomePage = () => {
         backColor: `${banner.backColor}`
       })
     ))
+    const homePageHeaderStyle={
+      width:'100%',
+      height:'748px',
+      background: `url('${MyVariable.hostName}/assets/banners/homepageheader.png') center center`,
+      backgroundSize:'100%'
+    }
       return (
+        
         <div>
+          {/* <div className='home-page-header' style={homePageHeaderStyle}>
+            <MenuStyle active='Trang Chủ'/>
+          </div> */}
           <Menu active='Trang Chủ'/>
           <div className='homepage-banner'>
             <ImageSlider slides={banners} />

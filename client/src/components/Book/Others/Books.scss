@@ -1,0 +1,8 @@
+.books-style-container {
+  display: inline-grid;
+  grid-template-columns: 24% 24% 24% 24%;
+  background-color: var(--White);
+  width: 100%;
+  padding-top: 0;
+  grid-gap: 12px;
+}

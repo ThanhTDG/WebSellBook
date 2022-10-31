@@ -1,0 +1,8 @@
+.btn-add-to-favorite:hover{
+    .btn-add-to-favorite-img{
+        //content: url('http://localhost:3000/assets/icons/ic-active-favorite.png')
+    }
+    img{
+        transition-duration: 0.4s;
+    }
+}

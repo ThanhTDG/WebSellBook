@@ -29,17 +29,17 @@ const SendComment = () => {
     }
     return (
         <div className='row'>
-            <div className='col-sm-11'>
+            <div className='col-sm-11 '>
                 <div className='row send-comment-container'>
-                    <div className='col-11'>
+                    <div className='col-sm-11 send-comment-bounder'>
                         <input type='text' placeholder='Nhập xét của bạn...' onChange={(e)=>(onComment(e))}/>
                     </div>
-                    <div className='col-1'>
+                    <div className='col-sm-1 send-comment-btn-image'>
                         <button style={btnAttrachImage}></button>
                     </div>
                 </div>
             </div>
-            <div className='col-sm-1'>
+            <div className='col-sm-1 btn-send-bounder'>
                 <div id='btn-send-container'>
                     <button id='btn-send' style={btnSendStyle}>
                     </button>

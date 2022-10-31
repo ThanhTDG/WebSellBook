@@ -1,0 +1,115 @@
+.book-in-cart-container{
+    background-color: var(--LightGray);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+.book-in-cart-contents{
+    p{
+        padding: 0;
+        margin: 0;
+    }
+    .book-in-cart-title{
+        font-size: 16px;
+    }
+    .book-in-cart-author{
+        font-size: 12px;
+    }
+}
+
+.book-in-cart-prices{
+    position: absolute;
+    bottom: 0;
+    .book-in-cart-prv-price{
+        color: var(--Gray);
+        text-decoration: line-through;
+        font-size: 20px;
+    }
+    .book-in-cart-discount-rate{
+        color:var(--Pink);
+        font-size: 20px;
+    }
+    .book-in-cart-cur-price{
+        color: var(--Orange);
+        display: block;
+        font-size: 28px;
+        font-family: 'MontserratMedium';
+    }
+}
+.book-in-cart-amount-container{
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+.book-in-cart-amount{
+    width: 60%;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--Gray);
+    display: flex;
+    background-color: var(--LightGray);
+    position: relative;
+    justify-content: center;
+    input{
+        width: 48px;
+        height: 36px;
+        border: none;
+        outline: none;
+        text-align: center;
+        font-size: 16px;
+        background-color: var(--LightGray);
+    }
+    button{
+        border: none;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background-color: var(--LightGray);
+        padding: 0px;
+        margin: 0px;
+        img{
+            width: 20px;
+            height: 20px;
+            padding: 0px;
+            margin: 0px;
+            margin-top: -16px;
+        }
+    }
+    .book-in-cart-amount-btn-minus{
+        top:6px;
+        left:8px;
+    }
+    .book-in-cart-amount-btn-plus{
+        top:6px;
+        right:8px;
+    }
+}
+
+.book-in-cart-price-container{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    .book-in-cart-price-cur-price{
+        color: var(--Pink);
+        font-size: 28px;
+        font-family: 'MontserratMedium';
+    }
+    button{
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        right: 24px;
+        padding: 0;
+        margin: 0; 
+        background-color: var(--LightGray);
+        img{
+            width: 32px;
+            height: 32px;
+        }
+    }
+}

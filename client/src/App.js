@@ -6,7 +6,7 @@ import {
     Navigate,
   } from "react-router-dom";
 import BookDetail from './components/Book/BookDetail';
-import Books from './pages/Books/Books';
+import BooksPage from './pages/Books/Books';
 import Cart from './pages/Cart/Cart';
 import ContactUs from './pages/Contact/Contact';
 import HomePage from './pages/Home/HomePage';
@@ -15,7 +15,7 @@ const App = () => {
         <Router>
         <Routes>
           <Route exact path="/" element={<HomePage/>} />
-          <Route path="/books" element={<Books/>} />
+          <Route path="/books" element={<BooksPage />} />
           <Route path='/cart' element={<Cart/>}/>
           <Route path="/contactus" element={<ContactUs/>} />
           <Route path="/bookdetail" element={<BookDetail/>} />
