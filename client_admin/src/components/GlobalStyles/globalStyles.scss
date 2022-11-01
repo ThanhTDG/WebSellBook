@@ -14,8 +14,11 @@
 	--activeItem: #3e3eac;
 	--holdItem: #6161da;
 	--blackPurple: #0f0f33;
+	--text-color: rgb(32, 32, 32);
 }
 * {
+	padding: 0;
+	margin: 0;
 	box-sizing: border-box;
 }
 html {
@@ -26,4 +29,17 @@ body {
 	margin: 0;
 	font-size: 1.6rem;
 	text-rendering: optimizeSpeed;
+	color: var(--text-color);
+}
+
+button,
+input,
+[tabindex] {
+	outline: none;
+	border: none;
+}
+
+a[href] {
+	color: var(--text-color);
+	text-decoration: none;
 }
