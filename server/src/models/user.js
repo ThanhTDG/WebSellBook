@@ -85,7 +85,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      select: false,
+      // select: false,
     },
     sex: {
       type: Boolean,
@@ -176,18 +176,6 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
-
-// userSchema.pre("findOneAndUpdate", async function (next) {
-//   // if (!this.isModified("password")) {
-//   //   return next();
-//   // }
-
-//   const { password } = this.getUpdate()?.$set;
-//   console.log(password);
-//   // await hashPassword(this, next);
-// });
-
-// /^(save|findOneAndUpdate)/
 
 const User = mongoose.model("User", userSchema);
 

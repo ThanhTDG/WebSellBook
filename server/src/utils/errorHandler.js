@@ -1,4 +1,4 @@
-class ErrorHandler extends Error {
+const ErrorHandler = class extends Error {
   /**
    * @param {number} statusCode HTTP response status code
    * @param {string|Error} message Error message
@@ -8,6 +8,6 @@ class ErrorHandler extends Error {
     this.statusCode = statusCode;
     this.message = message;
   }
-}
+};
 
 module.exports = ErrorHandler;

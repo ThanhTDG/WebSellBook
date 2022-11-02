@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     const decoded = verifyToken(token);
-    const user = await User.findOne({ id: decoded.id });
+    const user = await User.findById(decoded.id);
 
     if (!user) {
       throw new Error();

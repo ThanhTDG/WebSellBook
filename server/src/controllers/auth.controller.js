@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 
 /**
@@ -9,7 +10,7 @@ const { generateAvatar } = require("../utils/generateAvatar");
 const signUp = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, password } = req.body;
-    const avatar = generateAvatar(body.firstName);
+    const avatar = generateAvatar(firstName);
     const body = { firstName, lastName, email, phone, password, avatar };
     const data = new User(body);
     const newData = await data.save();
@@ -45,12 +46,60 @@ const signIn = async (req, res) => {
   }
 };
 
+/**
+ * Logout account
+ * @param {Request} req
+ * @param {Response} res
+ */
 const signOut = async (req, res) => {
   try {
     delete req.signedCookies.token;
-    res.redirect("/");
+    await res.json({ message: "Log out successful" });
   } catch (error) {
-    res.status(500).send();
+    await res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * Get profile
+ * @param {Request} req
+ * @param {Response} res
+ */
+const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    const obj = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+    };
+    await res.json(obj);
+  } catch (error) {
+    await res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+/**
+ * Change password
+ * @param {Request} req
+ * @param {Response} res
+ */
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = req.user;
+    const isMatch = await user.validatePassword(currentPassword);
+    if (!isMatch) {
+      throw new ErrorHandler(500, "Incorrect password");
+    }
+
+    user.password = newPassword;
+    await user.save();
+    await res.json({ message: "Change password successfully" });
+  } catch (error) {
+    await res.status(error.statusCode || 500).json({ message: error.message });
   }
 };
 
@@ -58,4 +107,6 @@ module.exports = {
   signUp,
   signIn,
   signOut,
+  getProfile,
+  changePassword,
 };
