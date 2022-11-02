@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3001
 RUN chown -R node /usr/app/toi-mua-sach/admin
 USER node
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "build" ]

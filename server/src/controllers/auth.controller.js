@@ -1,27 +1,47 @@
 const User = require("../models/user");
-const generateAvatar = require("../utils/generateAvatar");
+const { generateAvatar } = require("../utils/generateAvatar");
 
+/**
+ * Register a new account
+ * @param {Request} req
+ * @param {Response} res
+ */
 const signUp = async (req, res) => {
   try {
-    const body = req.body;
+    const { firstName, lastName, email, phone, password } = req.body;
     const avatar = generateAvatar(body.firstName);
-    const data = new User({ ...body, avatar });
+    const body = { firstName, lastName, email, phone, password, avatar };
+    const data = new User(body);
     const newData = await data.save();
-    res.status(201).json(newData);
+
+    const user = {
+      id: newData.id,
+      firstName: newData.firstName,
+      lastName: newData.lastName,
+      email: newData.email,
+      phone: newData.phone,
+      avatar: newData.avatar,
+    };
+    await res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    await res.status(400).json({ message: error.message });
   }
 };
 
+/**
+ * Login account
+ * @param {Request} req
+ * @param {Response} res
+ */
 const signIn = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findByCredentials(username, password);
     const token = user.generateAuthToken();
     // req.signedCookies.token = token;
-    res.json({ token });
+    await res.json({ token });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    await res.status(400).json({ message: error.message });
   }
 };
 

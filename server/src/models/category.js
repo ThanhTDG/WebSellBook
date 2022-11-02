@@ -37,6 +37,10 @@ const categorySchema = new Schema(
   { timestamps: true }
 );
 
+categorySchema.methods.getChildren = async function () {
+
+}
+
 categorySchema.pre("save", async function (next) {
   try {
     if (this.parent) {

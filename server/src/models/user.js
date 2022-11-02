@@ -120,6 +120,10 @@ userSchema.virtual("fullName").get(function () {
   return `${this.lastName} ${this.firstName}`;
 });
 
+/**
+ * Generate token
+ * @returns {string}
+ */
 userSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
@@ -131,10 +135,19 @@ userSchema.methods.generateAuthToken = function () {
 //   return obj;
 // };
 
+/**
+ * Validate password
+ * @param {string} password
+ */
 userSchema.methods.validatePassword = async function (password) {
   return await validatePassword(password, this.password);
 };
 
+/**
+ * Credential account
+ * @param {string} username
+ * @param {string} password
+ */
 userSchema.statics.findByCredentials = async (username, password) => {
   const user = await User.findOne({
     $or: [{ email: username }, { phone: username }],
@@ -164,15 +177,15 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.pre("findOneAndUpdate", async function (next) {
-  // if (!this.isModified("password")) {
-  //   return next();
-  // }
+// userSchema.pre("findOneAndUpdate", async function (next) {
+//   // if (!this.isModified("password")) {
+//   //   return next();
+//   // }
 
-  const { password } = this.getUpdate()?.$set;
-  console.log(password);
-  // await hashPassword(this, next);
-});
+//   const { password } = this.getUpdate()?.$set;
+//   console.log(password);
+//   // await hashPassword(this, next);
+// });
 
 // /^(save|findOneAndUpdate)/
 

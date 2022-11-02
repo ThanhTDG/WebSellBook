@@ -1,25 +1,25 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  admin:
-    image: toi-mua-sach/admin
-    build: client_admin
-    environment:
-      NODE_ENV: production
-    ports:
-      - 3001:3001
-    depends_on:
-      - server
+  # admin:
+  #   image: toi-mua-sach/admin
+  #   build: client_admin
+  #   environment:
+  #     NODE_ENV: production
+  #   ports:
+  #     - 3001:3001
+  #   depends_on:
+  #     - server
 
-  client:
-    image: toi-mua-sach/client
-    build: client
-    environment:
-      NODE_ENV: production
-    ports:
-      - 3000:3000
-    depends_on:
-      - server
+  # client:
+  #   image: toi-mua-sach/client
+  #   build: client
+  #   environment:
+  #     NODE_ENV: production
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - server
 
   server:
     image: toi-mua-sach/server
