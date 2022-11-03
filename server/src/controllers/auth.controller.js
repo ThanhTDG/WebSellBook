@@ -4,8 +4,8 @@ const { generateAvatar } = require("../utils/generateAvatar");
 
 /**
  * Register a new account
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} req Request
+ * @param {Response} res Response
  */
 const signUp = async (req, res) => {
   try {
@@ -31,8 +31,8 @@ const signUp = async (req, res) => {
 
 /**
  * Login account
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} req Request
+ * @param {Response} res Response
  */
 const signIn = async (req, res) => {
   try {
@@ -48,8 +48,8 @@ const signIn = async (req, res) => {
 
 /**
  * Logout account
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} req Request
+ * @param {Response} res Response
  */
 const signOut = async (req, res) => {
   try {
@@ -62,8 +62,8 @@ const signOut = async (req, res) => {
 
 /**
  * Get profile
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} req Request
+ * @param {Response} res Response
  */
 const getProfile = async (req, res) => {
   try {
@@ -82,9 +82,35 @@ const getProfile = async (req, res) => {
 };
 
 /**
+ * Set profile
+ * @param {Request} req Request
+ * @param {Response} res Response
+ */
+const setProfile = async (req, res) => {
+  try {
+    const user = req.user;
+  } catch (error) {
+    await res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+/**
+ * Upload avatar
+ * @param {Request} req Request
+ * @param {Response} res Response
+ */
+const uploadAvatar = async (req, res) => {
+  try {
+    const user = req.user;
+  } catch (error) {
+    await res.status(error.statusCode || 500).json({ message: error.message });
+  }
+};
+
+/**
  * Change password
- * @param {Request} req
- * @param {Response} res
+ * @param {Request} req Request
+ * @param {Response} res Response
  */
 const changePassword = async (req, res) => {
   try {
@@ -108,5 +134,7 @@ module.exports = {
   signIn,
   signOut,
   getProfile,
+  setProfile,
+  uploadAvatar,
   changePassword,
 };

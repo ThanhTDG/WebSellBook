@@ -9,7 +9,7 @@ const ErrorHandler = require("./errorHandler");
 /**
  * Callback get data from body of request
  * @callback GetData
- * @param {data} body - body of request
+ * @param {data} body Body of request
  * @returns {void}
  */
 
@@ -39,9 +39,7 @@ const Controller = class {
    */
   getAll = async (req, res) => {
     try {
-      const query = req.query;
-      const page = query.page || 0;
-      const limit = query.limit || 0;
+      const { page = 0, limit = 0 } = req.query;
 
       const options = {
         page,

@@ -2,6 +2,12 @@ const User = require("../models/user");
 
 const { verifyToken } = require("../utils/jwt");
 
+/**
+ * Authentication
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {*} next
+ */
 const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
