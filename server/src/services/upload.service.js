@@ -1,7 +1,8 @@
+require('dotenv').config();
+
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
-
-const ErrorHandler = require("../utils/errorHandler");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,25 +10,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const memoryStorage = multer.memoryStorage();
-
-const upload = multer({
-  storage: memoryStorage,
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "avatars",
+  },
 });
 
-const uploadToCloudinary = async (fileString, format) => {
-  try {
-    const { uploader } = cloudinary;
-    const res = await uploader.upload(
-      `data:image/${format};base64,${fileString}`
-    );
-    return res;
-  } catch (error) {
-    throw new ErrorHandler(500, error);
-  }
-};
+const upload = multer({
+  storage,
+});
 
 module.exports = {
   upload,
-  uploadToCloudinary,
 };

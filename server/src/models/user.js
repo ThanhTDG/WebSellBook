@@ -5,6 +5,7 @@ const validator = require("validator").default;
 mongoose.plugin(paginate);
 
 const { ROLE } = require("../utils/constants");
+const ErrorHandler = require('../utils/errorHandler');
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");
 const { signToken } = require("../utils/jwt");
@@ -146,12 +147,12 @@ userSchema.statics.findByCredentials = async (username, password) => {
     $or: [{ email: username }, { phone: username }],
   });
   if (!user) {
-    throw new Error("Unable to log in");
+    throw new ErrorHandler(401, "Unable to log in");
   }
 
   const isMatch = await user.validatePassword(password);
   if (!isMatch) {
-    throw new Error("Unable to log in");
+    throw new ErrorHandler(401, "Unable to log in");
   }
 
   return user;

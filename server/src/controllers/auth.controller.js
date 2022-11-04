@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { uploadToCloudinary } = require("../services/upload.service");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 
@@ -42,7 +43,7 @@ const signIn = async (req, res) => {
     // req.signedCookies.token = token;
     await res.json({ token });
   } catch (error) {
-    await res.status(400).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -56,7 +57,7 @@ const signOut = async (req, res) => {
     delete req.signedCookies.token;
     await res.json({ message: "Log out successful" });
   } catch (error) {
-    await res.status(500).json({ message: error.message });
+    await res.status(401).json({ message: error.message });
   }
 };
 
@@ -81,7 +82,7 @@ const getProfile = async (req, res) => {
     };
     await res.json(user);
   } catch (error) {
-    await res.status(error.statusCode || 500).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -109,7 +110,7 @@ const setProfile = async (req, res) => {
     };
     await res.status(200).json({ message: "User modified successfully", user });
   } catch (error) {
-    await res.status(error.statusCode || 500).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -120,9 +121,13 @@ const setProfile = async (req, res) => {
  */
 const uploadAvatar = async (req, res) => {
   try {
+    const file = req.file;
     const user = req.user;
+    user.avatar = file.path;
+    await user.save();
+    await res.json({ avatar: user.avatar });
   } catch (error) {
-    await res.status(error.statusCode || 500).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -137,14 +142,14 @@ const changePassword = async (req, res) => {
     const user = req.user;
     const isMatch = await user.validatePassword(currentPassword);
     if (!isMatch) {
-      throw new ErrorHandler(500, "Incorrect password");
+      throw new ErrorHandler(401, "Incorrect password");
     }
 
     user.password = newPassword;
     await user.save();
     await res.json({ message: "Change password successfully" });
   } catch (error) {
-    await res.status(error.statusCode || 500).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
