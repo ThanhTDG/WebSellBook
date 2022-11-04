@@ -5,7 +5,7 @@ info:
   description: |
     API này được sử dụng cho team dev để phát triển hệ thống.
     Không được để lộ API với mọi hình thức.<br>
-    Hệ thống được tạo bởi Dương Hiếu.
+    Hệ thống này được xây dựng bởi Dương Hiếu.
   contact:
     name: Dương Hiếu
     url: https://github.com/DuongHieu0712z
@@ -23,17 +23,31 @@ servers:
   description: Heroku server
 tags:
 - name: Quản lý danh mục
-  description: Quản lý danh mục, dành cho phân hệ quản trị
+  description: |
+    Quản lý danh mục, dành cho phân hệ quản trị
 - name: Quản lý sách
-  description: Quản lý sách, dành cho phân hệ quản trị
+  description: |
+    Quản lý sách, dành cho phân hệ quản trị
 - name: Quản lý người dùng
-  description: Quản lý người dùng, dành cho phân hệ quản trị
+  description: |
+    Quản lý người dùng, dành cho phân hệ quản trị
 - name: Quản lý hóa đơn
-  description: Quản lý hóa đơn, dành cho phân hệ quản trị
+  description: |
+    Quản lý hóa đơn, dành cho phân hệ quản trị
 - name: Tài khoản
-  description: Quản lý tài khoản, các vấn đề liên quan đến tài khoản và xác thực người dùng
+  description: |
+    Quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
 - name: Khách hàng
-  description: Các API bên phía client khách hàng sử dụng
+  description: |
+    Các API bên phía client khách hàng sử dụng, dành cho phân hệ khách hàng
+- name: Quản lý địa chỉ
+  description: |
+    Quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
+- name: Quản lý giỏ hàng
+  description: "Quản lý giỏ hàng, dành cho phân hệ khách hàng \n"
+- name: Quản lý đơn hàng
+  description: |
+    Quản lý đơn hàng, dành cho phân hệ khách hàng
 paths:
   /categories:
     get:
@@ -79,7 +93,8 @@ paths:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để thêm danh mục mới
-      description: Thêm danh mục mới
+      description: |
+        Thêm danh mục mới.
       requestBody:
         content:
           application/json:
@@ -107,7 +122,8 @@ paths:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để lấy danh mục
-      description: Lấy danh mục theo ID danh mục cho trước
+      description: |
+        Lấy danh mục theo ID danh mục cho trước.
       parameters:
       - name: id
         in: path
@@ -136,7 +152,8 @@ paths:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để sửa thông tin danh mục
-      description: Sửa thông tin danh mục theo ID danh mục cho trước
+      description: |
+        Sửa thông tin danh mục theo ID danh mục cho trước.
       parameters:
       - name: id
         in: path
@@ -164,7 +181,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
-        "400":
+        "500":
           description: Lỗi
           content:
             application/json:
@@ -174,7 +191,8 @@ paths:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để xóa danh mục
-      description: Xóa danh mục theo ID danh mục cho trước
+      description: |
+        Xóa danh mục theo ID danh mục cho trước.
       parameters:
       - name: id
         in: path
@@ -239,7 +257,8 @@ paths:
       tags:
       - Quản lý sách
       summary: Sử dụng để thêm sách mới
-      description: Thêm sách mới
+      description: |
+        Thêm sách mới.
       requestBody:
         content:
           application/json:
@@ -267,7 +286,8 @@ paths:
       tags:
       - Quản lý sách
       summary: Sử dụng để lấy sách
-      description: Lấy sách theo ID sách cho trước
+      description: |
+        Lấy sách theo ID sách cho trước.
       parameters:
       - name: id
         in: path
@@ -296,7 +316,8 @@ paths:
       tags:
       - Quản lý sách
       summary: Sử dụng để sửa thông tin sách
-      description: Sửa thông tin sách theo ID sách cho trước
+      description: |
+        Sửa thông tin sách theo ID sách cho trước.
       parameters:
       - name: id
         in: path
@@ -334,7 +355,8 @@ paths:
       tags:
       - Quản lý sách
       summary: Sử dụng để xóa sách
-      description: Xóa sách theo ID sách cho trước
+      description: |
+        Xóa sách theo ID sách cho trước.
       parameters:
       - name: id
         in: path
@@ -349,6 +371,283 @@ paths:
       responses:
         "204":
           description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users:
+    get:
+      tags:
+      - Quản lý người dùng
+      summary: Sử dụng để lấy danh sách người dùng
+      description: |
+        Lấy danh sách người dùng theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả người dùng.
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders:
+    get:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để lấy danh sách hóa đơn
+      description: |
+        Lấy danh sách hóa đơn theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả hóa đơn.
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/{id}:
+    get:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để lấy hóa đơn
+      description: |
+        Lấy hóa đơn theo ID hóa đơn cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID hóa đơn
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để sửa thông tin hóa đơn
+      description: |
+        Sửa thông tin hóa đơn theo ID hóa đơn cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID hóa đơn
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để lấy danh sách hóa đơn
+      description: |
+        Xóa hóa đơn theo ID hóa đơn cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID hóa đơn
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/signup:
+    post:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để đăng ký tài khoản mới
+      description: |
+        Khách hàng đăng ký tài khoản mới, chỉ sử dụng cho phân hệ khách hàng.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.SignUp'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.SignUp'
+        required: true
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/respones.SignUp'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/signin:
+    post:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để đăng nhập tài khoản
+      description: |
+        Người dùng đăng nhập vào website.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.SignIn'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.SignIn'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/signout:
+    post:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để đăng xuất tài khoản
+      description: |
+        Người dùng đăng xuất tài khoản.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/profile:
+    get:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để lấy thông tin tài khoản
+      description: |
+        Người dùng truy xuất thông tin tài khoản của mình.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để cập nhật thông tin tài khoản
+      description: |
+        Người dùng truy xuất thông tin tài khoản của mình.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/uploadavatar:
+    put:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để thay đổi ảnh đại diện
+      description: |
+        Người dùng thay đổi mật khẩu.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Category'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/changepassword:
+    put:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để thay đổi mật khẩu
+      description: |
+        Người dùng thay đổi mật khẩu.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.ChangePassword'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
         "400":
           description: Lỗi
           content:
@@ -375,23 +674,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /category/{id}:
+  /book:
     get:
       tags:
       - Khách hàng
       summary: Sử dụng để lấy danh sách sách theo danh mục
-      description: Lấy danh sách sách theo ID danh mục cho trước
+      description: |
+        Lấy danh sách sách theo ID danh mục cho trước.
       parameters:
-      - name: id
-        in: path
+      - name: category
+        in: query
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
+        required: false
+        style: form
+        explode: true
         schema:
           type: string
           format: ObjectId
         example: 63412da2f0dd862e790a187f
+      - name: page
+        in: query
+        description: Trang (mặc định 1)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về (mặc định 12)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
       responses:
         "200":
           description: OK
@@ -491,7 +809,7 @@ components:
           type: string
           description: Mã ISBN 10
           format: isbn10
-          example: "134494164"
+          example: "0134494164"
         supplier:
           type: string
           description: Nhà cung cấp/nhà phát hành
@@ -635,7 +953,7 @@ components:
           type: string
           description: Mã ISBN 10
           format: isbn10
-          example: "134494164"
+          example: "0134494164"
         supplier:
           type: string
           description: Nhà cung cấp/nhà phát hành
@@ -701,6 +1019,74 @@ components:
           description: ID danh mục cha
           format: ObjectId
           example: 63412da2f0dd862e790a187f
+    form.SignUp:
+      required:
+      - email
+      - firstName
+      - lastName
+      - password
+      - phone
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Tên người dùng
+          example: An
+        lastName:
+          type: string
+          description: Họ người dùng
+          example: Nguyễn Văn
+        email:
+          type: string
+          description: Email
+          format: email
+          example: an@gmail.example.com
+        phone:
+          type: string
+          description: Số điện thoại
+          format: phoneNumber
+          example: "0987654321"
+        password:
+          type: string
+          description: Mật khẩu (dài ít nhất 8 ký tự, có cả chữ và số)
+          example: 1234abcd
+    form.SignIn:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: Tên đăng nhập (sử dụng email hoặc số điện thoại)
+          example: an@gmail.example.com
+        password:
+          type: string
+          description: Mật khẩu
+          example: 1234abcd
+    respones.SignUp:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Thông báo
+          example: Success
+        user:
+          $ref: '#/components/schemas/respones.SignUp_user'
+    form.ChangePassword:
+      required:
+      - currentPassword
+      - newPassword
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          description: Mật khẩu hiện tại
+          example: 1234abcd
+        newPassword:
+          type: string
+          description: Mật khẩu mới
+          example: abcd1234
     pagination.Category:
       type: object
       properties:
@@ -833,6 +1219,28 @@ components:
           slug: light-novel
           image: string
           children: []
+    inline_response_200:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token
+          example: |
+            eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Thông báo
+          example: Sign out successful
+    inline_response_200_2:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Thông báo
+          example: Change password successful
     Book_dimension:
       type: object
       properties:
@@ -845,3 +1253,33 @@ components:
           description: Chiều rộng (cm)
           example: 13
       description: Kích thước (cao x rộng (cm))
+    respones.SignUp_user:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID người dùng
+          example: 634e8609071be9c0c9f52ca7
+        firstName:
+          type: string
+          description: Tên người dùng
+          example: An
+        lastName:
+          type: string
+          description: Họ người dùng
+          example: Nguyễn Văn
+        email:
+          type: string
+          description: Email
+          format: email
+          example: an@gmail.example.com
+        phone:
+          type: string
+          description: Số điện thoại
+          format: phoneNumber
+          example: "0987654321"
+        avatar:
+          type: string
+          description: Link hình ảnh
+          format: link
+          example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96

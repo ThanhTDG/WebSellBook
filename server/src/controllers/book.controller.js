@@ -62,7 +62,6 @@ const getData = (body) => {
  */
 const toJson = (data) => {
   const obj = data.toObject();
-  delete obj.fakeId;
   delete obj.__v;
   obj.total = data.total;
   return obj;

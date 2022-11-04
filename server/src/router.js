@@ -16,6 +16,6 @@ router.use("/books", book);
 router.use("/categories", category);
 router.use("/orders", order);
 router.use("/users", user);
-router.use("/client", client);
+router.use("/", client);
 
 module.exports = router;

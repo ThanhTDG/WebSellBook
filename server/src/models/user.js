@@ -111,7 +111,6 @@ const userSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    fakeId: String,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
@@ -128,12 +127,6 @@ userSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
 };
-
-// userSchema.methods.toJSON = function () {
-//   var obj = this.toObject();
-//   delete obj.password;
-//   return obj;
-// };
 
 /**
  * Validate password

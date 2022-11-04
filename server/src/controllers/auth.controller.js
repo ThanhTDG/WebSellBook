@@ -67,15 +67,19 @@ const signOut = async (req, res) => {
  */
 const getProfile = async (req, res) => {
   try {
-    const user = req.user;
-    const obj = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
+    const { id, firstName, lastName, email, phone, sex, birthday, avatar } =
+      req.user;
+    const user = {
+      id,
+      firstName,
+      lastName,
+      email,
+      phone,
+      sex,
+      birthday,
+      avatar,
     };
-    await res.json(obj);
+    await res.json(user);
   } catch (error) {
     await res.status(error.statusCode || 500).json({ message: error.message });
   }
@@ -88,7 +92,22 @@ const getProfile = async (req, res) => {
  */
 const setProfile = async (req, res) => {
   try {
-    const user = req.user;
+    const { firstName, lastName, email, phone, sex, birthday } = req.body;
+    const data = req.user;
+    data.overwrite({ firstName, lastName, email, phone, sex, birthday });
+    const newData = await data.save();
+
+    const user = {
+      id: newData.id,
+      firstName: newData.firstName,
+      lastName: newData.lastName,
+      email: newData.email,
+      phone: newData.phone,
+      sex: newData.sex,
+      birthday: newData.birthday,
+      avatar: newData.avatar,
+    };
+    await res.status(200).json({ message: "User modified successfully", user });
   } catch (error) {
     await res.status(error.statusCode || 500).json({ message: error.message });
   }

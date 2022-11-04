@@ -21,7 +21,6 @@ const getData = (body) => {
  */
 const toJson = (data) => {
   const obj = data.toObject();
-  delete obj.fakeId;
   delete obj.__v;
   return obj;
 };

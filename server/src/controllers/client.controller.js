@@ -6,7 +6,6 @@ const getTree = async (options) => {
     data.map(async (value) => {
       const obj = value.toObject();
       delete obj.__v;
-      delete obj.fakeId;
       delete obj.parent;
       delete obj.tree;
       obj.children = await getTree({ parent: value.id });

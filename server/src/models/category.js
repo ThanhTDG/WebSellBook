@@ -32,7 +32,6 @@ const categorySchema = new Schema(
         ref: "Category",
       },
     ],
-    fakeId: String,
   },
   { timestamps: true }
 );
