@@ -1,12 +1,11 @@
-import NavBar from "~/layouts/components/NavBar";
-import SideBar from "~/layouts/components/SideBar";
-
+import NavBar from "~/layouts/components/Navbar";
+import SideBar from "~/layouts/components/Sidebar";
+import "./defaultLayout.scss";
 function DefaultLayout({ children }) {
 	return (
-		<div>
-			<NavBar />
+		<div className="layout">
 			<div className="container">
-				<SideBar />
+				<SideBar className="sidebar" />
 				<div className="content">{children}</div>
 			</div>
 		</div>

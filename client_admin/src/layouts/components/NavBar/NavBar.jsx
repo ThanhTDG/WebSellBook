@@ -1,16 +1,14 @@
 import "./navbar.scss";
 import { icons } from "~/assets/images";
 import { navbarOptions } from "./navbarOption.js";
-import images from "~/assets/images";
 
 import { Search } from "@mui/icons-material";
 function Navbar() {
 	return (
 		<div className="navbar">
 			<div className="wrapper">
-				<div className="logo">
-					<img src={images.logo} alt="ToiMuaSach" />
-				</div>
+
+				
 				<div className="search">
 					<input type="text" placeholder="" spellCheck={false} />
 					<button className="btn-clear">
@@ -55,19 +53,5 @@ function RenderOption() {
 	});
 }
 
-// const Option = ((data, selected, setSelected) => {
-//   let key = data.key;
-//   menuItem.concat(data);
-//   return (
-//     <li >
-//       <div className={selected === key ? 'menuItem active' : 'menuItem'} key={data.key} onClick={() => {
-//         setSelected(key)
-//       }} >
-//         {images[key]}
-//         <span>{data.name}</span>
-//       </div>
 
-//     </li >
-//   );
-// });
 export default Navbar;

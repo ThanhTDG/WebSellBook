@@ -3,13 +3,19 @@ import { sidebarOptions } from "./sidebarOptions.js";
 import { icons } from "~/assets/images";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import images from "~/assets/images";
+import { Button } from '~/components/Button'
+import { default as RouteConfig } from '~/config/routes'
 let menuItem = [];
 
 function Sidebar() {
 	return (
 		<div className="sidebar">
-			<div className="top"></div>
+			<div className="top">
+				<div className="logo">
+					<img src={images.logoAndText} alt="Tôi Mua Sách" />
+				</div>
+			</div>
 			<div className="center">
 				<ul>{RenderOption()}</ul>
 			</div>
@@ -37,9 +43,8 @@ const Option = (data, index) => {
 	menuItem.concat(data);
 	let navigate = useNavigate();
 	let current = window.location.pathname.split("/")[1];
-	console.log(current, "oke");
 	if (!current) {
-		current = "dashboard";
+		current = "home";
 	}
 	return (
 		<li key={index + key}>
@@ -47,9 +52,10 @@ const Option = (data, index) => {
 				className={current === key ? "menuItem active" : "menuItem"}
 				key={data.key}
 				onClick={() => {
-					navigate(data.link);
+					navigate(RouteConfig[data.key]);
 				}}
 			>
+
 				{icons.Sidebar[key]}
 				<span>{data.name}</span>
 			</div>

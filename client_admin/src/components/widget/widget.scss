@@ -1,16 +1,77 @@
-.widgets,.charts{
-    display: flex;
-    padding: 20px;
-    gap:20px
+.widget {
+	--users: crimson;
+	--bg-user: rgba(255, 0, 0, 0.2);
+	--order: goldenrod;
+	--bg-order: rgba(218, 165, 32, 0.2);
+	--earing: green;
+	--bg-earing: rgba(0, 128, 0, 0.2);
+	--balance: purple;
+	--bg-balance: rgba(128, 0, 128, 0.2);
+
+	display: flex;
+	flex: 1;
+	justify-content: space-between;
+	padding: 8px 16px;
+	-webkit-box-shadow: (--webkit-box-shadow);
+	box-shadow: var(--boxShadow);
+	border-radius: 10px;
+	height: 128px;
+	.left,
+	.right {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		.view {
+			padding: 8px 0px;
+			overflow: hidden;
+		}
+		.title {
+			margin-top: 0.8rem;
+			font-size: 1.6rem;
+			font-weight: 700;
+			background-color: white;
+		}
+		.counter {
+			font-weight: normal;
+			font-size: 1.6rem;
+		}
+		.link {
+			width: max-content;
+			font-style: 1.2rem;
+			border-bottom: 1px solid gray;
+		}
+		.percentage {
+			display: flex;
+			align-items: center;
+			font-size: 1.6rem;
+			&.positive {
+				color: green;
+			}
+			&.negative {
+				color: red;
+			}
+		}
+		.icon {
+			font-size: 3.2rem;
+			padding: 5px;
+			border-radius: 5px;
+			align-self: flex-end;
+		}
+	}
 }
-.charts{
+.users {
+	color: var(--users);
+	background-color: var(--bg-user);
 }
-.listContainer{
-    -webkit-box-shadow: 2px 4px 10px 1 rgba(0,0,0,0.47);
-    box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
-    margin: 20px ;
-    .listTitle{
-        font-weight: 500px;
-        color:  gray;
-    }
+.order {
+	color: var(--order);
+	background-color: var(--bg-order);
+}
+.earning {
+	color: var(--earing);
+	background-color: var(--bg-earing);
+}
+.balance {
+	color: var(--balance);
+	background-color: var(--bg-balance);
 }

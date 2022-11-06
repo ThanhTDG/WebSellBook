@@ -27,7 +27,7 @@ const Navbar = {
 	list: <FormatListBulletedIcon className="icon" />,
 };
 const Sidebar = {
-	dashboard: <DashboardIcon className="icon" />,
+	home: <DashboardIcon className="icon" />,
 	products: <StorefrontIcon className="icon" />,
 	orders: <CreditCardIcon className="icon" />,
 	users: <PeopleOutlineIcon className="icon" />,
@@ -39,8 +39,8 @@ const Sidebar = {
 	profile: <AccountBoxIcon className="icon" />,
 	logout: <ExitToAppIcon className="icon" />,
 };
-const chart = {
+const Chart = {
 	increase: <TrendingUpIcon className="icon" />,
 };
 
-export { Navbar, Sidebar, chart };
+export { Navbar, Sidebar, Chart };
