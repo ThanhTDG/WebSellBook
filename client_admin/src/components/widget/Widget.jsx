@@ -1,25 +1,41 @@
-import './widget.scss'
+import { Link } from 'react-router-dom';
 import { icons } from "~/assets/images"
 import { type as typeWidget } from "./typeWidget.js"
-import { Link } from 'react-router-dom';
-
+import styles from './widget.module.scss'
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 function Widget({ type }) {
     const amount = 100;
     const diff = 20;
     let data = typeWidget[type];
+    let dataTitle = data.key;
+    let positive = true;
+    let negative = false;
+    const classTitle = cx('title', {
+        [dataTitle]: dataTitle,
+    });
+    const classIcon = cx('icon', {
+        [dataTitle]: dataTitle,
+    });
+    const classPercentage = cx('percentage', {
+        positive,
+        negative,
+    })
     return (
-        <div className="widget">
-            <div className="left">
-                <span className={`title ${data.key}`}>{data.title}</span>
-                <span className='counter'>{data.isMoney && "$"}{amount}</span>
-                <Link className='view'>{data.link}</Link>
+        <div className={cx("widget")}>
+            <div className={cx("left")}>
+                <span className={classTitle}>{data.title}</span>
+                <span className={cx('counter')}>{data.isMoney && "$"}{amount}</span>
+                <Link className={cx('view')}>{data.link}</Link>
             </div>
-            <div className="right">
-                <div className="percentage positive">
-                    {icons.Chart["increase"]}
-                    {diff}%
+            <div className={cx("right")}>
+                <div className={classPercentage} >
+                    {icons.Chart({ classPercentage })["increase"]}
+                    {diff} %
                 </div>
-                {data.icon}
+                <div className={cx("wrap-icon")}>
+                    {icons.Widget({ className: classIcon })[data.key]}
+                </div>
             </div>
         </div >
     )

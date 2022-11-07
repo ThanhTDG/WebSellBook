@@ -16,31 +16,50 @@ import SettingsSystemDaydreamIcon from "@mui/icons-material/SettingsSystemDaydre
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import ShoppingCartOnOutlinedIcon from "@mui/icons-material/ShoppingCart";
+import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 
-const Navbar = {
-	search: <SearchIcon className="icon" />,
-	language: <LanguageIcon className="icon" />,
-	darkModeIcon: <DarkModeIcon className="icon" />,
-	exitFullMode: <FullscreenExitIcon className="icon" />,
-	notification: <NotificationsNoneIcon className="icon" />,
-	chat: <ChatBubbleOutlineIcon className="icon" />,
-	list: <FormatListBulletedIcon className="icon" />,
-};
-const Sidebar = {
-	home: <DashboardIcon className="icon" />,
-	products: <StorefrontIcon className="icon" />,
-	orders: <CreditCardIcon className="icon" />,
-	users: <PeopleOutlineIcon className="icon" />,
-	delivery: <LocalShippingIcon className="icon" />,
-	stats: <QueryStatsIcon className="icon" />,
-	notifications: <NotificationsNoneIcon className="icon" />,
-	system_health: <DnsIcon className="icon" />,
-	logs: <SettingsSystemDaydreamIcon className="icon" />,
-	profile: <AccountBoxIcon className="icon" />,
-	logout: <ExitToAppIcon className="icon" />,
-};
-const Chart = {
-	increase: <TrendingUpIcon className="icon" />,
+const Navbar = ({className}) => {
+	return {
+		search: <SearchIcon className={className} />,
+		language: <LanguageIcon className={className} />,
+		darkModeIcon: <DarkModeIcon className={className} />,
+		exitFullMode: <FullscreenExitIcon className={className} />,
+		notification: <NotificationsNoneIcon className={className} />,
+		chat: <ChatBubbleOutlineIcon className={className} />,
+		list: <FormatListBulletedIcon className={className} />,
+	};
 };
 
-export { Navbar, Sidebar, Chart };
+const Sidebar = ({className}) => {
+	return {
+		home: <DashboardIcon className={className} />,
+		products: <StorefrontIcon className={className} />,
+		orders: <CreditCardIcon className={className} />,
+		users: <PeopleOutlineIcon className={className} />,
+		delivery: <LocalShippingIcon className={className} />,
+		stats: <QueryStatsIcon className={className} />,
+		notifications: <NotificationsNoneIcon className={className} />,
+		system_health: <DnsIcon className={className} />,
+		logs: <SettingsSystemDaydreamIcon className={className} />,
+		profile: <AccountBoxIcon className={className} />,
+		logout: <ExitToAppIcon className={className} />,
+	};
+};
+const Chart = ({className}) => {
+	return {
+		increase: <TrendingUpIcon className={className} />,
+	};
+};
+
+const Widget = ({className}) => {
+	return {
+		users: <PersonOutlineIcon className={className} />,
+		order: <ShoppingCartOnOutlinedIcon className={className} />,
+		earning: <MonetizationOnOutlinedIcon className={className} />,
+		balance: <AccountBalanceWalletIcon className={className} />,
+	};
+};
+export { Navbar, Sidebar, Chart, Widget };

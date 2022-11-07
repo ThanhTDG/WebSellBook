@@ -1,13 +1,11 @@
-import Home from "~/pages/Home";
-import { default as routesConfig } from "~/config/routes";
-import Products from "~/pages/Products";
-import TestLayout from "~/layouts/test/TestLayout";
+import PageConfig from "~/config/pages";
+
 // Public routes
 const publicRoutes = [];
 const privateRoutes = [
-	{ path: routesConfig.home, component: Home },
-	{ path: routesConfig.products, component: Products },
-	{ path: routesConfig.test, component: TestLayout, layout: null },
+	{ path: PageConfig.home.route, component: PageConfig.home.component },
+	{ path: PageConfig.products.route, component: PageConfig.product.component },
+	{ path: PageConfig.test.route, component: PageConfig.test.component, layout: null },
 ];
 
 export { publicRoutes, privateRoutes };

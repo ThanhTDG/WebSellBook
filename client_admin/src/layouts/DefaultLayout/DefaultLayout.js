@@ -1,12 +1,27 @@
+import { Title } from "@mui/icons-material";
 import NavBar from "~/layouts/components/Navbar";
 import SideBar from "~/layouts/components/Sidebar";
-import "./defaultLayout.scss";
+import styles from "./defaultLayout.module.scss";
+import classNames from "classnames/bind";
+import { getKey } from "~/utils/util";
+import PageConfig from "~/config/pages";
+const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
+	let key = getKey("route", window.location.pathname);
+	let title = PageConfig[key].title;
 	return (
-		<div className="layout">
-			<div className="container">
-				<SideBar className="sidebar" />
-				<div className="content">{children}</div>
+		<div className={cx("layout")}>
+			<SideBar className={cx("sidebar")} />
+			<div className={cx("container")}>
+				<div className={cx("header")}>
+					<NavBar></NavBar>
+				</div>
+				<div className={cx("content")}>
+					<div className={cx("title")}>
+						<h2>{title}</h2>
+					</div>
+					<div>{children}</div>
+				</div>
 			</div>
 		</div>
 	);

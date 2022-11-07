@@ -9,21 +9,18 @@ export const type = {
 		title: "USERS",
 		isMoney: false,
 		link: "See all users",
-		icon: <PersonOutlineIcon className="icon users" />,
 	},
 	order: {
 		key: "order",
 		title: "ORDER",
 		isMoney: false,
 		link: "View all order",
-		icon: <ShoppingCartOnOutlinedIcon className="icon order" />,
 	},
 	earning: {
 		key: "earning",
 		title: "EARNING",
 		isMoney: true,
 		link: "View net earnings",
-		icon: <MonetizationOnOutlinedIcon className="icon earning" />,
 	},
 
 	balance: {
@@ -31,6 +28,5 @@ export const type = {
 		title: "BALANCE",
 		isMoney: true,
 		link: "View detail",
-		icon: <AccountBalanceWalletIcon className="icon balance" />,
 	},
 };

@@ -1,22 +1,13 @@
+import { default as PageConfig } from "~/config/pages";
 export const sidebarOptions = [
 	{
 		title: "Main",
-		item: [
-			{
-				link: "/",
-				key: "home",
-				name: "Dashboard",
-			},
-		],
+		item: [PageConfig.home],
 	},
 	{
 		title: "Lists",
 		item: [
-			{
-				link: "/products",
-				key: "products",
-				name: "Products",
-			},
+			PageConfig.products,
 			{
 				link: "/orders",
 				key: "orders",

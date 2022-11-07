@@ -6,7 +6,7 @@ import { Button } from '~/components/Button';
 import "./home.scss"
 function Home() {
     return (
-        <div>
+        <div className="home">
 
             <div className='widgets'>
                 <Widget type="user" />

@@ -1,0 +1,18 @@
+.wrapper {
+	width: auto;
+	height: var(--vertical-navbar);
+	display: grid;
+	grid-template-columns: min-content 1fr min-content;
+}
+
+.avatar {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+.left {
+	width: 84px;
+	height: var(--vertical-navbar);
+	display: flex;
+	align-items: center;
+}

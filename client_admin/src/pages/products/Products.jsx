@@ -6,15 +6,9 @@ import { ProductMgtProvider } from '~/stores'
 function Products() {
     return (
         <div className='products'>
-            <div>
 
-            </div>
-            <h2>
-                Quản lý sách
-            </h2>
             <Button primary> Thêm mới </Button>
             <div>
-
                 <ProductMgtProvider>
                     < TabProduct />
                 </ProductMgtProvider>

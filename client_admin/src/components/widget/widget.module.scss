@@ -16,6 +16,8 @@
 	box-shadow: var(--boxShadow);
 	border-radius: 10px;
 	height: 128px;
+	min-width: 240px;
+	max-width: 320px;
 	.left,
 	.right {
 		display: flex;
@@ -26,7 +28,7 @@
 			overflow: hidden;
 		}
 		.title {
-			margin-top: 0.8rem;
+			text-align: left;
 			font-size: 1.6rem;
 			font-weight: 700;
 			background-color: white;
@@ -55,7 +57,7 @@
 			font-size: 3.2rem;
 			padding: 5px;
 			border-radius: 5px;
-			align-self: flex-end;
+			align-self: center;
 		}
 	}
 }
@@ -74,4 +76,7 @@
 .balance {
 	color: var(--balance);
 	background-color: var(--bg-balance);
+}
+.wrap-icon {
+	text-align: right;
 }

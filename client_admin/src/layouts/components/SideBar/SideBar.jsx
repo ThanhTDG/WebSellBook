@@ -1,22 +1,24 @@
-import "./sidebar.scss";
 import { sidebarOptions } from "./sidebarOptions.js";
 import { icons } from "~/assets/images";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import images from "~/assets/images";
 import { Button } from '~/components/Button'
-import { default as RouteConfig } from '~/config/routes'
-let menuItem = [];
+import { default as PageConfig } from '~/config/pages'
+import { getKey } from "~/utils/util";
+import classNames from "classnames/bind";
+import styles from './sidebar.module.scss';
+const cx = classNames.bind(styles);
 
 function Sidebar() {
 	return (
-		<div className="sidebar">
-			<div className="top">
-				<div className="logo">
+		<div className={cx("sidebar")}>
+			<div className={cx("top")}>
+				<div className={cx("logo")}>
 					<img src={images.logoAndText} alt="Tôi Mua Sách" />
 				</div>
 			</div>
-			<div className="center">
+			<div className={cx("center")}>
 				<ul>{RenderOption()}</ul>
 			</div>
 		</div>
@@ -29,7 +31,7 @@ function RenderOption() {
 		let item = option.item;
 		return (
 			<div key={index + title}>
-				<p className="title">{title}</p>
+				<p className={cx("title")}>{title}</p>
 				{item.map((item, index) => {
 					return Option(item, index);
 				})}
@@ -40,24 +42,23 @@ function RenderOption() {
 
 const Option = (data, index) => {
 	let key = data.key;
-	menuItem.concat(data);
 	let navigate = useNavigate();
-	let current = window.location.pathname.split("/")[1];
-	if (!current) {
-		current = "home";
-	}
+	let currentPath = window.location.pathname;
+	let active = getKey("route", currentPath) === key;
+	let classMenuItem = cx("menuItem", {
+		active,
+	});
 	return (
-		<li key={index + key}>
+		<li key={key}>
 			<div
-				className={current === key ? "menuItem active" : "menuItem"}
+				className={classMenuItem}
 				key={data.key}
 				onClick={() => {
-					navigate(RouteConfig[data.key]);
+					navigate(PageConfig[data.key].route);
 				}}
 			>
-
-				{icons.Sidebar[key]}
-				<span>{data.name}</span>
+				{icons.Sidebar({ className: cx('icon') })[key]}
+				<span>{data.title}</span>
 			</div>
 		</li>
 	);

@@ -1,14 +1,14 @@
 import React from 'react'
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import styles from './button.scss';
+import styles from './Button.module.scss';
 const cx = classNames.bind(styles);
 
 function Button({ to, href, rightIcon, leftIcon, primary = false, disable = false, rounded = false, text = false, outline = false, small = false, large = false, children, onclick,
     className, ...passProps }) {
 
     let Comp = 'button';
-
+    console.log(cx);
     const props = {
         onclick,
         ...passProps,

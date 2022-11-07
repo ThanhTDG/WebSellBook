@@ -6,7 +6,13 @@ import Tab from '@mui/material/Tab';
 import { TableProduct } from '~/components/table/product';
 import { useProductMgt, actions } from '~/stores'
 import { SelectNumberOfRows } from '~/components/Widget';
-import './tabProduct.scss'
+import styles from './tabProduct.module.scss';
+import classNames from 'classnames/bind';
+import Box from '@mui/material/Box';
+
+const cx = classNames.bind(styles);
+
+
 function TabProduct() {
     const [state, dispatch] = useProductMgt();
 
@@ -21,32 +27,34 @@ function TabProduct() {
     };
     console.log(state);
     return (
-        <div className='tabProduct'>
-            <div>
-                <Tabs value={state.selectTab} onChange={handleSwitchTab} aria-label="basic tabs example"
+        <div className={cx('wrapper')} >
+            <div className={cx('title-tab')}>
+                <Tabs sx={{ borderBottom: 1, borderColor: 'divider' }} value={state.selectTab} onChange={handleSwitchTab} aria-label="basic tabs example"
                     variant="scrollable"
                     scrollButtons
                     allowScrollButtonsMobile>
                     {
                         TitleTabProducts.map((title, index) => {
-                            return < Tab key={"label-tab-product-" + index} label={title.nameVN} />
+                            return < Tab sx={{ fontSize: 16, fontWeight: 700 }} key={"label-tab-product-" + index} label={title.nameVN} />
                         })
                     }
                 </Tabs>
             </div>
+
+            <div />
             {
                 TitleTabProducts.map((title, index) => {
                     return <TabPanel value={state.selectTab} index={index}>
                         <h1>{title.nameVN}</h1>
                         <TableProduct />
-                        <div className="nav-table">
+                        <div className={cx("nav-table")}>
                             <SelectNumberOfRows handleChange={handleSelectNumOfRows} page={state.page} />
                             <Pagination count={state.maxPage} size="small" page={state.page} onChange={handleSelectPage} />
                         </div>
                     </TabPanel>
                 })
             }
-        </div>
+        </div >
     )
 }
 
