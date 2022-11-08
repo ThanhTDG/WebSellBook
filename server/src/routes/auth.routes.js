@@ -15,7 +15,7 @@ router.put("/profile", auth, controller.setProfile);
 router.put(
   "/uploadavatar",
   auth,
-  upload.single("avatar"),
+  upload("avatars").single("avatar"),
   controller.uploadAvatar
 );
 router.put("/changepassword", auth, controller.changePassword);

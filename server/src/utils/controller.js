@@ -40,7 +40,6 @@ const Controller = class {
   getAll = async (req, res) => {
     try {
       const { page = 0, limit = 0 } = req.query;
-
       const options = {
         page,
         limit,
@@ -66,11 +65,11 @@ const Controller = class {
     try {
       const id = req.params.id;
       const data = await this.model.findById(id);
-
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      await res.json(data);
+
+      await res.json(data.toJson());
     } catch (error) {
       await res
         .status(error.statusCode || 400)

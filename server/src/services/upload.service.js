@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
@@ -10,16 +10,19 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "avatars",
-  },
-});
-
-const upload = multer({
-  storage,
-});
+/**
+ * @param {string} folder
+ */
+const upload = (folder) => {
+  const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder,
+      allowedFormats: ["jpg", "jpeg", "png"],
+    },
+  });
+  return multer({ storage });
+};
 
 module.exports = {
   upload,

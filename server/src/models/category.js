@@ -15,13 +15,11 @@ const categorySchema = new Schema(
       trim: true,
       unique: true,
     },
-    description: String,
     slug: {
       type: String,
       slug: "name",
       unique: true,
     },
-    image: String,
     parent: {
       type: Schema.Types.ObjectId,
       ref: "Category",
