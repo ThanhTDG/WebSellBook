@@ -11,6 +11,14 @@ mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
+const dimensionSchema = new Schema(
+  {
+    height: Number,
+    width: Number,
+  },
+  { _id: false }
+);
+
 const bookSchema = new Schema(
   {
     name: {
@@ -58,10 +66,7 @@ const bookSchema = new Schema(
     // language: String,
     images: [String],
     weight: Number,
-    dimension: {
-      height: Number,
-      width: Number,
-    },
+    dimension: dimensionSchema,
     page: Number,
     bookCover: String,
     status: {
@@ -96,6 +101,7 @@ bookSchema.pre("save", async function (next) {
     if (this.category) {
       await this.populate("category");
       this.tree = [this.category.id, ...this.category.tree];
+      this.depopulate("category");
     }
     next();
   } catch (error) {

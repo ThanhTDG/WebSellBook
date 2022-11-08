@@ -17,6 +17,19 @@ const category2Json = (value) => {
 };
 
 /**
+ * @param {Category[]} value Array of categories
+ */
+const categories2Json = (array) => {
+  array = array.map((value) => {
+    const children = value.children;
+    value = category2Json(value);
+    value.children = categories2Json(children);
+    return value;
+  });
+  return array;
+};
+
+/**
  * @param {Book} value
  */
 const book2Json = (value) => {
@@ -31,28 +44,15 @@ const book2Json = (value) => {
 };
 
 /**
- * @param {Object} options
- * @returns
- */
-const getTree = async (options) => {
-  let data = await Category.find(options);
-  data = await Promise.all(
-    data.map(async (value) => {
-      const obj = category2Json(value);
-      obj.children = await getTree({ parent: value.id });
-      return obj;
-    })
-  );
-  return data;
-};
-
-/**
  * @param {Request} req - Request
  * @param {Response} res - Response
  */
 const getCategories = async (req, res) => {
   try {
-    const data = await getTree({ parent: null });
+    let data = await Category.find({ parent: null });
+    // data = data.map((value) => category2Json(value));
+
+    data = categories2Json(data);
     await res.json(data);
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });

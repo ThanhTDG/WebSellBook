@@ -22,6 +22,8 @@ const getData = (body) => {
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
+  delete obj.tree;
+  delete obj.children;
   return obj;
 };
 

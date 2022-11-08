@@ -63,6 +63,7 @@ const getData = (body) => {
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
+  obj.dimension = data.dimension;
   obj.total = data.total;
   return obj;
 };
