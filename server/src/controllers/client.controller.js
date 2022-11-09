@@ -50,8 +50,6 @@ const book2Json = (value) => {
 const getCategories = async (req, res) => {
   try {
     let data = await Category.find({ parent: null });
-    // data = data.map((value) => category2Json(value));
-
     data = categories2Json(data);
     await res.json(data);
   } catch (error) {
