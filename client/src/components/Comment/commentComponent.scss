@@ -76,7 +76,7 @@
                 font-size: 16px;
                 color: var(--Darkest);
                 display: block;
-                padding-left: 64px;
+                padding-left: 48px !important;
             }
             :first-child{
                 font-family: 'MontserratMedium';
@@ -92,9 +92,9 @@
             display: block;
             margin-bottom: 12px;
             span{
-                font-size: 20px;
+                font-size: 16px !important;
                 margin-left: 0;
-                padding: 0;
+                padding: 0 !important;
             }
         }
         .rating-content{
@@ -179,5 +179,14 @@
             }
         }
         
+    }
+    .user-responsive-name{
+        font-size: 16px !important;
+    }
+    .user-responsive-description{
+        font-size: 12px !important;
+    }
+    .rating-content{
+        font-size: 12px !important;
     }
 }

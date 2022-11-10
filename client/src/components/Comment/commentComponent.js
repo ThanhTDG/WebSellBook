@@ -101,8 +101,8 @@ const CommentComponent = (props) => {
                 <img className='user-avatar' src={`${MyVariable.hostName}${props.user.avatar}`} alt='userAvatar'/>
             </div>
             <div className='col-11 user-detail-container'>
-                <span>{props.user.name}</span>
-                <span>{props.user.description}</span>
+                <span className='user-responsive-name'>{props.user.name}</span>
+                <span className='user-responsive-description'>{props.user.description}</span>
                 <div className='comment-content-container'>
                     <div className='rating-info'>
                         {stars.map((star)=>(

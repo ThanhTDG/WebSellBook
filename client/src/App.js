@@ -10,6 +10,7 @@ import BooksPage from './pages/Books/Books';
 import Cart from './pages/Cart/Cart';
 import ContactUs from './pages/Contact/Contact';
 import HomePage from './pages/Home/HomePage';
+import UserAccount from './pages/UserAccount/UserAccount';
 const App = () => {
     return (
         <Router>
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/cart' element={<Cart/>}/>
           <Route path="/contactus" element={<ContactUs/>} />
           <Route path="/bookdetail" element={<BookDetail/>} />
+          <Route path="/useraccount" element={<UserAccount/>} />
           <Route path="*" element={<Navigate to ="/" />}/>
         </Routes>
       </Router>

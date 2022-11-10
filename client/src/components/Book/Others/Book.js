@@ -20,8 +20,10 @@ const BookStyleSmall = (props) => {
     }
     const btnAddToCart = {
         fontSize: '10px',
-        backgroundColor: isShopping === true ? 'var(--DarkBlue)' : 'var(--White)',
-        border: isShopping === true ? 'none' : '2px solid var(--Red)',
+        // backgroundColor: isShopping === true ? 'var(--DarkBlue)' : 'var(--White)',
+        // border: isShopping === true ? 'none' : '2px solid var(--Red)',
+        backgroundColor:'transparent',
+        border: 'none',
         borderRadius: '20px',
         height: '40px',
         width: '100%',
@@ -54,7 +56,8 @@ const BookStyleSmall = (props) => {
                         <div className='book-style-image' style={bookStyleImage}></div>
                     </div>
                 </button>
-
+            </Link>
+            <div className='book-style-content-container'>
                 <div className='book-style-content'>
                     <span className='book-style-title'>{props.bookData.title}</span>
                     <span className='book-style-author'>{props.bookData.author}</span>
@@ -63,22 +66,25 @@ const BookStyleSmall = (props) => {
                     <div>{props.bookData.rating.ratingPoint} <img src={require('../../../assets/icons/ic-active-star.png')} alt='star'></img></div>
                     <div className='book-style-details-viewed'>Đã bán {props.bookData.rating.totalReview}</div>
                 </div>
-            </Link>
-            <div className='book-style-prices-container'>
-                <div className='row'>
-                    <div className='col-sm-6'>
-                        <span className='book-style-prv-price'>{props.bookData.prvPrice} đ</span>
-                        <span className='book-style-discount-rate'> -{props.bookData.discountrate}</span>
-                        <span className='book-style-cur-price'>{props.bookData.curPrice} đ</span>
-                    </div>
-                    <div className='col-sm-6'>
-                        <button style={btnAddToCart} onClick={onClickShoppingBtn}>
-                            <img className='icon-cart' src={require('../../../assets/icons/ic-cart.png')} alt='cart icon' />
-                            <img src={btnAddToCartIcon} alt='plus' />
-                        </button>
+
+                <div className='book-style-prices-container'>
+                    <div className='row'>
+                        <div className='col-sm-8 books-prices-responsive'>
+                            <span className='book-style-prv-price'>{props.bookData.prvPrice} đ</span>
+                            <span className='book-style-discount-rate'> -{props.bookData.discountrate}</span>
+                            <span className='book-style-cur-price'>{props.bookData.curPrice} đ</span>
+                        </div>
+                        <div className='col-sm-4 books-btn-shopping-container'>
+                            <button style={btnAddToCart} onClick={onClickShoppingBtn}>
+                                <img className='icon-cart' src={require(`../../../assets/icons/${isShopping===false?'ic-cart-none.png':'ic-cart-full.png'}`)} alt='cart icon' />
+                                {/* <img src={btnAddToCartIcon} alt='plus' /> */}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     );
 }

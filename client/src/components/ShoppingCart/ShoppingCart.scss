@@ -113,3 +113,76 @@
         }
     }
 }
+
+@media only screen and (max-width:600px ) {
+    
+    .responsive-row{
+        
+    }
+
+    .responsive-col-1{
+        width: 50%;
+        padding: 0;
+        margin: 0;
+        .responsice-book-image-in-cart{
+            width: 96px !important;
+            height: 120px !important;
+            margin-left: 48px !important;
+            border-radius: 8px !important;
+        }
+        .responsive-checkbox{
+            left: 12px !important;
+            top: 24% !important;
+        }
+    }
+    .responsive-col-2{
+        width: 50%;
+        .book-in-cart-contents{
+            .book-in-cart-title{
+                font-family: 'MontserratRegular';
+                font-size: 12px;
+            }
+            .book-in-cart-author{
+                font-size: 12px;
+            }
+        }
+        .book-in-cart-prices{
+            .book-in-cart-prv-price{
+                font-size: 12px;
+                margin: 0;
+                padding: 0;
+            }
+            .book-in-cart-discount-rate{
+                font-size: 12px;
+                margin: 0;
+                padding: 0;
+            }
+            .book-in-cart-cur-price{
+                font-size: 12px;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
+
+    .responsive-col-3{
+        width: 96px;
+        padding-top: 12px;
+        margin-left: 48px;
+        .book-in-cart-amount{
+            width: 100%;
+        }
+    }
+    .responsive-col-4{
+        width: 50%;
+        .book-in-cart-price-cur-price{
+            font-size: 16px;
+            margin-top: 10px;
+            padding-left: 18px;
+        }
+        .responsive-remove-btn{
+            position: absolute;
+            right: 0;
+        }
+    }
+}

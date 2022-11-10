@@ -1,8 +1,9 @@
-import { ADD_BOOK_TO_CART, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, UPDATE_BOOK_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, UPDATE_BOOK_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
 
 const initState = {
+    isLogin: false,
     booksInCartAmount: BooksInShoppingCart.length,
     booksInCart: [
         {
@@ -45,6 +46,11 @@ function reducer(state, action) {
                 ...state,
                 // booksInCart: removeBookInCart(state.booksInCart, action.payload)
                 booksInCartAmount: BooksInShoppingCart.length
+            }
+        case LOGIN_BY_USER:
+            return {
+                ...state,
+                isLogin: true
             }
         default:
             throw new Error('Invalid actions')

@@ -90,8 +90,8 @@ export const MyVariable = {
         contactUs: {
             title: 'Liên hệ chúng tôi tại',
             phoneNumber: '0911 111 205',
-            address: 'Địa chỉ: 01 Phù Đổng Thiên Vương - Phường 8 - Đà Lạt',
-            email: 'Email: toimuasach@gmail.com',
+            address: '01 Phù Đổng Thiên Vương - Phường 8 - Đà Lạt',
+            email: 'toimuasach@gmail.com',
             social: [
                 {
                     path: '/',
@@ -154,6 +154,11 @@ export const MyVariable = {
             title: 'Giá cao đến thấp',
             active: false,
             id: 5
+        },
+        {
+            title: 'Giá',
+            active: false,
+            id: 6
         }
     ]
 }

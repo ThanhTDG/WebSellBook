@@ -196,13 +196,13 @@ const BookDetail = () => {
                                 <div className='col-3 book-react'>
                                     <div className='row'>
                                         {stars.map((star) => (
-                                            <div className='col-2'><img className='book-stars' src={`${MyVariable.hostName}${star}`} alt='start' /></div>
+                                            <div className='col-2 book-stars-col-container'><img className='book-stars' src={`${MyVariable.hostName}${star}`} alt='start' /></div>
                                         ))}
 
                                     </div>
                                 </div>
                                 {/* <div className='col-1' style={bookRatingStyle}>5 sao</div> */}
-                                <div className='col-3 book-react'><a href='/' style={bookReactionStyle}><div className='book-comment' >5000 đánh giá</div></a></div>
+                                <div className='col-2 book-react'><a href='/' style={bookReactionStyle}><div className='book-comment' >5000 đánh giá</div></a></div>
                                 <div className='col-5 book-react'><a href='/' style={bookReactionStyle}><div className='book-saler' >5000 đã bán</div></a></div>
                             </div>
                         </div>
@@ -239,8 +239,8 @@ const BookDetail = () => {
                 </div>
             </div>
             <div className='row book-description-container'>
-                <div className='col-sm-4'>
-                    <span>Thông tin sách</span>
+                <div className='col-sm-4 book-description-col-responsive'>
+                    <span id='book-detail-info-title'>Thông tin sách</span>
                     <div className='book-description-info'>
                         {book.info.map((info) => (
                             <div className='row book-info-row'>
@@ -250,8 +250,8 @@ const BookDetail = () => {
                         ))}
                     </div>
                 </div>
-                <div className='col-sm-8 '>
-                    <span>Tóm tắt nội dung</span>
+                <div className='col-sm-8 book-detail-shortcut-col-responsive'>
+                    <span id='book-detail-shortcut-title'>Tóm tắt nội dung</span>
                     <div className='book-description overflow-auto' id='book-description-id'>
                         {bookDescription} <button className='btn-showmore' onClick={() => onShowMoreBookDescription(book.description)}> ... xem thêm</button>
                     </div>
@@ -287,7 +287,7 @@ const BookDetail = () => {
                 </div>
                 <div className='col-sm-8 book-your-rating-container'>
                     <div className='book-your-rating'>
-                        <span>{MyVariable.BookDetailTitle.toRatingTitle}</span>
+                        <span className='book-detail-responsive-title'>{MyVariable.BookDetailTitle.toRatingTitle}</span>
                         <span>{MyVariable.BookDetailTitle.toRatingGuid}</span>
                     </div>
                     <div className='book-your-rating-stars'>
@@ -303,9 +303,9 @@ const BookDetail = () => {
                     <div className='col-sm-4 vertical-banners-container'>
                         <VerticalSlider slides={banners}/>
                     </div>
-                    <div className='col-sm-8'>
+                    <div className='col-sm-8 book-detail-responsive-col'>
                         <div className='book-more-comment'>
-                            <span>{MyVariable.BookDetailTitle.reviewedTitle}</span>
+                            <span className='book-detail-responsive-title'>{MyVariable.BookDetailTitle.reviewedTitle}</span>
                         </div>
                             <CommentComponent comment={FakeData.comments[0]} user={FakeData.users[0]}/>
                             <CommentComponent comment={FakeData.comments[1]} user={FakeData.users[1]}/>

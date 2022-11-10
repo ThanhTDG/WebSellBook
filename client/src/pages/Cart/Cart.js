@@ -86,13 +86,13 @@ const Cart = () => {
                     <div className='col-sm-8'>
                         <div style={shoppingCartToolbarStyle} className='row'>
                             <div style={toolbarCheckboxContainer} className='col-sm-7'>
-                                <input style={checkboxStyle} type='checkbox' onChange={(e) => (onSelectedAllBook(e))}></input>
-                                <div style={toolbarSelectAllTextStyle}>Chọn tất cả ({BooksInShoppingCart.length} sản phẩm)</div>
+                                <input className='cart-responsive-checkbox' style={checkboxStyle} type='checkbox' onChange={(e) => (onSelectedAllBook(e))}></input>
+                                <div className='cart-responsive-toolbar' style={toolbarSelectAllTextStyle}>Chọn tất cả ({BooksInShoppingCart.length} sản phẩm)</div>
                             </div>
-                            <div className='col-sm-2 none-margin-padding'>
+                            <div className='col-sm-2 none-margin-padding amount-title'>
                                 Số lượng
                             </div>
-                            <div className='col-sm-3 none-margin-padding'>
+                            <div className='col-sm-3 none-margin-padding checkout-title'>
                                 Thành tiền
                             </div>
                         </div>

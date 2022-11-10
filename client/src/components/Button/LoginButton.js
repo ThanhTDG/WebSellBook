@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import './LoginButton.scss'
 import Modal from 'react-modal'
 import { MyVariable } from '../../variables/variables';
+import { useStore, actions } from '../../store';
 // import Modal from 'react-bootstrap/Modal';
 
 const LoginButton = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isRegister, setRegister] = useState(false);
     const [isLogin, setLogin] = useState(true);
+    const [state, dispatch] = useStore()
+
 
     function toggleModal() {
         setIsOpen(!isOpen);
@@ -31,6 +34,10 @@ const LoginButton = () => {
     }
     var loginStyle = {
         display: isLogin === true ? 'flex' : 'none'
+    }
+    function onLoginByUser(){
+        dispatch(actions.loginByUser('user account'))
+        setIsOpen(!isOpen)
     }
     return (
 
@@ -74,7 +81,7 @@ const LoginButton = () => {
                                         </div>
                                     </div>
                                     <div class="form-group login-form-bottom-container">
-                                        <button type="submit" class="">Đăng nhập</button>
+                                        <button type="submit" class="" onClick={()=>onLoginByUser()}>Đăng nhập</button>
                                         <span>Chưa có tài khoản? </span><span onClick={switchForm} className='login-form-highlight'>Đăng ký ngay</span>
                                     </div>
                                 </div>

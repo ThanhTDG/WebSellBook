@@ -80,3 +80,31 @@
     }
   }
 }
+
+@media only screen and (max-width:600px ) {
+  .amount-title{
+    display: none;
+  }
+  .checkout-title{
+    display: none;
+  }
+  .discounts-title-container{
+    display: none;
+  }
+  .cart-responsive-checkbox{
+    left: 0px !important;
+  }
+  .cart-responsive-toolbar{
+    padding-left: 36px !important;
+  }
+  .discounts-container {
+    display: grid;
+    background-color: var(--LightGray);
+    width: 100%;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 12px;
+    padding: 12px;
+  }
+}

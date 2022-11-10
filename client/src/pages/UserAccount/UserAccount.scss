@@ -1,0 +1,304 @@
+.user-account-page{
+    padding-top: 24px;
+    padding-left: 48px;
+    padding-right: 48px;
+    font-family: 'MontserratRegular';
+    background-color: var(--White);
+    padding-bottom: 32px;
+}
+.no-margin-padding{
+    margin: 0;
+    padding: 0;
+}
+
+.user-account-header{
+
+}
+
+.action-option{
+    display: block;
+}
+.action-inline-option{
+    display: inline;
+}
+.inaction-option{
+    display: none;
+}
+
+.pink-color{
+    color:var(--Pink)
+}
+.gray-color{
+    color: var(--Gray);
+}
+
+.user-account-body{
+    .uc-body-left-container{
+        background-color: var(--LightGray);
+        .ucbl-avatar-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 52px;
+            padding-bottom: 12px;
+            .avatar-img{
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: contain;
+                border: 2px solid var(--Gray);
+            }
+        }
+        .ucbl-name{
+            font-family: 'MontserratMedium';
+            text-align: center;
+        }
+        .ucbl-email{
+            text-align: center;
+            color: var(--Gray);
+            font-size: 12px;
+        }
+        .ucbl-chart-container{
+            padding-top: 54px;
+            padding-bottom: 48px;
+            .chart-total{
+                padding-bottom: 54px;
+                display: flex;
+                justify-content: center;
+                font-size: 12px;
+                color: var(--Brown);
+            }
+            .chart-value{
+                font-size: 48px;
+                font-family: 'MontserratMedium';
+                color: var(--Pink);
+                padding: 0;
+                margin: 0;
+                .chart-value-unit{
+                    font-size: 12px;
+                    color: var(--Pink);
+                    font-family: 'MontserratRegular' !important;
+                }
+            }
+            .chart-prices{
+                display: none;
+                justify-content: space-between;
+                padding-left: 32px;
+                padding-right: 32px;
+                padding-top: 24px;
+                padding-bottom: 24px;
+                .chart-price{
+                    font-size: 12px !important;
+                    color: var(--Brown);
+                }
+            }
+            
+        }
+        
+    }
+    .uc-body-right-container{
+        background-color: var(--White);
+        padding-left: 48px;
+        .page-title{
+            font-size: 24px;
+            font-family: 'MontserratMedium';
+        }
+        .ucbr-tool-bar{
+            width: 100%;
+            background-color: transparent;
+            margin-top: 24px;
+            button{
+                border: none;
+                border-radius: 20px;
+                height: 40px;
+                background-color: transparent;
+                padding-left: 12px;
+                padding-right: 12px;
+                box-shadow: none;
+                transition: box-shadow 0.4s ease;
+                margin-left: 4px;
+                margin-right: 4px;
+                transition-duration: 0.4s;
+            }
+            button:hover{
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            }
+        }
+        .info-form{
+            padding-top: 48px;
+            
+            button{
+                margin-top: 48px;
+                padding-left: 48px;
+                padding-right: 48px;
+                border: none;
+                border-radius: 24px;
+                height: 48px;
+                color: var(--White);
+                background-color: var(--Pink);
+                box-shadow: 0px 1px 4px var(--Pink);
+                transition: box-shadow 0.4s ease;
+            }
+            button:hover{
+                box-shadow: 0px 1px 8px var(--Pink);
+            }
+            .form-item{
+                padding-bottom: 24px;
+                // border: 2px solid var(--Gray);
+                border-radius: 12px;
+                margin: 4px;
+                margin-right: 24px;
+                padding: 12px;
+                margin-bottom: 12px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                transition: box-shadow 0.4s ease;
+                label{
+                    display: block;
+                    color: var(--Brown);
+                    font-size: 12px;
+                }
+                input{
+                    width: 100%;
+                    border: none;
+                    color: var(--Darkest);
+                }
+                input:focus{
+                    outline: none;
+                    border: none;
+                }
+            }
+            .form-item:hover{
+                box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+            }
+        }
+        .option-page-title{
+            font-size: 20px;
+            font-family: 'MontserratMedium';
+            padding-bottom: 24px;
+        }
+        
+        .option-page-1{
+            .option-avatar-container{
+                padding-top: 48px;
+                position: relative;
+                img{
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    object-fit: contain;
+                    border: 2px solid var(--Gray);
+                }
+                button{
+                    position: absolute;
+                    border: none;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    padding: 4px;
+                    margin: 0;
+                    background-color: var(--White);
+                    left: 84px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                    transition: box-shadow 0.4s ease;
+                    img{
+                        width: 30px;
+                        height: 30px;
+                        object-fit: contain;
+                        border: none;
+                        border-radius: none;
+                        box-shadow: none;
+                    }
+                }
+                button:hover{
+                    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+                }
+                
+            }
+        }
+
+        .option-page-2{
+            padding-left: 16px;
+            padding-top: 24px;
+            .otpion-notification-tool-bar{
+                width: 100%;
+                background-color: transparent;
+                margin-top: 0;
+                padding-bottom: 12px;
+                button{
+                    border: none;
+                    border-radius: 20px;
+                    height: 40px;
+                    background-color: transparent;
+                    padding-left: 12px;
+                    padding-right: 12px;
+                    box-shadow: none;
+                    transition: box-shadow 0.4s ease;
+                    margin-left: 4px;
+                    margin-right: 4px;
+                    transition-duration: 0.4s;
+                }
+                button:hover{
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+                }
+            }
+            
+        }
+        .option-page-3{
+            padding-top: 24px;
+            padding-left: 16px;
+        }
+
+        .option-page-4{
+            padding-top: 24px;
+            padding-left: 16px;
+            .option-bounder{
+                display: flex;
+                height: 56px;
+                align-items: center;
+                border-radius: 28px;
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+                transition: box-shadow 0.4s ease;
+                padding-left: 4px;
+                cursor: pointer;
+                transition-duration: 0.4s;
+                .img-bounder{
+                    width: 48px;
+                    height: 48px;
+                    background-color: var(--LightGray);
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid var(--Gray);
+                    img{
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                    }
+                }
+                
+                .option-context{
+                    padding-left: 12px;
+                    span{
+                        display: flex;
+                    }
+                    .option-description{
+                        font-size: 12px;
+                        color: var(--Gray);
+                    }
+                }
+            }
+            .option-bounder:hover{
+                box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+            }
+            .option-info-form{
+                padding-left: 24px;
+            }
+        }
+
+    }
+}
+
+.user-account-footer{
+
+}

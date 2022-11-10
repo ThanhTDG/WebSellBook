@@ -44,3 +44,49 @@
     color: var(--Orange);
     display: inline;
 }
+#books-btn-tb-6{
+    display: none;
+}
+
+@media only screen and (max-width:600px ) {
+    .books-responsive-col-1{
+        display: flex;
+        .btn-show-categories{
+            display: inline !important;
+            border: none;
+            height: 24px;
+            background-color: transparent;
+            img{
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+    .books-responsive-col-4{
+        padding: 0;
+        margin: 0;
+    }
+    .books-responsive-toolbar-container{
+        margin-left: 4px;
+        .btn-tb-container{
+            border: none;
+            background-color: var(--White);
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 16px !important;
+        }
+        .books-responsive-btn-tb-title{
+            font-size: 16px !important;
+            text-align: left !important;
+        }
+        #books-btn-tb-6{
+            display: block;
+        }
+        #books-btn-tb-5{
+            display: none;
+        }
+        #books-btn-tb-4{
+            display: none;
+        }
+    }
+}
