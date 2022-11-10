@@ -9,7 +9,7 @@ const Categories = (props) => {
             <div className='category-title'>{category.name}</div>
             <div className='categories-bounder'>
                 {category.child.map((category) => (
-                    <CategoryItem onAddTag={props.onAddTag} category={category} isParent={true} color={'var(--Orange)'} />
+                    <CategoryItem onAddTag={props.onAddTag} category={category} isParent={true} color={'var(--Pink)'} />
                 ))}
             </div>
         </div>

@@ -23,7 +23,8 @@ const Books = (props) => {
         'font-size': '36px',
         color: `${props.color}`,
         'margin-left': '48px',
-        'margin-top': '24px',
+        'margin-top': '48px',
+        marginBottom: '24px'
     }
     return (
         <div>

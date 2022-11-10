@@ -190,7 +190,7 @@ export const FakeData = {
             id: 'bk02',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
-            image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
+            image: 'https://lzd-img-global.slatic.net/g/p/e6b9918f30d2bf84c6f90cf1a701659c.jpg_720x720q80.jpg'
             , isfavorite: 'false'
             ,
             description: `Akizuki Takao là một học sinh 15 tuổi, sống với mẹ và anh trai (sắp chuyển ra riêng với bạn gái), và tin rằng "chỉ có đóng giày mới mang cậu thoát khỏi nơi này".
@@ -467,7 +467,7 @@ export const FakeData = {
             id: 'bk06',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
-            image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
+            image: 'https://lzd-img-global.slatic.net/g/p/e6b9918f30d2bf84c6f90cf1a701659c.jpg_720x720q80.jpg'
             , isfavorite: 'false',
             description: `Akizuki Takao là một học sinh 15 tuổi, sống với mẹ và anh trai (sắp chuyển ra riêng với bạn gái), và tin rằng "chỉ có đóng giày mới mang cậu thoát khỏi nơi này".
 

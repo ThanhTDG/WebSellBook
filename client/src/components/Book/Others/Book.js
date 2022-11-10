@@ -13,6 +13,7 @@ const BookStyleSmall = (props) => {
         backgroundSize: '152%',
         backgroundRepeat: 'no-repeat',
         borderRadius: '12px',
+        transition: 'filter 0.4s ease',
         filter: isHoverBookImage === true ? 'brightness(0.6)' : 'none'
     }
     function onClickShoppingBtn() {
@@ -37,7 +38,8 @@ const BookStyleSmall = (props) => {
     var btnContainBookImageStyle = {
         width: '100%',
         border: 'none',
-        padding: isHoverBookImage === false ? '8px' : '0px',
+        transition: 'transform 0.4s',
+        transform: isHoverBookImage===true? 'scale(1.06)':'none',
         backgroundColor: 'var(--White)'
     }
     function onHoverBookImage() {

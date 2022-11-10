@@ -7,15 +7,17 @@
         height: 48px;
         border: none;
         border-radius: 24px;
-        background-color: var(--DarkBlue);
+        background-color: var(--Pink);
         float: right;
         padding-left: 48px;
         padding-right: 48px;
         text-align: center;
         transition-duration: 0.4s;
+        box-shadow: 0px 1px 3px var(--Pink);
+        transition: box-shadow 0.4s ease;
     }
     button:hover{
-      background-color: var(--Blue);
+      box-shadow: 0px 1px 8px var(--Pink);
     }
 }
 .mymodal {

@@ -7,7 +7,7 @@ const CategoryItem = (props) => {
     const [onTag, setTag] = useState(0)
     const isParent = props.isParent;
     const categoryButtonStyle = {
-        backgroundColor: `${isSelected === false ? 'var(--LightGray)' : props.color}`
+        backgroundColor: `${isSelected === false ? 'var(--White)' : props.color}`
     }
     const categoryChildsStyle = {
         display: `${isSelected === true ? 'block' : 'none'}`,
@@ -47,13 +47,13 @@ const CategoryItem = (props) => {
     const childCategoryItem = props.category.hasOwnProperty('child') === true ?
         <div id={`category-childs-${props.category.id}`} style={categoryChildsStyle}>
             {props.category.child.map((child) => (
-                <CategoryItem onAddTag={props.onAddTag} category={child} color={'var(--Blue)'} />
+                <CategoryItem onAddTag={props.onAddTag} category={child} color={'var(--DarkBlue)'} />
             ))}
         </div> :
         <span></span>
     var categoryNameStyle = {
         marginRight: '12px',
-        color: props.color === 'var(--Blue)' && isSelected === true ? 'var(--White)' : 'var(--Darkest)',
+        color: isSelected === true ? 'var(--White)' : 'var(--Darkest)',
         fontSize: props.category.name.length>20? props.category.name.length>30 ?'10px':'12px':'16px'
     }
 

@@ -82,11 +82,16 @@
 }
 
 .book-style-content-container{
-    background-color: var(--LightGray);
+    background-color: var(--White);
     border-radius: 12px;
     padding: 12px;
     margin-top: 8px;
     padding-top: 4px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    transition: box-shadow 0.4s ease;
+}
+.book-style-content-container:hover{
+    box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
 }
 
 .books-btn-shopping-container{

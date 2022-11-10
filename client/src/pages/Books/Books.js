@@ -26,10 +26,10 @@ const BooksPage = () => {
     function toolBarItemStyle(isActive) {
         return {
             fontSize: '16px',
-            fontFamily: isActive === isSelectedToolBarID ? 'MontserratMedium' : 'MontserratRegular',
-            color: isActive === isSelectedToolBarID ? 'var(--DarkBlue)' : 'var(--Darkest)',
-            borderBottom: isActive === isSelectedToolBarID ? '4px solid var(--DarkBlue)' : 'none',
+            fontFamily: 'MontserratRegular',
+            color: isActive === isSelectedToolBarID ? 'var(--Pink)' : 'var(--Darkest)',
             textAlign: 'center',
+            boxShadow: isActive === isSelectedToolBarID? '0px 1px 8px rgba(0,0,0,0.3)':'none',
         }
     }
     const [isSelectedToolBarID, setIsSelectedToolBarID] = useState(1)
@@ -70,8 +70,8 @@ const BooksPage = () => {
                         <div className='d-flex books-responsive-toolbar-container' >
                             {
                                 MyVariable.booksToolbar.map((tb) => (
-                                    <button id={`books-btn-tb-${tb.id}`} className='btn-tb-container' onClick={() => onSelectToolBarItem(tb.id)}>
-                                        <div className='books-responsive-btn-tb-title' style={toolBarItemStyle(tb.id)}>{tb.title}</div>
+                                    <button id={`books-btn-tb-${tb.id}`} style={toolBarItemStyle(tb.id)} className='btn-tb-container' onClick={() => onSelectToolBarItem(tb.id)}>
+                                        <div className='books-responsive-btn-tb-title' >{tb.title}</div>
                                     </button>
                                 ))
                             }

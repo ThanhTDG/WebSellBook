@@ -8,13 +8,16 @@ const Discount = (props) => {
     }
     const discountContainerStyle={
         border: isSelected===false? '1px solid var(--Gray)': 'none',
-        backgroundColor: isSelected===false?'var(--LightGray)': 'var(--DarkBlue)',
-        color: isSelected===false?'var(--DarkGray)': 'var(--White)'
+        backgroundColor: isSelected===false?'var(--LightGray)': 'var(--White)',
+        color: isSelected===false?'var(--DarkGray)': 'var(--Pink)',
+        boxShadow:isSelected===false? 'none':'0px 1px 8px var(--Pink)',
+        transition: 'box-shadow 0.4s ease',
+
     }
     return (
         <div className='discount-container' style={discountContainerStyle}>
             <div className='discount-container-top'>
-                <img src={require(`../../assets/icons/${isSelected===false? 'discount-img-dark-gray.png':'discount-img-white.png' }`)} alt='discount img' />
+                <img src={require(`../../assets/icons/${isSelected===false? 'discount-img-dark-gray.png':'discount-img.png' }`)} alt='discount img' />
                 <div className='discount-content-container'>
                     <div className='discount-value'>{props.discountData.value}%</div>
                     <div className='discount-name'>{props.discountData.name}</div>
@@ -26,7 +29,7 @@ const Discount = (props) => {
             <div className='discount-container-option'>
                 <span>Sử dụng</span>
                 <button onClick={onClickButtonDiscount}>
-                    <img src={require(`../../assets/icons/${isSelected===false?'ic-toggle.png':'ic-toggle-blue.png' }`)} alt='ic-toggle'/>
+                    <img src={require(`../../assets/icons/${isSelected===false?'ic-toggle.png':'ic-toggle-active.png' }`)} alt='ic-toggle'/>
                 </button>
             </div>
         </div>
