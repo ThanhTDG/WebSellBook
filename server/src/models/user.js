@@ -4,7 +4,7 @@ const validator = require("validator").default;
 
 mongoose.plugin(paginate);
 
-const { ROLE } = require("../utils/constants");
+const { ROLE } = require("../constants");
 const ErrorHandler = require('../utils/errorHandler');
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");

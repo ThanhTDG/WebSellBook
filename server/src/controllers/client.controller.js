@@ -39,7 +39,9 @@ const book2Json = (value) => {
   delete obj.tree;
   delete obj.createdAt;
   delete obj.updatedAt;
-  obj.total = value.total;
+  obj.shortDes = value.shortDes;
+  obj.dimension = value.dimension;
+  obj.price = value.price;
   return obj;
 };
 
@@ -49,9 +51,8 @@ const book2Json = (value) => {
  */
 const getCategories = async (req, res) => {
   try {
-    let data = await Category.find({ parent: null });
-    data = categories2Json(data);
-    await res.json(data);
+    const data = await Category.find({ parent: null }).sort("_id");
+    await res.json(categories2Json(data));
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }

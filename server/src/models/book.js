@@ -5,7 +5,7 @@ const slug = require("mongoose-slug-updater");
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
-const { BOOK_STATUS } = require("../utils/constants");
+const { BOOK_STATUS } = require("../constants");
 
 mongoose.plugin(slug);
 
@@ -66,7 +66,12 @@ const bookSchema = new Schema(
     // language: String,
     images: [String],
     weight: Number,
-    dimension: dimensionSchema,
+    dimension: {
+      type: dimensionSchema,
+      get: (value) => {
+        if (value) return `${value.height} x ${value.width} cm`;
+      },
+    },
     page: Number,
     bookCover: String,
     status: {
@@ -81,6 +86,7 @@ const bookSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: true,
     },
     tree: [
       {
@@ -92,8 +98,17 @@ const bookSchema = new Schema(
   { timestamps: true }
 );
 
-bookSchema.virtual("total").get(function () {
-  return this.originalPrice * (1 - this.discountRate / 100);
+bookSchema.virtual("shortDes").get(function () {
+  const des = this.description;
+  if (des.length < 200) {
+    return des;
+  }
+  return des.slice(0, 200) + "...";
+});
+
+bookSchema.virtual("price").get(function () {
+  const price = this.originalPrice * (1 - this.discountRate / 100);
+  return Math.round(price / 1e3) * 1e3;
 });
 
 bookSchema.pre("save", async function (next) {

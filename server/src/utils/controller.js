@@ -69,7 +69,7 @@ const Controller = class {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
 
-      await res.json(data.toJson());
+      await res.json(this.toJson(data));
     } catch (error) {
       await res
         .status(error.statusCode || 400)
@@ -87,7 +87,7 @@ const Controller = class {
       const body = this.getData(req.body);
       const data = new this.model(body);
       const newData = await data.save();
-      await res.status(201).json(newData);
+      await res.status(201).json(this.toJson(newData));
     } catch (error) {
       await res.status(400).json({ message: error.message });
     }
@@ -108,7 +108,7 @@ const Controller = class {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
 
-      await res.json(data);
+      await res.json(this.toJson(data));
     } catch (error) {
       await res
         .status(error.statusCode || 400)

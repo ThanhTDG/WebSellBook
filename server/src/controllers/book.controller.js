@@ -8,7 +8,6 @@ const Controller = require("../utils/controller");
 const getData = (body) => {
   const {
     name,
-    shortDescription,
     description,
     authors,
     translators,
@@ -32,7 +31,6 @@ const getData = (body) => {
   } = body;
   return {
     name,
-    shortDescription,
     description,
     authors,
     translators,
@@ -42,7 +40,7 @@ const getData = (body) => {
     supplier,
     publisher,
     publishDate,
-    images,
+    // images,
     weight,
     dimension,
     page,
@@ -64,7 +62,7 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   obj.dimension = data.dimension;
-  obj.total = data.total;
+  obj.price = data.price;
   return obj;
 };
 

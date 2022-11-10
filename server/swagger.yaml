@@ -25,30 +25,30 @@ servers:
 tags:
 - name: Quản lý danh mục
   description: |
-    Quản lý danh mục, dành cho phân hệ quản trị
+    Sử dụng để quản lý danh mục, dành cho phân hệ quản trị
 - name: Quản lý sách
   description: |
-    Quản lý sách, dành cho phân hệ quản trị
+    Sử dụng để quản lý sách, dành cho phân hệ quản trị
 - name: Quản lý người dùng
   description: |
-    Quản lý người dùng, dành cho phân hệ quản trị
+    Sử dụng để quản lý người dùng, dành cho phân hệ quản trị
 - name: Quản lý hóa đơn
   description: |
-    Quản lý hóa đơn, dành cho phân hệ quản trị
+    Sử dụng để quản lý hóa đơn, dành cho phân hệ quản trị
 - name: Tài khoản
   description: |
-    Quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
+    Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
 - name: Khách hàng
   description: |
-    Các API bên phía client khách hàng sử dụng, dành cho phân hệ khách hàng
+    Sử dụng để lấy danh mục và sách, dành cho phân hệ khách hàng
 - name: Quản lý địa chỉ
   description: |
-    Quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
+    Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
 - name: Quản lý giỏ hàng
-  description: "Quản lý giỏ hàng, dành cho phân hệ khách hàng \n"
+  description: "Sử dụng để quản lý giỏ hàng, dành cho phân hệ khách hàng \n"
 - name: Quản lý đơn hàng
   description: |
-    Quản lý đơn hàng, dành cho phân hệ khách hàng
+    Sử dụng để quản lý đơn hàng, dành cho phân hệ khách hàng
 paths:
   /categories:
     get:
@@ -135,7 +135,7 @@ paths:
         schema:
           type: string
           format: ObjectId
-        example: 63412da2f0dd862e790a187f
+        example: 634d8da516d1688abe54d4ef
       responses:
         "200":
           description: OK
@@ -165,7 +165,7 @@ paths:
         schema:
           type: string
           format: ObjectId
-        example: 63412da2f0dd862e790a187f
+        example: 634d8da516d1688abe54d4ef
       requestBody:
         content:
           application/json:
@@ -204,7 +204,7 @@ paths:
         schema:
           type: string
           format: ObjectId
-        example: 63412da2f0dd862e790a187f
+        example: 634d8da516d1688abe54d4ef
       responses:
         "204":
           description: OK
@@ -700,7 +700,7 @@ paths:
         schema:
           type: string
           format: ObjectId
-        example: 63412da2f0dd862e790a187f
+        example: 634d8da516d1688abe54d4ef
       - name: page
         in: query
         description: Trang (mặc định 1)
@@ -725,7 +725,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/pagination.Book'
+                $ref: '#/components/schemas/client.pagination.Book'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /book/{id}:
+    get:
+      tags:
+      - Khách hàng
+      summary: Sử dụng để lấy sách
+      description: |
+        Lấy sách theo ID sách cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99276d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Book'
         "400":
           description: Lỗi
           content:
@@ -741,7 +772,7 @@ components:
           type: string
           description: ID danh mục
           format: ObjectId
-          example: 63412da2f0dd862e790a187f
+          example: 634d8da516d1688abe54d4ef
         name:
           type: string
           description: Tên danh mục
@@ -754,7 +785,7 @@ components:
           type: string
           description: ID danh mục cha
           format: ObjectId
-          example: 63412a2dd1431450628fde93
+          example: 634d8da216d1688abe54d40c
         createdDate:
           type: string
           description: Ngày khởi tạo
@@ -889,15 +920,17 @@ components:
           description: ID danh mục cha
           format: ObjectId
           example: 63412da2f0dd862e790a187f
-    Error:
-      required:
-      - message
+    Message:
       type: object
       properties:
         message:
           type: string
-          description: Thông tin lỗi
-          example: Error
+          description: Thông báo
+    Error:
+      allOf:
+      - $ref: '#/components/schemas/Message'
+      - example:
+          message: Error
     form.Category:
       required:
       - name
@@ -911,7 +944,7 @@ components:
           type: string
           description: ID danh mục cha
           format: ObjectId
-          example: 63412a2dd1431450628fde93
+          example: 634d8da216d1688abe54d40c
     form.Book:
       required:
       - name
@@ -1066,15 +1099,6 @@ components:
           type: string
           description: Mật khẩu
           example: 1234abcd
-    respones.SignUp:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Thông báo
-          example: Success
-        user:
-          $ref: '#/components/schemas/respones.SignUp_user'
     form.ChangePassword:
       required:
       - currentPassword
@@ -1089,6 +1113,15 @@ components:
           type: string
           description: Mật khẩu mới
           example: abcd1234
+    respones.SignUp:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Thông báo
+          example: Success
+        user:
+          $ref: '#/components/schemas/respones.SignUp_user'
     pagination.Category:
       type: object
       properties:
@@ -1178,49 +1211,192 @@ components:
           description: Trang sau, nếu không có trả null
           example: 3
     client.Category:
-      required:
-      - name
       type: object
       properties:
-        id:
+        _id:
           type: string
           description: ID danh mục
           format: ObjectId
-          readOnly: true
-          example: 63412da2f0dd862e790a187f
+          example: 634d8da216d1688abe54d40c
         name:
           type: string
           description: Tên danh mục
-          example: Light novel
-        description:
-          type: string
-          description: Mô tả danh mục
+          example: Văn học
         slug:
           type: string
           description: Slug danh mục
-          example: light-novel
-        image:
-          type: string
-          description: Link hình ảnh danh mục
-          format: link
+          example: van-hoc
         children:
           type: array
           description: Mảng danh mục con
+          example:
+          - _id: 634d8da516d1688abe54d4ef
+            name: Light novel
+            slug: light-novel
+            children: []
           items:
             $ref: '#/components/schemas/client.Category'
-      example:
-        id: 63412a2dd1431450628fde93
-        name: Văn học
-        description: string
-        slug: van-hoc
-        image: string
-        children:
-        - id: 63412da2f0dd862e790a187f
-          name: Light novel
-          description: string
-          slug: light-novel
-          image: string
-          children: []
+    client.Book:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID sách
+          format: ObjectId
+          readOnly: true
+          example: 634ed8e4f6a3a7266d99276d
+        name:
+          type: string
+          description: Tên sách
+          example: Thiên Sứ Nhà Bên – Tập 3
+        shortDescription:
+          type: string
+          description: Mô tả ngắn
+          example: |
+            “Mọi người đều thân thiết với Amane, chỉ có tôi như bị cho ra rìa vậy đó.” Mahiru và Amane đã lên lớp 11, họ trở thành bạn cùng lớp với nhau! Trái với Mahiru luôn cố gắng thu hẹp khoảng cách kể cả kh...
+        description:
+          type: string
+          description: Mô tả
+          example: |
+            “Mọi người đều thân thiết với Amane, chỉ có tôi như bị cho ra rìa vậy đó.” \nMahiru và Amane đã lên lớp 11, họ trở thành bạn cùng lớp với nhau! Trái với Mahiru luôn cố gắng thu hẹp khoảng cách kể cả khi ở trường, Amane vẫn giữ ý với “thiên sứ” và không tiến thêm một bước nào. \nNhờ có Chitose mà Mahiru dần xóa bỏ bức tường ngăn cách với các bạn cùng lớp, trong khi Amane lại nhớ đến vết thương cũ vừa lành trong\nĐây là câu chuyện tình ngọt ngào với cô gái nhà bên tuy lạnh lùng nhưng thật đáng yêu đã được ủng hộ nhiệt tình trên trang Shousetsuka ni Narou.\n* THIÊN SỨ NHÀ BÊN được xem là cú hit của dòng Light Novel rom-com tại thị trường Nhật Bản, với nội dung hài hước - lãng mạn rất được yêu thích. Tác phẩm nằm top 10 Kono Light novel ga Sugoi năm 2021, đã bán ra hơn 400.000 bản chỉ với 4 tập truyện riêng tại Nhật Bản.\nSố tập: 5+ (on-going)\nThiên Sứ Nhà Bên – Tập 3 – Phiên bản tặng kèm Bookmark\n---Một ấn phẩm của WINGS BOOKS - Thương hiệu sách trẻ của NXB Kim Đồng.Giá sản phẩm trên ToiMuaSach đã bao gồm thuế theo luật hiện hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng mà có thể phát sinh thêm chi phí khác như phí vận chuyển, phụ phí hàng cồng kềnh, thuế nhập khẩu (đối với đơn hàng giao từ nước ngoài có giá trị trên 1 triệu đồng).....
+        slug:
+          type: string
+          description: Slug sách
+          example: thien-su-nha-ben-tap-3
+        authors:
+          type: string
+          description: Các tác giả
+          example: Saekisan, Hanekoto
+        translators:
+          type: string
+          description: Các dịch giả
+          example: Trân Trân
+        sku:
+          type: string
+          description: Mã kho hàng
+          format: number
+          example: "8935244872972"
+        isbn13:
+          type: string
+          description: Mã ISBN 13
+          format: isbn13
+          example: 978-0134494166
+        isbn10:
+          type: string
+          description: Mã ISBN 10
+          format: isbn10
+          example: "0134494164"
+        supplier:
+          type: string
+          description: Nhà cung cấp/nhà phát hành
+          example: Nhà Xuất Bản Kim Đồng
+        publisher:
+          type: string
+          description: Nhà xuất bản
+          example: NXB Kim Đồng
+        publisherDate:
+          type: string
+          description: Ngày xuất bản
+          format: date
+          example: 2022-04-30
+        images:
+          type: array
+          description: Các link hình ảnh sách
+          items:
+            type: string
+            description: Link hình ảnh sách
+            format: link
+            example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
+        weight:
+          type: number
+          description: Trọng lượng (gram)
+          example: 350
+        dimension:
+          type: string
+          description: Kích thước (cao x rộng (cm))
+          example: 19 x 13 cm
+        page:
+          type: number
+          description: Số trang
+          example: 316
+        bookCover:
+          type: string
+          description: Loại bìa
+          example: Bìa mềm
+        status:
+          type: string
+          description: Trạng thái sách
+          example: available
+          enum:
+          - coming_soon
+          - available
+          - out_of_stock
+        expectedDate:
+          type: string
+          description: Ngày dự kiến có hàng
+          format: date
+          example: 2022-04-30
+        countInStock:
+          type: number
+          description: Tồn kho
+          example: 100
+        originalPrice:
+          type: number
+          description: Giá bìa
+          example: 95000
+        discountRate:
+          type: number
+          description: Giảm giá (%)
+          example: 25
+        price:
+          type: number
+          description: Giá hiện tại
+          readOnly: true
+          example: 72000
+    client.pagination.Book:
+      type: object
+      properties:
+        docs:
+          type: array
+          description: Mảng document
+          items:
+            $ref: '#/components/schemas/client.Book'
+        totalDocs:
+          type: number
+          description: Tổng số document
+          example: 100
+        limit:
+          type: number
+          description: Giới hạn số document trả về
+          example: 12
+        totalPages:
+          type: number
+          description: Tổng số trang
+          example: 9
+        page:
+          type: number
+          description: Trang hiện tại
+          example: 2
+        pagingCounter:
+          type: number
+          description: Index của document đầu tiên trong trang hiện tại
+          example: 13
+        hasPrevPage:
+          type: boolean
+          description: Có trang trước không
+          example: true
+        hasNextPage:
+          type: boolean
+          description: Có trang sau không
+          example: true
+        prevPage:
+          type: number
+          description: Trang trước, nếu không có trả null
+          example: 1
+        nextPage:
+          type: number
+          description: Trang sau, nếu không có trả null
+          example: 3
     inline_response_200:
       type: object
       properties:
