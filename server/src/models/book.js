@@ -152,7 +152,8 @@ bookSchema
 
     const len = arr.length;
     for (let i = 0; i < rates.length; i++) {
-      rates[i].rate = Math.round((rates[i].amount / len) * 100);
+      const rate = (rates[i].amount / len) * 100;
+      rates[i].rate = len ? Math.round(rate) : 0;
     }
 
     return rates;
