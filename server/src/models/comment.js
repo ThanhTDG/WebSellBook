@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate");
+const paginate = require("mongoose-paginate-v2");
 
 mongoose.plugin(paginate);
 
@@ -26,5 +26,18 @@ const commentSchema = new Schema(
   },
   { timestamps: true }
 );
+
+commentSchema
+  .virtual("_user", {
+    ref: "User",
+    localField: "user",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    const { fullName, avatar } = value;
+    const obj = { fullName, avatar };
+    return obj;
+  });
 
 module.exports = mongoose.model("Comment", commentSchema);

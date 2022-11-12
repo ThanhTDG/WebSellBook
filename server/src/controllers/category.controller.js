@@ -19,7 +19,7 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   delete obj.tree;
-  // delete obj.children;
+  delete obj.children;
   return obj;
 };
 

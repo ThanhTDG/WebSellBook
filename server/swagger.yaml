@@ -763,6 +763,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /comment/{book}:
+    get:
+      tags:
+      - Khách hàng
+      summary: Sử dụng để lấy danh sách bình luận
+      description: |
+        Lấy danh sách bình luận theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99261e
+      - name: page
+        in: query
+        description: Trang (mặc định 1)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về (mặc định 12)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.pagination.Comment'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Message:
@@ -1349,7 +1398,7 @@ components:
         numOfReviews:
           type: number
           description: Số lượt đánh giá
-          example: 10
+          example: 32
         rating:
           type: number
           description: Số sao đánh giá
@@ -1371,6 +1420,39 @@ components:
             rate: 63
           items:
             $ref: '#/components/schemas/RatingRate'
+    client.Comment:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID sách
+          format: ObjectId
+          example: 634f52bbab3c008e233fb1ec
+        user:
+          $ref: '#/components/schemas/client.Comment_user'
+        rate:
+          type: number
+          description: Số sao đánh giá
+          example: 5
+        content:
+          type: string
+          description: Bình luận
+          example: |
+            CHU DU QUA TRANG SÁCH CÙNG ĐINH HẰNG\nLà một người yêu thích du lịch, mình thích xem những chia sẻ của các bạn travel blogger để được chu du qua thật nhiều vùng đất cùng các bạn. Mỗi bạn một bản sắc riêng, và Hằng là một travel blogger nữ mà mình thường để ở chế độ Xem đầu tiên. Cảm giác như thế nào nhỉ? Hâm mộ, khâm phục, và cả ước ao, giá như mình có thể đi nhiều nơi như bạn ấy. Chắc hẳn đó không phải là mơ ước của chỉ riêng mình. Với một travel blogger nữ, hẳn bạn cũng phải vượt qua nhiều khó khăn, trở ngại hơn là với nam giới để tiếp tục với đam mê của mình. Vậy nên, nỗ lực và đam mê của bạn là đáng khâm phục.\n\nLại nói về quyển sách \"Người tình Havana\", mình theo dõi trang cá nhân của Hằng cũng vừa đủ lâu, nhưng chưa kịp lâu để biết đến hai quyển sách trước của Hằng. Vậy nên khi Hằng thông báo đã xuất bản quyển sách này thì mình đặt mua ngay. Mình thích quyển sách này vì nhiều lẽ:\n- Mình cũng là một dịch giả (cũng có sách bán trên tiki từ nhiều năm trước), nên mình rất quan tâm đến nội dung sách và cách viết - thể hiện cá tính của người viết. Và mình hoàn toàn hài lòng. Sách được biên tập kỹ, chỉnh chu trong từng câu chữ. Hãy thử đọc qua một đoạn văn miêu tả sống động như vầy xem bạn có thích thú không nhé \"La Floridita trở nên nổi tiếng thế giới một phần nhờ sự \"bảo chứng\" của Ernest Hemingway, một khách hàng quen thuộc lui tới đây gần như mỗi ngày. Tại góc quen thuộc của Hemingway, người ta còn đặt hẳn một bức tượng bằng đồng tạc ông bằng kích cỡ người thật, khuỷu tay trái gác lên quầy trong lúc tay phải chống nạnh một cách thư thái, hướng vào quầy bar chất đống các loại chai lọ trên tủ gỗ màu đỏ\". Thật sinh động biết bao!\n- Được sống một cuộc đời khác, được chu du qua một đất nước Mỹ Latin hoàn toàn xa lạ và khác biệt - Cuba với cuộc sống thường nhật đầy những khó khăn nhưng vẫn luôn lạc quan yêu đời. Mình yêu đất nước Achentina với thần tượng Maradona và điệu nhảy Tango huyền thoại, và mình tìm thấy sự đồng cảm, vô vàn điều thú vị từ quyển sách này\n- Lý do thứ 3 trong vô vàn lý do đó chính vì tác giả của quyển sách. Ấp ủ một quyển sách qua rất nhiều năm trời, chắc hẳn Hằng đã có sự cân nhắc rất nhiều để giới thiệu Cuba trong vô vàn nơi mà Hằng đã đi qua, vì vậy nên quyển sách vừa hấp dẫn bởi địa điểm và những câu chuyện về con người nơi đó, vừa thú vị vì cách Hằng chia sẻ - rất đời và rất chạm, chạm đến niềm ước ao được làm một Guliver du ký - như Hằng đã và đang làm.
+        images:
+          type: array
+          description: Hình ảnh
+          example:
+          - https://salt.tikicdn.com/ts/review/79/67/a0/3aa834855d62f0c126d51a7248023250.jpg
+          - https://salt.tikicdn.com/ts/review/7d/c9/4f/c4c7374569d77edb074b2114c6104761.jpg
+          - https://salt.tikicdn.com/ts/review/b3/00/77/3e200edd38529edae01d8dfee45104af.jpg
+          items:
+            type: string
+        createdAt:
+          type: string
+          description: Ngày tạo
+          format: date
+          example: 2022-10-09
     client.pagination.Book:
       type: object
       properties:
@@ -1379,6 +1461,50 @@ components:
           description: Mảng document
           items:
             $ref: '#/components/schemas/client.Book'
+        totalDocs:
+          type: number
+          description: Tổng số document
+          example: 100
+        limit:
+          type: number
+          description: Giới hạn số document trả về
+          example: 12
+        totalPages:
+          type: number
+          description: Tổng số trang
+          example: 9
+        page:
+          type: number
+          description: Trang hiện tại
+          example: 2
+        pagingCounter:
+          type: number
+          description: Index của document đầu tiên trong trang hiện tại
+          example: 13
+        hasPrevPage:
+          type: boolean
+          description: Có trang trước không
+          example: true
+        hasNextPage:
+          type: boolean
+          description: Có trang sau không
+          example: true
+        prevPage:
+          type: number
+          description: Trang trước, nếu không có trả null
+          example: 1
+        nextPage:
+          type: number
+          description: Trang sau, nếu không có trả null
+          example: 3
+    client.pagination.Comment:
+      type: object
+      properties:
+        docs:
+          type: array
+          description: Mảng document
+          items:
+            $ref: '#/components/schemas/client.Comment'
         totalDocs:
           type: number
           description: Tổng số document
@@ -1501,6 +1627,18 @@ components:
           description: Link hình ảnh
           format: link
           example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96
+    client.Comment_user:
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Họ tên
+          example: Hồng Ánh
+        avatar:
+          type: string
+          description: Ảnh đại diện
+          format: link
+          example: https://ui-avatars.com/api/?name=Ánh&background=random&color=random&length=1&size=96
   securitySchemes:
     BearerAuth:
       type: http
