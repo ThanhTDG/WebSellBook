@@ -3,16 +3,12 @@ const Controller = require("../utils/controller");
 
 /**
  * Get data from body of request
- * @param {Object} body - body of request
+ * @param {Object} body Body of request
  */
-const getData = (body) => {
-  const { name, description, image, parent } = body;
-  return {
-    name,
-    description,
-    image,
-    parent,
-  };
+const getData = ({ name, parent }) => {
+  const data = { name, parent };
+  Object.keys(data).forEach((key) => !data[key] && delete data[key]);
+  return data;
 };
 
 /**
@@ -23,7 +19,7 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   delete obj.tree;
-  delete obj.children;
+  // delete obj.children;
   return obj;
 };
 

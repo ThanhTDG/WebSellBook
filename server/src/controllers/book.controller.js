@@ -1,12 +1,36 @@
 const Book = require("../models/book");
 const Controller = require("../utils/controller");
+const { isEmpty } = require("../utils/utils");
 
 /**
  * Get data from body of request
  * @param {Object} body - body of request
  */
-const getData = (body) => {
-  const {
+const getData = ({
+  name,
+  description,
+  authors,
+  translators,
+  sku,
+  isbn13,
+  isbn10,
+  supplier,
+  publisher,
+  publishDate,
+  images,
+  weight,
+  height,
+  width,
+  page,
+  bookCover,
+  status,
+  expectedDate,
+  countInStock,
+  originalPrice,
+  discountRate,
+  category,
+}) => {
+  const data = {
     name,
     description,
     authors,
@@ -19,30 +43,7 @@ const getData = (body) => {
     publishDate,
     images,
     weight,
-    dimension,
-    page,
-    bookCover,
-    status,
-    expectedDate,
-    countInStock,
-    originalPrice,
-    discountRate,
-    category,
-  } = body;
-  return {
-    name,
-    description,
-    authors,
-    translators,
-    sku,
-    isbn13,
-    isbn10,
-    supplier,
-    publisher,
-    publishDate,
-    // images,
-    weight,
-    dimension,
+    dimension: { height, width },
     page,
     bookCover,
     status,
@@ -52,6 +53,8 @@ const getData = (body) => {
     discountRate,
     category,
   };
+  Object.keys(data).forEach((key) => isEmpty(data[key]) && delete data[key]);
+  return data;
 };
 
 /**

@@ -1,3 +1,5 @@
+const passport = require("passport");
+
 const User = require("../models/user");
 const { uploadToCloudinary } = require("../services/upload.service");
 const ErrorHandler = require("../utils/errorHandler");
@@ -37,10 +39,8 @@ const signUp = async (req, res) => {
  */
 const signIn = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findByCredentials(username, password);
+    const user = req.user;
     const token = user.generateAuthToken();
-    // req.signedCookies.token = token;
     await res.json({ token });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
@@ -54,7 +54,7 @@ const signIn = async (req, res) => {
  */
 const signOut = async (req, res) => {
   try {
-    delete req.signedCookies.token;
+    // req.logout();
     await res.json({ message: "Log out successful" });
   } catch (error) {
     await res.status(401).json({ message: error.message });

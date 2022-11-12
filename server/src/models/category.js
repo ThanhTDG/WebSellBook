@@ -45,14 +45,9 @@ categorySchema.pre("save", async function (next) {
     if (this.parent) {
       await this.populate("parent");
       this.tree = [this.parent.id, ...this.parent.tree];
+      this.parent.children.push(this.id);
+      await this.parent.save();
       this.depopulate("parent");
-
-      // await this.populate("tree");
-      // this.tree.forEach(async (value) => {
-      //   value.children.push(this.id);
-      //   await value.save();
-      // });
-      // this.depopulate("tree");
     }
     next();
   } catch (error) {

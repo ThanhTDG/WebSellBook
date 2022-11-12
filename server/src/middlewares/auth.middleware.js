@@ -1,29 +1,53 @@
-const User = require("../models/user");
+const passport = require("passport");
 
-const { verifyToken } = require("../utils/jwt");
+/**
+ * Required login
+ * @param {Request} req
+ * @param {Response} res
+ * @param {Function} next
+ */
+const requiredLogin = (req, res, next) =>
+  passport.authenticate("local", { session: true }, async (err, user) => {
+    if (err) {
+      return await res
+        .status(err.statusCode || 401)
+        .json({ message: err.message });
+    }
+
+    if (!user) {
+      return await res.status(401).json({ message: "Authentication failed" });
+    }
+
+    req.login(user, async (error) => {
+      if (error) {
+        return await res.status(401).json({ message: error.message });
+      }
+      next();
+    });
+  })(req, res, next);
 
 /**
  * Authentication
  * @param {Request} req Request
  * @param {Response} res Response
- * @param {*} next
+ * @param {Function} next
  */
-const auth = async (req, res, next) => {
-  try {
-    const token = req.header("Authorization").replace("Bearer ", "");
-    const decoded = verifyToken(token);
-    const user = await User.findById(decoded.id);
-
-    if (!user) {
-      throw new Error();
+const auth = async (req, res, next) =>
+  passport.authenticate("jwt", { session: false }, async (err, user) => {
+    if (err) {
+      return await res
+        .status(err.statusCode || 401)
+        .json({ message: err.message });
     }
 
-    req.token = token;
-    req.user = user;
-    next();
-  } catch (error) {
-    res.status(401).send({ message: error.message });
-  }
-};
+    if (!user) {
+      return await res.status(401).json({ message: "Authentication failed" });
+    }
 
-module.exports = auth;
+    next();
+  })(req, res, next);
+
+module.exports = {
+  requiredLogin,
+  auth,
+};

@@ -1,16 +1,16 @@
 const cors = require("cors");
-const dotenv = require("dotenv");
 const express = require("express");
-const session = require("cookie-session");
-// const session = require("express-session");
+// const session = require("cookie-session");
+const session = require("express-session");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const passport = require("passport");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 
 const router = require("./router");
 
-dotenv.config();
+require("dotenv").config();
 
 // Database connection
 const MONGO_URI = process.env.MONGO_URI;
@@ -27,16 +27,24 @@ const app = express();
 
 // Middlewares
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
-    cookie: { secure: true, maxAge: 60000 },
+    cookie: { secure: true, maxAge: 60 * 60 * 1000 },
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./configs/passport.config");
+
 app.use(
   morgan(
     ":date - :method: :url :status  :res[content-length] - :response-time ms"

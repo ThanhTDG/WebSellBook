@@ -147,12 +147,12 @@ userSchema.statics.findByCredentials = async (username, password) => {
     $or: [{ email: username }, { phone: username }],
   });
   if (!user) {
-    throw new ErrorHandler(401, "Unable to log in");
+    throw new ErrorHandler(401, "Unable to login");
   }
 
   const isMatch = await user.validatePassword(password);
   if (!isMatch) {
-    throw new ErrorHandler(401, "Unable to log in");
+    throw new ErrorHandler(401, "Unable to login");
   }
 
   return user;

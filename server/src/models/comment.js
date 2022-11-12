@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const paginate = require("mongoose-paginate");
+
+mongoose.plugin(paginate);
 
 const Schema = mongoose.Schema;
 

@@ -6,6 +6,7 @@ mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
 const { BOOK_STATUS } = require("../constants");
+const Comment = require("./comment");
 
 mongoose.plugin(slug);
 
@@ -81,6 +82,7 @@ const bookSchema = new Schema(
     },
     expectedDate: Date,
     countInStock: Number,
+    sold: Number,
     originalPrice: Number,
     discountRate: Number,
     category: {
@@ -110,6 +112,51 @@ bookSchema.virtual("price").get(function () {
   const price = this.originalPrice * (1 - this.discountRate / 100);
   return Math.round(price / 1e3) * 1e3;
 });
+
+bookSchema.virtual("numOfReviews", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "book",
+  count: true,
+});
+
+bookSchema
+  .virtual("rating", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "book",
+  })
+  .get(function (arr) {
+    let sum = 0;
+    arr.forEach((value) => {
+      sum += value.rate;
+    });
+
+    const len = arr.length;
+    const rating = (sum / len).toFixed(1);
+
+    return len ? parseFloat(rating) : 0;
+  });
+
+bookSchema
+  .virtual("ratingRate", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "book",
+  })
+  .get(function (arr) {
+    const rates = Array(5)
+      .fill()
+      .map((_) => ({ amount: 0, rate: 0 }));
+    arr.forEach((value) => rates[value.rate - 1].amount++);
+
+    const len = arr.length;
+    for (let i = 0; i < rates.length; i++) {
+      rates[i].rate = Math.round((rates[i].amount / len) * 100);
+    }
+
+    return rates;
+  });
 
 bookSchema.pre("save", async function (next) {
   try {
