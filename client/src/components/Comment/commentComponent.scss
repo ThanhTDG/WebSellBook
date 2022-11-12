@@ -3,19 +3,22 @@
     .user-avatar{
         width: 64px;
         border-radius: 32px;
-        border: 1px solid var(--Orange);
+        border: 1px solid var(--Gray);
         margin-right: 12px;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+        transition: box-shadow 0.4s ease;
     }
     .user-detail-container{
         span{
             font-family: 'MontserratRegular';
-            font-size: 16px;
-            color: var(--Darkest);
+            font-size: 12px;
+            color: var(--Brown);
             display: block;
         }
         :first-child{
             font-family: 'MontserratMedium';
-            font-size: 24px;
+            font-size: 16px;
+            color: var(--Darkest);
         }
     }
     .star-image{
@@ -32,7 +35,7 @@
     }
     .rating-content{
         font-family: 'MontserratRegular';
-        font-size: 16px;
+        font-size: 12px;
         color: var(--Darkest);
         text-align: justify;
         display: inline-block;
@@ -50,11 +53,16 @@
         color: var(--Gray);
         text-align: right;
     }
+    .comment-content-container:hover{
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+    }
     .comment-content-container{
-        background-color: var(--LightGray);
+        background-color: var(--White);
         border-radius: 12px;
         padding: 12px;
         margin-top: 4px;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+        transition: box-shadow 0.4s ease;
     }
 }
 
@@ -119,11 +127,13 @@
             margin-top: 12px;
         }
         .comment-content-container{
-            background-color: var(--LightGray);
+            background-color: var(--White);
             border-radius: 12px;
             padding: 12px;
             margin: 0;
             margin-top: 4px;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+            transition: box-shadow 0.4s ease;
         }
     }
 }

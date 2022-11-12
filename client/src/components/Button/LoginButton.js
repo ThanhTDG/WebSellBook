@@ -20,14 +20,14 @@ const LoginButton = () => {
         setRegister(!isRegister)
     }
     const rightColStyle = {
-        background: `url('${MyVariable.hostName}/assets/banners/login-image.png') center right`,
+        background: `url('${MyVariable.hostName}/assets/banners/3d-keyboard.png') center right`,
         backgroundRepeat: 'no-repeat',
         width: '100%',
         height: '84vh',
         borderRadius: '0px 24px 24px 0px',
         marginTop: '-1px',
         padding: '0',
-        backgroundSize: '100% 100%'
+        backgroundSize: '100% 98%'
     }
     var registerStyle = {
         display: isRegister === true ? 'flex' : 'none'
@@ -91,7 +91,7 @@ const LoginButton = () => {
                             <div style={rightColStyle} className='login-form-right-image'>
                             </div>
                             <button id='btn-close-login' className='btn-in-login-form-close' onClick={toggleModal}>
-                                <img src={require('../../assets/icons/ic-remove.png')} alt='close' />
+                                <img src={require('../../assets/icons/ic-close.png')} alt='close' />
                             </button>
                         </div>
                     </div>
@@ -127,7 +127,7 @@ const LoginButton = () => {
                             <div style={rightColStyle} className='login-form-right-image'>
                             </div>
                             <button id='btn-close-login' className='btn-in-login-form-close'  onClick={toggleModal}>
-                                <img src={require('../../assets/icons/ic-remove.png')} alt='close' />
+                                <img src={require('../../assets/icons/ic-close.png')} alt='close' />
                             </button>
                         </div>
                     </div>

@@ -19,7 +19,7 @@ const HistoryItem = (props) => {
             </div>
             <div className='history-content-container'>
                 <div className='history-content-bounder'>
-                    <div style={bookImageStyle}></div>
+                    <div className='history-book-image' style={bookImageStyle}></div>
                     <div className='history-content'>
                         <span className='book-title'>Bên kia mây trời là nơi hẹn ước</span>
                         <span className='book-author'>Makoto Shinkai</span>

@@ -5,7 +5,7 @@ import {
     Route,
     Navigate,
   } from "react-router-dom";
-import BookDetail from './components/Book/BookDetail';
+import BookDetail from './pages/BookDetail/BookDetail';
 import BooksPage from './pages/Books/Books';
 import Cart from './pages/Cart/Cart';
 import ContactUs from './pages/Contact/Contact';

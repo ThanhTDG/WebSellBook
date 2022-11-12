@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { FormGroup } from 'react-bootstrap';
+import Books from '../../components/Book/Books';
 import Chart from '../../components/Chart/Chart';
 import Menu from '../../components/Menu/Menu';
+import FavoriteBook from '../../components/User/Favorite/FavoriteBook';
 import HistoryItem from '../../components/User/History/HistoryItem';
 import NotificationItem from '../../components/User/Notification/NotificationItem';
 import { FakeData } from '../../variables/FakeData';
+import { MyVariable } from '../../variables/variables';
 import './UserAccount.scss';
 
 const UserAccount = () => {
@@ -14,6 +17,10 @@ const UserAccount = () => {
         Notification: {
             SelectAll: 'select-all-notificaiton',
             NonRead: 'select-non-read-notification'
+        },
+        Product: {
+            OnGoing: 'products-on-going',
+            HaveReceived: 'product-have-received'
         }
     }
     const [selectedOption, setSelectedOption] = useState(null)
@@ -27,13 +34,18 @@ const UserAccount = () => {
             order: 2
         },
         {
-            name: 'Lịch sử mua hàng',
+            name: 'Yêu thích',
+            order: 5
+        },
+        {
+            name: 'Đơn hàng',
             order: 3
         },
         {
             name: 'Bảo mật',
             order: 4
         },
+
     ]
     var notificationItem = [
         {
@@ -48,11 +60,26 @@ const UserAccount = () => {
         },
     ]
     const [selectedNotification, setselectedNotification] = useState(options.Notification.SelectAll)
+
+    var productStatus = [
+        {
+            name: 'Đang giao',
+            order: 1,
+            option: options.Product.OnGoing
+        },
+        {
+            name: 'Lịch sử mua hàng',
+            order: 1,
+            option: options.Product.HaveReceived
+        }
+    ]
+    const [productsStatus, setProductStatus] = useState(options.Product.OnGoing)
     function getStyleToolbarItem(item) {
         return {
             color: item.order === currentToolbarItem ? 'var(--Pink)' : 'var(--Darkest)',
-            boxShadow: item.order === currentToolbarItem ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none'
+            boxShadow: item.order === currentToolbarItem ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none',
             //borderBottom: item.order===currentToolbarItem? '2px solid var(--Pink)':'none'
+            paddingRight: item.name === 'Thông báo' ? '32px' : '12px',
         }
     }
     function getOptionPageStyle(optionPageNumber) {
@@ -91,6 +118,15 @@ const UserAccount = () => {
         }
         return result
     }
+    function getStyleProductStatusToolbarItem(option) {
+        return {
+            color: option === productsStatus ? 'var(--Pink)' : 'var(--Darkest)',
+            boxShadow: option === productsStatus ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none'
+        }
+    }
+    const renderNotificationPopup = (notificationNumber) => <div className='notification-number-container'>
+        <span>{notificationNumber}</span>
+    </div>
     return (
         <div>
             <Menu />
@@ -130,6 +166,7 @@ const UserAccount = () => {
                                     toolItems.map((item) => (
                                         <button className='tool-bar-item' style={getStyleToolbarItem(item)} onClick={() => setcurrentToolbarItem(item.order)}>
                                             {item.name}
+                                            {item.name === 'Thông báo' ? renderNotificationPopup(3) : ''}
                                         </button>
                                     ))
                                 }
@@ -140,6 +177,7 @@ const UserAccount = () => {
                                         <img className='avatar-img' src={require('../../assets/fake-data/avatar.jpg')} alt='avatar' />
                                         <button><img src={require('../../assets/icons/ic-pen.png')} alt='pen' /></button>
                                     </div>
+                                    <div className='option-page-user-title'>Thông tin tài khoản</div>
                                     <form className='info-form'>
                                         <div className='row no-margin-padding'>
                                             <div className='col-sm-6 no-margin-padding'>
@@ -186,11 +224,23 @@ const UserAccount = () => {
                                     </div>
                                 </div>
                                 <div className='option-page-3' style={getOptionPageStyle(3)}>
-                                    {
-                                        FakeData.books.map((book)=>(
-                                            <HistoryItem HistoryItemData={book}/>
-                                        ))
-                                    }
+                                    <div className='option-page-title'>Đơn hàng</div>
+                                    <div className='otpion-notification-tool-bar'>
+                                        {
+                                            productStatus.map((item) => (
+                                                <button className='notification-tool-bar-item' style={getStyleProductStatusToolbarItem(item.option)} onClick={() => setProductStatus(item.option)}>
+                                                    {item.name}
+                                                </button>
+                                            ))
+                                        }
+                                    </div>
+                                    <div className='product-status-container'>
+                                        {
+                                            FakeData.books.map((book) => (
+                                                <HistoryItem HistoryItemData={book} />
+                                            ))
+                                        }
+                                    </div>
                                 </div>
                                 <div className='option-page-4' style={getOptionPageStyle(4)}>
                                     <div className='option-page-title'>Đăng nhập</div>
@@ -198,7 +248,7 @@ const UserAccount = () => {
                                         <div className='img-bounder'>
                                             <img src={require('../../assets/icons/ic-popup-key.png')} alt='key'></img>
                                         </div>
-                                        <div className='option-context'>
+                                        <div className='user-option-context'>
                                             <span className='option-tittle'>Đổi mật khẩu</span>
                                             <span className='option-description'>Sử dụng mật khẩu bạn chưa bao giờ dùng trước đây</span>
                                         </div>
@@ -224,6 +274,16 @@ const UserAccount = () => {
                                         </div>
                                         <button>Lưu</button>
                                     </form>
+                                </div>
+                                <div className='option-page-5' style={getOptionPageStyle(5)}>
+                                    <div className='option-page-title'>Yêu thích</div>
+                                    <div className='option-page-favorites'>
+                                        {
+                                            FakeData.books.map((book) => (
+                                                <FavoriteBook bookData={book} height='280' />
+                                            ))
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

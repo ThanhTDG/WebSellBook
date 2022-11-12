@@ -32,6 +32,21 @@
     color: var(--Gray);
 }
 
+.notification-number-container{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--Red);
+    color: var(--Darkest) !important;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:4px;
+    right: 4px;
+}
+
 .user-account-body{
     .uc-body-left-container{
         background-color: var(--LightGray);
@@ -108,6 +123,7 @@
             background-color: transparent;
             margin-top: 24px;
             button{
+                position: relative;
                 border: none;
                 border-radius: 20px;
                 height: 40px;
@@ -125,10 +141,10 @@
             }
         }
         .info-form{
-            padding-top: 48px;
+            padding-top: 24px;
             
             button{
-                margin-top: 48px;
+                margin-top: 24px;
                 padding-left: 48px;
                 padding-right: 48px;
                 border: none;
@@ -178,9 +194,15 @@
         }
         
         .option-page-1{
+            .option-page-user-title{
+                font-size: 20px;
+                font-family: 'MontserratMedium';
+                padding-top: 24px;
+            }
             .option-avatar-container{
                 padding-top: 48px;
                 position: relative;
+                
                 img{
                     width: 120px;
                     height: 120px;
@@ -216,36 +238,39 @@
             }
         }
 
+        .otpion-notification-tool-bar{
+            width: 100%;
+            background-color: transparent;
+            margin-top: 0;
+            padding-bottom: 12px;
+            button{
+                border: none;
+                border-radius: 20px;
+                height: 40px;
+                background-color: transparent;
+                padding-left: 12px;
+                padding-right: 12px;
+                box-shadow: none;
+                transition: box-shadow 0.4s ease;
+                margin-left: 4px;
+                margin-right: 4px;
+                transition-duration: 0.4s;
+            }
+            button:hover{
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+            }
+        }
+
         .option-page-2{
             padding-left: 16px;
             padding-top: 24px;
-            .otpion-notification-tool-bar{
-                width: 100%;
-                background-color: transparent;
-                margin-top: 0;
-                padding-bottom: 12px;
-                button{
-                    border: none;
-                    border-radius: 20px;
-                    height: 40px;
-                    background-color: transparent;
-                    padding-left: 12px;
-                    padding-right: 12px;
-                    box-shadow: none;
-                    transition: box-shadow 0.4s ease;
-                    margin-left: 4px;
-                    margin-right: 4px;
-                    transition-duration: 0.4s;
-                }
-                button:hover{
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-                }
-            }
-            
         }
         .option-page-3{
             padding-top: 24px;
             padding-left: 16px;
+            .product-status-container{
+                padding-top: 24px;
+            }
         }
 
         .option-page-4{
@@ -277,8 +302,9 @@
                     }
                 }
                 
-                .option-context{
+                .user-option-context{
                     padding-left: 12px;
+                    padding-right: 12px;
                     span{
                         display: flex;
                     }
@@ -296,9 +322,50 @@
             }
         }
 
+        .option-page-5{
+            padding-top: 24px;
+            padding-left: 16px;
+            padding-right: 36px;
+            
+        }
+
     }
 }
 
 .user-account-footer{
 
+}
+
+@media only screen and (max-width:600px ){
+    .uc-body-right-container{
+        padding: 0 !important;
+        margin: 0;
+        margin-top: 48px;
+    }    
+    .option-page-1{
+        padding-left: 0 !important;
+    }
+    .option-page-2{
+        padding-left: 0 !important;
+    }
+    .option-page-3{
+        padding-left: 0 !important;
+    }
+
+    .option-page-4{
+        padding-left: 0 !important;
+        .option-bounder{
+            display: flex;
+            height: auto;
+            .user-option-context{
+                span{
+                    font-size: 12px;
+                }
+                .option-description{
+                    font-size: 10px !important;
+                }
+            }
+        }
+    }
+    
 }

@@ -1,42 +1,74 @@
-import React from 'react';
-import './HomePage.scss'
-import '../../components/Menu/Menu'
+import React, { useState, useEffect } from 'react';
+import * as booksServies from '../../apiServices/booksServices'
+import './HomePage.scss';
+import '../../components/Menu/Menu';
 import Menu from '../../components/Menu/Menu';
 import ImageSlider from '../../components/Carousel/ImageSlider';
 import MyFooter from '../../components/Footer/MyFooter';
 import { MyVariable } from '../../variables/variables';
-import Books from '../../components/Book/Books';
 import { FakeData } from '../../variables/FakeData';
+import FavoriteBook from '../../components/User/Favorite/FavoriteBook';
+import LoadingBookFavorite from '../../components/Loading/LoadingBookFavorite/LoadingBookFavorite';
+import * as bookDetail  from '../../apiServices/bookDetailService';
 const HomePage = () => {
-    var banners = []
-    MyVariable.Banners.forEach((banner)=>(
-      banners.push({
-        url: `${MyVariable.hostName}${banner.url}`,
-        title: `${banner.title}`,
-        backColor: `${banner.backColor}`
-      })
-    ))
-    const homePageHeaderStyle={
-      width:'100%',
-      height:'748px',
-      background: `url('${MyVariable.hostName}/assets/banners/homepageheader.png') center center`,
-      backgroundSize:'100%'
+  const [isLoading, setIsLoading] = useState(true)
+  var banners = []
+  const [apiBooks, setApiBooks] =useState([])
+  MyVariable.Banners.forEach((banner) => (
+    banners.push({
+      url: `${MyVariable.hostName}${banner.url}`,
+      title: `${banner.title}`,
+      backColor: `${banner.backColor}`
+    })
+  ))
+  function getTitleStyle(color) {
+    return {
+      color: color,
     }
-      return (
-        
-        <div>
-          {/* <div className='home-page-header' style={homePageHeaderStyle}>
-            <MenuStyle active='Trang Chủ'/>
-          </div> */}
-          <Menu active='Trang Chủ'/>
-          <div className='homepage-banner'>
-            <ImageSlider slides={banners} />
-          </div>
-          <Books bookData={FakeData.books} title={MyVariable.BookTopics[0]} color={'var(--Orange)'}/>
-          <Books bookData={FakeData.books} title={MyVariable.BookTopics[1]} color={'var(--Pink)'}/>
-          <MyFooter />
+  }
+
+  useEffect(()=>{
+    setIsLoading(true)
+    fetchApi()
+  }, [])
+
+  const fetchApi = async () => {
+    const booksResult = await booksServies.books()
+    setIsLoading(false)
+    setApiBooks(booksResult.docs)
+  }
+
+  
+
+  const renderBooks = isLoading === true ?
+    <div className='hot-search grid-books-container'>
+      {FakeData.books.map((book) => (
+        <LoadingBookFavorite height={340} />
+      ))}
+    </div> :
+    <div className='hot-search grid-books-container'>
+      {
+        apiBooks.map((book) => (
+          <FavoriteBook bookData={book} height='340' />
+        ))
+      }
+    </div>
+
+  return (
+    <div>
+      <Menu active='Trang Chủ' />
+      <div className='home-page-body'>
+        <div className='homepage-banner'>
+          <ImageSlider slides={banners} />
         </div>
-      );
+        <div className='home-page-books-title' style={getTitleStyle('var(--Pink)')}>
+          Tìm kiếm nhiều nhất
+        </div>
+        {renderBooks}
+      </div>
+      <MyFooter />
+    </div>
+  );
 }
 
 export default HomePage;

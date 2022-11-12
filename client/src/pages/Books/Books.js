@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BooksStyleSmall from '../../components/Book/Others/Books';
 import Categories from '../../components/Category/Categories';
 import CategoryTag from '../../components/Category/CategoryTag';
@@ -45,6 +45,7 @@ const BooksPage = () => {
     const categoriesContainerStyle={
         display: isShowCategories===true? 'block': 'none'
     }
+    
     return (
         <div>
             <Menu active='Sách'></Menu>
@@ -56,7 +57,7 @@ const BooksPage = () => {
                             <img src={require(`../../assets/icons/${isShowCategories===true? 'ic-down.png': 'ic-next.png'}`)} alt='ic-more'></img>
                         </button>
                     </div>
-                    <div className='col-sm-9'>
+                    <div className='col-sm-9 books-reponsive-col-search-result'>
                         <div style={searchGuideStyle}>Kết quả tìm kiếm cho <div id='books-search-text'>{stateName}</div></div>
                     </div>
                 </div>
@@ -86,10 +87,7 @@ const BooksPage = () => {
                         <BooksStyleSmall />
                     </div>
                 </div>
-
-
             </div>
-
             <MyFooter />
         </div>
     );

@@ -35,8 +35,8 @@
     border: none;
     background-color: transparent;
     position: absolute;
-    top: 29px;
-    right: 36px;
+    top: 30%;
+    right: 4px;
     transition-duration: 0.8s;
     img{
         padding: 4px;
@@ -72,7 +72,9 @@
     visibility: hidden;
     transform: translateY(-20px);
     position: fixed;
-    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s !important;
+    transition: opacity 0.4s ease;
+    transition: transform 0.4s ease;
+    transition: visibility 0.4s;
 }
 .user-popup-menu-active{
     opacity: 1;
@@ -85,9 +87,13 @@
     transform: translateY(0);
 }
 
+.menu-btn-container-col{
+    position: relative;    
+}
+
+
 .user-menu-more-container{
     padding: 12px;
-
     text-align: center;
     font-family: 'MontserratRegular';
     .user-popup-name{
@@ -293,6 +299,18 @@
 }
 
 @media only screen and (max-width:800px ) {
+    .menu-btn-user-menu-more{
+        top: 40%;
+        right: 24%;
+    }
+
+    .user-menu-more-container{
+        left: 0; 
+        right: 0; 
+        margin-left: auto; 
+        margin-right: auto; 
+    }
+
     .btn-login-container{
         display: flex;
         justify-content: center;
@@ -316,7 +334,11 @@
         .menu-parent-content{
             width: 50%;
             font-size: 20px;
+            margin: 0;
         }
+    }
+    .menu-btn-container-col{
+        justify-content: center;
     }
 }
 @media only screen and (max-width:1200px ) {

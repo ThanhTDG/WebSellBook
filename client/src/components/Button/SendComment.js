@@ -4,7 +4,6 @@ import './SendComment.scss';
 
 const SendComment = () => {
     const btnAttrachImage={
-        background: `url('${MyVariable.hostName}/assets/icons/ic-attrach-image-32.png') center center`,
         width: '36px',
         height: '36px',
         border:'none',
@@ -13,8 +12,7 @@ const SendComment = () => {
     const btnSendStyle={
         width:'36px',
         height: '36px',
-        border:'24px',
-        background:`url('${MyVariable.hostName}/assets/icons/ic-btn-send-32.png') center center`
+        border:'18px',
     }
     function onComment(e){
         var btn = document.getElementById('btn-send-container')
@@ -35,13 +33,16 @@ const SendComment = () => {
                         <input type='text' placeholder='Nhập xét của bạn...' onChange={(e)=>(onComment(e))}/>
                     </div>
                     <div className='col-sm-1 send-comment-btn-image'>
-                        <button style={btnAttrachImage}></button>
+                        <button style={btnAttrachImage}>
+                            <img src={require('../../assets/icons/ic-image.png')} alt='attach' />
+                        </button>
                     </div>
                 </div>
             </div>
             <div className='col-sm-1 btn-send-bounder'>
                 <div id='btn-send-container'>
                     <button id='btn-send' style={btnSendStyle}>
+                        <img src={require('../../assets/icons/ic-send.png')} alt='send'/>
                     </button>
                 </div>
             </div>
