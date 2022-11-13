@@ -4,8 +4,25 @@ import * as booksServies from '../../../apiServices/booksServices'
 import { FakeData } from '../../../variables/FakeData';
 import './Books.scss'
 import LoadingBookFavorite from '../../Loading/LoadingBookFavorite/LoadingBookFavorite';
+import { useStore, actions } from '../../../store';
 
 const BooksStyleSmall = () => {
+    const [state, dispatch] = useStore()
+    useEffect(() => {
+        if(state.categoryId === 'a'){
+            console.log('not chose category')
+            return
+        }
+        console.log(state.categoryId)
+        setIsLoading(true)
+        const fetch = async(categoryId)=>{
+            const booksResult = await booksServies.booksByCategoryId(categoryId)
+            setIsLoading(false)
+            setApiBooks(booksResult.docs)
+        }
+        fetch(state.categoryId)
+    }, [state])
+
     const [apiBooks, setApiBooks] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {

@@ -7,7 +7,7 @@ const SendComment = () => {
         width: '36px',
         height: '36px',
         border:'none',
-        'margin-top':'4px'
+        marginTop:'4px'
     }
     const btnSendStyle={
         width:'36px',

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { FormGroup } from 'react-bootstrap';
-import Books from '../../components/Book/Books';
 import Chart from '../../components/Chart/Chart';
 import Menu from '../../components/Menu/Menu';
 import FavoriteBook from '../../components/User/Favorite/FavoriteBook';
+import Favorites from '../../components/User/Favorite/Favorites';
 import HistoryItem from '../../components/User/History/HistoryItem';
 import NotificationItem from '../../components/User/Notification/NotificationItem';
 import { FakeData } from '../../variables/FakeData';
-import { MyVariable } from '../../variables/variables';
 import './UserAccount.scss';
 
 const UserAccount = () => {
@@ -277,13 +275,9 @@ const UserAccount = () => {
                                 </div>
                                 <div className='option-page-5' style={getOptionPageStyle(5)}>
                                     <div className='option-page-title'>Yêu thích</div>
-                                    <div className='option-page-favorites'>
-                                        {
-                                            FakeData.books.map((book) => (
-                                                <FavoriteBook bookData={book} height='280' />
-                                            ))
-                                        }
-                                    </div>
+                                    {
+                                        <Favorites />
+                                    }
                                 </div>
                             </div>
                         </div>

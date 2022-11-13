@@ -94,7 +94,11 @@
         
     }
 }
-
+.bd-more-title{
+    font-size: 24px;
+    font-family: 'MontserratMedium';
+    margin-bottom: 24px;
+}
 .bdm-container{
     margin: 48px 0;
     padding: 0 48px 0 48px;
@@ -131,6 +135,35 @@
                 background-color: transparent;
                 color: var(--Brown);
             }
+        }
+    }
+}
+
+.bd-rating-container{
+    margin: 0 0;
+    padding: 0 48px 48px 48px;
+    .bd-rating-left-container{
+        margin: 0;
+        padding: 0;
+    }
+    .bd-rating-right-container{
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.bd-comment-container{
+    margin: 0 0;
+    padding: 0 48px 48px 48px;
+    .bd-comment-left-container{
+        margin: 0;
+        padding: 0;
+    }
+    .bd-comment-right-container{
+        margin: 0;
+        padding: 0;
+        .bd-more-title{
+            margin-bottom: 24px !important;
         }
     }
 }

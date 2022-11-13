@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CategoryItem from './CategoryItem';
-import './Categories.scss'
+import './Categories.scss';
+import * as categoriesSv from '../../apiServices/categoryService';
+import { FakeData } from '../../variables/FakeData';
+import LoadingCategory from './Loading/LoadingCategory';
 
 const Categories = (props) => {
-    const category = props.category;
+    const [isLoading, setIsLoading] = useState(true)
+    const [apiCategories, setApiCategories] = useState([])
+    const fetchApi = async () => {
+        const categoriesResult = await categoriesSv.categories()
+        setIsLoading(false)
+        setApiCategories(categoriesResult)
+        console.log(categoriesResult)
+    }
+    useEffect(() => {
+        setIsLoading(true)
+        fetchApi()
+    }, [])
     return (
         <div>
-            <div className='category-title'>{category.name}</div>
-            <div className='categories-bounder'>
-                {category.child.map((category) => (
-                    <CategoryItem onAddTag={props.onAddTag} category={category} isParent={true} color={'var(--Pink)'} />
-                ))}
-            </div>
+            {
+                isLoading === false ?
+                    apiCategories.map((apiCategory) => (
+                        <div>
+                            <div className='category-title'>{apiCategory.name}</div>
+                            <div className='categories-bounder'>
+                                {
+                                    apiCategory.children.map((category) => (
+                                        <CategoryItem onAddTag={props.onAddTag} category={category} color={category.hasOwnProperty('children') === true?'var(--Pink)':'var(--Blue)'} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )) :
+                    <div>
+                        {
+                            FakeData.books.map((book) => (
+                                <LoadingCategory />
+                            ))
+                        }
+                    </div>
+            }
+
         </div>
     );
 }

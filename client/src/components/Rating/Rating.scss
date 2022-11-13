@@ -1,0 +1,61 @@
+.rating-container {
+    font-family: 'MontserratRegular';
+    .rating-total-container {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        .rating-total-value {
+        }
+        .rating-total-desc {
+            margin-left: 32px;
+        .rating-stars-container {
+            position: relative;
+            background-color: var(--LightGray);
+            width: 240px;
+            z-index: -2;
+            img {
+            width: 240px;
+            z-index: 0;
+            }
+        }
+        }
+        .rating-total-review {
+            color: var(--Brown);
+            padding-left: 12px;
+        }
+    }
+    .rating-detail{
+        margin-bottom: 4px;
+        .rating-review{
+            color:var(--Brown)
+        }
+    }
+}
+
+@media only screen and (max-width:600px ){
+    .rating-container {
+        .rating-total-container {
+            display: block;
+            .rating-total-value {
+                span{
+                    font-size: 56px !important;
+                }
+            }
+            .rating-total-desc {
+                margin-left: 0px;
+                margin-bottom: 12px;
+                font-size: 12px !important;
+            .rating-stars-container {
+                margin-left: -12px;
+            }
+            }
+            .rating-total-review {
+                color: var(--Brown);
+                padding-left: 0;
+            }
+        }
+        .rating-detail{
+            font-size: 12px !important;
+        }
+    }
+}

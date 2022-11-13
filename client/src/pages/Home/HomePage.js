@@ -9,7 +9,6 @@ import { MyVariable } from '../../variables/variables';
 import { FakeData } from '../../variables/FakeData';
 import FavoriteBook from '../../components/User/Favorite/FavoriteBook';
 import LoadingBookFavorite from '../../components/Loading/LoadingBookFavorite/LoadingBookFavorite';
-import * as bookDetail  from '../../apiServices/bookDetailService';
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true)
   var banners = []

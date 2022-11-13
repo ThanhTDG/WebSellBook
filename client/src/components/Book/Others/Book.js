@@ -30,19 +30,19 @@ const BookStyleSmall = (props) => {
                 </div>
             </div>
             <div className='book-style-nav-container'>
-                <Link to='/bookdetail' state={{ book: bookData }}>
+                <Link to='/bookdetail' state={{ bookId: bookData._id}}>
                     <div className='user-favorite-book-content'>
-                        <span className='user-favorite-book-title'>{bookData.name.length>50?bookData.name.substring(0, 50) + '...' : bookData.name}</span>
+                        <span className='user-favorite-book-title'>{bookData.name.length>40?bookData.name.substring(0, 40) + '...' : bookData.name}</span>
                         <span className='user-favorite-book-author'>{bookData.supplier}</span>
                     </div>
                     <div className='book-style-description-containers'>
                         <div className='book-style-values-container'>
                             <div className='book-style-rating-container'>
-                                <span>{4}</span>
+                                <span>{bookData.rating===0? '-': bookData.rating}</span>
                                 <img src={require('../../../assets/icons/ic-active-star.png')} alt='star' />
                             </div>
                             <div className='book-style-sale-figures-container'>
-                                <span>Đã bán: {10000}</span>
+                                <span>Đã bán: {bookData.sold}</span>
                             </div>
                         </div>
                         <div className='book-style-prices-container'>

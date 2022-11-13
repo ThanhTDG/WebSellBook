@@ -2,6 +2,13 @@
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
     gap: 24px;
+    a{
+        text-decoration: none;
+        color: var(--Darkest);
+    }
+    a:hover{
+        color: var(--Pink);
+    }
 }
 .user-favorite-book-img{
     transition: filter 0.4s ease ;

@@ -1,0 +1,26 @@
+.star-button-container{
+    display: flex;
+    margin-bottom: 16px;
+    margin-top: 28px;
+    button{
+        border: none;
+        background-color: transparent;
+    }
+}
+.comment-container{
+    margin-top: 48px;
+}
+
+@media only screen and (max-width:600px ) {
+    .your-rating-container{
+        margin-top: 48px;
+        .star-button-container{
+            margin-bottom: 12px;
+            margin-top: 24px;
+            justify-content: center;
+        }
+    }
+    .comment-container{
+        margin-top: 24px;
+    }
+}

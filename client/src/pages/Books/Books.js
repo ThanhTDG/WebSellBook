@@ -4,19 +4,19 @@ import Categories from '../../components/Category/Categories';
 import CategoryTag from '../../components/Category/CategoryTag';
 import MyFooter from '../../components/Footer/MyFooter';
 import Menu from '../../components/Menu/Menu';
-import { FakeData } from '../../variables/FakeData';
 import { MyVariable } from '../../variables/variables';
 import './Books.scss'
 import { CategoriesSelected } from './CategoriesSelected';
 import { useLocation } from 'react-router-dom'
 import { MyConstVariable } from '../../variables/MyConstVaeiable';
-import { Dropdown } from 'bootstrap';
+
 
 const BooksPage = () => {
     const location = useLocation();
     const { stateName } = location.state;
     const [isAddCategoryTag, setAddCategoryTag] = useState(true)
     const [isShowCategories, setIsShowCategories] = useState(true)
+    
     function onHandleShowCategories(){
         setIsShowCategories(!isShowCategories)
     }
@@ -63,9 +63,10 @@ const BooksPage = () => {
                 </div>
                 <div className='row books-row'>
                     <div className='col-sm-3 categories-col-container' style={categoriesContainerStyle}>
-                        {FakeData.categories.map((category) => (
+                        {/* {FakeData.categories.map((category) => (
                             <Categories category={category} onAddTag={onAddTag}/>
-                        ))}
+                        ))} */}
+                        <Categories onAddTag={onAddTag}/>
                     </div>
                     <div className='col-sm-9 books-responsive-col-4'>
                         <div className='d-flex books-responsive-toolbar-container' >

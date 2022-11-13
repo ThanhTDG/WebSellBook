@@ -3,7 +3,10 @@ import { useLocation } from 'react-router-dom';
 import * as bookDetail from '../../apiServices/bookDetailService'
 import AddToCardButton from '../../components/Button/AddToCardButton';
 import AddToFavoriteButton from '../../components/Button/AddToFavoriteButton';
+import Comments from '../../components/Comment/Comments/Comments';
 import Menu from '../../components/Menu/Menu';
+import Rating from '../../components/Rating/Rating';
+import YourRating from '../../components/Rating/YourRating/YourRating';
 import './BookDetail.scss'
 import LoadingBookDetail from './Loading/LoadingBookDetail';
 
@@ -119,7 +122,7 @@ const BookDetail = () => {
                 <div className='bd-bottom-content'>
                     <div className='bd-value-prices-container'>
                         <span className='bd-value-original-price'>{apiBookDetail.originalPrice} đ</span>
-                        <span className='bd-value-discount-rate'> -{apiBookDetail.discountRate} %</span>
+                        <span className='bd-value-discount-rate'> - {apiBookDetail.discountRate} %</span>
                         <span className='bd-value-price'>{apiBookDetail.price} đ</span>
                     </div>
                     <div className='bd-options-container'>
@@ -143,8 +146,10 @@ const BookDetail = () => {
             result.push({ title: 'Đơn vị phân phối', value: book.supplier })
         if (book.hasOwnProperty('publisher') && book.publisher !== '')
             result.push({ title: 'Nhà xuất bản', value: book.publisher })
-        if (book.hasOwnProperty('publisherDate') && book.publisherDate !== '')
-            result.push({ title: 'Ngày xuất bản', value: book.publisherDate })
+        if (book.hasOwnProperty('publisherDate') && book.publisherDate !== '') {
+            let date = new Date(book.publisherDate)
+            result.push({ title: 'Ngày xuất bản', value: date.toLocaleString() })
+        }
         if (book.hasOwnProperty('weight') && book.weight !== '')
             result.push({ title: 'Trọng lượng', value: book.weight })
         if (book.hasOwnProperty('dimension') && book.dimension !== '')
@@ -174,9 +179,29 @@ const BookDetail = () => {
             <div className='col-sm-8 bdm-right-container'>
                 <div className='bd-more-title'>Mô tả</div>
                 <div className='bdm-description'>
-                    <span>{isShowMoreDesc===false?apiBookDetail.shortDes: apiBookDetail.description}</span>
-                    <button className='bdm-btn-show-desc' onClick={()=>setIsShowMoreDesc(!isShowMoreDesc)}>{isShowMoreDesc===false?'Xem thêm': 'Thu nhỏ.'}</button>
+                    <span>{isShowMoreDesc === false ? apiBookDetail.shortDes : apiBookDetail.description}</span>
+                    <button className='bdm-btn-show-desc' onClick={() => setIsShowMoreDesc(!isShowMoreDesc)}>{isShowMoreDesc === false ? 'Xem thêm' : 'Thu nhỏ.'}</button>
                 </div>
+            </div>
+        </div>
+
+    const renderBookRating =
+        <div className='row bd-rating-container'>
+            <div className='col-sm-4 bd-rating-left-container'>
+                <Rating bookData={apiBookDetail} />
+            </div>
+            <div className='col-sm-8 bd-rating-right-container'>
+                <YourRating bookId={apiBookDetail._id} />
+            </div>
+        </div>
+
+    const renderBookComment =
+        <div className='row bd-comment-container'>
+            <div className='col-sm-4 bd-comment-left-container'>
+            </div>
+            <div className='col-sm-8 bd-comment-right-container'>
+                <div className='bd-more-title'>Bình luận</div>
+                <Comments bookId={apiBookDetail._id} />
             </div>
         </div>
     return (
@@ -190,6 +215,18 @@ const BookDetail = () => {
             {
                 isLoading === false ?
                     rederBookDetailMore :
+                    ''
+            }
+
+            {
+                isLoading === false ?
+                    renderBookRating :
+                    ''
+            }
+
+            {
+                isLoading === false ?
+                    renderBookComment :
                     ''
             }
         </div>
