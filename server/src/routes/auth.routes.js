@@ -1,7 +1,10 @@
 const express = require("express");
 const passport = require("passport");
 
-const { auth, requiredLogin } = require("../middlewares/auth.middleware");
+const {
+  authenticate,
+  requiredLogin,
+} = require("../middlewares/auth.middleware");
 const controller = require("../controllers/auth.controller");
 const { upload } = require("../services/upload.service");
 
@@ -15,14 +18,14 @@ router.post(
   controller.signOut
 );
 
-router.get("/profile", auth, controller.getProfile);
-router.put("/profile", auth, controller.setProfile);
+router.get("/profile", authenticate, controller.getProfile);
+router.put("/profile", authenticate, controller.setProfile);
 router.put(
   "/uploadavatar",
-  auth,
+  authenticate,
   upload("avatars").single("avatar"),
   controller.uploadAvatar
 );
-router.put("/changepassword", auth, controller.changePassword);
+router.put("/changepassword", authenticate, controller.changePassword);
 
 module.exports = router;

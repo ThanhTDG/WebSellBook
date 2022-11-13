@@ -1,53 +1,68 @@
 const passport = require("passport");
+const ErrorHandler = require("../utils/errorHandler");
 
 /**
  * Required login
- * @param {Request} req
- * @param {Response} res
- * @param {Function} next
+ * @param {Request} req Request
+ * @param {Response} res Response
+ * @param {Function} next Next function
  */
 const requiredLogin = (req, res, next) =>
-  passport.authenticate("local", { session: true }, async (err, user) => {
-    if (err) {
-      return await res
-        .status(err.statusCode || 401)
-        .json({ message: err.message });
-    }
-
-    if (!user) {
-      return await res.status(401).json({ message: "Authentication failed" });
-    }
-
-    req.login(user, async (error) => {
-      if (error) {
-        return await res.status(401).json({ message: error.message });
+  passport.authenticate("local", { session: false }, async (err, user) => {
+    try {
+      if (err) {
+        throw new ErrorHandler(401, err.message);
       }
-      next();
-    });
+
+      if (!user) {
+        throw new ErrorHandler(401, "Authentication failed");
+      }
+
+      req.login(user, async (err) => {
+        try {
+          if (err) {
+            throw new ErrorHandler(401, err.message);
+          }
+          next();
+        } catch (error) {
+          return await res
+            .status(error.statusCode || 401)
+            .json({ message: error.message });
+        }
+      });
+    } catch (error) {
+      return await res
+        .status(error.statusCode || 401)
+        .json({ message: error.message });
+    }
   })(req, res, next);
 
 /**
- * Authentication
+ * Authenticate token
  * @param {Request} req Request
  * @param {Response} res Response
- * @param {Function} next
+ * @param {Function} next Next function
  */
-const auth = async (req, res, next) =>
+const authenticate = async (req, res, next) =>
   passport.authenticate("jwt", { session: false }, async (err, user) => {
-    if (err) {
+    try {
+      if (err) {
+        throw new ErrorHandler(401, err.message);
+      }
+
+      if (!user) {
+        throw new ErrorHandler(401, "Authentication failed");
+      }
+
+      next();
+    } catch (error) {
       return await res
-        .status(err.statusCode || 401)
-        .json({ message: err.message });
+        .status(error.statusCode || 401)
+        .json({ message: error.message });
     }
-
-    if (!user) {
-      return await res.status(401).json({ message: "Authentication failed" });
-    }
-
-    next();
   })(req, res, next);
 
 module.exports = {
   requiredLogin,
-  auth,
+  authenticate,
 };
