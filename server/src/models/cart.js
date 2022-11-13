@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const Book = require("./book");
-
 const Schema = mongoose.Schema;
 
 const cartItemSchema = new Schema(
@@ -27,10 +25,16 @@ const cartItemSchema = new Schema(
   { _id: false, toJSON: { virtuals: true } }
 );
 
-cartItemSchema.virtual("total").get(async function () {
-  const book = await Book.findById(this.bookId);
-  return this.quantity * book.total;
-});
+cartItemSchema
+  .virtual("total", {
+    ref: "Book",
+    localField: "bookId",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    return this.quantity * value.price;
+  });
 
 const cartSchema = new Schema(
   {

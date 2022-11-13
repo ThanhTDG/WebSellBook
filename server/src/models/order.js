@@ -3,8 +3,6 @@ const paginate = require("mongoose-paginate");
 
 mongoose.plugin(paginate);
 
-const Book = require("./book");
-
 const { ORDER_STATUS } = require("../constants");
 
 const Schema = mongoose.Schema;
