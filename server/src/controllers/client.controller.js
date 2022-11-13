@@ -13,6 +13,7 @@ const category2Json = (value) => {
   delete obj.tree;
   delete obj.createdAt;
   delete obj.updatedAt;
+  obj.children = value.children;
   return obj;
 };
 
@@ -21,9 +22,8 @@ const category2Json = (value) => {
  */
 const categories2Json = (array) => {
   array = array.map((value) => {
-    const children = value.children;
     value = category2Json(value);
-    value.children = categories2Json(children);
+    value.children = categories2Json(value.children);
     return value;
   });
   return array;
@@ -39,8 +39,17 @@ const book2Json = (value) => {
   delete obj.tree;
   delete obj.createdAt;
   delete obj.updatedAt;
-  const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
-  obj = { ...obj, shortDes, dimension, numOfReviews, rating, ratingRate };
+  const { shortDes, dimension, price, numOfReviews, rating, ratingRate } =
+    value;
+  obj = {
+    ...obj,
+    shortDes,
+    dimension,
+    price,
+    numOfReviews,
+    rating,
+    ratingRate,
+  };
   return obj;
 };
 

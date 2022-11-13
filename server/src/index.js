@@ -47,7 +47,7 @@ require("./configs/passport.config");
 
 app.use(
   morgan(
-    ":date - :method: :url :status  :res[content-length] - :response-time ms"
+    ":date - :method: :url :status  :res[content-length] byte - :response-time ms"
   )
 );
 

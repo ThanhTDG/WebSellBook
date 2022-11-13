@@ -30,23 +30,21 @@ const categorySchema = new Schema(
         ref: "Category",
       },
     ],
-    children: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
   },
   { timestamps: true }
 );
+
+categorySchema.virtual("children", {
+  ref: "Category",
+  localField: "_id",
+  foreignField: "parent",
+});
 
 categorySchema.pre("save", async function (next) {
   try {
     if (this.parent) {
       await this.populate("parent");
       this.tree = [this.parent.id, ...this.parent.tree];
-      this.parent.children.push(this.id);
-      await this.parent.save();
       this.depopulate("parent");
     }
     next();
