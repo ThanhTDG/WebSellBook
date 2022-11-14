@@ -1,8 +1,9 @@
 import { icons } from "~/assets/images";
 import { navbarOptions } from "./navbarOption.js";
 import { Search } from "@mui/icons-material";
-import styles from './navbar.module.scss';
+import styles from "./navbar.module.scss";
 import classNames from "classnames/bind";
+import PageConfig from "~/config/pages.js";
 const cx = classNames.bind(styles);
 function Navbar() {
 	return (
@@ -20,11 +21,8 @@ function Navbar() {
 					/>
 				</div>
 			</div>
-
 		</div>
 	);
 }
-
-
 
 export default Navbar;

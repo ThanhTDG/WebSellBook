@@ -7,6 +7,7 @@ const theme = createTheme({
 		fontSize: 50,
 		fontWeightLight: 500,
 	},
+
 	components: {
 		MuiCssBaseline: {
 			styleOverrides: `

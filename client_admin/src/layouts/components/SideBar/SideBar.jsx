@@ -3,19 +3,21 @@ import { icons } from "~/assets/images";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import images from "~/assets/images";
-import { Button } from '~/components/Button'
-import { default as PageConfig } from '~/config/pages'
+import { Button } from "~/components/Button";
+import { default as PageConfig } from "~/config/pages";
 import { getKey } from "~/utils/util";
 import classNames from "classnames/bind";
-import styles from './sidebar.module.scss';
+import styles from "./sidebar.module.scss";
 const cx = classNames.bind(styles);
 
 function Sidebar() {
 	return (
 		<div className={cx("sidebar")}>
 			<div className={cx("top")}>
-				<div className={cx("logo")}>
-					<img src={images.logoAndText} alt="Tôi Mua Sách" />
+				<div>
+					<a className={cx("logo")} href={PageConfig.home.route}>
+						<img src={images.logoAndText} alt="Tôi Mua Sách" />
+					</a>
 				</div>
 			</div>
 			<div className={cx("center")}>
@@ -57,7 +59,7 @@ const Option = (data, index) => {
 					navigate(PageConfig[data.key].route);
 				}}
 			>
-				{icons.Sidebar({ className: cx('icon') })[key]}
+				{icons.Sidebar({ className: cx("icon") })[key]}
 				<span>{data.title}</span>
 			</div>
 		</li>

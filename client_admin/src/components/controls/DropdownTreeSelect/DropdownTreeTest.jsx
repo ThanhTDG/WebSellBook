@@ -1,6 +1,6 @@
 import React from "react";
 import DropdownTreeSelect from "react-dropdown-tree-select";
-import { OutlinedBox } from "~/components/OutLinedBox/Outlinebox";
+import OutlinedBox from "~/components/OutLinedBoxa";
 import "./dropdownTree.scss";
 /// https://www.npmjs.com/package/react-dropdown-tree-select#styling-and-customization
 function DropdownTree({ name, label, value, data, handleChange, onBlur, mode }) {

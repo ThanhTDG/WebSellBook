@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Box, FormControl } from "@mui/material";
-import { OutlinedBox } from "~/components/OutLinedBox/Outlinebox";
+import OutlinedBox from "~/components/OutlinedBox";
 import useForm from "~/customHook/useForm";
 import Controls from "~/components/controls/";
 import Form from "~/components/Form";
 import validate from "~/utils/validate";
-import { Button } from "~/components/Button";
+import Button from "~/components/Button";
 import classNames from "classnames/bind";
 import styles from "./product.module.scss";
 import { BookConfig } from "~/config/book";
 import categories from "~/components/controls/DropdownTree/sampleData";
+import Editor from "~/components/controls/Editor/Editor";
 
 const cx = classNames.bind(styles);
 const data = {
@@ -45,10 +46,8 @@ const initialValues = {
 	publisherDate: "2020-04-30T00:00:00.000Z",
 	images: ["https://cdn0.fahasa.com/media/catalog/product/o/v/overlord-2---bia1_1.jpg"],
 	weight: 300,
-	dimension: {
-		height: 18,
-		width: 13,
-	},
+	height: 18,
+	width: 13,
 	page: 426,
 	bookCover: "Bìa mềm",
 	status: "available",
@@ -84,7 +83,7 @@ function Product() {
 			setCategory(null);
 		}
 	};
-
+	console.log(values);
 	useLayoutEffect(() => {
 		setCategory(categories.find((item) => item.id === languageBook).children);
 	}, [languageBook]);
@@ -108,6 +107,7 @@ function Product() {
 									label={BookConfig.originalPrice.title}
 									name="originalPrice"
 									type="number"
+									configNumber={BookConfig.originalPrice.config}
 									endAdornment={BookConfig.originalPrice.unit}
 									value={values.originalPrice}
 									onChange={handleInputChange}
@@ -116,7 +116,7 @@ function Product() {
 								<Controls.Input
 									label={BookConfig.discountRate.title}
 									name="discountRate"
-									configNumber={{ min: "0", max: "100", step: "2.5" }}
+									configNumber={BookConfig.discountRate.config}
 									endAdornment={BookConfig.discountRate.unit}
 									type="number"
 									value={values.discountRate}
@@ -127,6 +127,7 @@ function Product() {
 									label={BookConfig.price.title}
 									name="price"
 									type="number"
+									configNumber={BookConfig.price.config}
 									endAdornment={BookConfig.price.unit}
 									value={values.price}
 									onChange={handleInputChange}
@@ -134,7 +135,7 @@ function Product() {
 								/>
 							</div>
 							<div className={cx("category")}>
-								<OutlinedBox title={"Thể loại"} type={"small"}>
+								<OutlinedBox title={BookConfig.type.title} type={"small"}>
 									<Controls.RadioGroup
 										label={"Ngôn ngữ"}
 										name="name"
@@ -162,47 +163,139 @@ function Product() {
 							</div>
 						</OutlinedBox>
 					</div>
-					<div className={cx("specification")}>
-						<OutlinedBox title={BookConfig.specification.title}>
-							<div className={cx("name")}>
+					<div className={cx("details")}>
+						<OutlinedBox title={BookConfig.details.title}>
+							<div className={cx("authors")}>
 								<Controls.Input
-									label={BookConfig.name.title}
-									name="name"
-									value={values.name}
+									label={BookConfig.authors.title}
+									name="authors"
+									value={values.authors}
 									onChange={handleInputChange}
-									errors={errors.name}
+									errors={errors.authors}
 								/>
 							</div>
-							<div className={cx("category")}>
-								<OutlinedBox title={"Thể loại"} type={"small"}>
-									<Controls.RadioGroup
-										label={"Ngôn ngữ"}
-										name="name"
-										items={categories}
-										value={languageBook}
-										onChange={handleLanguageBook}
-										errors={errors.name}
-									/>
-									{categories.map((item) => {
-										return (
-											item.id === languageBook && (
-												<div key={item.id}>
-													<Controls.DropdownTree
-														label={languageBook}
-														name="name"
-														items={item.children}
-														onChange={handleCategory}
-														errors={errors.name}
-													/>
-												</div>
-											)
-										);
-									})}
-								</OutlinedBox>
+							<div className={cx("translators")}>
+								<Controls.Input
+									label={BookConfig.translators.title}
+									name="translators"
+									value={values.translators}
+									onChange={handleInputChange}
+									errors={errors.translators}
+								/>
 							</div>
+							<div className={cx("sku")}>
+								<Controls.Input
+									label={BookConfig.sku.title}
+									name="sku"
+									value={values.sku}
+									onChange={handleInputChange}
+									errors={errors.sku}
+								/>
+							</div>
+							<div className={cx("isbn13")}>
+								<Controls.Input
+									label={BookConfig.isbn13.title}
+									name="isbn13"
+									value={values.isbn13}
+									onChange={handleInputChange}
+									errors={errors.isbn13}
+								/>
+							</div>
+							<div className={cx("isbn10")}>
+								<Controls.Input
+									label={BookConfig.isbn10.title}
+									name="isbn10"
+									value={values.isbn10}
+									onChange={handleInputChange}
+									errors={errors.isbn10}
+								/>
+							</div>
+							<div className={cx("supplier")}>
+								<Controls.Input
+									label={BookConfig.supplier.title}
+									name="supplier"
+									value={values.supplier}
+									onChange={handleInputChange}
+									errors={errors.supplier}
+								/>
+							</div>
+							<div className={cx("publisher")}>
+								<Controls.Input
+									label={BookConfig.publisher.title}
+									name="publisher"
+									value={values.publisher}
+									onChange={handleInputChange}
+									errors={errors.publisher}
+								/>
+							</div>
+							<div className={cx("publisherDate")}>
+								<Controls.DatePicker
+									label={BookConfig.publisherDate.title}
+									name="publisherDate"
+									value={values.publisherDate}
+									onChange={handleInputChange}
+								/>
+							</div>
+							<div className={cx("expectedDate")}>
+								<Controls.DatePicker
+									label={BookConfig.expectedDate.title}
+									name="expectedDate"
+									value={values.expectedDate}
+									onChange={handleInputChange}
+								/>
+							</div>
+							<OutlinedBox title={BookConfig.specification.title} type={"small"}>
+								<Controls.Input
+									label={BookConfig.weight.title}
+									name="weight"
+									value={values.weight}
+									onChange={handleInputChange}
+									errors={errors.weight}
+								/>
+								<Controls.Input
+									label={BookConfig.height.title}
+									name="height"
+									value={values.height}
+									onChange={handleInputChange}
+									errors={errors.height}
+								/>
+								<Controls.Input
+									label={BookConfig.width.title}
+									name="width"
+									value={values.width}
+									onChange={handleInputChange}
+									errors={errors.width}
+								/>
+								<Controls.Input
+									label={BookConfig.page.title}
+									name="page"
+									value={values.page}
+									onChange={handleInputChange}
+									errors={errors.page}
+								/>
+								<Controls.Input
+									label={BookConfig.bookCover.title}
+									name="bookCover"
+									value={values.bookCover}
+									onChange={handleInputChange}
+									errors={errors.bookCover}
+								/>
+							</OutlinedBox>
+						</OutlinedBox>
+
+						<OutlinedBox title={BookConfig.descNImage.title}>
+							<Controls.Textarea
+								label={BookConfig.description.title}
+								name="description"
+								value={values.description}
+								onChange={handleInputChange}
+								errors={errors.description}
+							/>
 						</OutlinedBox>
 					</div>
-					<Button type="submit">Xác nhận</Button>
+					<Button primary type="submit">
+						Xác nhận
+					</Button>
 				</div>
 			</FormControl>
 		</Form>

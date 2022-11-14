@@ -1,10 +1,6 @@
 import React from "react";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { TextField } from "@mui/material";
-import dayjs from "dayjs";
-import { useEffect } from "react";
-import LocationProviderMui from "./LocationProviderMui";
-function DatePicker(props) {
+import { DateTimePicker as MuiDateTimePicker } from "@mui/x-date-pickers";
+function DateTimePicker() {
 	const { name, label, value, onChange } = props;
 	const convertDayjs = (value) => {
 		if (typeof value === "string") {
@@ -20,7 +16,7 @@ function DatePicker(props) {
 	});
 	return (
 		<LocationProviderMui>
-			<DesktopDatePicker
+			<MuiDateTimePicker
 				name={name}
 				label={label}
 				value={convertDayjs(value)}
@@ -31,4 +27,4 @@ function DatePicker(props) {
 	);
 }
 
-export default DatePicker;
+export default DateTimePicker;

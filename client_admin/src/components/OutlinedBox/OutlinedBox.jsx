@@ -1,6 +1,6 @@
 import React from "react";
 import SvgIcon from "@mui/material/SvgIcon";
-import styles from "./outlineBox.module.scss";
+import styles from "./outlinedBox.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
@@ -25,4 +25,4 @@ function OutlinedBox({ icon, title, type = "normal", children }) {
 	);
 }
 
-export { OutlinedBox };
+export default OutlinedBox;
