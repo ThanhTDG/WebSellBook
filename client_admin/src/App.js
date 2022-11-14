@@ -3,8 +3,6 @@ import { privateRoutes } from "~/routes/index.js";
 import { DefaultLayout } from "~/layouts";
 import { Fragment } from "react";
 
-
-
 function App() {
 	return (
 		

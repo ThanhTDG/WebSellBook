@@ -101,7 +101,6 @@ export default function TableProduct(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
-
         </Paper>
     );
 }

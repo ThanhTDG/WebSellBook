@@ -16,6 +16,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { TitleListProduct } from './TitleTableProducts';
 import { Link } from 'react-router-dom';
+import './table.scss';
+
 function createData(name, calories, fat, carbs, protein, price) {
     return {
         name,
@@ -66,10 +68,10 @@ function Row(props) {
                 <TableCell component="th" scope="row" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} >
                     <Link to={curentUrl + "/1"}>   {row.name}</Link>
                 </TableCell>
-                <TableCell align="right">{row.calories} </TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell size="medium" align="right">{row.calories} </TableCell>
+                <TableCell size="medium" align="right">{row.fat}</TableCell>
+                <TableCell size="medium" align="right">{row.carbs}</TableCell>
+                <TableCell size="medium" align="right">{row.protein}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -138,10 +140,10 @@ const products = [
 function renderHeaderTable() {
     return (
         <TableHead>
-            <TableRow>
+            <TableRow >
                 <TableCell />
                 {TitleListProduct.map((header, index) => {
-                    return <TableCell key={header.key + index} align={index === 0 ? "left" : "right"} >{header.nameVN}</TableCell>
+                    return <TableCell sx={{ fontSize: 16, fontWeight: 500 }} key={header.key + index} align={index === 0 ? "left" : "right"} >{header.nameVN}</TableCell>
                 })
                 }
             </TableRow>
@@ -152,9 +154,9 @@ function renderHeaderTable() {
 function TableProduct() {
     return (
         <TableContainer >
-            <Table aria-label="collapsible table">
+            <Table aria-label="collapsible table" >
                 {renderHeaderTable()}
-                <TableBody>
+                <TableBody >
                     {products.map((row) => (
                         <Row key={row.name} row={row} />
                     ))}

@@ -35,7 +35,7 @@ function TabProduct() {
                     allowScrollButtonsMobile>
                     {
                         TitleTabProducts.map((title, index) => {
-                            return < Tab sx={{ fontSize: 16, fontWeight: 700 }} key={"label-tab-product-" + index} label={title.nameVN} />
+                            return < Tab sx={{ fontSize: 'subtitle1.fontSize' }} key={"label-tab-product-" + index} label={title.nameVN} />
                         })
                     }
                 </Tabs>
