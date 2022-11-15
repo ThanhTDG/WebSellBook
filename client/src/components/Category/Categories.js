@@ -28,7 +28,12 @@ const Categories = (props) => {
                             <div className='categories-bounder'>
                                 {
                                     apiCategory.children.map((category) => (
-                                        <CategoryItem onAddTag={props.onAddTag} category={category} color={category.hasOwnProperty('children') === true?'var(--Pink)':'var(--Blue)'} />
+                                        <CategoryItem
+                                            isHaveChild={category.hasOwnProperty('children')}
+                                            isParent={true}
+                                            onAddTag={props.onAddTag}
+                                            category={category}
+                                            color={'var(--Pink)'} />
                                     ))
                                 }
                             </div>

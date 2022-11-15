@@ -8,7 +8,8 @@ const BookStyleSmall = (props) => {
     const bookData = props.bookData
 
     const userFavoriteBookImageStyle = {
-        background: `url(${bookData.images[0]}) center center`,
+        backgroundImage: `url(${bookData.images[0]})`,
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         width: '100%',
         height: `${props.height}px`,
@@ -33,7 +34,7 @@ const BookStyleSmall = (props) => {
                 <Link to='/bookdetail' state={{ bookId: bookData._id}}>
                     <div className='user-favorite-book-content'>
                         <span className='user-favorite-book-title'>{bookData.name.length>40?bookData.name.substring(0, 40) + '...' : bookData.name}</span>
-                        <span className='user-favorite-book-author'>{bookData.supplier}</span>
+                        <span className='user-favorite-book-author'>{bookData.supplier.length>28?bookData.supplier.substring(0, 28)+'...': bookData.supplier}</span>
                     </div>
                     <div className='book-style-description-containers'>
                         <div className='book-style-values-container'>

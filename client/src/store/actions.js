@@ -1,4 +1,4 @@
-import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_CATEGORY, UPDATE_BOOK_IN_CART } from "./constants";
+import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, UPDATE_BOOK_IN_CART } from "./constants";
 
 export const addBookToCart = payload =>({
     type: ADD_BOOK_TO_CART,
@@ -25,5 +25,10 @@ export const loginByUser = payload =>({
 
 export const selectCategory = payload =>({
     type: SELECT_CATEGORY,
+    payload
+})
+
+export const selectCategoryChild = payload =>({
+    type: SELECT_CATEGORY_CHILD,
     payload
 })

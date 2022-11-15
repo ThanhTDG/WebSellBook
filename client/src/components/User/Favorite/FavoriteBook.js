@@ -8,7 +8,8 @@ const FavoriteBook = (props) => {
     const [isHoverOptionButtons, setIsHoverOptionButtons] = useState(false)
     const bookData = props.bookData
     const userFavoriteBookImageStyle = {
-        background: `url(${bookData.images[0]}) center center`,
+        backgroundImage: `url(${bookData.images[0]})`,
+        backgroundPosition:'center',
         backgroundRepeat: 'no-repeat',
         width: '100%',
         height: `${props.height}px`,

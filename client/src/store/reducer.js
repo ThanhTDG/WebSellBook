@@ -1,4 +1,4 @@
-import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_CATEGORY, UPDATE_BOOK_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, UPDATE_BOOK_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
 
@@ -22,7 +22,8 @@ const initState = {
             isSelected: false
         }
     ],
-    categoryId: 'a'
+    categoryId: 'a',
+    categoryChildId: 'b'
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -54,10 +55,16 @@ function reducer(state, action) {
                 isLogin: true
             }
         case SELECT_CATEGORY:
-            return{
+            return {
                 ...state,
-                categoryId: action.payload
+                categoryId: action.payload,
             }
+        case SELECT_CATEGORY_CHILD:
+            return {
+                ...state,
+                categoryChildId: action.payload
+            }
+
         default:
             throw new Error('Invalid actions')
     }
