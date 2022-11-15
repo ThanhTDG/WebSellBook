@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const JwtStrategy = require("passport-jwt").Strategy;
@@ -15,7 +14,7 @@ passport.deserializeUser(async (id, done) => {
     const user = await User.findById(id);
     done(null, user);
   } catch (error) {
-    done(error);
+    done(error, false);
   }
 });
 
@@ -34,13 +33,16 @@ passport.use(
 
       return done(null, user);
     } catch (error) {
-      return done(error);
+      return done(error, false);
     }
   })
 );
 
+const cookieExtractor = (req) =>
+  req.cookies.token || ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+
 const jwtOpts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: cookieExtractor,
   secretOrKey: process.env.JWT_SECRET,
 };
 
@@ -55,7 +57,7 @@ passport.use(
 
       return done(null, user);
     } catch (error) {
-      return done(error);
+      return done(error, false);
     }
   })
 );

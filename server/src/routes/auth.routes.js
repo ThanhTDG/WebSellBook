@@ -1,29 +1,24 @@
 const express = require("express");
-const passport = require("passport");
 
+const controller = require("../controllers/auth.controller");
 const {
   authenticate,
   requiredLogin,
 } = require("../middlewares/auth.middleware");
-const controller = require("../controllers/auth.controller");
-const { upload } = require("../services/upload.service");
+const { uploadAvatar } = require("../services/upload.service");
 
 const router = express.Router();
 
 router.post("/signup", controller.signUp);
 router.post("/signin", requiredLogin, controller.signIn);
-router.post(
-  "/signout",
-  passport.authenticate("jwt", { session: false }),
-  controller.signOut
-);
+router.post("/signout", authenticate, controller.signOut);
 
 router.get("/profile", authenticate, controller.getProfile);
 router.put("/profile", authenticate, controller.setProfile);
 router.put(
   "/uploadavatar",
   authenticate,
-  upload("avatars").single("avatar"),
+  uploadAvatar,
   controller.uploadAvatar
 );
 router.put("/changepassword", authenticate, controller.changePassword);

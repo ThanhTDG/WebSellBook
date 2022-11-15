@@ -1,4 +1,5 @@
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 // const session = require("cookie-session");
 const session = require("express-session");
@@ -27,6 +28,8 @@ const app = express();
 
 // Middlewares
 app.use(cors());
+
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -24,6 +24,12 @@ const upload = (folder) => {
   return multer({ storage });
 };
 
+/**
+ * Upload avatar
+ */
+const uploadAvatar = () => upload("avatars").single("avatar");
+
 module.exports = {
   upload,
+  uploadAvatar,
 };

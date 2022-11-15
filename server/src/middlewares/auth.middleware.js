@@ -1,4 +1,5 @@
 const passport = require("passport");
+const User = require("../models/user");
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
@@ -19,16 +20,12 @@ const requiredLogin = (req, res, next) =>
       }
 
       req.login(user, async (err) => {
-        try {
-          if (err) {
-            throw new ErrorHandler(401, err.message);
-          }
-          next();
-        } catch (error) {
+        if (err) {
           return await res
-            .status(error.statusCode || 401)
-            .json({ message: error.message });
+            .status(err.statusCode || 401)
+            .json({ message: err.message });
         }
+        next();
       });
     } catch (error) {
       return await res
@@ -54,7 +51,14 @@ const authenticate = async (req, res, next) =>
         throw new ErrorHandler(401, "Authentication failed");
       }
 
-      next();
+      req.login(user, async (err) => {
+        if (err) {
+          return await res
+            .status(err.statusCode || 401)
+            .json({ message: err.message });
+        }
+        next();
+      });
     } catch (error) {
       return await res
         .status(error.statusCode || 401)

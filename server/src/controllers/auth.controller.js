@@ -1,7 +1,6 @@
-const passport = require("passport");
+require("dotenv").config();
 
 const User = require("../models/user");
-const { uploadToCloudinary } = require("../services/upload.service");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 
@@ -41,7 +40,13 @@ const signIn = async (req, res) => {
   try {
     const user = req.user;
     const token = user.generateAuthToken();
-    await res.json({ token });
+    await res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: process.env.JWT_EXPIRES,
+      })
+      .json({ token });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -54,12 +59,38 @@ const signIn = async (req, res) => {
  */
 const signOut = async (req, res) => {
   try {
-    // req.logout();
-    await res.json({ message: "Log out successful" });
+    req.logout(async (err) => {
+      if (err) {
+        return await res
+          .status(err.statusCode || 401)
+          .json({ message: err.message });
+      }
+      await res.clearCookie("token").json({ message: "Log out successful" });
+    });
   } catch (error) {
     await res.status(401).json({ message: error.message });
   }
 };
+
+const user2json = ({
+  _id,
+  firstName,
+  lastName,
+  email,
+  phone,
+  sex,
+  birthday,
+  avatar,
+}) => ({
+  _id,
+  firstName,
+  lastName,
+  email,
+  phone,
+  sex,
+  birthday,
+  avatar,
+});
 
 /**
  * Get profile
@@ -68,19 +99,8 @@ const signOut = async (req, res) => {
  */
 const getProfile = async (req, res) => {
   try {
-    const { id, firstName, lastName, email, phone, sex, birthday, avatar } =
-      req.user;
-    const user = {
-      id,
-      firstName,
-      lastName,
-      email,
-      phone,
-      sex,
-      birthday,
-      avatar,
-    };
-    await res.json(user);
+    const user = req.user;
+    await res.json(user2json(user));
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -94,21 +114,16 @@ const getProfile = async (req, res) => {
 const setProfile = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, sex, birthday } = req.body;
-    const data = req.user;
-    data.overwrite({ firstName, lastName, email, phone, sex, birthday });
-    const newData = await data.save();
+    const user = req.user;
+    const data = await User.findByIdAndUpdate(
+      user._id,
+      { firstName, lastName, email, phone, sex, birthday },
+      { new: true }
+    );
 
-    const user = {
-      id: newData.id,
-      firstName: newData.firstName,
-      lastName: newData.lastName,
-      email: newData.email,
-      phone: newData.phone,
-      sex: newData.sex,
-      birthday: newData.birthday,
-      avatar: newData.avatar,
-    };
-    await res.status(200).json({ message: "User modified successfully", user });
+    await res
+      .status(200)
+      .json({ message: "User modified successfully", user: user2json(data) });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }

@@ -24,13 +24,16 @@ const categories2Json = (array) => {
   array = array.map((value) => {
     value = category2Json(value);
     value.children = categories2Json(value.children);
+    if (value.children.length === 0) {
+      delete value.children;
+    }
     return value;
   });
   return array;
 };
 
 /**
- * @param {Book} value
+ * @param {Book} value Book
  */
 const book2Json = (value) => {
   let obj = value.toObject();
@@ -54,7 +57,7 @@ const book2Json = (value) => {
 };
 
 /**
- * @param {Comment} value
+ * @param {Comment} value Comment
  */
 const comment2Json = (value) => {
   let obj = value.toObject();

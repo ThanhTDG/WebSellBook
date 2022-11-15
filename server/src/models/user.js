@@ -5,7 +5,7 @@ const validator = require("validator").default;
 mongoose.plugin(paginate);
 
 const { ROLE } = require("../constants");
-const ErrorHandler = require('../utils/errorHandler');
+const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");
 const { signToken } = require("../utils/jwt");
@@ -85,7 +85,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
       // select: false,
     },
     sex: {
