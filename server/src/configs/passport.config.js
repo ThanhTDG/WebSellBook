@@ -26,7 +26,6 @@ passport.use(
   new LocalStrategy(localOpts, async (username, password, done) => {
     try {
       const user = await User.findByCredentials(username, password);
-
       if (!user) {
         return done(null, false);
       }
@@ -50,7 +49,6 @@ passport.use(
   new JwtStrategy(jwtOpts, async (payload, done) => {
     try {
       const user = await User.findById(payload.id);
-
       if (!user) {
         return done(null, false);
       }

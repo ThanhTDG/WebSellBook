@@ -3,5 +3,5 @@ module.exports = {
   BEST_SELLER: "best-seller",
   NEWEST: "newest",
   LOW2HIGH: "low-to-high",
-  HIGH2lOW: "high-to-low",
+  HIGH2LOW: "high-to-low",
 };

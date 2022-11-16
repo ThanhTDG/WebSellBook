@@ -7,25 +7,25 @@ const { ORDER_STATUS } = require("../constants");
 
 const Schema = mongoose.Schema;
 
-const orderItemSchema = new Schema(
-  {
-    bookId: {
-      type: Schema.Types.ObjectId,
-      ref: "Book",
-      required: true,
-      unique: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
+const orderItemSchema = new Schema({
+  bookId: {
+    type: Schema.Types.ObjectId,
+    ref: "Book",
+    required: true,
+    unique: true,
   },
-  { _id: false, toJSON: { virtuals: true } }
-);
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  originalPrice: Number,
+  discountRate: Number,
+});
+
+orderItemSchema.virtual("price").get(function () {
+  const price = this.originalPrice * (1 - this.discountRate / 100);
+  return Math.round(price / 1e3) * 1e3;
+});
 
 orderItemSchema.virtual("total").get(function () {
   return this.quantity * this.price;

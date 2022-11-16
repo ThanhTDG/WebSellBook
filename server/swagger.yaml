@@ -677,7 +677,7 @@ paths:
       - Sản phẩm
       summary: Sử dụng để lấy danh sách danh mục
       description: |
-        Lấy danh sách danh mục theo cây.
+        Lấy danh sách danh mục theo dạng cây.
       responses:
         "200":
           description: OK
@@ -977,6 +977,10 @@ components:
           type: number
           description: Tồn kho
           example: 100
+        sold:
+          type: number
+          description: Đã bán
+          example: 10
         originalPrice:
           type: number
           description: Giá bìa

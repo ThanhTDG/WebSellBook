@@ -82,7 +82,7 @@ const sortMethod = (sort) => {
       return "-createdAt";
     case BOOK_SORT.LOW2HIGH:
       return "price";
-    case BOOK_SORT.HIGH2lOW:
+    case BOOK_SORT.HIGH2LOW:
       return "-price";
     default:
       return "";
