@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddToFavoriteButton.scss'
 
 const AddToFavoriteButton = (props) => {
     const mtop = props.top;
@@ -26,16 +27,18 @@ const AddToFavoriteButton = (props) => {
        if(e.target.style.backgroundColor === `var(--Gray)`){
             e.target.style.backgroundColor = `var(--Pink)`
        }else{
-        e.target.style.backgroundColor = `var(--Gray)`
+            e.target.style.backgroundColor = `var(--Gray)`
        }
     }
     return (
         <div>
             <button style={buttonStyle} 
             onClick={(e)=>onFavoriteClick(e)}
+            className='btn-add-to-favorite'
             ><img style={imgStyle} 
             src={require('../../assets/icons/ic-favorite-white.png')} 
             alt='icon favorite'
+            className='btn-add-to-favorite-img'
             />Yêu thích</button>
         </div>
     );

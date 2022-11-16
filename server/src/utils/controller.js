@@ -3,28 +3,52 @@ const mongoose = require("mongoose");
 const ErrorHandler = require("./errorHandler");
 
 /**
- * Model controllers for admin pages
- * @param {mongoose.Model} model
- * @returns The methods for control routes
+ * @typedef {Object} data
  */
-const controller = (model) => {
+
+/**
+ * Callback get data from body of request
+ * @callback GetData
+ * @param {data} body Body of request
+ * @returns {void}
+ */
+
+/**
+ * Callback get model to json
+ * @callback ToJson
+ * @param {mongoose.Model} data
+ * @returns {Object}
+ */
+
+const Controller = class {
+  /**
+   * @param {mongoose.Model} model
+   * @param {GetData} getData
+   * @param {ToJson} toJson
+   */
+  constructor(model, getData, toJson) {
+    this.model = model;
+    this.getData = getData;
+    this.toJson = toJson;
+  }
+
   /**
    * Get array of documents
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  const getAll = async function (req, res) {
+  getAll = async (req, res) => {
     try {
-      const query = req.query;
-      const page = query.page || 0;
-      const limit = query.limit || 0;
-
+      const { page = 0, limit = 0 } = req.query;
       const options = {
         page,
         limit,
         pagination: page && limit,
       };
-      const data = await model.paginate({}, options);
+      const data = await this.model.paginate({}, options);
+      if (this.toJson) {
+        data.docs = data.docs.map((value) => this.toJson(value));
+      }
 
       await res.json(data);
     } catch (error) {
@@ -37,15 +61,15 @@ const controller = (model) => {
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  const get = async (req, res) => {
+  get = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await model.findById(id).exec();
-
+      const data = await this.model.findById(id);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      await res.json(data);
+
+      await res.json(this.toJson(data));
     } catch (error) {
       await res
         .status(error.statusCode || 400)
@@ -58,33 +82,33 @@ const controller = (model) => {
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  const create = async (req, res) => {
+  create = async (req, res) => {
     try {
-      const body = model.getData(req.body);
-      const data = new model(body);
+      const body = this.getData(req.body);
+      const data = new this.model(body);
       const newData = await data.save();
-      await res.status(201).json(newData);
+      await res.status(201).json(this.toJson(newData));
     } catch (error) {
       await res.status(400).json({ message: error.message });
     }
   };
 
   /**
-   * Update data
+   * Update data by id
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  const update = async (req, res) => {
+  update = async (req, res) => {
     try {
       const id = req.params.id;
-      const body = req.body;
+      const body = this.getData(req.body);
       const options = { new: true };
-      const data = await model.findByIdAndUpdate(id, body, options).exec();
-
+      const data = await this.model.findByIdAndUpdate(id, body, options);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
-      await res.json(data);
+
+      await res.json(this.toJson(data));
     } catch (error) {
       await res
         .status(error.statusCode || 400)
@@ -97,14 +121,14 @@ const controller = (model) => {
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  const remove = async (req, res) => {
+  remove = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await model.findByIdAndDelete(id).exec();
-
+      const data = await this.model.findByIdAndDelete(id);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
+
       await res
         .status(204)
         .send(`Document with {_id: '${id}'} has been deleted...`);
@@ -115,13 +139,13 @@ const controller = (model) => {
     }
   };
 
-  return {
-    getAll,
-    get,
-    create,
-    update,
-    remove,
-  };
+  methods = () => ({
+    getAll: this.getAll,
+    get: this.get,
+    create: this.create,
+    update: this.update,
+    remove: this.remove,
+  });
 };
 
-module.exports = controller;
+module.exports = Controller;

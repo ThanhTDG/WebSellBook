@@ -1,0 +1,46 @@
+#category-header{
+    font-family: 'MontserratMedium';
+    font-size: 24px;
+    color: var(--Darkest);
+}
+.books-tool-bar-container{
+    height: 48px;
+    padding: 0;
+    font-family: 'MontserratMedium';
+    font-size: 24px;
+}
+.categories-col-container{
+    display: block;
+}
+.books-tb-item-container{
+    padding-right: 24px;
+    font-size: 16px;
+    font-family: 'MontserratRegular';
+}
+#books-body{
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+}
+
+.books-row{
+    margin: 0;
+    padding: 0;
+}
+#books-tags-container{
+    display: block;
+    margin-bottom: 12px;
+}
+.btn-tb-container{
+    border: none;
+    background-color: var(--White);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.btn-tb-container:hover{
+    background-color: var(--LightGray);
+}
+#books-search-text{
+    color: var(--Orange);
+    display: inline;
+}

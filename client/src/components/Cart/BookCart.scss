@@ -1,0 +1,362 @@
+#book-cart-container{
+    margin-left: 48px;
+    margin-right: 48px;
+    margin-bottom: 124px;
+}
+#book-cart-title{
+    margin-top: 24px;
+    display: flex;
+    color: var(--Darkest);
+    font-family: 'MontserratRegular';
+    font-size: 24px;
+    p{
+        font-family: 'MontserratMedium';
+        font-size: 36px;
+    }
+    span{
+        margin-top: 14px;
+        margin-left: 48px;
+    }
+}
+#book-cart-tool-bar{
+    color: var(--Darkest);
+    font-family: 'MontserratRegular';
+    font-size: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    background-color: var(--LightGray);
+    border-radius: 12px;
+    height: 48px;
+    margin-bottom: 24px;
+    #tb-check-box{
+        width: 24px;
+        height: 24px;
+        accent-color: var(--DarkBlue);
+        margin-top: 8px;
+        transition-duration: 0.4s;
+    }
+}
+.book-cart-book{
+    color: var(--Darkest);
+    font-family: 'MontserratRegular';
+    font-size: 16px;
+    margin-bottom: 24px;
+    background-color: var(--LightGray);
+    border-radius: 12px;
+    padding: 12px;
+    .book-in-cart-check-box-container{
+        display: flex;
+        align-self: center;
+    }
+    .tb-book-check-box{
+        width: 24px;
+        height: 24px;
+        border-color: var(--Gray);
+        accent-color: var(--DarkBlue);
+    }
+    .book-in-cart-content{
+        position: relative;
+        height: 124px;
+        :first-child{
+            font-size: 16px;
+            font-family: 'MontserratMedium';
+        }
+        span{
+            display: block;
+        }
+        .discount-image{
+            width: 120px;
+        }
+        .discount-content{
+            font-size: 12px;
+            position:absolute;
+            top:55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--Pink);
+          }
+        .book-in-cart-price-container{
+            
+            position: absolute;
+            bottom: 0;
+            .book-in-cart-before-price{
+                font-size: 16px;
+                color: var(--Gray);
+                text-decoration: line-through;
+                font-family: 'MontserratRegular';
+            }
+            :first-child{
+                display: inline;
+            }
+            span{
+                font-size: 24px;
+                color: var(--Orange);
+                font-family: 'MontserratRegular';
+            }
+            .book-in-cart-discount{
+                color: var(--Pink);
+                display: inline;
+                font-size: 16px;
+                margin-left: 12px;
+                font-family: 'MontserratRegular';
+            }
+            
+        }
+        .book-in-cart-discount{
+            margin-top: 8px;
+        }
+
+    }
+    .book-in-cart-amount{
+        input{
+            width: 40%;
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-left: 8px;
+            margin-right: 8px;
+            border: 2px solid var(--Darkest);
+            border-radius: 4px;
+        }
+        align-self: center;
+        button {
+            width: 36px;
+            height: 36px;
+            display: inline;
+            background-color: var(--LightGray);
+            border: none;
+            padding: 0;
+            img{
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+    .book-in-cart-prices{
+        align-self: center;
+        span{
+            text-align: center;
+            display: inline;
+            color: var(--Pink);
+            font-size: 32px;
+        }
+        button{
+            height: 48px;
+            width: 48px;
+            border: none;
+            background-color: var(--Gray);
+            border-radius: 24px;
+            float: right;
+            transition-duration: 0.4s;
+            
+        }
+        button:hover{
+            background-color: var(--Red) !important;
+            background-size: 104% !important;
+        }
+    }
+}
+.book-in-cark-purchase-container{
+    padding: 0;
+    margin: -12px;
+    font-family: 'MontserratRegular';
+    font-size: 24px;
+    .book-in-cark-purchase-btn{
+        background-color: var(--LightGray);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 0;
+    }
+    #btn-cart-purchase{
+        height: 48px;
+        padding-left: 24px;
+        padding-right: 24px;
+        background-color: var(--Pink);
+        border: none;
+        border-radius: 24px;
+        font-family: 'MontserratMedium';
+        color: var(--White);
+        font-family: 24px;
+        float: right;
+        width: 100%;
+        font-size: 24px;
+        margin-top: 24px;
+        transition-duration: 0.4s;
+    }
+    #btn-cart-purchase:hover{
+        background-color: var(--Orange);
+    }
+    .right-align-collumn{
+       text-align: right;
+    }
+    .left-align-collumn{
+        font-family: 'MontserratMedium';
+    }
+}
+
+@media only screen and (max-width:800px ){
+    #book-cart-title{
+        font-size: 24px;
+        display: block;
+        p{
+            font-family: 'MontserratMedium';
+            font-size: 24px;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+        span{
+            display: block;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+    }
+    #book-cart-tool-bar{
+        font-size: 16px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 4px;
+        .to-hide{
+            display: none !important;
+        }
+        .tb-cb{
+            width: 32px;
+        }
+        .tb-title{
+            width: 80%;
+            margin-top: 8px;
+            margin-left: 12px;
+        }
+    }
+
+    .book-cart-book{
+        font-size: 16px;
+        margin-bottom: 24px;
+        background-color: var(--LightGray);
+        border-radius: 12px;
+        padding: 0;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        .book-in-cart-check-box-container{
+            width: 42px;
+        }
+        .book-in-cart-content-image-container{
+            width: 80%;
+        }
+        .book-in-cart-image-container{
+            width: 40%;
+        }
+        .book-in-cart-content{
+            width: 60%;
+            :first-child{
+                font-size: 12px;
+                font-family: 'MontserratMedium';
+            }
+            span{
+                display: block;
+                font-size: 8px;
+            }
+            .book-in-cart-price-container{
+                position: absolute;
+                bottom: 0;
+                .book-in-cart-before-price{
+                    font-size: 8px;
+                }
+                span{
+                    font-size: 12px;
+                }
+                .book-in-cart-discount{
+                    color: var(--Pink);
+                    display: inline;
+                    font-size: 8px;
+                    margin-left: 12px;
+                    font-family: 'MontserratRegular';
+                }
+                
+            }
+        }
+        .book-in-cart-amount{
+            width: 50%;
+            margin-top: 12px;
+            input{
+                width: 40%;
+                padding-left: 8px;
+                padding-right: 8px;
+                margin-left: 8px;
+                margin-right: 8px;
+                border: 2px solid var(--Gray);
+                border-radius: 4px;
+                font-size: 12px;
+            }
+            align-self: center;
+            button {
+                width: 24px;
+                height: 24px;
+                display: inline;
+                background-color: var(--LightGray);
+                border: none;
+                padding: 0;
+                img{
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+        .book-in-cart-prices{
+            align-self: center;
+            width: 50%;
+            margin-top: 12px;
+            span{
+                text-align: center;
+                display: inline;
+                color: var(--Pink);
+                font-size: 16px;
+            }
+            button{
+                height: 32px;
+                width: 32px;
+                padding: 0;
+                border: none;
+                background-color: var(--Gray);
+                border-radius: 24px;
+                float: right;
+            }
+        }
+    }
+
+    .book-in-cark-purchase-container{
+        padding: 0;
+        margin: -12px;
+        font-family: 'MontserratRegular';
+        font-size: 16px;
+        .book-in-cark-purchase-btn{
+            background-color: var(--LightGray);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 0;
+        }
+        #btn-cart-purchase{
+            height: 48px;
+            padding-left: 24px;
+            padding-right: 24px;
+            background-color: var(--Pink);
+            border: none;
+            border-radius: 24px;
+            font-family: 'MontserratMedium';
+            color: var(--White);
+            font-family: 24px;
+            float: right;
+            width: 100%;
+            font-size: 24px;
+            margin-top: 12px;
+        }
+        .right-align-collumn{
+           text-align: left;
+           color: var(--Orange);
+        }
+        .left-align-collumn{
+            font-family: 'MontserratMedium';
+        }
+    }
+}

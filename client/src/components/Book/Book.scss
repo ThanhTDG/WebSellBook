@@ -3,5 +3,27 @@ a{
     color: var(--Darkest);
 }
 a:hover{
-    color: var(--Blue);
+    color: var(--DarkBlue);
+}
+
+.book-container-effect:hover{
+    .book-image-effect{
+        filter: brightness(0.6) !important;
+    }
+}
+@media only screen and (max-width:600px ){
+    .book-image-effect{
+        min-width: 168px !important;
+        margin: 0 !important;
+        padding: 0px !important;
+        width: 168px !important;
+        display: flex;
+        justify-items: center;
+    }
+    .book-container-effect{
+        min-width: 168px !important;
+    }
+    .book-context-title-effect{
+        font-size: 16px !important;
+    }
 }

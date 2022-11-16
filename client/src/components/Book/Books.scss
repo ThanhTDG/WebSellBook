@@ -23,9 +23,32 @@ $rowIncrement: 10px;
 
 @media only screen and (max-width:600px ) {
     .book-item{
-        width: 100%;
+        width: 168px;
         display: flex;
         justify-content: center;
+        padding: 0 !important;
+        margin: 0 !important;
     }
-    
+    .display-card-books-container{
+        display: flex;
+        width: 180px;
+    }
+    .pin_container {
+        margin-top: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 180px);
+        grid-auto-rows: $rowIncrement;
+        justify-content: center;
+    }
+    .books-title-effect{
+       margin: 0 !important;
+       padding: 0 !important;
+       margin-left: 24px !important;
+       margin-right: 24px !important;
+       font-size: 24px !important;
+       margin-top: 48px !important;
+    }
 }

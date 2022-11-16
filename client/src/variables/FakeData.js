@@ -1,11 +1,55 @@
+import { Categories } from "./CategoriesFake";
+
 export const FakeData = {
+    users: [
+        {
+            name: 'Nham vương Đế quân',
+            avatar: '/assets/fake-data/avatar-profile.jpg',
+            description: 'Chiến thần Zhongli',
+        },
+        {
+            name: 'Lôi thần',
+            avatar: '/assets/fake-data/avatar-raiden.png',
+            description: 'Hiikimori',
+        },
+        {
+            name: 'Barbatos',
+            avatar: '/assets/fake-data/avatar-venti.png',
+            description: 'Tên hát rong, Con nghiện',
+        },
+    ],
+    comments: [
+        {
+            ratingPoint: 5,
+            content: 'I will have order. Let have a purchase, Chidle!',
+            sendDate: '02:20 am 12/02/2022'
+        },
+        {
+            ratingPoint: 1,
+            content: 'Có khả năng sử dụng năng lượng nguyên tố không cần Vision. Ngoại lệ đã xuất hiện. Ngoại lệ - kẻ thù của sự Vĩnh Hằng',
+            sendDate: '02:20 am 12/02/2022'
+        },
+        {
+            ratingPoint: 4,
+            content: 'È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé È hé ',
+            sendDate: '02:20 am 12/02/2022'
+        },
+    ],
+    longComment: {
+        ratingPoint: 5,
+        content: `Asuna là một học sinh tiểu học. Sau cái chết của cha mình, cô bé buộc phải trưởng thành sớm hơn các bạn cùng trang lứa vì mẹ Asuna là y tá, thường xuyên trực dài ngày tại bệnh viện. Asuna trải qua những ngày của mình trong một hang động trong núi, lắng nghe thứ âm nhạc kì lạ phát ra từ thỏi pha lê cha mình để lại và cho một sinh vật giống mèo mà Asuna gọi là Mimi.
+
+        Một ngày nọ, khi băng qua cầu, Asuna bị một sinh vật`,
+        sendDate: '02:20 am 12/02/2022'
+    },
     books: [
         {
+            id: 'bk01',
             title: 'Những đứa trẻ đứa trẻ đuổi theo tinh tú',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/d5/56/e1/230844af8f876d7924829e25a1354358.jpg',
             isfavorite: 'false',
-            description:`Asuna là một học sinh tiểu học. Sau cái chết của cha mình, cô bé buộc phải trưởng thành sớm hơn các bạn cùng trang lứa vì mẹ Asuna là y tá, thường xuyên trực dài ngày tại bệnh viện. Asuna trải qua những ngày của mình trong một hang động trong núi, lắng nghe thứ âm nhạc kì lạ phát ra từ thỏi pha lê cha mình để lại và cho một sinh vật giống mèo mà Asuna gọi là Mimi.
+            description: `Asuna là một học sinh tiểu học. Sau cái chết của cha mình, cô bé buộc phải trưởng thành sớm hơn các bạn cùng trang lứa vì mẹ Asuna là y tá, thường xuyên trực dài ngày tại bệnh viện. Asuna trải qua những ngày của mình trong một hang động trong núi, lắng nghe thứ âm nhạc kì lạ phát ra từ thỏi pha lê cha mình để lại và cho một sinh vật giống mèo mà Asuna gọi là Mimi.
 
             Một ngày nọ, khi băng qua cầu, Asuna bị một sinh vật lạ đột kích và được một thanh niên lạ mặt cứu giúp. Cậu ta xưng tên là Shun, đến từ vùng đất Agartha. Asuna băng bó vết thương cho Shun và kể cho cậu nghe về thứ âm nhạc mà radio của cô bé bắt được. Cuộc gặp gỡ ngắn ngủi của Asuna và Shun chấm dứt khi Shun chết trong khi nới tay với sao.
             
@@ -24,59 +68,60 @@ export const FakeData = {
             Bên dưới vách núi, cả hai tìm thấy Cánh cổng sinh tử và đi vào. Họ gặp lại Morisaki. Asuna không lâu sau bị linh hồn vợ Morisaki chiếm giữ thân xác. Trong thời gian thân xác bị chiếm giữ, Asuna gặp lại linh hồn của Shun. Shin giận dữ cố hết sức để phá hủy clavis nhưng Morisaki ngăn cản vì không muốn mất vợ lần nữa. Tuy nhiên, Shin đã phá hủy được clavis và hồn Lisa buộc phải thoát khỏi thân xác Asuna. Trước khi biến mất hoàn toàn, Lisa bảo Morisaki hãy đi tìm hạnh phúc mà không có mình. Asuna tỉnh lại sau khi từ biệt Shun trong mơ, nhìn thấy Morisaki suy sụp đến mức van xin Shin giết chết mình nhưng Shin nói ông ta phải sống.
             
             Phim kết thúc khi Asuna quay lại trên mặt đất, còn Shin và Morisaki ở lại.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 7000,
                 ratingPoint: 3.5,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4000},
-                    {title: 5, reviews: 1900},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4000 },
+                    { title: 5, reviews: 1900 },
                 ]
             }
         },
         {
+            id: 'bk02',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
@@ -91,59 +136,60 @@ export const FakeData = {
             Sau đó, cậu ra khu vườn và bắt gặp Yukari bên một dòng nước. Tại đây, cậu đã đọc bài tanka đối lại bài tanka ngày trước của Yukari. Cô chúc mừng cậu và nói rằng đã tưởng cậu sẽ nhận ra cô là giáo viên văn học cổ điển. Hai người tiếp tục trò chuyện vui vẻ cho đến khi trời mưa giông khiến cả hai người đều bị ướt và họ chạy đến căn hộ của Yukari. Ở căn hộ, Takao đã thổ lộ tình cảm của mình với Yukari và nhận lại sự chối từ tế nhị của cô (cậu bị sửa cách xưng hô và được Yukari cho biết cô sẽ quay về quê). Takao ra về trong sự ngỡ ngàng và tức giận, để lại một mình Yukari khóc và nhớ về quãng thời gian của hai người. Nhận ra lỗi lầm của mình, cô chạy đuổi theo Takao, lúc đó đang đứng bần thần nhìn mưa rơi nơi cầu thang. Takao giận dữ nói cô về việc cậu đã thất vọng thế nào khi cảm thấy bị một người lớn như cô coi thường và cô không mở lòng với cậu (lúc này Takao không gọi cô là sensei mà là anata - ngôi thứ hai, thể lịch sự trong tiếng Nhật). Yukari oà khóc to hơn và chạy đến ôm lấy cậu, cho cậu biết thực ra tại khu vườn ấy, cậu đã cứu rỗi cô khi cô thấy sợ hãi hơn bao giờ hết. Xung quanh họ, mưa dần tạnh và nắng bắt đầu lên.
             
             Đoạn cuối phim tua nhanh những diễn biến trong cuộc sống mỗi người một nơi của họ: Takao tới Ý học nghề làm giày để làm một đôi giày thật đẹp cho Yukari như lời hứa của hai người, còn Yukari dạy học ở trường mới. Vào mùa đông, cậu lại đến thăm khu vườn và lôi bức thư (đề ngày 3 tháng 2 năm 2014) của Yukari gửi cậu ra đọc. Lúc đem ra đôi giày thành phẩm cho Yukari để ngắm, cậu tự hứa sẽ tự mình bước đi thật xa để tìm gặp cô.`,
-            prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.2,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk03',
             title: 'Bên kia mây trời là nơi hẹn ước',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/10/53/8c/2aab1b0cc21b70c67140f47226c0182f.JPG'
@@ -159,59 +205,60 @@ export const FakeData = {
             Hiroki quay về Aomori để hoàn thiện chiếc máy bay cùng Takuya. Chiếc máy bay chỉ có thể chở hai người nên Takuya ở lại, nhường chỗ cho Hiroki và Sayuri. Cả hai đánh cắp cơ thể Sayuri từ bệnh viện và chiếc máy bay được hoàn thành chỉ vài giờ trước khi Mỹ tuyên chiến Liên Bang. Khi Sayuri tỉnh lại khi máy bay lượn qua tháp, tòa tháp được khởi động và bắt đầu thay đổi thế giới. Vài phút trước khi tỉnh lại, Sayuri nhận ra mình sẽ mất đi ký ức 3 năm qua, kể cả tình yêu dành cho Hiroki. Về phía Hiroki, cậu thả tên lửa phá hủy tháp, ngăn chặn sự thay đổi vật chất của nó và tạo điều kiện cho việc thống nhất Nhật Bản của Tiền tuyến Giải phóng Uilta.
             
             Khi mọi thứ kết thúc, Takuya bỏ đi biệt tích, còn Hiroki thề với Sayuri rằng cậu sẽ bắt đầu lại từ đầu, kể cả mối quan hệ giữa họ.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 5.0,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk04',
             title: 'Your Name',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/25/40/61/dc00eccce4b4e0ec7098ff41df67c686.jpg'
@@ -221,64 +268,65 @@ export const FakeData = {
             Sau khi phát hành, Your Name – Tên cậu là gì? đã được giới phê bình khen ngợi nhiệt liệt cho cốt truyện và hình ảnh, và cùng với đạo diễn Makoto và ban nhạc RADWIMPS, đã giành được nhiều đề cử và giải thưởng tại Nhật Bản và cả trên thế giới, bao gồm giải thưởng của Hiệp hội phê bình phim Los Angeles cho phim hoạt hình xuất sắc nhất và giải thưởng Kịch bản xuất sắc nhất 2016 của Viện Hàn lâm Nhật Bản.
             
             Bộ phim cũng trở thành một hiện tượng điện ảnh tại Nhật Bản khi có doanh thu phòng vé cao nhất Nhật Bản năm 2016, là phim có doanh thu cao thứ 4 trong lịch sử Nhật Bản và anime có doanh thu cao thứ 3 lịch sử. Đây cũng là bộ phim Nhật Bản ăn khách nhất mọi thời đại tại các thị trường Trung Quốc, Đài Loan, Hàn Quốc và Thái Lan, và được mệnh danh là kẻ thống trị phòng vé Châu Á năm 2016[10] khi vị trí đầu bảng xếp hạng doanh thu phòng vé tại các nước và vùng lãnh thổ như Thái Lan, Đài Loan, Hồng Kông, Trung Quốc, Hàn Quốc và Việt Nam cũng do tác phẩm này nắm giữ trong tuần lễ ra mắt. Ngoài ra, thắng lợi của phim còn dẫn đến thành công kỉ lục của nền điện ảnh Nhật Bản trong năm 2016, cũng như sự tăng trưởng mạnh về mặt tài chính của các công ty liên quan trực tiếp và gián tiếp, bao gồm nhà phát hành Toho. Bên cạnh đó, việc sử dụng hình ảnh của các địa danh có thật ngoài đời đã làm bùng nổ thị trường du lịch Nhật Bản khi du khách trong và ngoài nước đổ đến tham quan các địa điểm có thật trong phim.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.1,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk05',
             title: 'Những đứa trẻ đứa trẻ đuổi theo tinh tú',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/d5/56/e1/230844af8f876d7924829e25a1354358.jpg'
             , isfavorite: 'false',
-            description:`Asuna là một học sinh tiểu học. Sau cái chết của cha mình, cô bé buộc phải trưởng thành sớm hơn các bạn cùng trang lứa vì mẹ Asuna là y tá, thường xuyên trực dài ngày tại bệnh viện. Asuna trải qua những ngày của mình trong một hang động trong núi, lắng nghe thứ âm nhạc kì lạ phát ra từ thỏi pha lê cha mình để lại và cho một sinh vật giống mèo mà Asuna gọi là Mimi.
+            description: `Asuna là một học sinh tiểu học. Sau cái chết của cha mình, cô bé buộc phải trưởng thành sớm hơn các bạn cùng trang lứa vì mẹ Asuna là y tá, thường xuyên trực dài ngày tại bệnh viện. Asuna trải qua những ngày của mình trong một hang động trong núi, lắng nghe thứ âm nhạc kì lạ phát ra từ thỏi pha lê cha mình để lại và cho một sinh vật giống mèo mà Asuna gọi là Mimi.
 
             Một ngày nọ, khi băng qua cầu, Asuna bị một sinh vật lạ đột kích và được một thanh niên lạ mặt cứu giúp. Cậu ta xưng tên là Shun, đến từ vùng đất Agartha. Asuna băng bó vết thương cho Shun và kể cho cậu nghe về thứ âm nhạc mà radio của cô bé bắt được. Cuộc gặp gỡ ngắn ngủi của Asuna và Shun chấm dứt khi Shun chết trong khi nới tay với sao.
             
@@ -297,59 +345,60 @@ export const FakeData = {
             Bên dưới vách núi, cả hai tìm thấy Cánh cổng sinh tử và đi vào. Họ gặp lại Morisaki. Asuna không lâu sau bị linh hồn vợ Morisaki chiếm giữ thân xác. Trong thời gian thân xác bị chiếm giữ, Asuna gặp lại linh hồn của Shun. Shin giận dữ cố hết sức để phá hủy clavis nhưng Morisaki ngăn cản vì không muốn mất vợ lần nữa. Tuy nhiên, Shin đã phá hủy được clavis và hồn Lisa buộc phải thoát khỏi thân xác Asuna. Trước khi biến mất hoàn toàn, Lisa bảo Morisaki hãy đi tìm hạnh phúc mà không có mình. Asuna tỉnh lại sau khi từ biệt Shun trong mơ, nhìn thấy Morisaki suy sụp đến mức van xin Shin giết chết mình nhưng Shin nói ông ta phải sống.
             
             Phim kết thúc khi Asuna quay lại trên mặt đất, còn Shin và Morisaki ở lại.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.8,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk06',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
@@ -363,65 +412,66 @@ export const FakeData = {
             Sau đó, cậu ra khu vườn và bắt gặp Yukari bên một dòng nước. Tại đây, cậu đã đọc bài tanka đối lại bài tanka ngày trước của Yukari. Cô chúc mừng cậu và nói rằng đã tưởng cậu sẽ nhận ra cô là giáo viên văn học cổ điển. Hai người tiếp tục trò chuyện vui vẻ cho đến khi trời mưa giông khiến cả hai người đều bị ướt và họ chạy đến căn hộ của Yukari. Ở căn hộ, Takao đã thổ lộ tình cảm của mình với Yukari và nhận lại sự chối từ tế nhị của cô (cậu bị sửa cách xưng hô và được Yukari cho biết cô sẽ quay về quê). Takao ra về trong sự ngỡ ngàng và tức giận, để lại một mình Yukari khóc và nhớ về quãng thời gian của hai người. Nhận ra lỗi lầm của mình, cô chạy đuổi theo Takao, lúc đó đang đứng bần thần nhìn mưa rơi nơi cầu thang. Takao giận dữ nói cô về việc cậu đã thất vọng thế nào khi cảm thấy bị một người lớn như cô coi thường và cô không mở lòng với cậu (lúc này Takao không gọi cô là sensei mà là anata - ngôi thứ hai, thể lịch sự trong tiếng Nhật). Yukari oà khóc to hơn và chạy đến ôm lấy cậu, cho cậu biết thực ra tại khu vườn ấy, cậu đã cứu rỗi cô khi cô thấy sợ hãi hơn bao giờ hết. Xung quanh họ, mưa dần tạnh và nắng bắt đầu lên.
             
             Đoạn cuối phim tua nhanh những diễn biến trong cuộc sống mỗi người một nơi của họ: Takao tới Ý học nghề làm giày để làm một đôi giày thật đẹp cho Yukari như lời hứa của hai người, còn Yukari dạy học ở trường mới. Vào mùa đông, cậu lại đến thăm khu vườn và lôi bức thư (đề ngày 3 tháng 2 năm 2014) của Yukari gửi cậu ra đọc. Lúc đem ra đôi giày thành phẩm cho Yukari để ngắm, cậu tự hứa sẽ tự mình bước đi thật xa để tìm gặp cô.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.0,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk07',
             title: 'Bên kia mây trời là nơi hẹn ước',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/10/53/8c/2aab1b0cc21b70c67140f47226c0182f.JPG'
             , isfavorite: 'false'
-            , prvPrice: '160.000',
-            curPrice: '140.000',
+            , prvPrice: 160000,
+            curPrice: 140000,
             description: `Phim xoay quanh 3 người bạn sống ở Aomori, cực bắc Nhật Bản. Hiroki và Sayuri thường đi chung một chuyến tàu hỏa và quen nhau. Dần dần, Sayuri trở nên thân thiết cả với Takuya, bạn của Hiroki. Cả 3 người đều cảm thấy hứng thú với toà tháp chọc trời của Liên Bang, có thể nhìn thấy từ eo biển Tsugaru. Họ hứa sẽ cùng nhau bay trên chiếc máy bay Velaciela (đôi cánh trắng) mà Takuya và Hiroki đang chế tạo để đến tháp. Tuy nhiên, lời hứa chưa kịp thực hiện thì Sayuri đột ngột mất tích.
 
             Ba năm sau, Hiroki và Takuya đã không còn làm máy bay nữa. Mỗi người một nơi sau sự biến mất của Sayuri. Hiroki chuyển lên Tokyo học và thường xuyên bị ám ảnh bởi các giấc mơ kì lạ. Còn Takuya làm việc như một nhà vật lý tại Cơ quan Liên Minh Khoa học (Alliance scientific facility) tài trợ bởi Cơ quan An ninh Quốc gia Hoa Kỳ (Hoa Kỳ' National Security Agency - NSA, trong phim gọi là NASA), nghiên cứu về thế giới song song cùng với Kasahara Maki dưới sự giám sát của giáo sư Tomizawa. Họ tìm ra rằng, tháp của Liên Bang liên tục thay khối vật chất xung quanh nó bằng vật chất từ không gian khác.
@@ -434,57 +484,58 @@ export const FakeData = {
             
             Khi mọi thứ kết thúc, Takuya bỏ đi biệt tích, còn Hiroki thề với Sayuri rằng cậu sẽ bắt đầu lại từ đầu, kể cả mối quan hệ giữa họ.`
             ,
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.2,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         },
         {
+            id: 'bk08',
             title: 'Your Name',
             author: 'Shinkai Makoto',
             image: 'https://salt.tikicdn.com/cache/w1200/ts/product/25/40/61/dc00eccce4b4e0ec7098ff41df67c686.jpg'
@@ -494,57 +545,142 @@ export const FakeData = {
             Sau khi phát hành, Your Name – Tên cậu là gì? đã được giới phê bình khen ngợi nhiệt liệt cho cốt truyện và hình ảnh, và cùng với đạo diễn Makoto và ban nhạc RADWIMPS, đã giành được nhiều đề cử và giải thưởng tại Nhật Bản và cả trên thế giới, bao gồm giải thưởng của Hiệp hội phê bình phim Los Angeles cho phim hoạt hình xuất sắc nhất và giải thưởng Kịch bản xuất sắc nhất 2016 của Viện Hàn lâm Nhật Bản.
             
             Bộ phim cũng trở thành một hiện tượng điện ảnh tại Nhật Bản khi có doanh thu phòng vé cao nhất Nhật Bản năm 2016, là phim có doanh thu cao thứ 4 trong lịch sử Nhật Bản và anime có doanh thu cao thứ 3 lịch sử. Đây cũng là bộ phim Nhật Bản ăn khách nhất mọi thời đại tại các thị trường Trung Quốc, Đài Loan, Hàn Quốc và Thái Lan, và được mệnh danh là kẻ thống trị phòng vé Châu Á năm 2016[10] khi vị trí đầu bảng xếp hạng doanh thu phòng vé tại các nước và vùng lãnh thổ như Thái Lan, Đài Loan, Hồng Kông, Trung Quốc, Hàn Quốc và Việt Nam cũng do tác phẩm này nắm giữ trong tuần lễ ra mắt. Ngoài ra, thắng lợi của phim còn dẫn đến thành công kỉ lục của nền điện ảnh Nhật Bản trong năm 2016, cũng như sự tăng trưởng mạnh về mặt tài chính của các công ty liên quan trực tiếp và gián tiếp, bao gồm nhà phát hành Toho. Bên cạnh đó, việc sử dụng hình ảnh của các địa danh có thật ngoài đời đã làm bùng nổ thị trường du lịch Nhật Bản khi du khách trong và ngoài nước đổ đến tham quan các địa điểm có thật trong phim.`
-            , prvPrice: '160.000',
-            curPrice: '140.000',
-            discountrate:'20%',
-            discountcodes:[
-                '15%','35%', '40%', 
+            , prvPrice: 160000,
+            curPrice: 140000,
+            discountrate: '20%',
+            discountcodes: [
+                '15%', '35%', '40%',
             ],
             award: {
                 image: '/assets/icons/ic-hot.png',
                 title: 'Đang thịnh hành'
             },
-            info:[
+            info: [
                 {
                     title: 'Công ty phát hành',
-                    content:'MintBooks'
+                    content: 'MintBooks'
                 },
                 {
                     title: 'Ngày xuất bản',
-                    content:'24 - 09 - 2020'
+                    content: '24 - 09 - 2020'
                 },
                 {
                     title: 'Kích thước',
-                    content:'14.5 x 20.5 cm'
+                    content: '14.5 x 20.5 cm'
                 },
                 {
                     title: 'Dịch giả',
-                    content:'Thạc Hoàng'
+                    content: 'Thạc Hoàng'
                 },
                 {
                     title: 'Loại bìa',
-                    content:'Bìa gập'
+                    content: 'Bìa gập'
                 },
                 {
                     title: 'Số trang',
-                    content:'500 trang'
+                    content: '500 trang'
                 },
                 {
                     title: 'Nhà xuất bản',
-                    content:'Nhà xuất bản Kim Đồng'
+                    content: 'Nhà xuất bản Kim Đồng'
                 }
             ],
-            rating:{
+            rating: {
                 totalReview: 12000,
                 ratingPoint: 4.2,
-                detail:[
-                    {title: 1, reviews: 100},
-                    {title: 2, reviews: 400},
-                    {title: 3, reviews: 600},
-                    {title: 4, reviews: 4900},
-                    {title: 5, reviews: 6000},
+                detail: [
+                    { title: 1, reviews: 100 },
+                    { title: 2, reviews: 400 },
+                    { title: 3, reviews: 600 },
+                    { title: 4, reviews: 4900 },
+                    { title: 5, reviews: 6000 },
                 ]
             }
         }
-    ]
+    ],
+    // categories: [
+    //     {
+    //         "id": "1",
+    //         "name": "Sách Tiếng Việt",
+    //         "description": "",
+    //         "slug": "",
+    //         "children": [
+    //             {
+    //                 "id": "11",
+    //                 "name": "Văn học",
+    //                 "description": "",
+    //                 "slug": "",
+    //                 "children": [
+    //                     {
+    //                         "id": "111",
+    //                         "name": "Light novel",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     },
+    //                     {
+    //                         "id": "112",
+    //                         "name": "Tiểu thuyết",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "12",
+    //                 "name": "Toán học",
+    //                 "description": "",
+    //                 "slug": "",
+    //                 "children": [
+    //                     {
+    //                         "id": "121",
+    //                         "name": "Toán đại cương",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     },
+    //                     {
+    //                         "id": "122",
+    //                         "name": "Toán hình học",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         "id": "2",
+    //         "name": "English book",
+    //         "description": "",
+    //         "slug": "",
+    //         "children": [
+    //             {
+    //                 "id": "21",
+    //                 "name": "Art & Photography",
+    //                 "description": "",
+    //                 "slug": "",
+    //                 "children": [
+    //                     {
+    //                         "id": "211",
+    //                         "name": "Architecture",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     },
+    //                     {
+    //                         "id": "212",
+    //                         "name": "Graphic Design",
+    //                         "description": "",
+    //                         "slug": "",
+    //                         "children": []
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // ]
+    categories: Categories
 }

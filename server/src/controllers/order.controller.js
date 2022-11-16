@@ -1,4 +1,4 @@
-const controller = require("../utils/controller");
-const Order = require("../models/order");
+// const controller = require("../utils/controller");
+// const Order = require("../models/order");
 
-module.exports = controller(Order);
+// module.exports = controller(Order);

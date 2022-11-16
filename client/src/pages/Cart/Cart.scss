@@ -1,0 +1,82 @@
+.none-margin-padding {
+  margin: 0;
+  padding: 0;
+}
+#discounts-title {
+  font-size: 24px;
+  color: var(--Darkest);
+  font-family: "MontserratMedium";
+}
+.discounts-container {
+  display: grid;
+  background-color: var(--LightGray);
+  width: 100%;
+
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 12px;
+  padding: 12px;
+}
+.discounts-title-container {
+  margin: 0;
+  padding: 0;
+  padding-top: 4px;
+  margin-top: 24px;
+  padding-left: 12px;
+}
+.checkout-container {
+  width: 100%;
+  background-color: var(--LightGray);
+  margin-top: 12px;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 24px;
+  position: relative;
+  .checkount-count-text {
+    color: var(--Gray);
+  }
+  .checkount-count-value {
+    columns: var(--Darkest);
+    position: absolute;
+    right: 12px;
+  }
+  .sub-checkout-count-container {
+    font-size: 16px !important;
+    color: var(--Gray);
+  }
+  .sub-checkout-count-last-container {
+    margin-bottom: 24px;
+  }
+  .checkount-count-darker-text {
+    color: var(--DarkGray);
+  }
+  .checkout-count-value-percent {
+    padding-right: 12px;
+  }
+  .checkout-count-value-value {
+  }
+  .checkount-buttons {
+    button {
+      width: 100%;
+      height: 48px;
+      border: none;
+      border-radius: 12px;
+      transition-duration: 0.4s;
+      margin-top: 12px;
+    }
+    .btn-checkout {
+      margin-top: 24px;
+      background-color: var(--Orange);
+    }
+    .btn-checkout:hover {
+      background-color: var(--Pink);
+    }
+    .btn-cont-shopping {
+      background-color: var(--LightOrange);
+    }
+    .btn-cont-shopping:hover {
+      background-color: var(--LightOrange);
+    }
+  }
+}

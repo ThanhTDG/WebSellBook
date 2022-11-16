@@ -1,4 +1,4 @@
-const controller = require("../utils/controller");
-const User = require("../models/user");
+// const controller = require("../utils/controller");
+// const User = require("../models/user");
 
-module.exports = controller(User);
+// module.exports = controller(User);

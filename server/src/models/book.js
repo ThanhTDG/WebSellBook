@@ -1,15 +1,25 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate");
+const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
+const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
+mongoose.plugin(aggregatePaginate);
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
-const { BOOK_STATUS } = require("../utils/constants");
+const { BOOK_STATUS } = require("../constants");
 
 mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
+
+const dimensionSchema = new Schema(
+  {
+    height: Number,
+    width: Number,
+  },
+  { _id: false }
+);
 
 const bookSchema = new Schema(
   {
@@ -59,8 +69,10 @@ const bookSchema = new Schema(
     images: [String],
     weight: Number,
     dimension: {
-      height: Number,
-      width: Number,
+      type: dimensionSchema,
+      get: (value) => {
+        if (value) return `${value.height} x ${value.width} cm`;
+      },
     },
     page: Number,
     bookCover: String,
@@ -71,11 +83,20 @@ const bookSchema = new Schema(
     },
     expectedDate: Date,
     countInStock: Number,
+    sold: Number,
     originalPrice: Number,
     discountRate: Number,
+    // price: {
+    //   type: Number,
+    //   get: function () {
+    //     const price = this.originalPrice * (1 - this.discountRate / 100);
+    //     return Math.round(price / 1e3) * 1e3;
+    //   },
+    // },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: true,
     },
     tree: [
       {
@@ -83,24 +104,75 @@ const bookSchema = new Schema(
         ref: "Category",
       },
     ],
-    fakeId: String,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-bookSchema.virtual("image").get(function () {
-  return this.images[0] || null;
+bookSchema.virtual("shortDes").get(function () {
+  const des = this.description;
+  if (des.length < 200) {
+    return des;
+  }
+  return des.slice(0, 200) + "...";
 });
 
-bookSchema.virtual("total").get(function () {
-  return this.originalPrice * (1 - this.discountRate / 100);
+bookSchema.virtual("price").get(function () {
+  const price = this.originalPrice * (1 - this.discountRate / 100);
+  return Math.round(price / 1e3) * 1e3;
 });
+
+bookSchema.virtual("numOfReviews", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "book",
+  count: true,
+});
+
+bookSchema
+  .virtual("rating", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "book",
+  })
+  .get(function (arr) {
+    let sum = 0;
+    arr.forEach((value) => {
+      sum += value.rate;
+    });
+
+    const len = arr.length;
+    const rating = (sum / len).toFixed(1);
+
+    return len ? parseFloat(rating) : 0;
+  });
+
+bookSchema
+  .virtual("ratingRate", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "book",
+  })
+  .get(function (arr) {
+    const rates = Array(5)
+      .fill()
+      .map((_) => ({ amount: 0, rate: 0 }));
+    arr.forEach((value) => rates[value.rate - 1].amount++);
+
+    const len = arr.length;
+    for (let i = 0; i < rates.length; i++) {
+      const rate = (rates[i].amount / len) * 100;
+      rates[i].rate = len ? Math.round(rate) : 0;
+    }
+
+    return rates;
+  });
 
 bookSchema.pre("save", async function (next) {
   try {
     if (this.category) {
       await this.populate("category");
       this.tree = [this.category.id, ...this.category.tree];
+      this.depopulate("category");
     }
     next();
   } catch (error) {
