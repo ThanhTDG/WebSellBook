@@ -38,9 +38,9 @@ tags:
 - name: Tài khoản
   description: |
     Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
-- name: Khách hàng
+- name: Sản phẩm
   description: |
-    Sử dụng để lấy danh mục và sách, dành cho phân hệ khách hàng
+    Sử dụng để lấy danh mục, sách và bình luận của sách, dành cho phân hệ khách hàng
 - name: Quản lý địa chỉ
   description: |
     Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
@@ -567,6 +567,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /auth/profile:
     get:
       tags:
@@ -580,13 +582,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/client.User'
         "400":
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     put:
       tags:
       - Tài khoản
@@ -599,13 +603,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/client.User'
         "400":
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /auth/uploadavatar:
     put:
       tags:
@@ -632,6 +638,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /auth/changepassword:
     put:
       tags:
@@ -666,7 +674,7 @@ paths:
   /category:
     get:
       tags:
-      - Khách hàng
+      - Sản phẩm
       summary: Sử dụng để lấy danh sách danh mục
       description: |
         Lấy danh sách danh mục theo cây.
@@ -686,7 +694,7 @@ paths:
   /book:
     get:
       tags:
-      - Khách hàng
+      - Sản phẩm
       summary: Sử dụng để lấy danh sách sách theo danh mục
       description: |
         Lấy danh sách sách theo ID danh mục cho trước.
@@ -719,6 +727,21 @@ paths:
         schema:
           type: number
         example: 12
+      - name: sort
+        in: query
+        description: Sắp xếp (mặc định "popular")
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - popular
+          - best-seller
+          - newest
+          - low-to-high
+          - high-to-low
+        example: popular
       responses:
         "200":
           description: OK
@@ -735,7 +758,7 @@ paths:
   /book/{id}:
     get:
       tags:
-      - Khách hàng
+      - Sản phẩm
       summary: Sử dụng để lấy sách
       description: |
         Lấy sách theo ID sách cho trước.
@@ -766,7 +789,7 @@ paths:
   /comment/{book}:
     get:
       tags:
-      - Khách hàng
+      - Sản phẩm
       summary: Sử dụng để lấy danh sách bình luận
       description: |
         Lấy danh sách bình luận theo ID sách cho trước.
@@ -1249,7 +1272,7 @@ components:
           description: Thông báo
           example: Success
         user:
-          $ref: '#/components/schemas/respones.SignUp_user'
+          $ref: '#/components/schemas/client.User'
     client.Category:
       type: object
       properties:
@@ -1453,6 +1476,45 @@ components:
           description: Ngày tạo
           format: date
           example: 2022-10-09
+    client.User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID người dùng
+          example: 634e8609071be9c0c9f52ca7
+        firstName:
+          type: string
+          description: Tên người dùng
+          example: An
+        lastName:
+          type: string
+          description: Họ người dùng
+          example: Nguyễn Văn
+        fullName:
+          type: string
+          description: Họ tên đầy đủ
+          example: Nguyễn Văn An
+        email:
+          type: string
+          description: Email
+          format: email
+          example: an@gmail.example.com
+        phone:
+          type: string
+          description: Số điện thoại
+          format: phoneNumber
+          example: "0987654321"
+        avatar:
+          type: string
+          description: Link hình ảnh
+          format: link
+          example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96
+        lastSession:
+          type: string
+          description: Lần đăng nhập gần nhất
+          format: date
+          example: 2022-11-10
     client.pagination.Book:
       type: object
       properties:
@@ -1597,36 +1659,6 @@ components:
           type: string
           description: Thông báo
           example: Change password successful
-    respones.SignUp_user:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID người dùng
-          example: 634e8609071be9c0c9f52ca7
-        firstName:
-          type: string
-          description: Tên người dùng
-          example: An
-        lastName:
-          type: string
-          description: Họ người dùng
-          example: Nguyễn Văn
-        email:
-          type: string
-          description: Email
-          format: email
-          example: an@gmail.example.com
-        phone:
-          type: string
-          description: Số điện thoại
-          format: phoneNumber
-          example: "0987654321"
-        avatar:
-          type: string
-          description: Link hình ảnh
-          format: link
-          example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96
     client.Comment_user:
       type: object
       properties:
@@ -1643,3 +1675,4 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT

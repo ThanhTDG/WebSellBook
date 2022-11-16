@@ -1,6 +1,24 @@
 const passport = require("passport");
-const User = require("../models/user");
 const ErrorHandler = require("../utils/errorHandler");
+
+/**
+ * Login
+ * @param {Request} req Request
+ * @param {any} user User
+ * @param {Function} next Next function
+ */
+const login = (req, user, next) =>
+  req.login(user, async (err) => {
+    if (err) {
+      return await res
+        .status(err.statusCode || 401)
+        .json({ message: err.message });
+    }
+
+    user.lastSession = new Date();
+    await user.save();
+    next();
+  });
 
 /**
  * Required login
@@ -19,14 +37,7 @@ const requiredLogin = (req, res, next) =>
         throw new ErrorHandler(401, "Authentication failed");
       }
 
-      req.login(user, async (err) => {
-        if (err) {
-          return await res
-            .status(err.statusCode || 401)
-            .json({ message: err.message });
-        }
-        next();
-      });
+      login(req, user, next);
     } catch (error) {
       return await res
         .status(error.statusCode || 401)
@@ -51,14 +62,7 @@ const authenticate = async (req, res, next) =>
         throw new ErrorHandler(401, "Authentication failed");
       }
 
-      req.login(user, async (err) => {
-        if (err) {
-          return await res
-            .status(err.statusCode || 401)
-            .json({ message: err.message });
-        }
-        next();
-      });
+      login(req, user, next);
     } catch (error) {
       return await res
         .status(error.statusCode || 401)

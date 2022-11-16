@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
+const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
+mongoose.plugin(aggregatePaginate);
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
 const { BOOK_STATUS } = require("../constants");
-const Comment = require("./comment");
 
 mongoose.plugin(slug);
 
@@ -85,6 +86,13 @@ const bookSchema = new Schema(
     sold: Number,
     originalPrice: Number,
     discountRate: Number,
+    // price: {
+    //   type: Number,
+    //   get: function () {
+    //     const price = this.originalPrice * (1 - this.discountRate / 100);
+    //     return Math.round(price / 1e3) * 1e3;
+    //   },
+    // },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
@@ -97,7 +105,7 @@ const bookSchema = new Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 
 bookSchema.virtual("shortDes").get(function () {

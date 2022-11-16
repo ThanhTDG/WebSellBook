@@ -4,6 +4,30 @@ const User = require("../models/user");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 
+const user2json = ({
+  _id,
+  firstName,
+  lastName,
+  fullName,
+  email,
+  phone,
+  sex,
+  birthday,
+  avatar,
+  lastSession,
+}) => ({
+  _id,
+  firstName,
+  lastName,
+  fullName,
+  email,
+  phone,
+  sex,
+  birthday,
+  avatar,
+  lastSession,
+});
+
 /**
  * Register a new account
  * @param {Request} req Request
@@ -17,14 +41,7 @@ const signUp = async (req, res) => {
     const data = new User(body);
     const newData = await data.save();
 
-    const user = {
-      id: newData.id,
-      firstName: newData.firstName,
-      lastName: newData.lastName,
-      email: newData.email,
-      phone: newData.phone,
-      avatar: newData.avatar,
-    };
+    const user = user2json(newData);
     await res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     await res.status(400).json({ message: error.message });
@@ -71,26 +88,6 @@ const signOut = async (req, res) => {
     await res.status(401).json({ message: error.message });
   }
 };
-
-const user2json = ({
-  _id,
-  firstName,
-  lastName,
-  email,
-  phone,
-  sex,
-  birthday,
-  avatar,
-}) => ({
-  _id,
-  firstName,
-  lastName,
-  email,
-  phone,
-  sex,
-  birthday,
-  avatar,
-});
 
 /**
  * Get profile

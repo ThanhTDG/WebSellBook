@@ -6,7 +6,7 @@ const book = require("./routes/book.routes");
 const category = require("./routes/category.routes");
 const order = require("./routes/order.routes");
 const user = require("./routes/user.routes");
-const client = require("./routes/client.routes");
+const product = require("./routes/product.routes");
 
 const router = express.Router();
 
@@ -16,6 +16,6 @@ router.use("/books", book);
 router.use("/categories", category);
 router.use("/orders", order);
 router.use("/users", user);
-router.use("/", client);
+router.use("/", product);
 
 module.exports = router;
