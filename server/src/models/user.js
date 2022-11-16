@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate");
+const paginate = require("mongoose-paginate-v2");
 const validator = require("validator").default;
 
 mongoose.plugin(paginate);
 
-const { ROLE } = require("../utils/constants");
+const { ROLE } = require("../constants");
+const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");
 const { signToken } = require("../utils/jwt");
@@ -84,8 +85,8 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
-      select: false,
+      // required: true,
+      // select: false,
     },
     sex: {
       type: Boolean,
@@ -111,7 +112,6 @@ const userSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    fakeId: String,
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
@@ -120,32 +120,48 @@ userSchema.virtual("fullName").get(function () {
   return `${this.lastName} ${this.firstName}`;
 });
 
+/**
+ * Generate token
+ * @returns {string}
+ */
 userSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
 };
 
-// userSchema.methods.toJSON = function () {
-//   var obj = this.toObject();
-//   delete obj.password;
-//   return obj;
-// };
-
+/**
+ * Validate password
+ * @param {string} password
+ */
 userSchema.methods.validatePassword = async function (password) {
   return await validatePassword(password, this.password);
 };
 
+/**
+ * To JSON
+ */
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+
+/**
+ * Credential account
+ * @param {string} username
+ * @param {string} password
+ */
 userSchema.statics.findByCredentials = async (username, password) => {
   const user = await User.findOne({
     $or: [{ email: username }, { phone: username }],
   });
   if (!user) {
-    throw new Error("Unable to log in");
+    throw new ErrorHandler(401, "Unable to login");
   }
 
   const isMatch = await user.validatePassword(password);
   if (!isMatch) {
-    throw new Error("Unable to log in");
+    throw new ErrorHandler(401, "Unable to login");
   }
 
   return user;
@@ -163,18 +179,6 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
-
-userSchema.pre("findOneAndUpdate", async function (next) {
-  // if (!this.isModified("password")) {
-  //   return next();
-  // }
-
-  const { password } = this.getUpdate()?.$set;
-  console.log(password);
-  // await hashPassword(this, next);
-});
-
-// /^(save|findOneAndUpdate)/
 
 const User = mongoose.model("User", userSchema);
 

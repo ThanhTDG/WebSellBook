@@ -15,13 +15,11 @@ const categorySchema = new Schema(
       trim: true,
       unique: true,
     },
-    description: String,
     slug: {
       type: String,
       slug: "name",
       unique: true,
     },
-    image: String,
     parent: {
       type: Schema.Types.ObjectId,
       ref: "Category",
@@ -32,27 +30,32 @@ const categorySchema = new Schema(
         ref: "Category",
       },
     ],
-    fakeId: String,
   },
   { timestamps: true }
 );
 
-categorySchema.statics.getData = (body) => {
-  const { name, description, image, parent } = body;
-  return {
-    name,
-    description,
-    image,
-    parent,
-  };
-};
+categorySchema.virtual("children", {
+  ref: "Category",
+  localField: "_id",
+  foreignField: "parent",
+});
 
 categorySchema.pre("save", async function (next) {
   try {
     if (this.parent) {
       await this.populate("parent");
       this.tree = [this.parent.id, ...this.parent.tree];
+      this.depopulate("parent");
     }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+categorySchema.pre("find", async function (next) {
+  try {
+    this.populate("children");
     next();
   } catch (error) {
     next(error);

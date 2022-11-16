@@ -1,4 +1,9 @@
+require("dotenv").config();
+
 const jwt = require("jsonwebtoken");
+
+const SECRET = process.env.JWT_SECRET;
+const EXPIRES = process.env.JWT_EXPIRES;
 
 /**
  * Sign token
@@ -6,15 +11,13 @@ const jwt = require("jsonwebtoken");
  * @return {string} The token
  */
 const signToken = (payload) =>
-  jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
-  });
+  jwt.sign(payload, SECRET, { expiresIn: EXPIRES });
 
 /**
  * Verify token
  * @param {string} token
  */
-const verifyToken = (token) => jwt.verify(token, process.env.JWT_SECRET);
+const verifyToken = (token) => jwt.verify(token, SECRET);
 
 module.exports = {
   signToken,
