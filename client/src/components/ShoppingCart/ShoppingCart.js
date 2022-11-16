@@ -22,7 +22,8 @@ const ShoppingCart = (props) => {
         setIsHoverTrash(false)
     }
     const bookInCartImageStyle = {
-        background: `url('${bookData.image}') center center`,
+        backgroundImage: `url('${bookData.image}')`,
+        backgroundPosition:'center',
         width: '124px',
         height: '164px',
         borderRadius: '12px',

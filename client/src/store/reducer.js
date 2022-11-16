@@ -1,4 +1,4 @@
-import { ADD_BOOK_TO_CART, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, UPDATE_BOOK_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, UPDATE_BOOK_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
 
@@ -22,8 +22,19 @@ const initState = {
             isSelected: false
         }
     ],
+    prevCategoryId: 'c',
     categoryId: 'a',
-    categoryChildId: 'b'
+    categoryChildId: 'b',
+    booksPage: 1,
+    booksNavButtons: {
+        hasNextPage: false,
+        hasPrevPage: false,
+        nextPage: 1,
+        page: 1,
+        prevPage: 0,
+        totalPages: 20,
+        pagingCounter: 1,
+    }
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -55,16 +66,29 @@ function reducer(state, action) {
                 isLogin: true
             }
         case SELECT_CATEGORY:
-            return {
-                ...state,
-                categoryId: action.payload,
-            }
+            if (state.prevCategoryId !== state.categoryId || (state.prevCategoryId==='c' && state.prevCategoryId==='a'))
+                return {
+                    ...state,
+                    prevCategoryId: state.categoryId,
+                    categoryId: action.payload,
+                }
+            else
+                break
         case SELECT_CATEGORY_CHILD:
             return {
                 ...state,
                 categoryChildId: action.payload
             }
-
+        case BOOKS_NAVIGATION_BUTTONS:
+            return {
+                ...state,
+                booksNavButtons: action.payload
+            }
+        case SELECT_BOOKS_NAVIGATION_BUTTON:
+            return{
+                ...state,
+                booksPage: action.payload
+            }
         default:
             throw new Error('Invalid actions')
     }

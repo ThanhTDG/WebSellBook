@@ -8,36 +8,74 @@ import { useStore, actions } from '../../../store';
 
 const BooksStyleSmall = () => {
     const [state, dispatch] = useStore()
+
     useEffect(() => {
-        if(state.categoryId === 'a'){
+        if (state.categoryId === 'a') {
             console.log('not chose category')
             return
         }
         console.log(state.categoryId)
         setIsLoading(true)
-        const fetch = async(categoryId)=>{
-            const booksResult = await booksServies.booksByCategoryId(categoryId)
+        const fetch = async (categoryId, page) => {
+            const booksResult = await booksServies.booksByCategoryId(categoryId, page)
             setIsLoading(false)
             setApiBooks(booksResult.docs)
+            dispatch(actions.booksNavButtons(getBooksNavButtons(booksResult)))
         }
-        fetch(state.categoryId)
-    }, [state])
+        fetch(state.categoryId, 1)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.categoryId])
+
+    useEffect(() => {
+        console.log('current page: ' + state.booksPage)
+        console.log('category id: ' + state.categoryId)
+        if (state.categoryId === 'a') {
+            setIsLoading(true)
+            fetchApi(state.booksPage)
+            return
+        }
+        setIsLoading(true)
+        const fetch = async (categoryId, page) => {
+            const booksResult = await booksServies.booksByCategoryId(categoryId, page)
+            setIsLoading(false)
+            setApiBooks(booksResult.docs)
+            console.log(booksResult)
+        }
+        fetch(state.categoryId, state.booksPage)
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.booksPage])
 
     const [apiBooks, setApiBooks] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+
     useEffect(() => {
         setIsLoading(true)
-        fetchApi()
+        fetchApi(1)
     }, [])
 
-    const fetchApi = async () => {
-        const booksResult = await booksServies.books()
+    const fetchApi = async (page) => {
+        const booksResult = await booksServies.books(page)
         setIsLoading(false)
         setApiBooks(booksResult.docs)
+        console.log(booksResult)
     }
+
+    function getBooksNavButtons(apiBooksResult) {
+        return {
+            hasNextPage: apiBooksResult.hasNextPage,
+            hasPrevPage: apiBooksResult.hasPrevPage,
+            nextPage: apiBooksResult.nextPage,
+            page: apiBooksResult.page,
+            prevPage: apiBooksResult.prevPage,
+            totalPages: apiBooksResult.totalPages,
+            pagingCounter: apiBooksResult.pagingCounter,
+        }
+    }
+
     const renderBooks = isLoading === true ?
         <div className='books-style-container'>
-            {FakeData.books.map((book) => (
+            {FakeData.loading48.map((book) => (
                 <LoadingBookFavorite height={340} />
             ))}
         </div> :
@@ -51,6 +89,7 @@ const BooksStyleSmall = () => {
     return (
         <div>
             {renderBooks}
+            
         </div>
     );
 }

@@ -4,8 +4,8 @@ export const books = async (q) => {
     try {
         const res = await request.get('book', {
             params: {
-                page: 1,
-                limit: 20
+                page: q,
+                limit: 48
             }
         });
         return res.data
@@ -14,14 +14,14 @@ export const books = async (q) => {
     }
 }
 
-export const booksByCategoryId = async (q) => {
+export const booksByCategoryId = async (q, page) => {
     console.log(q)
     try {
         const res = await request.get(`book`, {
             params: {
                 category: q,
-                page: 1,
-                limit: 100
+                page: page,
+                limit: 48
             }
         });
         

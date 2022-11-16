@@ -3,6 +3,7 @@ import './LoginButton.scss'
 import Modal from 'react-modal'
 import { MyVariable } from '../../variables/variables';
 import { useStore, actions } from '../../store';
+import * as AuthServices from '../../apiServices/AuthServices'
 // import Modal from 'react-bootstrap/Modal';
 
 const LoginButton = () => {
@@ -35,7 +36,14 @@ const LoginButton = () => {
     var loginStyle = {
         display: isLogin === true ? 'flex' : 'none'
     }
+
+    const fetchUserSignIn = async()=>{
+        const userToken = await AuthServices.signIn('khachhang@example.com','1234abcd')
+    }
+
     function onLoginByUser(){
+        fetchUserSignIn()
+
         dispatch(actions.loginByUser('user account'))
         setIsOpen(!isOpen)
     }

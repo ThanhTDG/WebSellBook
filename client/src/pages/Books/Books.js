@@ -9,6 +9,9 @@ import './Books.scss'
 import { CategoriesSelected } from './CategoriesSelected';
 import { useLocation } from 'react-router-dom'
 import { MyConstVariable } from '../../variables/MyConstVaeiable';
+import BooksPaginated from '../../components/NavButtons/booksPaginated';
+import { useStore} from '../../store';
+import BookBavButtonsOther from '../../components/NavButtons/bookBavButtonsOther';
 
 
 const BooksPage = () => {
@@ -16,11 +19,20 @@ const BooksPage = () => {
     const { stateName } = location.state;
     const [isAddCategoryTag, setAddCategoryTag] = useState(true)
     const [isShowCategories, setIsShowCategories] = useState(true)
-    
-    function onHandleShowCategories(){
+
+    const [state] = useStore()
+    const [isLoadingPagiated, setIsLoadingPagiated] = useState(false)
+
+    useEffect(() => {
+        setIsLoadingPagiated(!isLoadingPagiated)
+        console.log('reset at books')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.categoryId])
+
+    function onHandleShowCategories() {
         setIsShowCategories(!isShowCategories)
     }
-    function onAddTag(){
+    function onAddTag() {
         setAddCategoryTag(!isAddCategoryTag)
     }
     function toolBarItemStyle(isActive) {
@@ -29,7 +41,7 @@ const BooksPage = () => {
             fontFamily: 'MontserratRegular',
             color: isActive === isSelectedToolBarID ? 'var(--Pink)' : 'var(--Darkest)',
             textAlign: 'center',
-            boxShadow: isActive === isSelectedToolBarID? '0px 1px 8px rgba(0,0,0,0.3)':'none',
+            boxShadow: isActive === isSelectedToolBarID ? '0px 1px 8px rgba(0,0,0,0.3)' : 'none',
         }
     }
     const [isSelectedToolBarID, setIsSelectedToolBarID] = useState(1)
@@ -37,15 +49,15 @@ const BooksPage = () => {
         setIsSelectedToolBarID(order)
     }
     const searchGuideStyle = {
-        display: stateName===MyConstVariable.myNullVariable? 'none': 'block'
+        display: stateName === MyConstVariable.myNullVariable ? 'none' : 'block'
     }
-    const buttonShowCategoryStyle={
+    const buttonShowCategoryStyle = {
         display: 'none',
     }
-    const categoriesContainerStyle={
-        display: isShowCategories===true? 'block': 'none'
+    const categoriesContainerStyle = {
+        display: isShowCategories === true ? 'block' : 'none'
     }
-    
+
     return (
         <div>
             <Menu active='Sách'></Menu>
@@ -54,7 +66,7 @@ const BooksPage = () => {
                     <div className='col-sm-3 books-responsive-col-1' >
                         <div id='category-header'>Danh mục sách</div>
                         <button onClick={onHandleShowCategories} className='btn-show-categories' style={buttonShowCategoryStyle}>
-                            <img src={require(`../../assets/icons/${isShowCategories===true? 'ic-down.png': 'ic-next.png'}`)} alt='ic-more'></img>
+                            <img src={require(`../../assets/icons/${isShowCategories === true ? 'ic-down.png' : 'ic-next.png'}`)} alt='ic-more'></img>
                         </button>
                     </div>
                     <div className='col-sm-9 books-reponsive-col-search-result'>
@@ -66,7 +78,7 @@ const BooksPage = () => {
                         {/* {FakeData.categories.map((category) => (
                             <Categories category={category} onAddTag={onAddTag}/>
                         ))} */}
-                        <Categories onAddTag={onAddTag}/>
+                        <Categories onAddTag={onAddTag} />
                     </div>
                     <div className='col-sm-9 books-responsive-col-4'>
                         <div className='d-flex books-responsive-toolbar-container' >
@@ -80,12 +92,19 @@ const BooksPage = () => {
                         </div>
                         <div id='books-tags-container'>
                             {
-                                CategoriesSelected.map((tagItem)=>(
+                                CategoriesSelected.map((tagItem) => (
                                     <CategoryTag category={tagItem} />
                                 ))
                             }
                         </div>
                         <BooksStyleSmall />
+                        <div className='books-page-buttons-container'>
+                            {
+                                isLoadingPagiated === false ?
+                                    <BooksPaginated focePage={0} />
+                                    : <BookBavButtonsOther focePage={0} />
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
