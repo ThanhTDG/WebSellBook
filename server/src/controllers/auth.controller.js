@@ -86,7 +86,17 @@ const signOut = async (req, res) => {
           .status(err.statusCode || 401)
           .json({ message: err.message });
       }
-      await res.clearCookie("token").json({ message: "Log out successful" });
+
+      const cookieOpts = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: process.env.JWT_EXPIRES,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      };
+
+      await res
+        .clearCookie("token", cookieOpts)
+        .json({ message: "Log out successful" });
     });
   } catch (error) {
     await res.status(401).json({ message: error.message });
