@@ -58,11 +58,11 @@ const signIn = async (req, res) => {
     const user = req.user;
     const token = user.generateAuthToken();
     await res.cookie("token", token, {
-      signed: true,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      // signed: true,
+      // httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
       maxAge: process.env.JWT_EXPIRES,
-      sameSite: "None",
+      // sameSite: "None",
     });
     await res.json({ token });
   } catch (error) {
