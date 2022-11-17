@@ -73,4 +73,22 @@ const toJson = (data) => {
 
 const controller = new Controller(Book, getData, toJson);
 
-module.exports = controller.methods();
+/**
+ * Upload images
+ * @param {Request} req Request
+ * @param {Response} res Response
+ */
+const uploadImgs = async (req, res) => {
+  try {
+    const files = req.files;
+    const paths = files.map((file) => file.path);
+    await res.json(paths);
+  } catch (error) {
+    await res.status(error.statusCode || 400).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  ...controller.methods(),
+  uploadImgs,
+};

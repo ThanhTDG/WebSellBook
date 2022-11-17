@@ -39,7 +39,7 @@ const requiredLogin = (req, res, next) =>
 
       login(req, user, next);
     } catch (error) {
-      return await res
+      await res
         .status(error.statusCode || 401)
         .json({ message: error.message });
     }
@@ -64,7 +64,7 @@ const authenticate = async (req, res, next) =>
 
       login(req, user, next);
     } catch (error) {
-      return await res
+      await res
         .status(error.statusCode || 401)
         .json({ message: error.message });
     }

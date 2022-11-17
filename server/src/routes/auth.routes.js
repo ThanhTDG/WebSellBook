@@ -5,7 +5,7 @@ const {
   authenticate,
   requiredLogin,
 } = require("../middlewares/auth.middleware");
-const { uploadAvatar } = require("../services/upload.service");
+const { uploadAvatar } = require("../middlewares/upload.middleware");
 
 const router = express.Router();
 
