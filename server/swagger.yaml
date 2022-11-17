@@ -1624,8 +1624,9 @@ components:
         token:
           type: string
           description: Token
-          example: |
-            eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
+          example: eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
+        user:
+          $ref: '#/components/schemas/client.User'
     inline_response_200_1:
       type: object
       properties:
