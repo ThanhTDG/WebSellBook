@@ -38,7 +38,7 @@ passport.use(
 );
 
 const cookieExtractor = (req) =>
-  req.cookies.token || ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+  req.signedCookies.token || ExtractJwt.fromAuthHeaderAsBearerToken()(req);
 
 const jwtOpts = {
   jwtFromRequest: cookieExtractor,

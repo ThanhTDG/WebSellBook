@@ -1,7 +1,6 @@
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
-// const session = require("cookie-session");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -27,16 +26,40 @@ mongoose
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
-app.use(cookieParser());
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "X-Requested-With,content-type"
+//   );
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    cookie: { secure: true, maxAge: 60 * 60 * 1000 },
+    cookie: {
+      signed: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 1000,
+    },
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
