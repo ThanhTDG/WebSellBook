@@ -44,7 +44,8 @@ const getData = ({
     publishDate,
     images,
     weight,
-    dimension: { height, width },
+    height,
+    width,
     page,
     bookCover,
     status,
@@ -66,7 +67,6 @@ const getData = ({
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
-  obj.dimension = data.dimension;
   obj.price = data.price;
   return obj;
 };

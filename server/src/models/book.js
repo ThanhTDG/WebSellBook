@@ -68,12 +68,8 @@ const bookSchema = new Schema(
     // language: String,
     images: [String],
     weight: Number,
-    dimension: {
-      type: dimensionSchema,
-      get: (value) => {
-        if (value) return `${value.height} x ${value.width} cm`;
-      },
-    },
+    height: Number,
+    width: Number,
     page: Number,
     bookCover: String,
     status: {
@@ -108,12 +104,18 @@ const bookSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
+bookSchema.index({ name: "text" });
+
 bookSchema.virtual("shortDes").get(function () {
   const des = this.description;
   if (des.length < 200) {
     return des;
   }
   return des.slice(0, 200) + "...";
+});
+
+bookSchema.virtual("dimension").get(function () {
+  if (this.height && this.width) return `${this.height} x ${this.width} cm`;
 });
 
 bookSchema.virtual("price").get(function () {

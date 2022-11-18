@@ -66,10 +66,9 @@ const userSchema = new Schema(
       require: true,
       trim: true,
       unique: true,
-      validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error("Email is invalid");
-        }
+      validate: {
+        validator: (value) => validator.isEmail(value),
+        message: "Email is invalid",
       },
     },
     phone: {
@@ -77,16 +76,28 @@ const userSchema = new Schema(
       require: true,
       trim: true,
       unique: true,
-      validate(value) {
-        if (!validator.isMobilePhone(value, "vi-VN")) {
-          throw new Error("Phone number is invalid");
-        }
+      validate: {
+        validator: (value) => validator.isMobilePhone(value, "vi-VN"),
+        message: "Phone number is invalid",
       },
     },
     password: {
       type: String,
-      // required: true,
+      required: true,
       // select: false,
+      // minLength: [
+      //   8,
+      //   "Password is shorter than the minimum allowed length (8).",
+      // ],
+      // maxLength: [
+      //   255,
+      //   "Password is longer than the maximum allowed length (255).",
+      // ],
+      // validate: {
+      //   validator: (value) =>
+      //     /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,255}$/.test(value),
+      //   message: "Password is invalid",
+      // },
     },
     sex: {
       type: Boolean,

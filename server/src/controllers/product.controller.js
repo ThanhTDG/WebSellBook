@@ -54,11 +54,13 @@ const book2Json = (value) => {
   delete obj.__v;
   delete obj.category;
   delete obj.tree;
+  delete obj.height;
+  delete obj.width;
   // delete obj.createdAt;
   delete obj.updatedAt;
   const { shortDes, dimension, price, numOfReviews, rating, ratingRate } =
     value;
-  console.log(value.price);
+  // console.log(value.price);
   obj = {
     ...obj,
     shortDes,
@@ -95,8 +97,9 @@ const sortMethod = (sort) => {
  */
 const getBooks = async (req, res) => {
   try {
-    const { category, page = 1, limit = 12, sort } = req.query;
-    const query = category ? { tree: category } : {};
+    const { category, search, page = 1, limit = 12, sort } = req.query;
+    let query = search ? { $text: { $search: search } } : {};
+    query = category ? { tree: category, ...query } : query;
     const options = {
       page,
       limit,
@@ -104,18 +107,6 @@ const getBooks = async (req, res) => {
       // sort: sortMethod(sort),
     };
 
-    // const aggregate = Book.aggregate(
-    //   [
-    //     {
-    //       $project: {
-    //         price: { $multiply: ["$originalPrice", "$discountRate"] },
-    //       },
-    //     },
-    //     { $sort: { price: 1 } },
-    //   ],
-    //   { allowDiskUse: true }
-    // );
-    // const data = await Book.aggregatePaginate(aggregate, options);
     const data = await Book.paginate(query, options);
     data.docs = data.docs.map((value) => book2Json(value));
 
