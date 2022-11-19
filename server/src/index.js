@@ -1,5 +1,5 @@
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
@@ -8,9 +8,15 @@ const passport = require("passport");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 
+const {
+  NODE_ENV: { PROC },
+} = require("./constants");
+
 const router = require("./router");
 
 require("dotenv").config();
+
+const NODE_ENV = process.env.NODE_ENV;
 
 // Database connection
 const MONGO_URI = process.env.MONGO_URI;
@@ -43,9 +49,9 @@ app.use(
     cookie: {
       signed: true,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: NODE_ENV === PROC,
       maxAge: 60 * 60 * 1000,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      sameSite: NODE_ENV === PROC ? "none" : "strict",
     },
     secret: process.env.SESSION_SECRET,
     resave: true,
@@ -72,8 +78,8 @@ app.use("/api", router);
 const swaggerDoc = YAML.load("./swagger.yaml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-// console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}`);
-// if (process.env.NODE_ENV === "production") {
+// console.log(`NODE_ENV = ${NODE_ENV}`);
+// if (NODE_ENV === PROC) {
 //   // TODO
 //   app.use();
 //   app.get("*", (req, res) => {

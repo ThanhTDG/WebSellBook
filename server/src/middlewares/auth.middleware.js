@@ -1,5 +1,8 @@
 const passport = require("passport");
+
 const ErrorHandler = require("../utils/errorHandler");
+
+const opts = { session: false };
 
 /**
  * Login
@@ -27,7 +30,7 @@ const login = (req, user, next) =>
  * @param {Function} next Next function
  */
 const requiredLogin = (req, res, next) =>
-  passport.authenticate("local", { session: false }, async (err, user) => {
+  passport.authenticate("local", opts, async (err, user) => {
     try {
       if (err) {
         throw new ErrorHandler(401, err.message);
@@ -52,7 +55,7 @@ const requiredLogin = (req, res, next) =>
  * @param {Function} next Next function
  */
 const authenticate = async (req, res, next) =>
-  passport.authenticate("jwt", { session: false }, async (err, user) => {
+  passport.authenticate("jwt", opts, async (err, user) => {
     try {
       if (err) {
         throw new ErrorHandler(401, err.message);

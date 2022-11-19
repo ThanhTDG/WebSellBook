@@ -1,6 +1,7 @@
 const express = require("express");
 
 const controller = require("../controllers/auth.controller");
+
 const {
   authenticate,
   requiredLogin,
@@ -15,6 +16,7 @@ router.post("/signout", authenticate, controller.signOut);
 
 router.get("/profile", authenticate, controller.getProfile);
 router.put("/profile", authenticate, controller.setProfile);
+
 router.put(
   "/uploadavatar",
   authenticate,

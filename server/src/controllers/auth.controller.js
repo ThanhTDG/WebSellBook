@@ -1,8 +1,15 @@
 require("dotenv").config();
 
+const {
+  NODE_ENV: { PROC },
+} = require("../constants");
+
 const User = require("../models/user");
+
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
+
+const NODE_ENV = process.env.NODE_ENV;
 
 const user2json = ({
   _id,
@@ -60,9 +67,9 @@ const signIn = async (req, res) => {
     const cookieOpts = {
       signed: true,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: NODE_ENV === PROC,
       maxAge: process.env.JWT_EXPIRES,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      sameSite: NODE_ENV === PROC ? "none" : "strict",
     };
 
     await res
@@ -89,9 +96,9 @@ const signOut = async (req, res) => {
 
       const cookieOpts = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: NODE_ENV === PROC,
         maxAge: process.env.JWT_EXPIRES,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        sameSite: NODE_ENV === PROC ? "none" : "strict",
       };
 
       await res
@@ -151,7 +158,10 @@ const uploadAvatar = async (req, res) => {
     const user = req.user;
     user.avatar = file.path;
     await user.save();
-    await res.json({ avatar: user.avatar });
+    await res.json({
+      message: "Avatar uploaded successfully",
+      avatar: user.avatar,
+    });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
