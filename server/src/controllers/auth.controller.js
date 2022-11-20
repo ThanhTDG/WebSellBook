@@ -69,7 +69,7 @@ const signIn = async (req, res) => {
       httpOnly: true,
       secure: NODE_ENV === PROC,
       maxAge: process.env.JWT_EXPIRES,
-      sameSite: NODE_ENV === PROC ? "none" : "strict",
+      sameSite: NODE_ENV === PROC ? "none" : "lax",
     };
 
     await res
@@ -98,7 +98,7 @@ const signOut = async (req, res) => {
         httpOnly: true,
         secure: NODE_ENV === PROC,
         maxAge: process.env.JWT_EXPIRES,
-        sameSite: NODE_ENV === PROC ? "none" : "strict",
+        sameSite: NODE_ENV === PROC ? "none" : "lax",
       };
 
       await res

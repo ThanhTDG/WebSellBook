@@ -51,7 +51,7 @@ app.use(
       httpOnly: true,
       secure: NODE_ENV === PROC,
       maxAge: 60 * 60 * 1000,
-      sameSite: NODE_ENV === PROC ? "none" : "strict",
+      sameSite: NODE_ENV === PROC ? "none" : "lax",
     },
     secret: process.env.SESSION_SECRET,
     resave: true,
