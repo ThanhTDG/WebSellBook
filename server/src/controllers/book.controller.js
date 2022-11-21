@@ -68,6 +68,7 @@ const getData = ({
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
+  obj.id = data._id;
   obj.price = data.price;
   return obj;
 };

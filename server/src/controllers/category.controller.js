@@ -21,6 +21,7 @@ const toJson = (data) => {
   delete obj.__v;
   delete obj.tree;
   delete obj.children;
+  obj.id = data.id;
   return obj;
 };
 
