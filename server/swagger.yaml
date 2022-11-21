@@ -22,7 +22,7 @@ servers:
   description: Development API server
 - url: https://toi-mua-sach.herokuapp.com/api
   description: Heroku server
-- url: https://toimuasach.click/api
+- url: https://api.toimuasach.click/api/v1
   description: Production API server
 tags:
 - name: Quản lý danh mục

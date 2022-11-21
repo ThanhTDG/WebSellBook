@@ -72,7 +72,7 @@ app.use(
 
 // Routes
 app.get("/", (req, res) => res.send("Welcome to ToiMuaSach API"));
-app.use("/api", router);
+app.use("/api/v1", router);
 
 // API documents
 const swaggerDoc = YAML.load("./swagger.yaml");
