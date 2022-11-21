@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-	baseURL: "https://toi-mua-sach.herokuapp.com/api",
+	baseURL: "https://api.toimuasach.click/api/v1",
 });
 
 export const get = async (path, option = {}) => {

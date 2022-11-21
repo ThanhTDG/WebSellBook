@@ -20,7 +20,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ShoppingCartOnOutlinedIcon from "@mui/icons-material/ShoppingCart";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -62,4 +62,13 @@ const Widget = ({ className }) => {
 		balance: <AccountBalanceWalletIcon className={className} />,
 	};
 };
-export { Navbar, Sidebar, Chart, Widget };
+const Button = ({ className }) => {
+	return {
+		users: <PersonOutlineIcon className={className} />,
+		order: <ShoppingCartOnOutlinedIcon className={className} />,
+		earning: <MonetizationOnOutlinedIcon className={className} />,
+		balance: <AccountBalanceWalletIcon className={className} />,
+		close: <HighlightOffOutlinedIcon className={className} />,
+	};
+};
+export { Navbar, Sidebar, Chart, Widget, Button };

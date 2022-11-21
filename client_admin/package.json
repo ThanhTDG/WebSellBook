@@ -26,6 +26,7 @@
     "react-dropdown-tree-select": "^2.7.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.6",
     "react-upload-gallery": "^0.4.1",
     "react-widgets": "^5.8.4",
     "recharts": "^2.1.16",

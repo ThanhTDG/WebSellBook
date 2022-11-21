@@ -12,7 +12,7 @@ function DetailProduct(props) {
 
 	return (
 		<Tippy
-			placement="bottom-end"
+			placement="bottom-start"
 			interactive
 			delay={[700, 200]}
 			render={(attrs) => {

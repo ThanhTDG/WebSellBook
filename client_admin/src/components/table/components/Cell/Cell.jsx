@@ -1,26 +1,42 @@
 import React from "react";
-import { TableCell as TableCellMui } from "@mui/material";
+import { TableCell as TableCellMui, tableCellClasses } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import TableRow from "@mui/material/TableRow";
 
 function Cell(props) {
-	const {
-		typeCell = "normal",
-		key = null,
-		size = "medium",
-		align = "right",
-		style = null,
-		children,
-		...passProps
-	} = props;
+	const { key = null, size = "medium", align = "right", width: refWidth = null, children, ...passProps } = props;
 	let sx = {};
-	switch (typeCell) {
-		case "header":
-			sx = { fontSize: 16, fontWeight: 500 };
-			break;
-	}
+	let value = 150;
+
+	const StyledTableCell = styled(TableCellMui)(({ theme }) => ({
+		[`&.${tableCellClasses.head}`]: {
+			backgroundColor: theme.palette.common.black,
+			color: theme.palette.common.white,
+			width: refWidth ? refWidth : 200,
+		},
+		[`&.${tableCellClasses.body}`]: {
+			fontSize: 14,
+			width: refWidth ? refWidth : 200,
+			minWith: 200,
+		},
+	}));
 	return (
-		<TableCellMui sx={sx} key={key} size={size} align={align} style={style} {...passProps}>
+		<StyledTableCell
+			align={align}
+			size={size}
+		>
 			{children}
-		</TableCellMui>
+		</StyledTableCell>
+		// <TableCellMui
+		// 	sx={sx}
+		// 	key={key}
+		// 	size={size}
+		// 	align={align}
+		// 	style={style}
+		// 	{...passProps}
+		// >
+		// 	{children}
+		// </TableCellMui>
 	);
 }
 

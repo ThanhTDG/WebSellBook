@@ -1,32 +1,16 @@
 import React, { Fragment, useState } from "react";
 import { generatePath, Link } from "react-router-dom";
 import TableComp from "~/components/table/components";
-import { Switch } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
 import BookConfig from "~/config/Book";
 import classNames from "classnames/bind";
 
 import styles from "./Product.module.scss";
 import PageConfig from "~/config/pages";
 import Popper, { PopperWrapper } from "~/components/Popper";
-import Tippy from "@tippyjs/react/headless";
 import Controls from "~/components/controls";
 
 const cx = classNames.bind(styles);
 const status = BookConfig.status;
-
-const GreenSwitch = styled(Switch)(({ theme }) => ({
-	"& .MuiSwitch-switchBase.Mui-checked": {
-		color: green[600],
-		"&:hover": {
-			backgroundColor: alpha(green[600], theme.palette.action.hoverOpacity),
-		},
-	},
-	"& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-		backgroundColor: green[600],
-	},
-}));
 
 function Product(props) {
 	const { product } = props;
@@ -36,7 +20,6 @@ function Product(props) {
 		setIsHovering(false);
 	};
 	const handleMouseOver = () => {
-		console.log("isHover");
 		setIsHovering(true);
 	};
 
@@ -44,7 +27,7 @@ function Product(props) {
 		setIsEnable(!isEnable);
 	};
 	let linkProduct = PageConfig.product.route + product.id;
-	let price = product.originalPrice * (100 - product.discountRate);
+	let price = (product.originalPrice * (100 - product.discountRate)) / 100;
 	return (
 		<Fragment>
 			<TableComp.Row>
@@ -53,6 +36,7 @@ function Product(props) {
 					align="left"
 					onMouseOver={handleMouseOver}
 					onMouseOut={handleMouseOut}
+					width={800}
 				>
 					<Popper.DetailProduct
 						product={product}
@@ -64,13 +48,13 @@ function Product(props) {
 							})}
 							target="_blank"
 						>
-							{product.name}
+							<div className={cx("single-line")}>{product.name}</div>
 						</Link>
 					</Popper.DetailProduct>
 				</TableComp.Cell>
 				<TableComp.Cell size="small">{product.countInStock}</TableComp.Cell>
-				<TableComp.Cell size="small">{price}</TableComp.Cell>
 				<TableComp.Cell size="small">{product.sold}</TableComp.Cell>
+				<TableComp.Cell size="small">{product.price.toLocaleString()}</TableComp.Cell>
 				<TableComp.Cell size="small">
 					<Controls.Switch
 						checked={isEnable}

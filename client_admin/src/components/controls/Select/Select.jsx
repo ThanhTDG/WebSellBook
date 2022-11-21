@@ -16,6 +16,8 @@ function Select(props) {
 
 	return (
 		<FormControl
+			variant="filled"
+			sx={{ m: 1, minWidth: 120 }}
 			fullWidth
 			className={className}
 			size={size}

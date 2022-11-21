@@ -13,17 +13,18 @@ const table = {
 				title: "Tồn kho",
 				engTitle: "Count Of Stock",
 			},
-			{
-				key: "price",
-				align: "right",
-				title: "Giá bán",
-				engTitle: "Price",
-			},
+
 			{
 				key: "sold",
 				align: "right",
 				title: "Đã bán",
 				engTitle: "Sold",
+			},
+			{
+				key: "price",
+				align: "right",
+				title: "Giá bán",
+				engTitle: "Price",
 			},
 			{
 				key: "status",

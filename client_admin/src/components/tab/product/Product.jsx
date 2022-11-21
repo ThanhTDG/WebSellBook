@@ -9,36 +9,42 @@ import { limitRowsBook } from "~/config/table";
 import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
 import * as productService from "~/services/productsService";
-import * as convertObject from "~/utils/convertObject";
 import * as stores from "~/stores";
 import * as initState from "~/config/initialStates";
+import Loading from "~/components/Loading";
+import classNames from "classnames/bind";
+import Controls from "~/components/controls";
+import Search from "~/components/Search";
 
 const listStatus = BookConfig.listStatus;
 const constant = stores.constants;
 const actions = stores.actions;
 const initialState = initState.products;
-
+const cx = classNames.bind(styles);
 function reducer(state, action) {
 	switch (action.type) {
 		case constant.SET_LIMIT_ROWS:
+			console.log("set limit", action.payload);
 			return {
 				...state,
 				page: 1,
 				limit: action.payload,
 			};
 		case constant.SET_STATUS_PRODUCTS:
+			console.log("set status", action.payload);
 			return {
 				...initialState,
 				indexStatus: action.payload.indexStatus,
 				status: action.payload.status,
 			};
 		case constant.SET_PAGE_PRODUCTS:
-			console.log("set Page", state, state.page);
+			console.log("set Page", action.payload);
 			return {
 				...state,
 				page: action.payload,
 			};
 		case constant.SET_NEW_PROP_PRODUCTS:
+			console.log("set new", action.payload);
 			return {
 				...state,
 				status: action.payload.status,
@@ -53,19 +59,21 @@ function reducer(state, action) {
 
 function Product() {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const debounceValue = useDebounce(state, 500);
+	const debounceValue = useDebounce(state, 250);
 	const [products, setProducts] = useState([]);
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [counter, setCounter] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
 		const fetchApi = async () => {
 			const result = await productService.getProducts(state);
 			console.log(result);
 			handleProducts(result);
 		};
-
+		setIsLoading(false);
 		if (isUpdate) {
 			console.log("update", "isUpdate", state, isUpdate);
+			setIsLoading(true);
 			fetchApi();
 		}
 		setIsUpdate(!isUpdate);
@@ -78,7 +86,6 @@ function Product() {
 			setProducts(result.docs);
 		}
 	};
-	console.log(state);
 	const handleLimitChange = (e) => {
 		dispatch(actions.setLimitRow(e.target.value));
 	};
@@ -100,12 +107,20 @@ function Product() {
 						value={state.indexStatus}
 						index={index}
 					>
-						<TableProduct
-							state={state}
-							products={products}
-							onPageChange={handlePageChange}
-							onLimitChange={handleLimitChange}
-						/>
+						<Search />
+						{isLoading ? (
+							<Loading
+								size={25}
+								height={500}
+							/>
+						) : (
+							<TableProduct
+								state={state}
+								products={products}
+								onPageChange={handlePageChange}
+								onLimitChange={handleLimitChange}
+							/>
+						)}
 					</TabPanel>
 				);
 			})}
