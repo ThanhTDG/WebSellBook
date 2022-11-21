@@ -10,19 +10,20 @@ function Select(props) {
 		value,
 		onChange,
 		items,
+		variant = null,
 		none = false,
 		labelInside = false,
 	} = props;
 
 	return (
 		<FormControl
-			variant="filled"
+			variant={variant}
 			sx={{ m: 1, minWidth: 120 }}
 			fullWidth
 			className={className}
 			size={size}
 		>
-			{labelInside ? <InputLabel>{label}</InputLabel> : <FormLabel>{label}</FormLabel>}
+			{labelInside && variant ? <InputLabel>{label}</InputLabel> : <FormLabel>{label}</FormLabel>}
 			<SelectMui
 				name={name}
 				value={value}

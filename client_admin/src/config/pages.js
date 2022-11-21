@@ -7,44 +7,50 @@ const PageConfig = {
 	home: {
 		key: "home",
 		route: "/",
-		title: "Trang chủ",
+		label: "Trang chủ",
+		component: Home,
+	},
+	dashboard: {
+		key: "dashboard",
+		route: "/",
+		label: "Bảng điều khiển",
 		component: Home,
 	},
 	// mgt product
 	products: {
 		key: "products",
 		route: "/products",
-		title: "Quản lý sản phẩm",
+		label: "Quản lý sản phẩm",
 		component: Products,
 	},
 	newProduct: {
 		key: "newProduct",
 		route: "/products/new",
-		title: "Thêm sản phẩm",
+		label: "Thêm sản phẩm",
 		component: NewProduct,
 	},
 	product: {
 		key: "product",
 		route: "/product/:id",
-		title: "Sản phẩm",
+		label: "Sản phẩm",
 		component: NewProduct,
 	},
 	orders: {
 		key: "orders",
 		route: "/orders",
-		title: "Quản lý đơn hàng",
+		label: "Quản lý đơn hàng",
 		component: TestLayout,
 	},
 	order: {
 		key: "order",
 		route: "/order@:id",
-		title: "Đơn hàng",
+		label: "Đơn hàng",
 		component: TestLayout,
 	},
 	test: {
 		key: "test",
 		route: "/test",
-		title: "Thử nghiệm",
+		label: "Thử nghiệm",
 		component: TestLayout,
 	},
 };

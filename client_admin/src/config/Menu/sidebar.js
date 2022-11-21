@@ -1,13 +1,22 @@
+import { Link } from "react-router-dom";
+import { icons } from "~/assets/images";
 import { default as PageConfig } from "~/config/pages";
-export const sidebarOptions = [
+const sidebar = [
 	{
-		title: "Main",
-		item: [PageConfig.home],
+		key: "home",
+		label: <Link to={PageConfig.home.route}>Trang chủ</Link>,
+		icon: icons.Sidebar("icon").home,
 	},
 	{
-		title: "Lists",
-		item: [
-			PageConfig.products,
+		key: "list",
+		label: "Danh sách",
+		icon: icons.Sidebar("icon").list,
+		children: [
+			{
+				key: "products",
+				label: <Link to={PageConfig.products.route}>Sản phẩm</Link>,
+				icon: icons.Sidebar("icon").products,
+			},
 			{
 				link: "/orders",
 				key: "orders",
@@ -26,23 +35,11 @@ export const sidebarOptions = [
 		],
 	},
 	{
-		title: "Useful",
-		item: [
-			{
-				link: "/stats",
-				key: "stats",
-				name: "Stats",
-			},
-			{
-				link: "/notifications",
-				key: "notifications",
-				name: "Notifications",
-			},
-		],
+		label: "Useful",
 	},
 	{
-		title: "Service",
-		item: [
+		label: "Service",
+		children: [
 			{
 				link: "/system_health",
 				key: "system_health",
@@ -56,8 +53,8 @@ export const sidebarOptions = [
 		],
 	},
 	{
-		title: "USER",
-		item: [
+		label: "USER",
+		children: [
 			{
 				link: "/profile",
 				key: "profile",
@@ -71,3 +68,4 @@ export const sidebarOptions = [
 		],
 	},
 ];
+export default sidebar;

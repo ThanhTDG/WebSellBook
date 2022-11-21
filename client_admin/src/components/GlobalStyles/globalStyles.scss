@@ -20,8 +20,9 @@
 	--holdItem: rgba(255, 255, 255, 0.5);
 	--blackPurple: #0f0f33;
 	--text-color: rgb(32, 32, 32);
-	--vertical-navbar: 48px;
-	--horizontal-sidebar: 240px;
+	--vertical-navbar: 64px;
+	--max-width-sidebar: 200px;
+	--min-width-sidebar: 80px;
 }
 * {
 	padding: 0;

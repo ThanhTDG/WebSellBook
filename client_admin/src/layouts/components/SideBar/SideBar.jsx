@@ -1,69 +1,69 @@
-import { sidebarOptions } from "./sidebarOptions.js";
-import { icons } from "~/assets/images";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import images from "~/assets/images";
-import { Button } from "~/components/controls/Button";
-import { default as PageConfig } from "~/config/pages";
+import { Layout, Menu } from "antd";
+import images, { icons } from "~/assets/images";
 import { getKey } from "~/utils/util";
-import classNames from "classnames/bind";
+import PageConfig from "~/config/pages";
 import styles from "./sidebar.module.scss";
+import classNames from "classnames/bind";
+import MenuConfig from "~/config/Menu";
+import { Link } from "react-router-dom";
+
 const cx = classNames.bind(styles);
+const { Header, Sider, Content } = Layout;
+const items = [
+	getItem("Option 1", "1", icons.Button("test").close),
+	getItem("Option 2", "2", icons.Button("test").close),
+	getItem("User", "sub1", icons.Button("test").close, [
+		getItem("Tom", "3"),
+		getItem("Bill", "4"),
+		getItem("Alex", "5"),
+	]),
+	getItem("Team", "sub2", icons.Button("test").close, [
+		getItem("Team", "sub2", icons.Button("test").close, [getItem("Team", "sub2", icons.Button("test").close)]),
+		getItem("Team 2", "8"),
+	]),
+	getItem("Files", "9", icons.Button("test").close),
+];
 
-function Sidebar() {
-	return (
-		<div className={cx("sidebar")}>
-			<div className={cx("top")}>
-				<div>
-					<a className={cx("logo")} href={PageConfig.home.route}>
-						<img src={images.logoAndText} alt="Tôi Mua Sách" />
-					</a>
-				</div>
-			</div>
-			<div className={cx("center")}>
-				<ul>{RenderOption()}</ul>
-			</div>
-		</div>
-	);
+function getItem(label, key, icon, children) {
+	return {
+		key,
+		label,
+		icon,
+		children,
+	};
 }
-
-function RenderOption() {
-	return sidebarOptions.map((option, index) => {
-		let title = option.title;
-		let item = option.item;
-		return (
-			<div key={index + title}>
-				<p className={cx("title")}>{title}</p>
-				{item.map((item, index) => {
-					return Option(item, index);
-				})}
-			</div>
-		);
-	});
-}
-
-const Option = (data, index) => {
-	let key = data.key;
-	let navigate = useNavigate();
+function Sidebar({ collapsed, setCollapsed }) {
 	let currentPath = window.location.pathname;
-	let active = getKey("route", currentPath) === key;
-	let classMenuItem = cx("menuItem", {
-		active,
-	});
+	let key = getKey("route", currentPath);
 	return (
-		<li key={key}>
-			<div
-				className={classMenuItem}
-				key={data.key}
-				onClick={() => {
-					navigate(PageConfig[data.key].route);
-				}}
+		<Sider
+			className={cx("sidebar")}
+			collapsible
+			collapsed={collapsed}
+			onCollapse={(value) => setCollapsed(value)}
+		>
+			<Link
+				className={cx("logo")}
+				to={PageConfig.home.route}
 			>
-				{icons.Sidebar({ className: cx("icon") })[key]}
-				<span>{data.title}</span>
-			</div>
-		</li>
+				<img
+					src={collapsed ? images.logo : images.logoAndText}
+					alt="Tôi Mua Sách"
+				/>
+			</Link>
+
+			<Menu
+				onClick={(e) => {
+					console.log(e);
+				}}
+				theme="dark"
+				defaultSelectedKeys={key}
+				mode="inline"
+				items={MenuConfig.sideBar}
+			/>
+		</Sider>
 	);
-};
+}
 
 export default Sidebar;

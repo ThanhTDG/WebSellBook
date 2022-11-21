@@ -13,6 +13,7 @@ function Footer(props) {
 			<div className={cx("controls")}>
 				<Controls.Select
 					labelInside={true}
+					variant={"filled"}
 					size="small"
 					className={cx("row-selector")}
 					value={limitValue}

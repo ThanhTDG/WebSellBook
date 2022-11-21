@@ -21,6 +21,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ShoppingCartOnOutlinedIcon from "@mui/icons-material/ShoppingCart";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import ListIcon from "@mui/icons-material/List";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -35,6 +36,7 @@ const Navbar = ({ className }) => {
 
 const Sidebar = ({ className }) => {
 	return {
+		list: <ListIcon className={className} />,
 		home: <DashboardIcon className={className} />,
 		products: <StorefrontIcon className={className} />,
 		orders: <CreditCardIcon className={className} />,
@@ -69,6 +71,7 @@ const Button = ({ className }) => {
 		earning: <MonetizationOnOutlinedIcon className={className} />,
 		balance: <AccountBalanceWalletIcon className={className} />,
 		close: <HighlightOffOutlinedIcon className={className} />,
+		search: <SearchIcon className={className} />,
 	};
 };
 export { Navbar, Sidebar, Chart, Widget, Button };

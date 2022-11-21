@@ -6,6 +6,7 @@ function Input(props) {
 	const {
 		className = null,
 		name,
+		variant = "outlined",
 		label,
 		value,
 		onChange,
@@ -14,12 +15,14 @@ function Input(props) {
 		required = false,
 		disabled = false,
 		type = null,
+		placeholder = null,
 		error = null,
 		endAdornment = null,
 		startAdornment = null,
 		configNumber = null,
 		oncClickEndAdornment,
 		oncClickStartAdornment,
+		size = "normal",
 	} = props;
 	let inputProps = {};
 	if (startAdornment) {
@@ -52,12 +55,14 @@ function Input(props) {
 			className={className}
 		>
 			<TextField
+				placeholder={placeholder}
+				variant={variant}
 				label={label}
 				required={required}
 				disabled={disabled}
 				id={id}
 				InputProps={{ ...inputProps }}
-				size="Normal"
+				size={size}
 				name={name}
 				value={value}
 				onChange={onChange}

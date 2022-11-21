@@ -107,7 +107,16 @@ function Product() {
 						value={state.indexStatus}
 						index={index}
 					>
-						<Search />
+						<div className={cx("tool-filter")}>
+							<Controls.Select
+								labelInside={true}
+								className={cx("type-search")}
+								items={BookConfig.options.typeSearch.value}
+								
+							/>
+							<Search className={cx("search-box")} />
+						</div>
+
 						{isLoading ? (
 							<Loading
 								size={25}

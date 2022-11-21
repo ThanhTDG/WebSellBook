@@ -9,7 +9,7 @@ import styles from "./search.module.scss";
 const cx = classNames.bind(styles);
 
 function Search(props) {
-	const { className = null, name, label, value, onChange } = props;
+	const { className = null, label = "Tìm kiếm", value = "", onChange, size = "normal" } = props;
 	const [search, setSearch] = useState(value);
 	const inputRef = useRef();
 	const handleSearch = (e) => {
@@ -22,13 +22,15 @@ function Search(props) {
 		setSearch("");
 	};
 	return (
-		<div className="wrapper">
+		<div className={cx("wrapper", className)}>
 			<Controls.Input
-				label={label}
+				placeholder={"Tìm kiếm"}
+				size={size}
 				classNames={cx("search-input")}
 				onChange={handleSearch}
 				value={search}
-				endAdornment={<IconButton onClick={clearSearch}>{icons.Button("icon").close}</IconButton>}
+				endAdornment={search && <IconButton onClick={clearSearch}>{icons.Button("icon").close}</IconButton>}
+				startAdornment={icons.Button("icon").search}
 			/>
 		</div>
 	);
