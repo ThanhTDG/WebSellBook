@@ -13,11 +13,12 @@ function Cell(props) {
 			backgroundColor: theme.palette.common.black,
 			color: theme.palette.common.white,
 			width: refWidth ? refWidth : 200,
+			minWith: "200px",
 		},
 		[`&.${tableCellClasses.body}`]: {
 			fontSize: 14,
 			width: refWidth ? refWidth : 200,
-			minWith: 200,
+			minWith: "200px",
 		},
 	}));
 	return (
