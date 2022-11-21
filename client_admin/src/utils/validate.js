@@ -1,4 +1,3 @@
-import { BookConfig } from "~/config/book";
 import validator from "validator";
 const validate = {
 	book: "bookValidation",

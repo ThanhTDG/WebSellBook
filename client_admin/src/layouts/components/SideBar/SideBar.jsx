@@ -3,7 +3,7 @@ import { icons } from "~/assets/images";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import images from "~/assets/images";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/controls/Button";
 import { default as PageConfig } from "~/config/pages";
 import { getKey } from "~/utils/util";
 import classNames from "classnames/bind";

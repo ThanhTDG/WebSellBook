@@ -2,13 +2,25 @@ import { FormControl, FormLabel, FormControlLabel, Radio, RadioGroup as MuiRadio
 import React from "react";
 
 function RadioGroup(props) {
-	const { name, label, value, onChange, items, children } = props;
+	const { name, className = null, row = true, label, value, onChange, items, children } = props;
 	return (
-		<FormControl>
+		<FormControl className={className}>
 			<FormLabel>{label}</FormLabel>
-			<MuiRadioGroup row name={name} value={value} onChange={onChange}>
+			<MuiRadioGroup
+				row={row}
+				name={name}
+				value={value}
+				onChange={onChange}
+			>
 				{items.map((item) => {
-					return <FormControlLabel key={item.id} value={item.id} control={<Radio />} label={item.name} />;
+					return (
+						<FormControlLabel
+							key={item.id}
+							value={item.id}
+							control={<Radio />}
+							label={item.name}
+						/>
+					);
 				})}
 			</MuiRadioGroup>
 			{children}

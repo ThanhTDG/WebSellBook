@@ -18,16 +18,16 @@ const PageConfig = {
 		component: Products,
 	},
 	newProduct: {
-		key: "products",
+		key: "newProduct",
 		route: "/products/new",
 		title: "Thêm sản phẩm",
 		component: NewProduct,
 	},
 	product: {
 		key: "product",
-		route: "/product/@:id",
+		route: "/product/:id",
 		title: "Sản phẩm",
-		component: Products,
+		component: NewProduct,
 	},
 	orders: {
 		key: "orders",

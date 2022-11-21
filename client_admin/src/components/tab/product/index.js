@@ -1,1 +1,1 @@
-export { default as TabProduct } from "./TabProduct";
+export { default as TabProduct } from "./Product";

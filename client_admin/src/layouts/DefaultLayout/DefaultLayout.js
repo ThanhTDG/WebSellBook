@@ -8,7 +8,10 @@ import PageConfig from "~/config/pages";
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
 	let key = getKey("route", window.location.pathname);
-	let title = PageConfig[key].title;
+	let title = "";
+	if (key) {
+		title = PageConfig[key].title;
+	}
 	return (
 		<div className={cx("layout")}>
 			<SideBar className={cx("sidebar")} />
@@ -20,7 +23,7 @@ function DefaultLayout({ children }) {
 					<div className={cx("title")}>
 						<h2>{title}</h2>
 					</div>
-					<div>{children}</div>
+					{children}
 				</div>
 			</div>
 		</div>

@@ -1,17 +1,22 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useReducer } from "react";
 import { Box, FormControl } from "@mui/material";
 import OutlinedBox from "~/components/OutlinedBox";
-import useForm from "~/customHook/useForm";
+import useForm from "~/hooks/useForm";
 import Controls from "~/components/controls/";
 import Form from "~/components/Form";
 import validate from "~/utils/validate";
-import Button from "~/components/Button";
-import classNames from "classnames/bind";
+
 import styles from "./product.module.scss";
-import { BookConfig } from "~/config/book";
 import categories from "~/components/controls/DropdownTree/sampleData";
 import Editor from "~/components/controls/Editor/Editor";
+import classNames from "classnames/bind";
+import "./formMuiCustom.scss";
+import { icons } from "~/assets/images";
+import Button from "~/components/controls/Button";
+import unit from "~/config/unit";
+import BookConfig from "~/config/Book";
 
+const propsBook = BookConfig.props;
 const cx = classNames.bind(styles);
 const data = {
 	label: "search me",
@@ -29,38 +34,24 @@ const data = {
 		},
 	],
 };
-const initialValues = {
-	id: "634ed8e4f6a3a7266d992614",
-	name: "OVERLORD - Tập 2",
-	shortDescription: "OVERLORD - Tập 2: Chiến Binh Bóng Tối\n",
-	description:
-		'Vào ngày hoạt động cuối cùng của game YGGDRASIL, do hiện tượng bí ẩn nào đó, một người chơi là Momonga trong tạo hình nhân vật bộ xương tự nhiên bị dịch chuyển tới một thế giới xa lạ.\nĐã tám ngày trôi qua. Suốt tám ngày này, Momonga, giờ đổi tên thành Ainz, đã thăm thú toàn bộ lăng mộ Nazarick, xem xét tình hình các thuộc hạ của mình. Sau khi xác nhận rằng nơi đây chẳng khác mấy so với thế giới game, Ainz quyết định đã đến lúc tiến hành bước tiếp theo, là mở rộng phạm vi khám phá và chinh phục.\nDẫn theo một hầu gái hộ vệ, anh tìm đến thành phố trong vai trò người chuyên diệt quái, mà người ta vẫn gọi là "mạo hiểm giả".\n',
-	slug: "overlord-tap-2",
-	authors: "Maruyama Kugane",
-	translators: "Mỹ Trinh",
-	sku: "8935250704472",
-	isbn13: "978-0134494166",
-	isbn10: "0134494164",
-	supplier: "IPM",
-	publisher: "NXB Hồng Đức",
-	publisherDate: "2020-04-30T00:00:00.000Z",
-	images: ["https://cdn0.fahasa.com/media/catalog/product/o/v/overlord-2---bia1_1.jpg"],
-	weight: 300,
-	height: 18,
-	width: 13,
-	page: 426,
-	bookCover: "Bìa mềm",
-	status: "available",
-	expectedDate: "2020-04-30T00:00:00.000Z",
-	countInStock: 100,
-	originalPrice: 135000,
-	discountRate: 25,
-	currentPrice: 100000,
-	category: "63412da2f0dd862e790a187f",
-};
 
-function Product() {
+function reducer(state, action) {
+	switch (action.type) {
+		default:
+			throw new Error();
+	}
+}
+function Product(props) {
+	const { isEdit = true, initialValues = propsBook.initialValues } = props;
 	const { values, setValues, errors, setError, handleInputChange } = useForm(initialValues);
+	const [openUpload, setOpenUpload] = useState(false);
+	const [languageBook, setLanguageBook] = useState(categories[0].id);
+	const [status, setStatus] = useState(propsBook.status.optionNew[0].id);
+	let AddIcon = icons.Button.add;
+	const handleOpenDialogUpload = () => {
+		setOpenUpload(true);
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (validate.book) {
@@ -69,13 +60,15 @@ function Product() {
 			window.alert("noError");
 		}
 	};
-	const [languageBook, setLanguageBook] = useState(categories[0].id);
-	const [category, setCategory] = useState([]);
+
 	const handleLanguageBook = (e, value) => {
 		setLanguageBook(value);
 		setCategory(null);
 	};
-
+	const handleStatus = (e, value) => {
+		setStatus(value);
+		handleInputChange(e, value);
+	};
 	const handleCategory = (e, node) => {
 		if (node) {
 			setCategory(node.value);
@@ -83,222 +76,322 @@ function Product() {
 			setCategory(null);
 		}
 	};
+	const setCategory = (value) => {
+		let convert = {
+			target: {
+				name: "category",
+			},
+		};
+		if (value) {
+			convert.target.value = value;
+		} else {
+			convert.target.value = null;
+		}
+		handleInputChange(convert);
+	};
 	console.log(values);
-	useLayoutEffect(() => {
-		setCategory(categories.find((item) => item.id === languageBook).children);
-	}, [languageBook]);
 	return (
 		<Form onSubmit={handleSubmit}>
-			<FormControl sx={{ width: 1 }}>
+			<FormControl className="form-control">
 				<div className={cx("wrapper")}>
-					<div className={cx("critical-information")}>
-						<OutlinedBox title={BookConfig.criticalInformation.title}>
-							<div className={cx("name")}>
+					<OutlinedBox
+						title={propsBook.criticalInformation.title}
+						className={cx("critical-information")}
+					>
+						<div className={cx("name")}>
+							<Controls.Input
+								label={propsBook.name.title}
+								fullWidth
+								name="name"
+								value={values.name}
+								onChange={handleInputChange}
+								errors={errors.name}
+							/>
+						</div>
+						<Division3
+							comp1={
 								<Controls.Input
-									label={BookConfig.name.title}
-									name="name"
-									value={values.name}
-									onChange={handleInputChange}
-									errors={errors.name}
-								/>
-							</div>
-							<div className={cx("price")}>
-								<Controls.Input
-									label={BookConfig.originalPrice.title}
+									label={propsBook.originalPrice.title}
+									fullWidth
 									name="originalPrice"
 									type="number"
-									configNumber={BookConfig.originalPrice.config}
-									endAdornment={BookConfig.originalPrice.unit}
+									configNumber={propsBook.originalPrice.config}
+									endAdornment={unit.monetary}
 									value={values.originalPrice}
 									onChange={handleInputChange}
 									errors={errors.originalPrice}
 								/>
+							}
+							comp2={
 								<Controls.Input
-									label={BookConfig.discountRate.title}
+									fullWidth
+									label={propsBook.discountRate.title}
 									name="discountRate"
-									configNumber={BookConfig.discountRate.config}
-									endAdornment={BookConfig.discountRate.unit}
+									configNumber={propsBook.discountRate.config}
+									endAdornment={unit.percent}
 									type="number"
 									value={values.discountRate}
 									onChange={handleInputChange}
 									errors={errors.discountRate}
 								/>
+							}
+							comp3={
 								<Controls.Input
-									label={BookConfig.price.title}
+									fullWidth
+									label={propsBook.price.title}
+									disabled={true}
 									name="price"
 									type="number"
-									configNumber={BookConfig.price.config}
-									endAdornment={BookConfig.price.unit}
-									value={values.price}
+									configNumber={propsBook.price.config}
+									endAdornment={unit.monetary}
+									value={values.originalPrice * ((100 - values.discountRate) / 100)}
 									onChange={handleInputChange}
 									errors={errors.price}
 								/>
-							</div>
-							<div className={cx("category")}>
-								<OutlinedBox title={BookConfig.type.title} type={"small"}>
-									<Controls.RadioGroup
-										label={"Ngôn ngữ"}
-										name="name"
-										items={categories}
-										value={languageBook}
-										onChange={handleLanguageBook}
-										errors={errors.name}
-									/>
-									{categories.map((item) => {
-										return (
-											item.id === languageBook && (
-												<div key={item.id}>
-													<Controls.DropdownTree
-														label={BookConfig.category.title}
-														name="name"
-														items={item.children}
-														onChange={handleCategory}
-														errors={errors.name}
-													/>
-												</div>
-											)
-										);
-									})}
-								</OutlinedBox>
-							</div>
-						</OutlinedBox>
-					</div>
-					<div className={cx("details")}>
-						<OutlinedBox title={BookConfig.details.title}>
-							<div className={cx("authors")}>
-								<Controls.Input
-									label={BookConfig.authors.title}
-									name="authors"
-									value={values.authors}
-									onChange={handleInputChange}
-									errors={errors.authors}
+							}
+						/>
+						<div className={cx("category")}>
+							<OutlinedBox
+								title={propsBook.type.title}
+								type={"small"}
+							>
+								<Controls.RadioGroup
+									label={"Ngôn ngữ"}
+									name="name"
+									items={categories}
+									value={languageBook}
+									onChange={handleLanguageBook}
+									errors={errors.name}
 								/>
-							</div>
-							<div className={cx("translators")}>
+								{categories.map((item) => {
+									return (
+										item.id === languageBook && (
+											<div key={item.id}>
+												<Controls.DropdownTree
+													label={propsBook.category.title}
+													name="category"
+													items={item.children}
+													onChange={handleCategory}
+													errors={errors.name}
+												/>
+											</div>
+										)
+									);
+								})}
+							</OutlinedBox>
+						</div>
+					</OutlinedBox>
+					<OutlinedBox
+						title={propsBook.details.title}
+						className={cx("details")}
+					>
+						<div className={cx("writer")}>
+							<Controls.Input
+								label={propsBook.authors.title}
+								name="authors"
+								value={values.authors}
+								onChange={handleInputChange}
+								errors={errors.authors}
+							/>
+							<Controls.Input
+								label={propsBook.translators.title}
+								name="translators"
+								value={values.translators}
+								onChange={handleInputChange}
+								errors={errors.translators}
+							/>
+						</div>
+
+						<Division3
+							comp1={
 								<Controls.Input
-									label={BookConfig.translators.title}
-									name="translators"
-									value={values.translators}
-									onChange={handleInputChange}
-									errors={errors.translators}
-								/>
-							</div>
-							<div className={cx("sku")}>
-								<Controls.Input
-									label={BookConfig.sku.title}
+									label={propsBook.sku.title}
 									name="sku"
 									value={values.sku}
 									onChange={handleInputChange}
 									errors={errors.sku}
 								/>
-							</div>
-							<div className={cx("isbn13")}>
+							}
+							comp2={
 								<Controls.Input
-									label={BookConfig.isbn13.title}
+									label={propsBook.isbn13.title}
 									name="isbn13"
 									value={values.isbn13}
 									onChange={handleInputChange}
 									errors={errors.isbn13}
 								/>
-							</div>
-							<div className={cx("isbn10")}>
+							}
+							comp3={
 								<Controls.Input
-									label={BookConfig.isbn10.title}
+									label={propsBook.isbn10.title}
 									name="isbn10"
 									value={values.isbn10}
 									onChange={handleInputChange}
 									errors={errors.isbn10}
 								/>
-							</div>
-							<div className={cx("supplier")}>
+							}
+						/>
+						<Division3
+							comp1={
 								<Controls.Input
-									label={BookConfig.supplier.title}
+									label={propsBook.supplier.title}
 									name="supplier"
 									value={values.supplier}
 									onChange={handleInputChange}
 									errors={errors.supplier}
 								/>
-							</div>
-							<div className={cx("publisher")}>
+							}
+							comp2={
 								<Controls.Input
-									label={BookConfig.publisher.title}
+									label={propsBook.publisher.title}
 									name="publisher"
 									value={values.publisher}
 									onChange={handleInputChange}
 									errors={errors.publisher}
 								/>
-							</div>
-							<div className={cx("publisherDate")}>
+							}
+							comp3={
 								<Controls.DatePicker
-									label={BookConfig.publisherDate.title}
+									label={propsBook.publisherDate.title}
 									name="publisherDate"
 									value={values.publisherDate}
 									onChange={handleInputChange}
 								/>
-							</div>
-							<div className={cx("expectedDate")}>
-								<Controls.DatePicker
-									label={BookConfig.expectedDate.title}
-									name="expectedDate"
-									value={values.expectedDate}
-									onChange={handleInputChange}
+							}
+						/>
+						<Division3
+							comp1={
+								<Controls.RadioGroup
+									row={false}
+									label={propsBook.status.title}
+									name="status"
+									items={propsBook.status.optionNew}
+									value={status}
+									onChange={handleStatus}
+									errors={errors.status}
 								/>
-							</div>
-							<OutlinedBox title={BookConfig.specification.title} type={"small"}>
-								<Controls.Input
-									label={BookConfig.weight.title}
-									name="weight"
-									value={values.weight}
-									onChange={handleInputChange}
-									errors={errors.weight}
-								/>
-								<Controls.Input
-									label={BookConfig.height.title}
-									name="height"
-									value={values.height}
-									onChange={handleInputChange}
-									errors={errors.height}
-								/>
-								<Controls.Input
-									label={BookConfig.width.title}
-									name="width"
-									value={values.width}
-									onChange={handleInputChange}
-									errors={errors.width}
-								/>
-								<Controls.Input
-									label={BookConfig.page.title}
-									name="page"
-									value={values.page}
-									onChange={handleInputChange}
-									errors={errors.page}
-								/>
-								<Controls.Input
-									label={BookConfig.bookCover.title}
-									name="bookCover"
-									value={values.bookCover}
-									onChange={handleInputChange}
-									errors={errors.bookCover}
-								/>
-							</OutlinedBox>
-						</OutlinedBox>
+							}
+							comp2={
+								status === propsBook.status.optionNew[0].id ? (
+									<Controls.Input
+										label={propsBook.countInStock.title}
+										name="countInStock"
+										value={values.countInStock}
+										type="number"
+										endAdornment={unit.book}
+										onChange={handleInputChange}
+										errors={errors.countInStock}
+									/>
+								) : (
+									<Controls.DatePicker
+										label={propsBook.expectedDate.title}
+										name="expectedDate"
+										value={values.expectedDate}
+										onChange={handleInputChange}
+									/>
+								)
+							}
+						/>
 
-						<OutlinedBox title={BookConfig.descNImage.title}>
-							<Controls.Textarea
-								label={BookConfig.description.title}
-								name="description"
-								value={values.description}
+						<OutlinedBox
+							className={cx("wrapper-box")}
+							title={propsBook.specification.title}
+							type={"small"}
+						>
+							<Controls.Input
+								label={propsBook.width.title}
+								endAdornment={unit.dimension}
+								type="number"
+								name="width"
+								configNumber={propsBook.width.config}
+								value={values.width}
 								onChange={handleInputChange}
-								errors={errors.description}
+								errors={errors.width}
+							/>
+							<Controls.Input
+								label={propsBook.height.title}
+								type="number"
+								name="height"
+								configNumber={propsBook.height.config}
+								endAdornment={unit.dimension}
+								value={values.height}
+								onChange={handleInputChange}
+								errors={errors.height}
+							/>
+							<Controls.Input
+								label={propsBook.weight.title}
+								type="number"
+								name="weight"
+								configNumber={propsBook.weight.config}
+								endAdornment={unit.weight}
+								value={values.weight}
+								onChange={handleInputChange}
+								errors={errors.weight}
+							/>
+
+							<Controls.Input
+								label={propsBook.page.title}
+								endAdornment={unit.page}
+								type="number"
+								name="page"
+								value={values.page}
+								configNumber={propsBook.page.config}
+								onChange={handleInputChange}
+								errors={errors.page}
+							/>
+							<Controls.Input
+								label={propsBook.bookCover.title}
+								name="bookCover"
+								value={values.bookCover}
+								onChange={handleInputChange}
+								errors={errors.bookCover}
 							/>
 						</OutlinedBox>
-					</div>
-					<Button primary type="submit">
+					</OutlinedBox>
+					<OutlinedBox
+						title={propsBook.descNImage.title}
+						className={cx("descNImage")}
+					>
+						<Controls.Textarea
+							label={propsBook.description.title}
+							name="description"
+							value={values.description}
+							onChange={handleInputChange}
+							errors={errors.description}
+						/>
+						<Button
+							primary
+							leftIcon={icons.Button("icons").add}
+							type="button"
+							onClick={handleOpenDialogUpload}
+						>
+							Thêm nè
+						</Button>
+						<Controls.Dialog
+							open={openUpload}
+							setOpen={setOpenUpload}
+						>
+							<Controls.UploadGallery></Controls.UploadGallery>
+						</Controls.Dialog>
+					</OutlinedBox>
+					<Button
+						primary
+						type="submit"
+					>
 						Xác nhận
 					</Button>
 				</div>
 			</FormControl>
 		</Form>
+	);
+}
+function Division3({ comp1, comp2, comp3 }) {
+	return (
+		<div className={cx("row")}>
+			<div className={cx("colum")}>{comp1}</div>
+			<div className={cx("colum")}>{comp2}</div>
+			<div className={cx("colum")}>{comp3}</div>
+		</div>
 	);
 }
 
