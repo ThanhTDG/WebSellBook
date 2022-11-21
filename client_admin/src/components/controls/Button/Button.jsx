@@ -1,1 +1,65 @@
-{"version":3,"file":"tippy-react-headless.esm.js","sources":["../../src/utils.js","../../src/util-hooks.js","../../src/className-plugin.js","../../src/Tippy.js","../../src/useSingleton.js","../../src/forwardRef.js","../../src/headless.js"],"sourcesContent":["export const isBrowser =\n  typeof window !== 'undefined' && typeof document !== 'undefined';\n\nexport function preserveRef(ref, node) {\n  if (ref) {\n    if (typeof ref === 'function') {\n      ref(node);\n    }\n    if ({}.hasOwnProperty.call(ref, 'current')) {\n      ref.current = node;\n    }\n  }\n}\n\nexport function ssrSafeCreateDiv() {\n  return isBrowser && document.createElement('div');\n}\n\nexport function toDataAttributes(attrs) {\n  const dataAttrs = {\n    'data-placement': attrs.placement,\n  };\n\n  if (attrs.referenceHidden) {\n    dataAttrs['data-reference-hidden'] = '';\n  }\n\n  if (attrs.escaped) {\n    dataAttrs['data-escaped'] = '';\n  }\n\n  return dataAttrs;\n}\n\nfunction deepEqual(x, y) {\n  if (x === y) {\n    return true;\n  } else if (\n    typeof x === 'object' &&\n    x != null &&\n    typeof y === 'object' &&\n    y != null\n  ) {\n    if (Object.keys(x).length !== Object.keys(y).length) {\n      return false;\n    }
+import React from "react";
+import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
+import styles from "./Button.module.scss";
+const cx = classNames.bind(styles);
+
+function Button({
+	to,
+	href,
+	rightIcon,
+	leftIcon,
+	primary = false,
+	disable = false,
+	rounded = false,
+	text = false,
+	outline = false,
+	small = false,
+	large = false,
+	children,
+	onClick,
+	className,
+	...passProps
+}) {
+	let Comp = "button";
+	const props = {
+		onClick,
+		...passProps,
+	};
+	if (disable) {
+		Object.keys(props).forEach((key) => {
+			if (key.startsWith("on") && typeof props[key] === "function") {
+				delete props[key];
+			}
+		});
+	}
+	if (to) {
+		props.to = to;
+		Comp = Link;
+	} else if (href) {
+		props.href = href;
+		Comp = "a";
+	}
+	const classes = cx("btn", {
+		[className]: className,
+		primary,
+		outline,
+		text,
+		rounded,
+		disable,
+		large,
+		small,
+	});
+	return (
+		<Comp
+			className={classes}
+			{...props}
+		>
+			{leftIcon && <span className={cx("icon")}>{leftIcon}</span>}
+			<span className="title">{children}</span>
+			{rightIcon && <span className={cx("icon")}>{rightIcon}</span>}
+		</Comp>
+	);
+}
+
+export default Button;
