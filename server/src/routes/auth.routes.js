@@ -14,6 +14,8 @@ router.post("/signup", controller.signUp);
 router.post("/signin", requiredLogin, controller.signIn);
 router.post("/signout", authenticate, controller.signOut);
 
+router.post("/verifyaccount", authenticate, controller.verifyAccount);
+
 router.get("/profile", authenticate, controller.getProfile);
 router.put("/profile", authenticate, controller.setProfile);
 
@@ -24,7 +26,5 @@ router.put(
   controller.uploadAvatar
 );
 router.put("/changepassword", authenticate, controller.changePassword);
-
-router.post("/verifyaccount", authenticate, controller.verifyAccount);
 
 module.exports = router;
