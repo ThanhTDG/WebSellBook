@@ -193,9 +193,9 @@ bookSchema.pre("findOneAndUpdate", async function (next) {
   update.price = getPrice(update.originalPrice, update.discountRate);
 
   try {
-    await update.populate("category");
-    update.tree = [update.category.id, ...update.category.tree];
-    update.depopulate("category");
+    // await update.populate("category");
+    // update.tree = [update.category.id, ...update.category.tree];
+    // update.depopulate("category");
 
     next();
   } catch (error) {
