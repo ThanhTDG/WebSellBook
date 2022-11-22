@@ -116,7 +116,13 @@ const BookDetail = () => {
                         <img src={require('../../assets/icons/ic-stars.png')} alt='stars' />
                         <div className='bd-rating-value' style={getRattingValue(apiBookDetail.rating)} />
                     </div>
-                    <a href='/'>(Xem tất cả {apiBookDetail.numOfReviews} đánh giá)</a>
+                    <a href='/'>
+                        {
+                            apiBookDetail.numOfReviews > 0 ?
+                            <span>(Xem tất cả {apiBookDetail.numOfReviews} đánh giá)</span>:
+                            <span>(Hãy là người đầu tiên đánh giá)</span>
+                        }
+                    </a>
                     <span>Đã bán: {apiBookDetail.sold}</span>
                 </div>
                 <div className='bd-bottom-content'>

@@ -60,6 +60,11 @@
         }
         .rating-content{
             text-align: justify;
+            button{
+                background-color: transparent;
+                border: none;
+                color: var(--Gray);
+            }
         }
         .comment-images-container{
             padding-top: 12px;

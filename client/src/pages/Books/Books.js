@@ -10,7 +10,7 @@ import { CategoriesSelected } from './CategoriesSelected';
 import { useLocation } from 'react-router-dom'
 import { MyConstVariable } from '../../variables/MyConstVaeiable';
 import BooksPaginated from '../../components/NavButtons/booksPaginated';
-import { useStore} from '../../store';
+import { useStore } from '../../store';
 import BookBavButtonsOther from '../../components/NavButtons/bookBavButtonsOther';
 
 
@@ -26,7 +26,7 @@ const BooksPage = () => {
     useEffect(() => {
         setIsLoadingPagiated(!isLoadingPagiated)
         console.log('reset at books')
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.categoryId])
 
     function onHandleShowCategories() {

@@ -22,7 +22,7 @@ const Rating = (props) => {
             position: 'absolute',
             top: '1px',
             left: '1px',
-            zIndex:'-1'
+            zIndex: '-1'
         }
     }
     function ratingDetailColor(rating) {
@@ -54,11 +54,11 @@ const Rating = (props) => {
             borderRadius: '4px',
         }
     }
-    function getRatingDetail(ratings){
-        var rs =[]
-        for(let i=0; i< ratings.length; i++){
+    function getRatingDetail(ratings) {
+        var rs = []
+        for (let i = 0; i < ratings.length; i++) {
             rs.push({
-                title: i+1,
+                title: i + 1,
                 amount: ratings[i].amount,
                 rate: ratings[i].rate
             })
@@ -70,7 +70,12 @@ const Rating = (props) => {
             <span className='bd-more-title'>Đánh giá </span>
             <div className='rating-total-container'>
                 <div className='rating-total-value'>
-                    <span style={bookRatingPointStyle(bookData.rating)}>{(Math.round(bookData.rating* 100) / 100).toFixed(1)}</span>
+                    {
+                        bookData.rating > 0 ?
+                            <span style={bookRatingPointStyle(bookData.rating)}>{(Math.round(bookData.rating * 100) / 100).toFixed(1)}</span>
+                            :
+                            <span>__</span>
+                    }
                 </div>
                 <div className='rating-total-desc'>
                     <div className='rating-stars-container'>
@@ -78,7 +83,11 @@ const Rating = (props) => {
                         <div style={activeStarColorsStyle(bookData.rating)}></div>
                     </div>
                     <div className='rating-total-review'>
-                        <span>{bookData.numOfReviews} lượt đánh giá</span>
+                        {
+                            bookData.numOfReviews > 0 ?
+                                <span>{bookData.numOfReviews} lượt đánh giá</span> :
+                                <span>Chưa có lượt đáng giá</span>
+                        }
                     </div>
                 </div>
             </div>

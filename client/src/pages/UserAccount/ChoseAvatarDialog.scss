@@ -1,0 +1,221 @@
+.user-chose-avatar-dialog-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'MontserratRegular';
+    height: 100%;
+    transition-duration: 0.4s;
+    .info-form{
+        padding-top: 24px;
+        .user-form-row-container{
+            display: flex;
+            width: 100%;
+        }
+        
+        .form-item{
+            width: 100%;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.4s ease;
+            label{
+                display: block;
+                color: var(--Brown);
+                font-size: 12px;
+            }
+            input{
+                width: 100%;
+                border: none;
+                color: var(--Darkest);
+            }
+            input:focus{
+                outline: none;
+                border: none;
+            }
+        }
+        .form-item:hover{
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        }
+    }
+    .review-avatar-container{
+        .comfirm-pw-avatar-container{
+            .comfirm-pw-avatar{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    object-fit: contain;
+                    border: 2px solid var(--Gray);
+                }
+            }
+            .comfirm-pw-content{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 12px;
+                span{
+                    display: block;
+                    font-family: 'MontserratMedium';
+                }
+            }
+            
+        }
+        .dialog-title{
+            font-size: 24px;
+            color: var(--Darkest);
+            margin-bottom: 48px;
+            font-family: 'MontserratMedium';
+            display: flex;
+            justify-content: center;
+        }
+        
+        .review-avatar{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            .img-display-avatar{
+                width: 264px;
+                height: 264px;
+                border-radius: 50%;
+                box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+            }
+            button{
+                z-index: 10;
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                border: none;
+                background-color: var(--White);
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+                transition: box-shadow 0.4s ease;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 32px;
+                    height: 32px;
+                    object-fit: contain;
+                }
+            }
+            button:hover{
+                box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+            }
+        }
+
+        
+    }
+    .avatar-options{
+        display: flex;
+        justify-content: center;
+        input[type="file"]{
+            display: none;
+        }
+        .avatar-option{
+            margin-top: 48px;
+            height: 48px;
+            padding-left: 32px;
+            padding-right: 32px;
+            border-radius: 24px;
+            background-color: var(--Pink);
+            color: var(--White);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+            transition: box-shadow 0.4s ease;
+        }
+        .avatar-option:hover{
+            box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+        }
+        .save-change-avatar{
+            margin-top: 24px;
+            border: none;
+        }
+    }
+}
+
+@media only screen and (max-width:600px ){
+    .user-chose-avatar-dialog-container{
+        .review-avatar-container{
+            .dialog-title{
+                font-size: 16px;
+                margin-bottom: 24px;
+            }
+
+            .info-form{
+                padding: 24px 12px 0px 12px;
+                .user-form-row-container{
+                    display: flex;
+                    width: 100%;
+                }
+                
+                .form-item{
+                    width: 100%;
+                    border-radius: 12px;
+                    padding: 12px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                    transition: box-shadow 0.4s ease;
+                    label{
+                        display: block;
+                        color: var(--Brown);
+                        font-size: 12px;
+                    }
+                    input{
+                        width: 100%;
+                        border: none;
+                        color: var(--Darkest);
+                    }
+                    input:focus{
+                        outline: none;
+                        border: none;
+                    }
+                }
+                .form-item:hover{
+                    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+                }
+            }
+            
+            .review-avatar{
+                .img-display-avatar{
+                    width: 124px;
+                    height: 124px;
+                }
+                button{
+                    top: 4px;
+                    right: 24px;
+                    width: 24px;
+                    height: 24px;
+                    img{
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+            }
+    
+            .avatar-options{
+                display: flex;
+                justify-content: center;
+                input[type="file"]{
+                    display: none;
+                }
+                .avatar-option{
+                    margin-top: 24px;
+                }
+                .save-change-avatar{
+                    margin-top: 24px;
+                    border: none;
+                }
+            }
+        }
+        
+    }
+}

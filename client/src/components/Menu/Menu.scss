@@ -3,6 +3,48 @@
     justify-content: right;
     padding: 0;
 }
+.user-menu-container{
+    display: flex;
+    //margin-top: 20px;
+    margin-top: -4px;
+    align-items: center;
+    .user-menu-notification-container{
+        position: relative;
+        .user-menu-notification-value{
+            position: absolute;
+            top: 0px;
+            right: 12px;
+            background-color: var(--Red);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: var(--Darkest) !important;
+        }
+        .user-menu-notification{
+            margin-right: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            background-color: var(--White);
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+            transition: box-shadow 0.4s ease;
+            &:hover{
+                box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+            }
+            img{
+                width: 32px;
+                height: 32px;
+                object-fit: contain;
+            }
+        }
+    }
+    
+}
 .menu-btn-avtar{
     position: relative;
     border: none;
@@ -10,16 +52,15 @@
     display: flex;
     justify-content: left;
     align-items: center;
-    margin-top: 20px;
-    height: 52px;
-    border-radius: 26px;
+    height: 48px;
+    border-radius: 24px;
     padding: 2px;
     transition-duration: 0.8s;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.4s ease;
     img{
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         border-radius: 24px;
         border: 2px solid var(--Gray);
         // box-shadow: 0 4px 8px 0 var(--Gray), 0 6px 20px 0 var(--Gray);
@@ -124,6 +165,7 @@
         display: flex;
         justify-content: center;
         padding-top: 12px;
+        
         button{
             border: 1px solid var(--Gray);
             background-color: var(--White);
@@ -143,6 +185,7 @@
         button:hover{
             background-color: var(--LightGray);
         }
+        
     }
 
     .user-popup-actions{
@@ -164,7 +207,7 @@
                 background-color: var(--LightGray);
                 font-size: 12px;
                 box-shadow: none;
-                transition: box-shadow 0.4s ease;
+                transition: box-shadow 0.4s ease, background-color 0.4s;
                 .action-img-container{
                     width: 32px;
                     height: 32px;
@@ -189,6 +232,18 @@
             }
             button:hover{
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            }
+            .user-setting-action-container:hover{
+                background-color: var(--Pink);
+                color: var(--White);
+            }
+            .logout-action-container:hover{
+                background-color: var(--Red) !important;
+                color: var(--White)
+            }
+            .use-other-account-container:hover{
+                background-color: var(--DarkBlue);
+                color: var(--White);
             }
         }
         
@@ -299,9 +354,12 @@
 }
 
 @media only screen and (max-width:800px ) {
+    .user-menu-container{
+        margin-top: 24px;
+    }
     .menu-btn-user-menu-more{
-        top: 40%;
-        right: 24%;
+        top: 42%;
+        right: 14%;
     }
 
     .user-menu-more-container{

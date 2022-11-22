@@ -78,7 +78,7 @@ const CommentComponent = (props) => {
                         commentData.content.length > 300 ?
                             <button onClick={() => setIsShowMoreContent(!isShowMoreContent)}>
                                 {
-                                    isShowMoreContent === false ? '... xem thêm' : 'thu nhỏ.'
+                                    isShowMoreContent === false ? '... xem thêm' : 'thu nhỏ'
                                 }
                             </button> :
                             ''

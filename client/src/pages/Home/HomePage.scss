@@ -51,6 +51,18 @@ a:hover{
     padding-right: 48px;
 }
 
+
+
+@media only screen and (max-width:1400px ) {
+    .grid-books-container{
+        grid-template-columns: 24% 24% 24% 24%;
+    }
+}
+@media only screen and (max-width:1000px ) {
+    .grid-books-container{
+        grid-template-columns: 32% 32% 32%;
+    }
+}
 @media only screen and (max-width:600px ) {
     .homepage-banner{
         height: 240px;

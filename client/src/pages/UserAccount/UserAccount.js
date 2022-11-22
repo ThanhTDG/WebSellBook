@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from '../../components/Chart/Chart';
 import Menu from '../../components/Menu/Menu';
 import FavoriteBook from '../../components/User/Favorite/FavoriteBook';
@@ -7,9 +7,21 @@ import HistoryItem from '../../components/User/History/HistoryItem';
 import NotificationItem from '../../components/User/Notification/NotificationItem';
 import { FakeData } from '../../variables/FakeData';
 import './UserAccount.scss';
+import { useStore, actions } from '../../store';
+import * as AuthServices from '../../apiServices/AuthServices'
+import ChoseAvatarDialog from './ChoseAvatarDialog';
+import ComfirmChangeInfo from './ComfirmChangeInfo';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 const UserAccount = () => {
-    const [currentToolbarItem, setcurrentToolbarItem] = useState(1)
+    const [state, dispatch] = useStore()
+
+    const { userCurrentTbIndex } = state
+
+    const [currentToolbarItem, setcurrentToolbarItem] = useState(userCurrentTbIndex)
+    useEffect(() => {
+        setcurrentToolbarItem(state.userCurrentTbIndex)
+    }, [state.userCurrentTbIndex])
     const options = {
         ChangePassWord: 'change-page-word',
         Notification: {
@@ -21,6 +33,7 @@ const UserAccount = () => {
             HaveReceived: 'product-have-received'
         }
     }
+    const [isOpenAvatarChose, setIsOpenAvatarChose] = useState(false)
     const [selectedOption, setSelectedOption] = useState(null)
     var toolItems = [
         {
@@ -125,6 +138,89 @@ const UserAccount = () => {
     const renderNotificationPopup = (notificationNumber) => <div className='notification-number-container'>
         <span>{notificationNumber}</span>
     </div>
+
+
+    //data
+    const { userProfile } = state
+
+
+    const onChangePassword = async () => {
+        let currentPassword = document.getElementById('user-change-password-current').value
+        let newPassword = document.getElementById('user-change-password-new').value
+        let reNewPassword = document.getElementById('user-change-password-re-new').value
+
+        if (newPassword !== reNewPassword)
+            return false
+        else {
+            let verify = await AuthServices.verityAccount(currentPassword)
+            if (!verify)
+                return false
+        }
+        let userChangePassword = await AuthServices.changePassword(currentPassword, newPassword)
+        return true
+    }
+
+    const resetPasswordInfo = () => {
+        document.getElementById('user-change-password-current').value = ''
+        document.getElementById('user-change-password-new').value = ''
+        document.getElementById('user-change-password-re-new').value = ''
+    }
+
+    function updateUserProfile() {
+        if (getUserUpdateProfile() === false) {
+            return
+        }
+        setIsOpenComfirmPassword(true)
+        //updateUserInfo(getUserUpdateProfile())
+    }
+    const updateUserInfo = async (userInfo) => {
+        let updateUser = await AuthServices.changeProfile(userInfo)
+    }
+    function getUserUpdateProfile() {
+        let upFirstName = document.getElementById('user-profile-firstname').value
+        let upLastName = document.getElementById('user-profile-lastname').value
+        let upEmail = document.getElementById('user-profile-email').value
+        let upPhone = document.getElementById('user-profile-phone').value
+
+        if (state.userProfile.firstName !== upFirstName ||
+            state.userProfile.lastName !== upLastName ||
+            state.userProfile.email !== upEmail ||
+            state.userProfile.phone !== upPhone)
+            return {
+                firstName: upFirstName,
+                lastName: upLastName,
+                email: upEmail,
+                phone: upPhone,
+                sex: true,
+                birthday: "2001-01-01T00:00:00.000Z"
+            }
+        else {
+            return false
+        }
+    }
+
+
+    function onOpenChoseAvatarDialog() {
+        setIsOpenAvatarChose(!isOpenAvatarChose)
+    }
+    function closeChoseAvatarDialog() {
+        setIsOpenAvatarChose(false)
+    }
+
+    const [isOpenComfirmPassword, setIsOpenComfirmPassword] = useState(false)
+    function onOpenComfirmPassword() {
+        setIsOpenComfirmPassword(!isOpenComfirmPassword)
+    }
+    function onCloseComfirmPassword() {
+        setIsOpenComfirmPassword(false)
+    }
+    const onComfirmPassword = async (comfirm) => {
+        if (comfirm) {
+            await updateUserInfo(getUserUpdateProfile())
+        }
+    }
+
+
     return (
         <div>
             <Menu />
@@ -136,10 +232,10 @@ const UserAccount = () => {
                     <div className='row .no-margin-padding'>
                         <div className='col-sm-4 uc-body-left-container .no-margin-padding'>
                             <div className='ucbl-avatar-container'>
-                                <img className='avatar-img' src={require('../../assets/fake-data/avatar.jpg')} alt='avatar' />
+                                <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
                             </div>
-                            <p className='ucbl-name no-margin-padding'>Kadezaha Kazuha</p>
-                            <p className='ucbl-email no-margin-padding'>kazuha@kadezaha.inazuma.teyvat</p>
+                            <p className='ucbl-name no-margin-padding'>{userProfile.firstName} {userProfile.lastName}</p>
+                            <p className='ucbl-email no-margin-padding'>{userProfile.email}</p>
                             <div className='ucbl-chart-container'>
                                 <div className='chart-total'>
                                     <span>Đã chốt <span className='chart-value'>2000</span> đơn hàng</span>
@@ -172,35 +268,44 @@ const UserAccount = () => {
                             <div className='option-page-containers'>
                                 <div className='option-page-1' style={getOptionPageStyle(1)}>
                                     <div className='option-avatar-container'>
-                                        <img className='avatar-img' src={require('../../assets/fake-data/avatar.jpg')} alt='avatar' />
-                                        <button><img src={require('../../assets/icons/ic-pen.png')} alt='pen' /></button>
+                                        <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
+                                        <button onClick={onOpenChoseAvatarDialog}><img src={require('../../assets/icons/ic-pen.png')} alt='pen' /></button>
+                                        <ChoseAvatarDialog isOpen={isOpenAvatarChose} handleAvatarDialog={onOpenChoseAvatarDialog} onCloseModal={closeChoseAvatarDialog} />
                                     </div>
                                     <div className='option-page-user-title'>Thông tin tài khoản</div>
                                     <form className='info-form'>
-                                        <div className='row no-margin-padding'>
-                                            <div className='col-sm-6 no-margin-padding'>
-                                                <div className='form-item'>
-                                                    <label>Họ và tên</label>
-                                                    <input type={'text'} value={'Kadezaha Kazuha'}></input>
-                                                </div>
-                                                <div className='form-item'>
-                                                    <label>Email</label>
-                                                    <input type={'text'} value={'kazuha@kadezaha.inazuma.teyvat'}></input>
-                                                </div>
+                                        <div className='user-form-row-container no-margin-padding'>
+                                            <div className='form-item'>
+                                                <label>Họ tên đệm</label>
+                                                <input type={'text'} id='user-profile-firstname' defaultValue={userProfile.firstName}></input>
                                             </div>
-                                            <div className='col-sm-6 no-margin-padding'>
-                                                <div className='form-item'>
-                                                    <label>Số điện thoại</label>
-                                                    <input type={'text'} value={'0971777777'}></input>
-                                                </div>
-                                                <div className='form-item'>
-                                                    <label>Địa chỉ giao hàng</label>
-                                                    <input type={'text'} value={'Liyue'}></input>
-                                                </div>
+                                            <div className='form-item'>
+                                                <label>Tên</label>
+                                                <input type={'text'} id='user-profile-lastname' defaultValue={userProfile.lastName}></input>
                                             </div>
                                         </div>
-                                        <button>Lưu</button>
+                                        <div className='user-form-row-container no-margin-padding'>
+                                            <div className='form-item'>
+                                                <label>Email</label>
+                                                <input type={'email'} id='user-profile-email' defaultValue={userProfile.email}></input>
+                                            </div>
+                                            <div className='form-item'>
+                                                <label>Số điện thoại</label>
+                                                <input type={'text'} id='user-profile-phone' defaultValue={userProfile.phone}></input>
+                                            </div>
+                                            {/* <div className='form-item'>
+                                                    <label>Địa chỉ giao hàng</label>
+                                                    <input type={'text'} value={'Liyue'}></input>
+                                                </div> */}
+                                        </div>
                                     </form>
+                                    <button className='user-form-button' onClick={updateUserProfile}>Lưu</button>
+                                    <ComfirmChangeInfo
+                                        isOpen={isOpenComfirmPassword}
+                                        handleComfirmPasswordDialog={onOpenComfirmPassword}
+                                        onCloseModal={onCloseComfirmPassword}
+                                        onComfirmPassword={onComfirmPassword}
+                                    />
                                 </div>
                                 <div className='option-page-2' style={getOptionPageStyle(2)}>
                                     <div className='option-page-title'>Thông báo</div>
@@ -256,22 +361,27 @@ const UserAccount = () => {
                                             <div className='col-sm-6 no-margin-padding'>
                                                 <div className='form-item'>
                                                     <label>Mật khẩu hiện tại</label>
-                                                    <input type={'password'} value={'Kadezaha Kazuha'}></input>
+                                                    <input type={'password'} id='user-change-password-current'></input>
                                                 </div>
                                                 <div className='form-item'>
                                                     <label>Mật khẩu mới</label>
-                                                    <input type={'password'} value={'kazuha@kadezaha.inazuma.teyvat'}></input>
+                                                    <input type={'password'} id='user-change-password-new'></input>
                                                 </div>
                                                 <div className='form-item'>
                                                     <label>Xác nhật mật khẩu mới</label>
-                                                    <input type={'password'} value={'kazuha@kadezaha.inazuma.teyvat'}></input>
+                                                    <input type={'password'} id='user-change-password-re-new'></input>
                                                 </div>
                                             </div>
                                             <div className='col-sm-6 no-margin-padding'>
                                             </div>
                                         </div>
-                                        <button>Lưu</button>
                                     </form>
+                                    <button className={`user-form-button ${selectedOption === options.ChangePassWord ? 'action-option' : 'inaction-option'}`}
+                                        onClick={async () => {
+                                            let rs = onChangePassword()
+                                            if (rs)
+                                                resetPasswordInfo()
+                                        }}>Lưu</button>
                                 </div>
                                 <div className='option-page-5' style={getOptionPageStyle(5)}>
                                     <div className='option-page-title'>Yêu thích</div>

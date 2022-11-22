@@ -1,17 +1,16 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL:'https://toi-mua-sach.herokuapp.com/api/',
-    method:'get'
+    baseURL:'https://api.toimuasach.click/api/v1/',
 })
 
 const postRequest = axios.create({
-    baseURL:'https://toi-mua-sach.herokuapp.com/api/',
+    baseURL:'https://api.toimuasach.click/api/v1/',
     method:'post'
 })
 
 const putRequest = axios.create({
-    baseURL:'https://toi-mua-sach.herokuapp.com/api/',
+    baseURL:'https://api.toimuasach.click/api/v1/',
     method:'put'
 })
 

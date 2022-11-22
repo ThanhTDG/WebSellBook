@@ -5,6 +5,9 @@
         align-items: center;
         justify-content: left;
         .rating-total-value {
+            span{
+                font-size: 84px;
+            }
         }
         .rating-total-desc {
             margin-left: 32px;

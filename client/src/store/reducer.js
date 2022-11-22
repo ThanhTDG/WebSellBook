@@ -1,4 +1,4 @@
-import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, LOGIN_BY_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, UPDATE_BOOK_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, GET_USER_PROFILE, LOGIN_BY_USER, LOGOUT_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, SELEECT_USER_TB_INDEX, UPDATE_BOOK_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
 
@@ -34,7 +34,9 @@ const initState = {
         prevPage: 0,
         totalPages: 20,
         pagingCounter: 1,
-    }
+    },
+    userProfile: 'none',
+    userCurrentTbIndex: 1
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -66,14 +68,11 @@ function reducer(state, action) {
                 isLogin: true
             }
         case SELECT_CATEGORY:
-            if (state.prevCategoryId !== state.categoryId || (state.prevCategoryId==='c' && state.prevCategoryId==='a'))
-                return {
-                    ...state,
-                    prevCategoryId: state.categoryId,
-                    categoryId: action.payload,
-                }
-            else
-                break
+            return {
+                ...state,
+                prevCategoryId: state.categoryId,
+                categoryId: action.payload,
+            }
         case SELECT_CATEGORY_CHILD:
             return {
                 ...state,
@@ -85,9 +84,25 @@ function reducer(state, action) {
                 booksNavButtons: action.payload
             }
         case SELECT_BOOKS_NAVIGATION_BUTTON:
-            return{
+            return {
                 ...state,
                 booksPage: action.payload
+            }
+        case GET_USER_PROFILE:
+            return {
+                ...state,
+                userProfile: action.payload
+            }
+        case LOGOUT_USER:
+            return {
+                ...state,
+                userProfile: 'none',
+                isLogin: false
+            }
+        case SELEECT_USER_TB_INDEX:
+            return {
+                ...state,
+                userCurrentTbIndex: action.payload
             }
         default:
             throw new Error('Invalid actions')
