@@ -72,15 +72,21 @@ const bookSchema = new Schema(
     expectedDate: Date,
     countInStock: Number,
     sold: Number,
-    originalPrice: Number,
-    discountRate: Number,
-    // price: {
-    //   type: Number,
-    //   get: function () {
-    //     const price = this.originalPrice * (1 - this.discountRate / 100);
-    //     return Math.round(price / 1e3) * 1e3;
-    //   },
-    // },
+    originalPrice: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    discountRate: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
@@ -108,11 +114,6 @@ bookSchema.virtual("shortDes").get(function () {
 
 bookSchema.virtual("dimension").get(function () {
   if (this.height && this.width) return `${this.height} x ${this.width} cm`;
-});
-
-bookSchema.virtual("price").get(function () {
-  const price = this.originalPrice * (1 - this.discountRate / 100);
-  return Math.round(price / 1e3) * 1e3;
 });
 
 bookSchema.virtual("numOfReviews", {
@@ -161,13 +162,41 @@ bookSchema
     return rates;
   });
 
+/**
+ * Get price of book
+ * @param {number} originalPrice Original price
+ * @param {number} discountRate Discount rate
+ */
+const getPrice = (originalPrice, discountRate) => {
+  const price = originalPrice * (1 - discountRate / 100);
+  return Math.round(price / 1e3) * 1e3;
+};
+
 bookSchema.pre("save", async function (next) {
+  if (this.isModified("originalPrice") || this.isModified("discountRate")) {
+    this.price = getPrice(this.originalPrice, this.discountRate);
+  }
+
   try {
-    if (this.category) {
-      await this.populate("category");
-      this.tree = [this.category.id, ...this.category.tree];
-      this.depopulate("category");
-    }
+    await this.populate("category");
+    this.tree = [this.category.id, ...this.category.tree];
+    this.depopulate("category");
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+bookSchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  update.price = getPrice(update.originalPrice, update.discountRate);
+
+  try {
+    await update.populate("category");
+    update.tree = [update.category.id, ...update.category.tree];
+    update.depopulate("category");
+
     next();
   } catch (error) {
     next(error);

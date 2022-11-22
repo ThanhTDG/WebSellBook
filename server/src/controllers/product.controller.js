@@ -60,14 +60,11 @@ const book2Json = (value) => {
   delete obj.width;
   // delete obj.createdAt;
   delete obj.updatedAt;
-  const { shortDes, dimension, price, numOfReviews, rating, ratingRate } =
-    value;
-  // console.log(value.price);
+  const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
   obj = {
     ...obj,
     shortDes,
     dimension,
-    price,
     numOfReviews,
     rating,
     ratingRate,
@@ -100,13 +97,13 @@ const sortMethod = (sort) => {
 const getBooks = async (req, res) => {
   try {
     const { category, search, page = 1, limit = 12, sort } = req.query;
-    let query = search ? { $text: { $search: search } } : {};
-    query = category ? { tree: category, ...query } : query;
+    // let query = search ? { $text: { $search: search } } : {};
+    query = category ? { tree: category, ...query } : {};
     const options = {
       page,
       limit,
       populate: ["numOfReviews", "rating", "ratingRate"],
-      // sort: sortMethod(sort),
+      sort: sortMethod(sort),
     };
 
     const data = await Book.paginate(query, options);
