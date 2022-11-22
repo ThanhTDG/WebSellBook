@@ -18,7 +18,7 @@ info:
 servers:
 - url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/1.0.0
   description: SwaggerHub API Auto Mocking
-- url: http://localhost:5000/api
+- url: http://localhost:5000/api/v1
   description: Development API server
 - url: https://toi-mua-sach.herokuapp.com/api
   description: Heroku server
@@ -682,6 +682,37 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
       - BearerAuth: []
+  /auth/verifyaccount:
+    post:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để xác thực tài khoản
+      description: |
+        Người dùng xác thực tài khoản bằng mật khẩu.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.VerifyAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.VerifyAccount'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /category:
     get:
       tags:
@@ -1290,6 +1321,15 @@ components:
           type: string
           description: Mật khẩu mới
           example: abcd1234
+    form.VerifyAccount:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: Mật khẩu
+          example: 1234abcd
     client.Category:
       type: object
       properties:

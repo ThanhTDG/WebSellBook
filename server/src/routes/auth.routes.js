@@ -25,4 +25,6 @@ router.put(
 );
 router.put("/changepassword", authenticate, controller.changePassword);
 
+router.post("/verifyaccount", authenticate, controller.verifyAccount);
+
 module.exports = router;

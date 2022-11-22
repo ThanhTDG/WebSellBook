@@ -189,6 +189,26 @@ const changePassword = async (req, res) => {
   }
 };
 
+/**
+ * Change password
+ * @param {Request} req Request
+ * @param {Response} res Response
+ */
+const verifyAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const user = req.user;
+    const isMatch = await user.validatePassword(password);
+    if (!isMatch) {
+      throw new ErrorHandler(401, "Incorrect password");
+    }
+
+    await res.json({ message: "Account verification successful" });
+  } catch (error) {
+    await res.status(error.statusCode || 401).json({ message: error.message });
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -197,4 +217,5 @@ module.exports = {
   setProfile,
   uploadAvatar,
   changePassword,
+  verifyAccount,
 };

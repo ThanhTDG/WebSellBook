@@ -1,5 +1,7 @@
-// const User = require("../models/user");
+const User = require("../models/user");
 
-// const controller = require("../utils/controller");
+const Controller = require("../utils/controller");
 
-// module.exports = controller(User);
+const controller = new Controller(User);
+
+module.exports = controller.methods();
