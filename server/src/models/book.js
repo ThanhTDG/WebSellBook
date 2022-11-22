@@ -13,14 +13,6 @@ mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
-const dimensionSchema = new Schema(
-  {
-    height: Number,
-    width: Number,
-  },
-  { _id: false }
-);
-
 const bookSchema = new Schema(
   {
     name: {

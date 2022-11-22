@@ -7,7 +7,10 @@ const Cart = require("../models/cart");
 const getCart = async (req, res) => {
   try {
     const user = req.user;
-    let data = await Cart.findOne({ userId: user.id });
+    let data = await Cart.findOne({ userId: user.id }).populate([
+      "items.book",
+      "items.total",
+    ]);
     if (!data) {
       data = new Cart({ userId: user.id });
       data = await data.save();
@@ -31,7 +34,7 @@ const addBook = async (req, res) => {
       { userId: user.id },
       { $addToSet: { items: { bookId } } },
       { new: true, upsert: true }
-    );
+    ).populate(["items.book", "items.total"]);
 
     await res.json(data);
   } catch (error) {
@@ -46,7 +49,7 @@ const addBook = async (req, res) => {
 const updateBook = async (req, res) => {
   try {
     const bookId = req.params.book;
-    const { quantity = 1, selected = false } = req.body;
+    const { quantity, selected } = req.body;
     console.log(quantity, selected);
     const user = req.user;
     const data = await Cart.findOneAndUpdate(
@@ -58,7 +61,7 @@ const updateBook = async (req, res) => {
         },
       },
       { new: true }
-    );
+    ).populate(["items.book", "items.total"]);
 
     await res.json(data);
   } catch (error) {
@@ -78,7 +81,7 @@ const deleteBook = async (req, res) => {
       { userId: user.id },
       { $pull: { items: { bookId } } },
       { new: true }
-    );
+    ).populate(["items.book", "items.total"]);
 
     await res.json(data);
   } catch (error) {

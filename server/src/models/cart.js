@@ -25,6 +25,27 @@ const cartItemSchema = new Schema(
   { _id: false }
 );
 
+const book2Json = ({
+  _id,
+  name,
+  images,
+  countInStock,
+  originalPrice,
+  discountRate,
+  price,
+}) => ({ _id, name, images, countInStock, originalPrice, discountRate, price });
+
+cartItemSchema
+  .virtual("book", {
+    ref: "Book",
+    localField: "bookId",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    return book2Json(value);
+  });
+
 cartItemSchema
   .virtual("total", {
     ref: "Book",
@@ -36,6 +57,14 @@ cartItemSchema
     return this.quantity * value.price;
   });
 
+cartItemSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.bookId;
+  obj.book = this.book;
+  obj.total = this.total;
+  return obj;
+};
+
 const cartSchema = new Schema(
   {
     userId: {
@@ -43,13 +72,6 @@ const cartSchema = new Schema(
       ref: "User",
     },
     items: [cartItemSchema],
-    // items: {
-    //   type: [cartItemSchema],
-    //   validate: {
-    //     validator: (value) => console.log(value),
-    //     message: "hello",
-    //   },
-    // },
   },
   { timestamps: true }
 );
@@ -66,5 +88,15 @@ cartSchema.virtual("total").get(function () {
     .filter((value) => value.selected)
     .reduce((sum, value) => sum + value.total, 0);
 });
+
+cartSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.__v;
+  delete obj.createdAt;
+  delete obj.updatedAt;
+  obj.items = this.items;
+  obj.total = this.total;
+  return obj;
+};
 
 module.exports = mongoose.model("Cart", cartSchema);
