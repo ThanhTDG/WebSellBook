@@ -3,7 +3,7 @@ import React, { useReducer, useState } from "react";
 import styles from "./product.module.scss";
 import Tabs from "../components/Tabs";
 import BookConfig from "~/config/Book";
-import { TableProduct } from "~/components/table/Product";
+import { TableProduct } from "~/components/table/product";
 import TabPanel from "../TabPanel";
 import { limitRowsBook } from "~/config/table";
 import { useDebounce } from "~/hooks";
@@ -57,7 +57,7 @@ function reducer(state, action) {
 	}
 }
 
-function Product() {
+function Products() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const debounceValue = useDebounce(state, 250);
 	const [products, setProducts] = useState([]);
@@ -112,7 +112,6 @@ function Product() {
 								labelInside={true}
 								className={cx("type-search")}
 								items={BookConfig.options.typeSearch.value}
-								
 							/>
 							<Search className={cx("search-box")} />
 						</div>
@@ -137,4 +136,4 @@ function Product() {
 	);
 }
 
-export default Product;
+export default Products;

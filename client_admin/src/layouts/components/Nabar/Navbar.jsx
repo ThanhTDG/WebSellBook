@@ -1,11 +1,12 @@
 import { icons } from "~/assets/images";
+import React from "react";
 import { navbarOptions } from "./navbarOption.js";
 import { Search } from "@mui/icons-material";
 import styles from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import PageConfig from "~/config/pages.js";
 const cx = classNames.bind(styles);
-function Navbar() {
+function Header() {
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("left")}>
@@ -25,4 +26,4 @@ function Navbar() {
 	);
 }
 
-export default Navbar;
+export default Header;

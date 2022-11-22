@@ -1,7 +1,7 @@
 import React, { Component, useRef, useEffect } from "react";
 import Chart from "~/components/Charts/Chart";
 import Featured from "~/components/Featured";
-import { Widget } from "~/components/Widget";
+import Widget from "~/components/Widget";
 import { Button } from "~/components/controls/Button";
 import "./home.scss";
 function Home() {

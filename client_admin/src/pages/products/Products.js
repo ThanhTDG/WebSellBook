@@ -2,7 +2,7 @@ import * as React from "react";
 import Controls from "~/components/controls/";
 import classNames from "classnames/bind";
 
-import { TabProduct } from "~/components/tab/product";
+import { TabProduct } from "~/components/tab/Products";
 import { ProductMgtProvider } from "~/stores";
 import styles from "./products.module.scss";
 import PageConfig from "~/config/pages";
@@ -22,9 +22,6 @@ function Products() {
 			</div>
 			<div>
 				<TabProduct />
-				{/* <ProductMgtProvider>
-				
-				</ProductMgtProvider> */}
 			</div>
 		</div>
 	);

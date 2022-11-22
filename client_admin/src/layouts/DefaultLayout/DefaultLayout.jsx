@@ -7,12 +7,12 @@ import {
 	VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
-import Sidebar from "../components/Sidebar/Sidebar";
 import classNames from "classnames/bind";
 import styles from "./defaultLayout.module.scss";
 import { getKey } from "~/utils/util";
 import PageConfig from "~/config/pages";
-import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Nabar";
 const cx = classNames.bind(styles);
 
 const { Header, Sider, Content } = Layout;
