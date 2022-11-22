@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { generatePath, Link } from "react-router-dom";
-import TableComp from "~/components/table/components";
+import Table from "~/components/table/components";
 import BookConfig from "~/config/Book";
 import classNames from "classnames/bind";
 
@@ -30,13 +30,12 @@ function Product(props) {
 	let price = (product.originalPrice * (100 - product.discountRate)) / 100;
 	return (
 		<Fragment>
-			<TableComp.Row>
-				<TableComp.Cell
+			<Table.Row>
+				<Table.Cell
 					size="small"
 					align="left"
 					onMouseOver={handleMouseOver}
 					onMouseOut={handleMouseOut}
-					width={700}
 				>
 					<Popper.DetailProduct
 						product={product}
@@ -48,20 +47,20 @@ function Product(props) {
 							})}
 							target="_blank"
 						>
-							<div className={cx("single-line")}>{product.name}</div>
+							<span className={cx("single-line")}>{product.name}</span>
 						</Link>
 					</Popper.DetailProduct>
-				</TableComp.Cell>
-				<TableComp.Cell size="small">{product.countInStock}</TableComp.Cell>
-				<TableComp.Cell size="small">{product.sold}</TableComp.Cell>
-				<TableComp.Cell size="small">{product.price.toLocaleString()}</TableComp.Cell>
-				<TableComp.Cell size="small">
+				</Table.Cell>
+				<Table.Cell size="small">{product.countInStock}</Table.Cell>
+				<Table.Cell size="small">{product.sold}</Table.Cell>
+				<Table.Cell size="small">{product.price.toLocaleString()}</Table.Cell>
+				<Table.Cell size="small">
 					<Controls.Switch
 						checked={isEnable}
 						onChange={handleSwitchStatus}
 					/>
-				</TableComp.Cell>
-			</TableComp.Row>
+				</Table.Cell>
+			</Table.Row>
 		</Fragment>
 	);
 }

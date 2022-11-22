@@ -1,12 +1,32 @@
 .loading-table {
 }
 .tool-filter {
-	padding: 16px;
+	padding-top: 16px;
+	padding-left: 16px;
+	padding-right: 16px;
 	display: flex;
-	.type-search {
+	flex-direction: column;
+	.top,
+	.bottom {
+		display: flex;
+		margin-top: 8px;
+		align-items: center;
+	}
+	.type-search,
+	.sort-select {
 		width: 160px;
 	}
-	.search-box {
+	.search-box,
+	.category-select {
 		width: 500px;
+		margin-left: 16px;
+	}
+
+	.category-select {
+		margin-top: 5.5px;
+	}
+	.confirm {
+		height: 40px;
+		margin-left: 16px;
 	}
 }

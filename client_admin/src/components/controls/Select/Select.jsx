@@ -10,9 +10,10 @@ function Select(props) {
 		value,
 		onChange,
 		items,
-		variant = null,
+		variant = "outlined",
 		none = false,
 		labelInside = false,
+		noneLabel = "",
 	} = props;
 
 	return (
@@ -23,13 +24,14 @@ function Select(props) {
 			className={className}
 			size={size}
 		>
-			{labelInside && variant ? <InputLabel>{label}</InputLabel> : <FormLabel>{label}</FormLabel>}
+			{labelInside ? <InputLabel>{label}</InputLabel> : <FormLabel>{label}</FormLabel>}
 			<SelectMui
+				label={label}
 				name={name}
 				value={value}
 				onChange={onChange}
 			>
-				{none && <MenuItem value="">None</MenuItem>}
+				{none && <MenuItem value="">{noneLabel}</MenuItem>}
 				{items.map((item) => {
 					let id = item;
 					let name = item;

@@ -1,4 +1,3 @@
-import { ConstructionOutlined } from "@mui/icons-material";
 import * as request from "~/utils/request";
 
 export const getProducts = async (query) => {

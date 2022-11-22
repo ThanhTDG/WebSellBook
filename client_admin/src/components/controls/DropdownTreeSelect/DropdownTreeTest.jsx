@@ -4,15 +4,9 @@ import OutlinedBox from "~/components/OutLinedBoxa";
 import "./dropdownTree.scss";
 /// https://www.npmjs.com/package/react-dropdown-tree-select#styling-and-customization
 function DropdownTree({ name, label, value, data, handleChange, onBlur, mode }) {
-	const onChange = (currentNode, selectedNodes) => {
-		console.log("onChange::", currentNode, selectedNodes);
-	};
-	const onAction = (node, action) => {
-		console.log("onAction::", action, node);
-	};
-	const onNodeToggle = (currentNode) => {
-		console.log("onNodeToggle::", currentNode);
-	};
+	const onChange = (currentNode, selectedNodes) => {};
+	const onAction = (node, action) => {};
+	const onNodeToggle = (currentNode) => {};
 	return (
 		<OutlinedBox title={label}>
 			<DropdownTreeSelect

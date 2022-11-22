@@ -10,7 +10,9 @@ import ImageList from "./ImageList/ImageList";
 import Dialog from "./Dialog";
 import Select from "./Select";
 import Switch from "./Switch";
+import TreeSelect from "./TreeSelect";
 const Controls = {
+	TreeSelect,
 	Textarea,
 	Input,
 	UploadGallery,

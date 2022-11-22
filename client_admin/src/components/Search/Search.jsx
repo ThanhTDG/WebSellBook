@@ -10,16 +10,16 @@ const cx = classNames.bind(styles);
 
 function Search(props) {
 	const { className = null, label = "Tìm kiếm", value = "", onChange, size = "normal" } = props;
-	const [search, setSearch] = useState(value);
+
 	const inputRef = useRef();
 	const handleSearch = (e) => {
 		let value = e.target.value;
 		if (!(value.length === 1 && value === " ")) {
-			setSearch(value);
+			onChange(value);
 		}
 	};
 	const clearSearch = (e) => {
-		setSearch("");
+		onChange("");
 	};
 	return (
 		<div className={cx("wrapper", className)}>
@@ -28,8 +28,8 @@ function Search(props) {
 				size={size}
 				classNames={cx("search-input")}
 				onChange={handleSearch}
-				value={search}
-				endAdornment={search && <IconButton onClick={clearSearch}>{icons.Button("icon").close}</IconButton>}
+				value={value}
+				endAdornment={value && <IconButton onClick={clearSearch}>{icons.Button("icon").close}</IconButton>}
 				startAdornment={icons.Button("icon").search}
 			/>
 		</div>

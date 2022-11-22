@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import React, { useReducer } from "react";
+import React, { useReducer, memo } from "react";
 
 import Table from "~/components/table/components";
 import { table as tableConfig, limitRowsBook as limitRow } from "~/config/table";
@@ -15,20 +15,18 @@ import Loading from "~/components/Loading";
 const bookConfig = tableConfig.book;
 
 function Product(props) {
-	const { state, products, onLimitChange, onPageChange } = props;
+	const { state, products, categories, onLimitChange, onPageChange } = props;
+	console.log("rerender", props);
 	return (
 		<Paper>
 			{products && products.length > 0 && (
 				<Table.Frame>
 					<Table.Head>
-						{bookConfig.headers.map((header, index) => (
-							<Table.Cell
-								key={index}
-								align={header.align}
-							>
-								{header.title}
-							</Table.Cell>
-						))}
+						<Table.Cell align={bookConfig.headers[0].align}>{bookConfig.headers[0].title}</Table.Cell>
+						<Table.Cell align={bookConfig.headers[1].align}>{bookConfig.headers[1].title}</Table.Cell>
+						<Table.Cell align={bookConfig.headers[2].align}>{bookConfig.headers[2].title}</Table.Cell>
+						<Table.Cell align={bookConfig.headers[3].align}>{bookConfig.headers[3].title}</Table.Cell>
+						<Table.Cell align={bookConfig.headers[4].align}>{bookConfig.headers[4].title}</Table.Cell>
 					</Table.Head>
 					<Table.Body>
 						{products.map((item) => (
@@ -40,7 +38,6 @@ function Product(props) {
 					</Table.Body>
 				</Table.Frame>
 			)}
-
 			<Footer
 				limitValue={state.limit}
 				limit={limitRow}

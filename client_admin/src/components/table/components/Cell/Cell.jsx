@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import TableRow from "@mui/material/TableRow";
 
 function Cell(props) {
-	const { key = null, size = "medium", align = "right", width: refWidth = null, children, ...passProps } = props;
+	const { size = "medium", align = "right", width: refWidth = null, children, ...passProps } = props;
 	let sx = {};
 	let value = 150;
 
@@ -18,7 +18,7 @@ function Cell(props) {
 		[`&.${tableCellClasses.body}`]: {
 			fontSize: 14,
 			width: refWidth ? refWidth : 200,
-			minWith: "200px",
+			"min-width": "200px",
 		},
 	}));
 	return (

@@ -24,7 +24,7 @@ function Content(props) {
 					<h3 className={cx("text")}>{product.name}</h3>
 				</div>
 				<div className={cx("category")}>
-					<div className={cx("title")}>{product.category}</div>
+					<div className={cx("title")}>{}</div>
 				</div>
 				<div className={cx("rating")}>
 					<div className={cx("rating-value")}>

@@ -27,3 +27,25 @@ export const setNewPropProducts = (payload) => ({
 	type: constants.SET_NEW_PROP_PRODUCTS,
 	payload,
 });
+
+export const setTypeSearchProducts = (payload) => ({
+	type: constants.SET_TYPE_SEARCH_PRODUCTS,
+	payload,
+});
+export const setSearchProducts = (payload) => ({
+	type: constants.SET_SEARCH_PRODUCTS,
+	payload,
+});
+export const setCategoryProducts = (payload) => ({
+	type: constants.SET_CATEGORY_PRODUCTS,
+	payload,
+});
+
+export const setSortProducts = (payload) => ({
+	type: constants.SET_SORT_PRODUCTS,
+	payload,
+});
+export const setFilterProducts = (payload) => ({
+	type: constants.SET_FILTER_PRODUCTS,
+	payload,
+});
