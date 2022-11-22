@@ -36,7 +36,7 @@ function Product(props) {
 					align="left"
 					onMouseOver={handleMouseOver}
 					onMouseOut={handleMouseOut}
-					width={800}
+					width={700}
 				>
 					<Popper.DetailProduct
 						product={product}
