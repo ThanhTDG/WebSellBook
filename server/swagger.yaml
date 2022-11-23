@@ -14,14 +14,12 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  version: 0.0.8
+  version: 0.0.9
 servers:
 - url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.8
   description: SwaggerHub API Auto Mocking
 - url: http://localhost:5000/api/v1
   description: Development API server
-- url: https://toi-mua-sach.herokuapp.com/api
-  description: Heroku server
 - url: https://api.toimuasach.click/api/v1
   description: Production API server
 tags:
