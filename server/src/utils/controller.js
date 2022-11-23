@@ -129,9 +129,9 @@ const Controller = class {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
 
-      await res
-        .status(204)
-        .send(`Document with {_id: '${id}'} has been deleted...`);
+      await res.json({
+        message: `Document with {_id: '${id}'} has been deleted...`,
+      });
     } catch (error) {
       await res
         .status(error.statusCode || 400)

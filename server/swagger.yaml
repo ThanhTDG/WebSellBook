@@ -42,7 +42,10 @@ tags:
     Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
 - name: Sản phẩm
   description: |
-    Sử dụng để lấy danh mục, sách và bình luận của sách, dành cho phân hệ khách hàng
+    Sử dụng để lấy sản phẩm, dành cho phân hệ khách hàng
+- name: Bình luận
+  description: |
+    Sử dụng để lấy bình luận sản phẩm, dành cho phân hệ khách hàng
 - name: Quản lý địa chỉ
   description: |
     Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
@@ -208,8 +211,12 @@ paths:
           format: ObjectId
         example: 634d8da516d1688abe54d4ef
       responses:
-        "204":
+        "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -372,8 +379,12 @@ paths:
           format: ObjectId
         example: 634ed8e4f6a3a7266d992614
       responses:
-        "204":
+        "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -411,117 +422,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /users:
-    get:
-      tags:
-      - Quản lý người dùng
-      summary: Sử dụng để lấy danh sách người dùng
-      description: |
-        Lấy danh sách người dùng theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả người dùng.
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /orders:
-    get:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy danh sách hóa đơn
-      description: |
-        Lấy danh sách hóa đơn theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả hóa đơn.
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /orders/{id}:
-    get:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy hóa đơn
-      description: |
-        Lấy hóa đơn theo ID hóa đơn cho trước.
-      parameters:
-      - name: id
-        in: path
-        description: ID hóa đơn
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để sửa thông tin hóa đơn
-      description: |
-        Sửa thông tin hóa đơn theo ID hóa đơn cho trước.
-      parameters:
-      - name: id
-        in: path
-        description: ID hóa đơn
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy danh sách hóa đơn
-      description: |
-        Xóa hóa đơn theo ID hóa đơn cho trước.
-      parameters:
-      - name: id
-        in: path
-        description: ID hóa đơn
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
         "400":
           description: Lỗi
           content:
@@ -868,7 +768,7 @@ paths:
   /comment/{book}:
     get:
       tags:
-      - Sản phẩm
+      - Bình luận
       summary: Sử dụng để lấy danh sách bình luận
       description: |
         Lấy danh sách bình luận theo ID sách cho trước.
