@@ -11,6 +11,7 @@ import Tippy from '@tippyjs/react';
 import LoadingUserProfile from './Loadding/LoadingUserProfile';
 import { render } from '@testing-library/react';
 import * as AuthServices from '../../apiServices/AuthServices'
+import SearchSuggest from './SearchSuggest/SearchSuggest';
 
 const Menu = (props) => {
     const navigate = useNavigate()
@@ -23,8 +24,9 @@ const Menu = (props) => {
 
     const [isUseUserPopupMenu, setIsUseUserPopupMenu] = useState(false)
 
-    const [searchResult, isSearchResult] = useState([1, 2, 3, 4, 5])
-    const [isOnSearch, setIsOnSearch] = useState(true)
+    const [searchResult, setSearchResult] = useState([1, 2, 3, 4, 5])
+    const [isSuggestSearch, setIsSuggestSearch] = useState(false)
+    const [inputSearchValue, setInputSearchValue] = useState('')
 
     function onSearch() {
         var searchInput = document.getElementById('search-bar');
@@ -143,6 +145,14 @@ const Menu = (props) => {
         )}
     </div>
 
+    useEffect(() => {
+        if (inputSearchValue.length > 1) {
+            setSearchResult([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
+        } else {
+            setSearchResult([])
+        }
+    }, [inputSearchValue])
+
     return (
         <div id='menu-bounder'>
             <div id='menu-header' class="row">
@@ -150,21 +160,30 @@ const Menu = (props) => {
                     <img src={require('../../assets/LogoMain.png')} alt='Logo' />
                 </div>
                 <div id='search-bar-container' class="col-xl-6">
-                    {/* <Tippy
-                        interactive={false}
-                        visible={searchResult.length > 0}
-                        render={(attrs)=>(
-                            <div className='poper-search-result-container' tabIndex='-1' {...attrs}>
-                                {
-                                    searchResult.map((item)=>(
-                                        <span>{item}</span>
-                                    ))
-                                }
-                            </div>
-                        )}>
-                        <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} />
-                    </Tippy> */}
-                    <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} />
+                    <div className='suggest-search-container'>
+                        <Tippy
+                            interactive={false}
+                            visible={searchResult.length > 0}
+                            width={'100%'}
+                            render={(attrs) => (
+                                <div className='poper-search-result-container' tabIndex='-1' {...attrs}>
+                                    {
+                                        searchResult.map((item) => (
+                                            <span><SearchSuggest title={item} /></span>
+                                        ))
+                                    }
+                                </div>
+                            )}>
+                            <input type='text' id='search-bar'
+                                placeholder={MyVariable.PlacseHolderForSearchBar}
+                                onChange={(e) => {
+                                    setInputSearchValue(e.target.value)
+                                }}
+                                value={inputSearchValue}
+                            />
+                        </Tippy>
+                    </div>
+                    {/* <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} /> */}
                     <img src={require('../../assets/icons/ic-search.png')} alt='search icon' onClick={() => onSearch()} />
                 </div>
                 <div class="col-xl-3 menu-btn-container-col">
