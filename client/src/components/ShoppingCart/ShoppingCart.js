@@ -15,6 +15,11 @@ const ShoppingCart = (props) => {
     // const { booksInCart } = state
     // const bookDataState = booksInCart.find(item=> item.book.id === bookData.id)
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+
     function onHoverTrash() {
         setIsHoverTrash(true)
     }
@@ -116,9 +121,9 @@ const ShoppingCart = (props) => {
                         <p className='book-in-cart-author'>{bookData.author}</p>
                     </div>
                     <div className='book-in-cart-prices'>
-                        <span className='book-in-cart-prv-price'>{bookData.prvPrice} đ</span>
+                        <span className='book-in-cart-prv-price'>{formatter.format(parseInt(bookData.prvPrice))}</span>
                         <span className='book-in-cart-discount-rate'> -{bookData.discountrate}</span>
-                        <span className='book-in-cart-cur-price'>{bookData.curPrice} đ</span>
+                        <span className='book-in-cart-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
                     </div>
                 </div>
                 <div className='col-sm-2 book-in-cart-amount-container responsive-col-3'>
@@ -129,7 +134,7 @@ const ShoppingCart = (props) => {
                     </div>
                 </div>
                 <div className='col-sm-3 book-in-cart-price-container responsive-col-4'>
-                    <span className='book-in-cart-price-cur-price'>{bookData.curPrice} đ</span>
+                    <span className='book-in-cart-price-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
                     <button className='responsive-remove-btn' onClick={() => (onRemoveBookInCart())} onMouseEnter={onHoverTrash} onMouseLeave={onNoneHoverTrash}><img src={require(`../../assets/icons/${isHoverTrash === true ? 'ic-trash.png' : 'ic-trash-gray.png'}`)} alt='ic-close' /></button>
                 </div>
             </div>

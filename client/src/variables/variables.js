@@ -133,32 +133,38 @@ export const MyVariable = {
         {
             title: 'Phổ biến',
             active: true,
-            id: 1
+            id: 1,
+            constant: 'popular'
         },
         {
             title: 'Bán chạy',
             active: false,
-            id: 2
+            id: 2,
+            constant: 'best-seller'
         },
         {
             title: 'Hàng mới',
             active: false,
-            id: 3
+            id: 3,
+            constant: 'newest'
         },
         {
             title: 'Giá thấp đến cao',
             active: false,
-            id: 4
+            id: 4,
+            constant: 'low-to-high'
         },
         {
             title: 'Giá cao đến thấp',
             active: false,
-            id: 5
+            id: 5,
+            constant: 'high-to-low'
         },
         {
             title: 'Giá',
             active: false,
-            id: 6
+            id: 6,
+            constant: 'best-seller'
         }
     ]
 }

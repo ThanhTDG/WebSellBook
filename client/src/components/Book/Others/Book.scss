@@ -35,14 +35,22 @@
     }
     .book-style-prices-container{
         padding-top:0;
+        .book-style-prv-prices-container{
+            .book-style-prv-price{
+                text-decoration: line-through;
+                font-size: 12px;
+                color: var(--Gray) !important;
+            }
+            .book-style-discount-rate{
+                font-size: 12px;
+                color: var(--Pink) !important;
+                padding-left: 0px;
+            }
+        }
         span{
             
         }
-        .book-style-prv-price{
-            text-decoration: line-through;
-            font-size: 12px;
-            color: var(--Gray) !important;
-        }
+        
         .book-style-cur-price{
             font-size: 24px;
             color: var(--Pink) !important;
@@ -79,12 +87,20 @@
             }
         }
         .book-style-prices-container{
+            .book-style-prv-prices-container{
+                .book-style-prv-price{
+                    font-size: 12px;
+                }
+                
+                .book-style-discount-rate{
+                    font-size: 12px;
+                }
+            }
+            
             span{
                 display: block;
             }
-            .book-style-prv-price{
-                font-size: 12px;
-            }
+            
             .book-style-cur-price{
                 font-size: 18px;
             }

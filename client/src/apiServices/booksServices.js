@@ -14,14 +14,15 @@ export const books = async (q) => {
     }
 }
 
-export const booksByCategoryId = async (q, page) => {
+export const booksByCategoryId = async (q, page, sort) => {
     console.log(q)
     try {
         const res = await request.get(`book`, {
             params: {
                 category: q,
                 page: page,
-                limit: 48
+                limit: 48,
+                sort: sort
             }
         });
         

@@ -19,6 +19,10 @@ const BookStyleSmall = (props) => {
         transform: isHoverOptionButtons === true ? 'scale(1.06)' : 'none',
         boxShadow: '0px 1px 4px rgba(0,0,0,0.3)'
     }
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+      });
     return (
         <div className='book-style-container' onMouseLeave={() => setIsHoverOptionButtons(false)}>
             <div className='user-favorite-book-bounder'>
@@ -31,15 +35,15 @@ const BookStyleSmall = (props) => {
                 </div>
             </div>
             <div className='book-style-nav-container'>
-                <Link to='/bookdetail' state={{ bookId: bookData._id}}>
+                <Link to='/bookdetail' state={{ bookId: bookData._id }}>
                     <div className='user-favorite-book-content'>
-                        <span className='user-favorite-book-title'>{bookData.name.length>40?bookData.name.substring(0, 40) + '...' : bookData.name}</span>
-                        <span className='user-favorite-book-author'>{bookData.supplier.length>28?bookData.supplier.substring(0, 28)+'...': bookData.supplier}</span>
+                        <span className='user-favorite-book-title'>{bookData.name.length > 40 ? bookData.name.substring(0, 40) + '...' : bookData.name}</span>
+                        <span className='user-favorite-book-author'>{bookData.supplier.length > 28 ? bookData.supplier.substring(0, 28) + '...' : bookData.supplier}</span>
                     </div>
                     <div className='book-style-description-containers'>
                         <div className='book-style-values-container'>
                             <div className='book-style-rating-container'>
-                                <span>{bookData.rating===0? '-': bookData.rating}</span>
+                                <span>{bookData.rating === 0 ? '-' : bookData.rating}</span>
                                 <img src={require('../../../assets/icons/ic-active-star.png')} alt='star' />
                             </div>
                             <div className='book-style-sale-figures-container'>
@@ -47,8 +51,11 @@ const BookStyleSmall = (props) => {
                             </div>
                         </div>
                         <div className='book-style-prices-container'>
-                            <span className='book-style-prv-price'>{bookData.originalPrice} đ</span>
-                            <span className='book-style-cur-price'>{bookData.price} đ</span>
+                            <div className='book-style-prv-prices-container'>
+                                <span className='book-style-prv-price'>{formatter.format(parseInt(bookData.originalPrice))}</span>
+                                <span className='book-style-discount-rate'> -{bookData.discountRate} %</span>
+                            </div>
+                            <span className='book-style-cur-price'>{formatter.format(parseInt(bookData.price))}</span>
                         </div>
                     </div>
                 </Link>

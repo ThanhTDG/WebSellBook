@@ -10,7 +10,7 @@ import { CategoriesSelected } from './CategoriesSelected';
 import { useLocation } from 'react-router-dom'
 import { MyConstVariable } from '../../variables/MyConstVaeiable';
 import BooksPaginated from '../../components/NavButtons/booksPaginated';
-import { useStore } from '../../store';
+import { actions, useStore } from '../../store';
 import BookBavButtonsOther from '../../components/NavButtons/bookBavButtonsOther';
 
 
@@ -20,7 +20,7 @@ const BooksPage = () => {
     const [isAddCategoryTag, setAddCategoryTag] = useState(true)
     const [isShowCategories, setIsShowCategories] = useState(true)
 
-    const [state] = useStore()
+    const [state, dispatch] = useStore()
     const [isLoadingPagiated, setIsLoadingPagiated] = useState(false)
 
     useEffect(() => {
@@ -45,8 +45,9 @@ const BooksPage = () => {
         }
     }
     const [isSelectedToolBarID, setIsSelectedToolBarID] = useState(1)
-    function onSelectToolBarItem(order) {
+    function onSelectToolBarItem(order, constant) {
         setIsSelectedToolBarID(order)
+        dispatch(actions.selectBookSortTyle(constant))
     }
     const searchGuideStyle = {
         display: stateName === MyConstVariable.myNullVariable ? 'none' : 'block'
@@ -84,7 +85,11 @@ const BooksPage = () => {
                         <div className='d-flex books-responsive-toolbar-container' >
                             {
                                 MyVariable.booksToolbar.map((tb) => (
-                                    <button id={`books-btn-tb-${tb.id}`} style={toolBarItemStyle(tb.id)} className='btn-tb-container' onClick={() => onSelectToolBarItem(tb.id)}>
+                                    <button 
+                                    id={`books-btn-tb-${tb.id}`} 
+                                    style={toolBarItemStyle(tb.id)} 
+                                    className='btn-tb-container' 
+                                    onClick={() => onSelectToolBarItem(tb.id, tb.constant)}>
                                         <div className='books-responsive-btn-tb-title' >{tb.title}</div>
                                     </button>
                                 ))

@@ -16,13 +16,13 @@ const BooksStyleSmall = () => {
         }
         console.log(state.categoryId)
         setIsLoading(true)
-        const fetch = async (categoryId, page) => {
-            const booksResult = await booksServies.booksByCategoryId(categoryId, page)
+        const fetch = async (categoryId, page, sort) => {
+            const booksResult = await booksServies.booksByCategoryId(categoryId, page, sort)
             setIsLoading(false)
             setApiBooks(booksResult.docs)
             dispatch(actions.booksNavButtons(getBooksNavButtons(booksResult)))
         }
-        fetch(state.categoryId, 1)
+        fetch(state.categoryId, 1, state.bookSortTyle)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.categoryId])
 
@@ -35,16 +35,35 @@ const BooksStyleSmall = () => {
             return
         }
         setIsLoading(true)
-        const fetch = async (categoryId, page) => {
-            const booksResult = await booksServies.booksByCategoryId(categoryId, page)
+        const fetch = async (categoryId, page, sort) => {
+            const booksResult = await booksServies.booksByCategoryId(categoryId, page, sort)
             setIsLoading(false)
             setApiBooks(booksResult.docs)
             console.log(booksResult)
         }
-        fetch(state.categoryId, state.booksPage)
+        fetch(state.categoryId, state.booksPage, state.bookSortTyle)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.booksPage])
+
+    useEffect(() => {
+        console.log('current page: ' + state.booksPage)
+        console.log('category id: ' + state.categoryId)
+        if (state.categoryId === 'a') {
+            setIsLoading(true)
+            fetchApi(state.booksPage)
+            return
+        }
+        setIsLoading(true)
+        const fetch = async (categoryId, page, sort) => {
+            const booksResult = await booksServies.booksByCategoryId(categoryId, page, sort)
+            setIsLoading(false)
+            setApiBooks(booksResult.docs)
+            console.log(booksResult)
+        }
+        fetch(state.categoryId, 1, state.bookSortTyle)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.bookSortTyle])
 
     const [apiBooks, setApiBooks] = useState([])
     const [isLoading, setIsLoading] = useState(true)

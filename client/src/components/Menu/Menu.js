@@ -153,6 +153,22 @@ const Menu = (props) => {
         }
     }, [inputSearchValue])
 
+    function getSuggestSearchItemsStyle() {
+        let inputSearch = document.getElementById('search-bar')
+        return {
+            width: inputSearch.offsetWidth
+        }
+    }
+
+    const removeSearchValueButtonStyle={
+        display: inputSearchValue.length>0? 'flex': 'none'
+    }
+
+    function onSelectSuggestSearch(suggest){
+        setInputSearchValue(suggest)
+        setSearchResult([])
+    }
+
     return (
         <div id='menu-bounder'>
             <div id='menu-header' class="row">
@@ -160,31 +176,33 @@ const Menu = (props) => {
                     <img src={require('../../assets/LogoMain.png')} alt='Logo' />
                 </div>
                 <div id='search-bar-container' class="col-xl-6">
-                    <div className='suggest-search-container'>
-                        <Tippy
-                            interactive={false}
-                            visible={searchResult.length > 0}
-                            width={'100%'}
-                            render={(attrs) => (
-                                <div className='poper-search-result-container' tabIndex='-1' {...attrs}>
-                                    {
-                                        searchResult.map((item) => (
-                                            <span><SearchSuggest title={item} /></span>
-                                        ))
-                                    }
-                                </div>
-                            )}>
-                            <input type='text' id='search-bar'
-                                placeholder={MyVariable.PlacseHolderForSearchBar}
-                                onChange={(e) => {
-                                    setInputSearchValue(e.target.value)
-                                }}
-                                value={inputSearchValue}
-                            />
-                        </Tippy>
-                    </div>
+                    <Tippy
+                        interactive={true}
+                        visible={searchResult.length > 0}
+                        placement={'bottom'}
+                        appendTo={document.body}
+                        render={(attrs) => (
+                            <div className='poper-search-result-container' style={getSuggestSearchItemsStyle()} tabIndex='-1' {...attrs}>
+                                {
+                                    searchResult.map((item) => (
+                                        <SearchSuggest title={item} key={item} onSelectSuggestSearch={onSelectSuggestSearch}/>
+                                    ))
+                                }
+                            </div>
+                        )}>
+                        <input type='text' id='search-bar'
+                            placeholder={MyVariable.PlacseHolderForSearchBar}
+                            onChange={(e) => {
+                                setInputSearchValue(e.target.value)
+                            }}
+                            value={inputSearchValue}
+                        />
+                    </Tippy>
                     {/* <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} /> */}
-                    <img src={require('../../assets/icons/ic-search.png')} alt='search icon' onClick={() => onSearch()} />
+                    <button style={removeSearchValueButtonStyle} onClick={()=>{setInputSearchValue('')}}>
+                        <img src={require('../../assets/icons/ic-close.png')} alt='remove'/>
+                    </button>
+                    <img className='search-bar-btn-search' src={require('../../assets/icons/ic-search.png')} alt='search icon' onClick={() => onSearch()} />
                 </div>
                 <div class="col-xl-3 menu-btn-container-col">
                     <div className='menu-btn-login-container' style={loginButtonStyle}><LoginButton /></div>

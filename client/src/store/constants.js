@@ -10,3 +10,13 @@ export const SELECT_BOOKS_NAVIGATION_BUTTON = 'select-books-navigation-button'
 export const GET_USER_PROFILE = 'get-user-profile'
 export const LOGOUT_USER = 'logout-user'
 export const SELEECT_USER_TB_INDEX = 'select-user-tool-bar-index'
+export const SELEECT_BOOK_SORT_TYPE = 'select-book-sort-type'
+
+
+export const BOOK_TYLE_POPULAR = 'popular'
+export const BOOK_TYLE_BEST_SELLER = 'best-seller'
+export const BOOK_TYLE_BEST_NEWEST = 'newest'
+export const BOOK_TYLE_BEST_LOW_TO_HIGHT = 'low-to-high'
+export const BOOK_TYLE_BEST_HIGHT_TO_LOW= 'high-to-low'
+
+

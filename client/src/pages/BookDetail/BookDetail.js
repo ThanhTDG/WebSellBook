@@ -77,6 +77,10 @@ const BookDetail = () => {
         }
     }, [viewImageNumber])
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
 
     function getRattingValue(point) {
         return {
@@ -119,17 +123,17 @@ const BookDetail = () => {
                     <a href='/'>
                         {
                             apiBookDetail.numOfReviews > 0 ?
-                            <span>(Xem tất cả {apiBookDetail.numOfReviews} đánh giá)</span>:
-                            <span>(Hãy là người đầu tiên đánh giá)</span>
+                                <span>(Xem tất cả {apiBookDetail.numOfReviews} đánh giá)</span> :
+                                <span>(Hãy là người đầu tiên đánh giá)</span>
                         }
                     </a>
                     <span>Đã bán: {apiBookDetail.sold}</span>
                 </div>
                 <div className='bd-bottom-content'>
                     <div className='bd-value-prices-container'>
-                        <span className='bd-value-original-price'>{apiBookDetail.originalPrice} đ</span>
+                        <span className='bd-value-original-price'>{formatter.format(parseInt(apiBookDetail.originalPrice))}</span>
                         <span className='bd-value-discount-rate'> - {apiBookDetail.discountRate} %</span>
-                        <span className='bd-value-price'>{apiBookDetail.price} đ</span>
+                        <span className='bd-value-price'>{formatter.format(parseInt(apiBookDetail.price))}</span>
                     </div>
                     <div className='bd-options-container'>
                         <AddToCardButton />
@@ -210,6 +214,7 @@ const BookDetail = () => {
                 <Comments bookId={apiBookDetail._id} />
             </div>
         </div>
+
     return (
         <div>
             <Menu />
