@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate");
+const paginate = require("mongoose-paginate-v2");
+const validator = require("validator").default;
 
 mongoose.plugin(paginate);
 
@@ -12,7 +13,6 @@ const orderItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Book",
     required: true,
-    unique: true,
   },
   quantity: {
     type: Number,
@@ -33,7 +33,7 @@ orderItemSchema.virtual("total").get(function () {
 
 const shippingInfoSchema = new Schema(
   {
-    name: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
@@ -42,10 +42,9 @@ const shippingInfoSchema = new Schema(
       type: String,
       require: true,
       trim: true,
-      validate(value) {
-        if (!validator.isMobilePhone(value, "vi-VN")) {
-          throw new Error("Phone number is invalid");
-        }
+      validate: {
+        validator: (value) => validator.isMobilePhone(value, "vi-VN"),
+        message: "Phone number is invalid",
       },
     },
     region: {
@@ -81,6 +80,8 @@ const orderSchema = new Schema(
       type: shippingInfoSchema,
       required: true,
     },
+    orderCode: String,
+    shippingCode: String,
     purchaseDate: {
       type: Date,
       default: Date.now,

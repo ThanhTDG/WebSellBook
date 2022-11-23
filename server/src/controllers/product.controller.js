@@ -1,7 +1,8 @@
 const { BOOK_SORT } = require("../constants");
+
 const Book = require("../models/book");
 const Category = require("../models/category");
-const Comment = require("../models/comment");
+
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
@@ -19,7 +20,7 @@ const category2Json = (value) => {
 };
 
 /**
- * @param {Category[]} value Array of categories
+ * @param {Category[]} array Array of categories
  */
 const categories2Json = (array) => {
   array = array.map((value) => {
@@ -54,16 +55,16 @@ const book2Json = (value) => {
   delete obj.__v;
   delete obj.category;
   delete obj.tree;
+  delete obj.height;
+  delete obj.width;
+  delete obj.textSearch;
   // delete obj.createdAt;
   delete obj.updatedAt;
-  const { shortDes, dimension, price, numOfReviews, rating, ratingRate } =
-    value;
-  console.log(value.price);
+  const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
   obj = {
     ...obj,
     shortDes,
     dimension,
-    price,
     numOfReviews,
     rating,
     ratingRate,
@@ -95,27 +96,16 @@ const sortMethod = (sort) => {
  */
 const getBooks = async (req, res) => {
   try {
-    const { category, page = 1, limit = 12, sort } = req.query;
-    const query = category ? { tree: category } : {};
+    const { category, search, page = 1, limit = 12, sort } = req.query;
+    let query = search ? { $text: { $search: search } } : {};
+    query = category ? { tree: category, ...query } : query;
     const options = {
       page,
       limit,
       populate: ["numOfReviews", "rating", "ratingRate"],
-      // sort: sortMethod(sort),
+      sort: sortMethod(sort),
     };
 
-    // const aggregate = Book.aggregate(
-    //   [
-    //     {
-    //       $project: {
-    //         price: { $multiply: ["$originalPrice", "$discountRate"] },
-    //       },
-    //     },
-    //     { $sort: { price: 1 } },
-    //   ],
-    //   { allowDiskUse: true }
-    // );
-    // const data = await Book.aggregatePaginate(aggregate, options);
     const data = await Book.paginate(query, options);
     data.docs = data.docs.map((value) => book2Json(value));
 
@@ -147,40 +137,8 @@ const getBook = async (req, res) => {
   }
 };
 
-/**
- * @param {Comment} value Comment
- */
-const comment2Json = (value) => {
-  let obj = value.toObject();
-  delete obj.__v;
-  delete obj.book;
-  delete obj.updatedAt;
-  const { _user } = value;
-  obj.user = _user;
-  return obj;
-};
-
-/**
- * @param {Request} req Request
- * @param {Response} res Response
- */
-const getComments = async (req, res) => {
-  try {
-    const book = req.params.book;
-    const { page = 1, limit = 12 } = req.query;
-    const opts = { page, limit, populate: "_user" };
-    const data = await Comment.paginate({ book }, opts);
-    data.docs = data.docs.map((value) => comment2Json(value));
-
-    await res.json(data);
-  } catch (error) {
-    await res.status(error.statusCode || 400).json({ message: error.message });
-  }
-};
-
 module.exports = {
   getCategories,
   getBooks,
   getBook,
-  getComments,
 };

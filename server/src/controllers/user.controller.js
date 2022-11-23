@@ -1,4 +1,13 @@
-// const controller = require("../utils/controller");
-// const User = require("../models/user");
+const User = require("../models/user");
 
-// module.exports = controller(User);
+const Controller = require("../utils/controller");
+
+const UserController = class extends Controller {
+  constructor(getData, toJson) {
+    super(User, getData, toJson);
+  }
+};
+
+const controller = new UserController();
+
+module.exports = controller.methods();

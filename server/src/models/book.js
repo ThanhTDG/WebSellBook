@@ -1,25 +1,18 @@
 const mongoose = require("mongoose");
-const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
+// const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
-mongoose.plugin(aggregatePaginate);
+const Category = require("./category");
+
+const { BOOK_STATUS } = require("../constants");
+const { normalizeStr } = require("../utils/utils");
+
+// mongoose.plugin(aggregatePaginate);
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
-const { BOOK_STATUS } = require("../constants");
-
-mongoose.plugin(slug);
-
 const Schema = mongoose.Schema;
-
-const dimensionSchema = new Schema(
-  {
-    height: Number,
-    width: Number,
-  },
-  { _id: false }
-);
 
 const bookSchema = new Schema(
   {
@@ -29,6 +22,7 @@ const bookSchema = new Schema(
       trim: true,
       unique: true,
     },
+    textSearch: String,
     shortDescription: String,
     description: String,
     slug: {
@@ -68,12 +62,8 @@ const bookSchema = new Schema(
     // language: String,
     images: [String],
     weight: Number,
-    dimension: {
-      type: dimensionSchema,
-      get: (value) => {
-        if (value) return `${value.height} x ${value.width} cm`;
-      },
-    },
+    height: Number,
+    width: Number,
     page: Number,
     bookCover: String,
     status: {
@@ -82,17 +72,31 @@ const bookSchema = new Schema(
       default: BOOK_STATUS.AVAILABLE,
     },
     expectedDate: Date,
-    countInStock: Number,
-    sold: Number,
-    originalPrice: Number,
-    discountRate: Number,
-    // price: {
-    //   type: Number,
-    //   get: function () {
-    //     const price = this.originalPrice * (1 - this.discountRate / 100);
-    //     return Math.round(price / 1e3) * 1e3;
-    //   },
-    // },
+    countInStock: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    sold: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    originalPrice: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    discountRate: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
@@ -105,8 +109,10 @@ const bookSchema = new Schema(
       },
     ],
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
+
+bookSchema.index({ name: "text" });
 
 bookSchema.virtual("shortDes").get(function () {
   const des = this.description;
@@ -116,9 +122,8 @@ bookSchema.virtual("shortDes").get(function () {
   return des.slice(0, 200) + "...";
 });
 
-bookSchema.virtual("price").get(function () {
-  const price = this.originalPrice * (1 - this.discountRate / 100);
-  return Math.round(price / 1e3) * 1e3;
+bookSchema.virtual("dimension").get(function () {
+  if (this.height && this.width) return `${this.height} x ${this.width} cm`;
 });
 
 bookSchema.virtual("numOfReviews", {
@@ -167,13 +172,45 @@ bookSchema
     return rates;
   });
 
+/**
+ * Get price of book
+ * @param {number} originalPrice Original price
+ * @param {number} discountRate Discount rate
+ */
+const getPrice = (originalPrice, discountRate) => {
+  const price = originalPrice * (1 - discountRate / 100);
+  return Math.round(price / 1e3) * 1e3;
+};
+
 bookSchema.pre("save", async function (next) {
+  if (this.isModified("name")) {
+    this.textSearch = normalizeStr(this.name);
+  }
+
+  if (this.isModified("originalPrice") || this.isModified("discountRate")) {
+    this.price = getPrice(this.originalPrice, this.discountRate);
+  }
+
   try {
-    if (this.category) {
-      await this.populate("category");
-      this.tree = [this.category.id, ...this.category.tree];
-      this.depopulate("category");
-    }
+    await this.populate("category");
+    this.tree = [this.category.id, ...this.category.tree];
+    this.depopulate("category");
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+bookSchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  update.textSearch = normalizeStr(update.name);
+  update.price = getPrice(update.originalPrice, update.discountRate);
+
+  try {
+    const category = await Category.findById(update.category);
+    update.tree = [update.category, ...category.tree];
+
     next();
   } catch (error) {
     next(error);

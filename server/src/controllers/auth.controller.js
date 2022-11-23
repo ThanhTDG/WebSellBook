@@ -1,8 +1,15 @@
 require("dotenv").config();
 
+const {
+  NODE_ENV: { PROC },
+} = require("../constants");
+
 const User = require("../models/user");
+
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
+
+const NODE_ENV = process.env.NODE_ENV;
 
 const user2json = ({
   _id,
@@ -57,14 +64,17 @@ const signIn = async (req, res) => {
   try {
     const user = req.user;
     const token = user.generateAuthToken();
-    await res.cookie("token", token, {
+    const cookieOpts = {
       signed: true,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: NODE_ENV === PROC,
       maxAge: process.env.JWT_EXPIRES,
-      sameSite: "None",
-    });
-    await res.json({ token });
+      sameSite: NODE_ENV === PROC ? "none" : "lax",
+    };
+
+    await res
+      .cookie("token", token, cookieOpts)
+      .json({ token, user: user2json(user) });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -83,10 +93,40 @@ const signOut = async (req, res) => {
           .status(err.statusCode || 401)
           .json({ message: err.message });
       }
-      await res.clearCookie("token").json({ message: "Log out successful" });
+
+      const cookieOpts = {
+        httpOnly: true,
+        secure: NODE_ENV === PROC,
+        maxAge: process.env.JWT_EXPIRES,
+        sameSite: NODE_ENV === PROC ? "none" : "lax",
+      };
+
+      await res
+        .clearCookie("token", cookieOpts)
+        .json({ message: "Log out successful" });
     });
   } catch (error) {
     await res.status(401).json({ message: error.message });
+  }
+};
+
+/**
+ * Change password
+ * @param {Request} req Request
+ * @param {Response} res Response
+ */
+const verifyAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const user = req.user;
+    const isMatch = await user.validatePassword(password);
+    if (!isMatch) {
+      throw new ErrorHandler(401, "Incorrect password");
+    }
+
+    await res.json({ message: "Account verification successful" });
+  } catch (error) {
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -138,7 +178,10 @@ const uploadAvatar = async (req, res) => {
     const user = req.user;
     user.avatar = file.path;
     await user.save();
-    await res.json({ avatar: user.avatar });
+    await res.json({
+      message: "Avatar uploaded successfully",
+      avatar: user.avatar,
+    });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -170,6 +213,7 @@ module.exports = {
   signUp,
   signIn,
   signOut,
+  verifyAccount,
   getProfile,
   setProfile,
   uploadAvatar,
