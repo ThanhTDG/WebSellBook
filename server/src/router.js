@@ -11,6 +11,7 @@ const user = require("./routes/user.routes");
 const product = require("./routes/product.routes");
 const comment = require("./routes/comment.routes");
 const cart = require("./routes/cart.routes");
+const favorite = require("./routes/favorite.routes");
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use("/users", user);
 router.use("/", product);
 router.use("/comment", comment);
 router.use("/cart", cart);
+router.use("/favorite", favorite);
 
 module.exports = router;
