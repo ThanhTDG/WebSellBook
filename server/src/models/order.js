@@ -12,7 +12,6 @@ const orderItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Book",
     required: true,
-    unique: true,
   },
   quantity: {
     type: Number,

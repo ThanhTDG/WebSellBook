@@ -109,7 +109,7 @@ const bookSchema = new Schema(
       },
     ],
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
 
 bookSchema.index({ name: "text" });

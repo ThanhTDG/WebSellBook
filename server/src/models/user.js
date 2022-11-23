@@ -114,6 +114,12 @@ const userSchema = new Schema(
       },
     },
     addresses: [addressSchema],
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Book",
+      },
+    ],
     role: {
       type: String,
       enum: Object.values(ROLE),
