@@ -7,7 +7,7 @@ function Textarea(props) {
 		<Form>
 			<SemanticTextArea
 				style={style}
-				disable={disable}
+				disable={disable.toString()}
 				name={name}
 				aria-label={label}
 				rows={maxRows}

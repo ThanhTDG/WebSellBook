@@ -22,6 +22,7 @@ import ShoppingCartOnOutlinedIcon from "@mui/icons-material/ShoppingCart";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ListIcon from "@mui/icons-material/List";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -40,7 +41,8 @@ const Sidebar = ({ className }) => {
 		home: <DashboardIcon className={className} />,
 		products: <StorefrontIcon className={className} />,
 		orders: <CreditCardIcon className={className} />,
-		users: <PeopleOutlineIcon className={className} />,
+		users: <ManageAccountsIcon className={className} />,
+		customer: <PeopleOutlineIcon className={className} />,
 		delivery: <LocalShippingIcon className={className} />,
 		stats: <QueryStatsIcon className={className} />,
 		notifications: <NotificationsNoneIcon className={className} />,

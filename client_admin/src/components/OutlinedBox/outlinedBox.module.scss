@@ -9,6 +9,9 @@ $text-normal-color: #494949;
 	border-left: 1px solid $border-color;
 	border-bottom: 1px solid $border-color;
 	border-right: 1px solid $border-color;
+	-webkit-box-shadow: var(--wk-box-shadow);
+	box-shadow: var(--box-shadow);
+	background-color: white;
 	border-radius: 5px;
 
 	.childrenContainer {

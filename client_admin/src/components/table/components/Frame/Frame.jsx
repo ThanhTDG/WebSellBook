@@ -4,8 +4,11 @@ import { Table, TableContainer } from "@mui/material";
 function Frame(props) {
 	const { label = "table", children, ...passProps } = props;
 	return (
-		<TableContainer>
-			<Table aria-label={label} {...passProps}>
+		<TableContainer {...passProps}>
+			<Table
+				stickyHeader
+				aria-label={label}
+			>
 				{children}
 			</Table>
 		</TableContainer>

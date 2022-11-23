@@ -12,13 +12,13 @@ function Cell(props) {
 		[`&.${tableCellClasses.head}`]: {
 			backgroundColor: theme.palette.common.black,
 			color: theme.palette.common.white,
-			width: refWidth ? refWidth : 200,
-			minWith: "200px",
+			width: refWidth ? refWidth : 184,
+			"min-width": "184px",
 		},
 		[`&.${tableCellClasses.body}`]: {
 			fontSize: 14,
-			width: refWidth ? refWidth : 200,
-			"min-width": "200px",
+			width: refWidth ? refWidth : 184,
+			"min-width": "184px",
 		},
 	}));
 	return (

@@ -1,9 +1,8 @@
 import { SET_TAB_MGT_PRODUCT, SET_LIMIT_ROWS, SET_PAGE_MGT_PRODUCT } from "./constants";
-import { limitRowsBook } from "~/config/table";
 const initState = {
 	selectTab: 0,
 	tab: "",
-	limitedRowNum: limitRowsBook.options[0],
+	limitedRowNum: 0,
 	search: "",
 	page: 1,
 	maxPage: 10,

@@ -1,8 +1,13 @@
 .wrapper {
+	padding: 16px 16px;
 	width: auto;
 	height: var(--vertical-navbar);
-	display: grid;
-	grid-template-columns: min-content 1fr min-content;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	-webkit-box-shadow: var(--wk-box-shadow);
+	box-shadow: var(--box-shadow);
+	background-color: white;
 }
 
 .avatar {
@@ -12,7 +17,6 @@
 }
 .left {
 	width: 84px;
-	height: var(--vertical-navbar);
 	display: flex;
 	align-items: center;
 }

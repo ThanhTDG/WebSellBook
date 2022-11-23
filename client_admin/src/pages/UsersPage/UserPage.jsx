@@ -1,7 +1,5 @@
-import React, { useMemo, useReducer, useState } from "react";
-
+import React from "react";
 import styles from "./product.module.scss";
-import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
 import BookConfig from "~/config/Book";
 import { TableProduct } from "~/components/table/product";
@@ -24,7 +22,7 @@ const constant = stores.constants;
 const actions = stores.actions;
 const initialState = initState.products;
 const initFilter = initState.filterProduct;
-const tabTableStyles = classNames.bind(tabStyle);
+const cx = classNames.bind(styles);
 function reducer(state, action) {
 	switch (action.type) {
 		case constant.SET_LIMIT_ROWS:
@@ -80,7 +78,7 @@ function reducer(state, action) {
 	}
 }
 
-function Products() {
+function UserPage() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [filter, setFilter] = useState(initFilter);
 	const [products, setProducts] = useState([]);
@@ -202,19 +200,19 @@ function Products() {
 			onChange={handleTabChange}
 			items={listStatus}
 		>
-			<div className={tabTableStyles("tool-filter")}>
-				<div className={tabTableStyles("top")}>
+			<div className={cx("tool-filter")}>
+				<div className={cx("top")}>
 					<Controls.Select
 						size="small"
 						labelInside={true}
 						label={options.typeSearch.name}
-						className={tabTableStyles("type-search")}
+						className={cx("type-search")}
 						items={options.typeSearch.value}
 						onChange={handleTypeSearchChange}
 						value={filter.typeSearch}
 					/>
 					<Search
-						className={tabTableStyles("search-box")}
+						className={cx("search-box")}
 						size="small"
 						value={filter.search}
 						onChange={handleSearchChange}
@@ -222,26 +220,26 @@ function Products() {
 					<Controls.Button
 						primary
 						onClick={handleConfirm}
-						className={tabTableStyles("confirm")}
+						className={cx("confirm")}
 					>
 						Xác nhận
 					</Controls.Button>
 				</div>
 
-				<div className={tabTableStyles("bottom")}>
+				<div className={cx("bottom")}>
 					<Controls.Select
 						none={true}
 						noneLabel="Không"
 						size="small"
 						labelInside={true}
 						label={options.typeSort.name}
-						className={tabTableStyles("sort-select")}
+						className={cx("sort-select")}
 						items={options.typeSort.value}
 						onChange={handleSortChange}
 						value={filter.sort}
 					/>
 					<Controls.TreeSelect
-						className={tabTableStyles("category-select")}
+						className={cx("category-select")}
 						size={"large"}
 						label="Danh mục"
 						value={filter.category}
@@ -255,4 +253,4 @@ function Products() {
 	);
 }
 
-export default Products;
+export default UserPage;

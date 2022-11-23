@@ -2,11 +2,10 @@ import { Paper } from "@mui/material";
 import React, { useReducer, memo } from "react";
 
 import Table from "~/components/table/components";
-import { table as tableConfig, limitRowsBook as limitRow } from "~/config/table";
+import { table as tableConfig, limitRow } from "~/config/table";
 
 import { actions, useProductMgt } from "~/stores";
 import Footer from "../Footer";
-import { limitRowsBook } from "~/config/table";
 import { useEffect } from "react";
 import * as constant from "~/stores/constants";
 import { useDebounce } from "~/hooks";
@@ -20,7 +19,7 @@ function Product(props) {
 	return (
 		<Paper>
 			{products && products.length > 0 && (
-				<Table.Frame>
+				<Table.Frame style={{ maxHeight: 700 }}>
 					<Table.Head>
 						<Table.Cell align={bookConfig.headers[0].align}>{bookConfig.headers[0].title}</Table.Cell>
 						<Table.Cell align={bookConfig.headers[1].align}>{bookConfig.headers[1].title}</Table.Cell>

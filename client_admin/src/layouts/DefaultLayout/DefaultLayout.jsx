@@ -19,11 +19,7 @@ const { Header, Sider, Content } = Layout;
 
 function DefaultLayout({ children }) {
 	const [collapsed, setCollapsed] = useState(false);
-	let key = getKey("route", window.location.pathname);
-	let label = "";
-	if (key) {
-		label = PageConfig[key].label;
-	}
+
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
 			<Layout className="site-layout">
@@ -34,11 +30,8 @@ function DefaultLayout({ children }) {
 					collapsed={collapsed}
 					setCollapsed={setCollapsed}
 				/>
-				<Content className={cx("content", collapsed ? "max" : "min")}>
-					<div className={cx("title")}>
-						<h2>{label}</h2>
-					</div>
-					{children}
+				<Content className={cx("container", collapsed ? "max" : "min")}>
+					<div className={cx("content")}>{children}</div>
 				</Content>
 			</Layout>
 		</Layout>

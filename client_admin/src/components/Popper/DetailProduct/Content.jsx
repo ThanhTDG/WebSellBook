@@ -20,9 +20,7 @@ function Content(props) {
 				></Image>
 			</div>
 			<div className={cx("info")}>
-				<div className={cx("name")}>
-					<h3 className={cx("text")}>{product.name}</h3>
-				</div>
+				<div className={cx("text", "name-product")}>{product.name}</div>
 				<div className={cx("category")}>
 					<div className={cx("title")}>{}</div>
 				</div>
@@ -44,14 +42,15 @@ function Content(props) {
 
 				<div className={cx("short-desc")}>
 					<div className="title">Mô tả</div>
-					<div className={cx("content")}>
-						<Controls.Textarea
+					<div className={cx("text", "content")}>
+						{product.description}
+						{/* <Controls.Textarea
 							disable={true}
 							max
 							style={{ outline: "none", border: "none", padding: 0, overflow: "hidden" }}
 							maxRows={6}
 							value={`${shortDesc}`}
-						></Controls.Textarea>
+						></Controls.Textarea> */}
 					</div>
 				</div>
 			</div>

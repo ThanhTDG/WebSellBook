@@ -35,9 +35,9 @@ const table = {
 		],
 	},
 };
-const limitRowsBook = {
+const limitRow = {
 	title: "Số trang",
 	options: [25, 50, 100],
 };
 
-export { table, limitRowsBook };
+export { table, limitRow };

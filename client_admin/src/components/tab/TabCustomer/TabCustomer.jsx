@@ -1,9 +1,8 @@
 import React, { useMemo, useReducer, useState } from "react";
 
-import styles from "./product.module.scss";
+import styles from "./tabCustomer.module.scss";
 import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
-import BookConfig from "~/config/Book";
 import { TableProduct } from "~/components/table/product";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
@@ -17,9 +16,10 @@ import Controls from "~/components/controls";
 import Search from "~/components/Search";
 import { getCategories, getCategoriesTree } from "~/services/categoriesSerivce";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
+import CustomerConfig from "~/config/Customer";
 
-const listStatus = BookConfig.listStatus;
-const options = BookConfig.options;
+const listStatus = CustomerConfig.listStatus;
+const options = CustomerConfig.options;
 const constant = stores.constants;
 const actions = stores.actions;
 const initialState = initState.products;
@@ -80,7 +80,7 @@ function reducer(state, action) {
 	}
 }
 
-function Products() {
+function TabCustomer() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [filter, setFilter] = useState(initFilter);
 	const [products, setProducts] = useState([]);
@@ -255,4 +255,4 @@ function Products() {
 	);
 }
 
-export default Products;
+export default TabCustomer;

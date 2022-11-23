@@ -47,7 +47,7 @@ function Product(props) {
 							})}
 							target="_blank"
 						>
-							<span className={cx("single-line")}>{product.name}</span>
+							<div className={cx("single-line")}>{product.name}</div>
 						</Link>
 					</Popper.DetailProduct>
 				</Table.Cell>

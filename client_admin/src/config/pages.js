@@ -2,6 +2,7 @@ import Home from "~/pages/Home";
 import NewProduct from "~/pages/NewProduct";
 import Products from "~/pages/Products";
 import TestLayout from "~/pages/test/TestLayout";
+import CustomerPage from "~/pages/CustomerPage";
 
 const PageConfig = {
 	home: {
@@ -35,6 +36,16 @@ const PageConfig = {
 		label: "Sản phẩm",
 		component: NewProduct,
 	},
+	// mgt users
+
+	// mgt customer
+	customer: {
+		key: "customer",
+		route: "/customer",
+		label: "Quản lý khách hàng",
+		component: CustomerPage,
+	},
+
 	orders: {
 		key: "orders",
 		route: "/orders",

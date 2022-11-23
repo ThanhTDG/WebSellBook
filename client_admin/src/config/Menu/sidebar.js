@@ -13,9 +13,14 @@ const sidebar = [
 		icon: icons.Sidebar("icon").list,
 		children: [
 			{
-				key: "products",
+				key: PageConfig.products.key,
 				label: <Link to={PageConfig.products.route}>Sản phẩm</Link>,
 				icon: icons.Sidebar("icon").products,
+			},
+			{
+				key: PageConfig.customer.key,
+				label: <Link to={PageConfig.customer.route}>Khách hàng</Link>,
+				icon: icons.Sidebar("icon").customer,
 			},
 			{
 				link: "/orders",
