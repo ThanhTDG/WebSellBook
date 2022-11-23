@@ -10,220 +10,213 @@
   position: relative;
 }
 .book-content {
-    font-family: 'MontserratRegular';
-    color: var(--Darkest);
+  font-family: "MontserratRegular";
+  color: var(--Darkest);
   .book-title {
-    font-family: 'MontserratMedium';
+    font-family: "MontserratMedium";
     font-size: 36px;
   }
-  .book-author{
+  .book-author {
     font-size: 24px;
   }
-  .book-description{
+  .book-description {
     font-size: 16px;
     text-align: justify;
     margin-top: 8px;
     max-height: 312px;
   }
-  
-  
 }
-.book-prices-container{
+.book-prices-container {
   margin-bottom: 24px;
-    .book-prv-price{
-        font-size: 24px;
-        span{
-          color: var(--Pink);
-          text-decoration: none;
-        }
-        .prv-prices{
-          text-decoration: line-through;
-          color: var(--Gray);
-          margin-right: 12px;
-        }
+  .book-prv-price {
+    font-size: 24px;
+    span {
+      color: var(--Pink);
+      text-decoration: none;
     }
-    .book-cur-price{
-        font-size: 36px;
-        color: var(--Orange);
+    .prv-prices {
+      text-decoration: line-through;
+      color: var(--Gray);
+      margin-right: 12px;
     }
+  }
+  .book-cur-price {
+    font-size: 36px;
+    color: var(--Orange);
+  }
 }
-.book-award-container{
-    width: 124px;
-    height: 124px;
-    padding:12px;
-    border-radius: 62px;
-    position: absolute;
-    bottom: -52px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    background-color: var(--White);
-    border: 4px dashed var(--Orange);
-    img{
-      width: 100%;
-      height: 100%;
-    }
+.book-award-container {
+  width: 124px;
+  height: 124px;
+  padding: 12px;
+  border-radius: 62px;
+  position: absolute;
+  bottom: -52px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: var(--White);
+  border: 4px dashed var(--Orange);
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
-#book-favorite{
-    position: absolute;
-    bottom: 60px;
-    left: 70px;
+#book-favorite {
+  position: absolute;
+  bottom: 60px;
+  left: 70px;
 }
 
-.book-discount-container{
+.book-discount-container {
   font-size: 24px;
   margin-bottom: 24px;
-  .discount-image{
+  .discount-image {
     width: 120px;
   }
-  .discount-content{
+  .discount-content {
     font-size: 12px;
-    position:absolute;
-    top:55%;
+    position: absolute;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--Pink);
   }
 }
-.buttons-container{
+.buttons-container {
   margin-top: 0;
   width: 40%;
   position: absolute;
-  top:412px;
+  top: 412px;
 }
-.book-stars{
+.book-stars {
   width: 24px;
   height: 24px;
 }
-.book-stars-container{
+.book-stars-container {
   color: var(--Gray);
   height: 24px;
   line-height: 100%;
-  
 }
 .book-comment {
   margin-top: 6px;
 }
-.book-saler{
+.book-saler {
   margin-top: 6px;
 }
 
-
-.book-description-container{
+.book-description-container {
   margin-left: 48px;
   margin-right: 48px;
-  font-family: 'MontserratRegular';
+  font-family: "MontserratRegular";
   color: var(--Darkest);
-  span{
+  span {
     font-size: 36px;
-    font-family: 'MontserratMedium';
+    font-family: "MontserratMedium";
   }
   .book-description {
-    -ms-overflow-style: none !important; 
+    -ms-overflow-style: none !important;
     scrollbar-width: none !important;
     text-align: justify;
     margin-top: 12px;
-
   }
   .book-description::-webkit-scrollbar {
     display: none;
   }
-  .btn-showmore{
+  .btn-showmore {
     border: none;
     background-color: var(--White);
     color: var(--Gray);
   }
-  .book-description-info{
+  .book-description-info {
     margin-top: 12px;
-    .book-info-title{
-      font-family: 'MontserratMedium';
+    .book-info-title {
+      font-family: "MontserratMedium";
     }
-    .book-info-row{
+    .book-info-row {
       min-height: 40px;
     }
   }
 }
 
-#book-rating-title{
+#book-rating-title {
   font-size: 36px;
   color: var(--Darkest);
-  font-family: 'MontserratMedium';
+  font-family: "MontserratMedium";
   margin-left: 48px;
   margin-top: 48px;
 }
-.book-rating-container{
+.book-rating-container {
   margin-left: 48px;
   margin-right: 48px;
   margin-top: 24px;
   padding: 0;
-  #book-rating-point-container{
+  #book-rating-point-container {
     margin-top: -32px;
   }
-  .book-total-review{
-    span{
+  .book-total-review {
+    span {
       padding-left: 12px;
       color: var(--Gray);
     }
   }
-  #book-rating-stars{
+  #book-rating-stars {
     background-color: var(--LightGray);
     width: 240px;
     padding: 0;
     position: relative;
-    img{
+    img {
       width: 240px;
       padding: 0;
       margin: 0;
       z-index: 2;
     }
   }
-  .rating-detail{
+  .rating-detail {
     height: 24px;
     margin-bottom: 8px;
     color: var(--Gray);
-    .rating-persent{
+    .rating-persent {
       color: var(--Darkest);
     }
-    .rating-review{
+    .rating-review {
       text-align: right;
     }
   }
-  .rating-detail-container{
+  .rating-detail-container {
     background-color: var(--LightGray);
-    border-radius: 4px ;
+    border-radius: 4px;
     padding: 0;
   }
 }
 
-
-.book-your-rating-container{
-  .book-your-rating{
-    font-family: 'MontserratRegular';
+.book-your-rating-container {
+  .book-your-rating {
+    font-family: "MontserratRegular";
     color: var(--Darkest);
     font-size: 16px;
     margin-bottom: 24px;
-    span{
+    span {
       display: block;
     }
   }
-  .book-your-rating :first-child{
+  .book-your-rating :first-child {
     font-size: 30px;
-    font-family: 'MontserratMedium';
+    font-family: "MontserratMedium";
   }
-  .book-your-rating-stars{
+  .book-your-rating-stars {
     margin-bottom: 24px;
   }
-  
 }
 
-.book-more-comment-container{
+.book-more-comment-container {
   margin-top: 48px;
-  .book-more-comment{
-    font-family: 'MontserratMedium';
+  .book-more-comment {
+    font-family: "MontserratMedium";
     color: var(--Darkest);
     font-size: 30px;
     margin-bottom: 24px;
   }
-  #btn-showmore-rating{
+  #btn-showmore-rating {
     height: 48px;
     border-radius: 24px;
     background-color: var(--Pink);
@@ -231,111 +224,222 @@
     color: var(--White);
     padding-left: 24px;
     padding-right: 24px;
-    font-family: 'MontserratRegular';
+    font-family: "MontserratRegular";
     float: right;
     margin-top: 24px;
     transition-duration: 0.4s;
-
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.4s ease;
   }
-  #btn-showmore-rating:hover{
-    background-color: var(--Orange);
+  #btn-showmore-rating:hover {
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
   }
-  .vertical-banners-container{
+  .vertical-banners-container {
     padding: 24px;
     padding-right: 48px;
-
   }
 }
+.book-detail-grid-books-container {
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18% 18%;
+  gap: 32px;
+  padding-top: 32px;
+  padding-left: 96px;
+  padding-right: 96px;
+}
+.book-detail-attach-books-title{
+  font-size: 48px;
+  color: var(--Darkest);
+  font-family: 'MontserratMedium';
+  margin-top: 96px;
+  padding-left: 48px;
+}
 
-
-@media only screen and (max-width:800px ) {
-  .vertical-banners-container{
+@media only screen and (max-width: 600px) {
+  .book-detail-grid-books-container {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    gap: 12px;
+    padding-top: 24px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+  .book-detail-attach-books-title{
+    font-size: 24px;
+    color: var(--Darkest);
+    font-family: 'MontserratMedium';
+    margin-top: 48px;
+    padding-left: 48px;
+  }
+  .vertical-banners-container {
     display: none;
   }
-    .book-btn-add-to-cart{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-top: 24px;
-        width: 100%;
-        margin-left: 8px;
+  .book-btn-add-to-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 12px;
+    width: 100%;
+    margin-left: 8px;
+  }
+  .book-award-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .book-content {
+    margin-top: 52px;
+  }
+  .book-prices-container {
+    text-align: center;
+  }
+  #book-favorite {
+    position: absolute;
+    bottom: 60px;
+    left: 120px;
+  }
+  .buttons-container {
+    width: 100%;
+    position: inherit;
+  }
+  .book-discount-container {
+    text-align: center;
+  }
+  .book-react {
+    width: 33%;
+  }
+  .book-stars-container {
+    margin-bottom: 24px;
+  }
+  .book-detail-container {
+    margin-left: 48px;
+    margin-right: 48px;
+    margin-bottom: 0;
+  }
+
+  .book-description-container {
+    margin-top: 12px;
+    .book-description-col-responsive {
+      padding: 0;
     }
-    .book-award-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+    .book-description-info {
+      margin-top: 12px;
+      margin-bottom: 24px;
+      .book-info-title {
+        font-family: "MontserratMedium";
+      }
+      .book-info-row {
+        height: 40px;
+        margin-bottom: 12px;
+      }
     }
-    .book-content{
-      margin-top: 52px;
+  }
+  #book-rating-stars-container {
+    margin-bottom: 24px;
+  }
+
+  .book-your-rating-container {
+    margin-bottom: 24px;
+    padding: 0;
+    .book-your-rating {
+      margin-top: 24px;
+      font-family: "MontserratRegular";
+      color: var(--Darkest);
+      font-size: 16px;
+      margin-bottom: 24px;
+      span {
+        display: block;
+      }
     }
-    .book-prices-container{
-        text-align: center;
+    .book-your-rating :first-child {
+      font-size: 30px;
+      font-family: "MontserratMedium";
     }
-    #book-favorite{
-        position: absolute;
-        bottom: 60px;
-        left: 120px;
+    .book-your-rating-stars {
+      margin-bottom: 24px;
+      button {
+        margin-right: 2px !important;
+      }
     }
-    .buttons-container{
+  }
+
+  .book-image {
+    background-size: 148% 104% !important;
+    border-radius: 12px !important;
+  }
+
+  .book-detail-container {
+    margin: 0;
+    padding: 0;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .book-content {
+    color: var(--Darkest);
+    padding-top: 12px;
+    .book-title {
+      font-size: 24px;
+    }
+    .book-author {
+      font-size: 16px;
+    }
+    .book-description {
+      font-size: 16px;
+      text-align: justify;
+      margin-top: 8px;
+      max-height: 312px;
+    }
+  }
+  .book-stars-container {
+    margin: 0;
+    padding: 0;
+    padding-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 20px;
+
+    .book-react {
+      width: 32%;
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+    }
+    .book-stars {
+      width: 20px;
+      height: 20px;
+    }
+    .book-stars-col-container {
+      padding: 0;
+      margin: 0;
+      padding-top: 2px;
+    }
+  }
+  #book-detail-info-title {
+    font-size: 24px;
+  }
+  .book-detail-shortcut-col-responsive {
+    padding: 0;
+    #book-detail-shortcut-title {
+      font-size: 24px;
+    }
+  }
+  #book-rating-title {
+    font-size: 24px;
+  }
+  .book-detail-responsive-title {
+    font-size: 24px !important;
+  }
+  .book-detail-responsive-col {
+    padding: 0;
+  }
+  .book-more-comment-container {
+    margin: 0;
+    padding: 0;
+    padding-right: 28px;
+    .book-more-comment {
       width: 100%;
-      position: inherit;
     }
-    .book-discount-container{
-      text-align: center;
-    }
-    .book-react{
-      width: 33%;
-    }
-    .book-stars-container{
-      margin-bottom: 24px;
-    }
-    .book-detail-container {
-      margin-left: 48px;
-      margin-right: 48px;
-      margin-bottom: 0;
-    }
-
-    .book-description-container{
-      .book-description-info{
-        margin-top: 12px;
-        margin-bottom: 24px;
-        .book-info-title{
-          font-family: 'MontserratMedium';
-        }
-        .book-info-row{
-          height: 40px;
-          margin-bottom: 12px;
-        }
-      }
-    }
-    #book-rating-stars-container{
-      margin-bottom: 24px;
-    }
-
-    .book-your-rating-container{
-      margin-bottom: 24px;
-      .book-your-rating{
-        margin-top: 24px;
-        font-family: 'MontserratRegular';
-        color: var(--Darkest);
-        font-size: 16px;
-        margin-bottom: 24px;
-        span{
-          display: block;
-        }
-      }
-      .book-your-rating :first-child{
-        font-size: 30px;
-        font-family: 'MontserratMedium';
-      }
-      .book-your-rating-stars{
-        margin-bottom: 24px;
-        button{
-          margin-right: 2px !important;
-        }
-      }
-      
-    }
+  }
 }

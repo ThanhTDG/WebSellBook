@@ -1,183 +1,141 @@
+.anoun-title{
+    font-family: 'MontserratRegular';
+    color: var(--Brown);
+    font-size: 12px;
+}
 .commment-container{
-    margin-top: 12px;
-    .user-avatar{
-        width: 64px;
-        border-radius: 32px;
-        border: 1px solid var(--Orange);
-        margin-right: 12px;
-    }
-    .user-detail-container{
-        span{
-            font-family: 'MontserratRegular';
-            font-size: 16px;
-            color: var(--Darkest);
-            display: block;
-        }
-        :first-child{
-            font-family: 'MontserratMedium';
-            font-size: 24px;
-        }
-    }
-    .star-image{
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
-    }
-    .rating-info{
+    font-family: 'MontserratRegular';
+    padding: 0 0 24px 0;
+    .comment-user-container{
         display: flex;
-        span{
-            font-size: 20px;
-            margin-left: 12px;
+        align-items: center;
+        img{
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+        .user-details-container{
+            padding-left: 8px;
+            span{
+                display: block;
+            }
+            .user-responsive-name{
+                font-family: 'MontserratMedium';
+            }
+            .user-responsive-description{
+                font-size: 12px;
+                color: var(--Brown);
+            }
         }
     }
-    .rating-content{
-        font-family: 'MontserratRegular';
-        font-size: 16px;
-        color: var(--Darkest);
-        text-align: justify;
-        display: inline-block;
-        .commentContentOptionButtonStyle{
-            border: none;
-            color: var(--Gray);
-            font-size: 16px;
-            background: none;
-            font-family: 'MontserratRegular';
-        }
-    }
-    .comment-date{
-        font-family: 'MontserratRegular';
-        font-size: 12px;
-        color: var(--Gray);
-        text-align: right;
+    .comment-content-container:hover{
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
     }
     .comment-content-container{
-        background-color: var(--LightGray);
-        border-radius: 12px;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
         padding: 12px;
-        margin-top: 4px;
-    }
-}
-
-@media only screen and (max-width:800px ) {
-    .commment-container{
-        margin: 0;
-        padding: 0;
-        margin-top: 12px;
-        width: 120%;
-        .user-avatar{
-            width: 64px;
-            border-radius: 32px;
-            border: 1px solid var(--Orange);
-            position: absolute;
-        }
-        .user-detail-container{
-            span{
-                font-family: 'MontserratRegular';
-                font-size: 16px;
-                color: var(--Darkest);
-                display: block;
-                padding-left: 64px;
-            }
-            :first-child{
-                font-family: 'MontserratMedium';
-                font-size: 24px;
-            }
-        }
-        .star-image{
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-        }
+        border-radius: 12px;
+        margin: 8px 0 0 52px;
+        transition: box-shadow 0.4s ease;
         .rating-info{
-            display: block;
-            margin-bottom: 12px;
-            span{
-                font-size: 20px;
-                margin-left: 0;
-                padding: 0;
+            display: flex;
+            align-items: center;
+            .rating-stars{
+                display: flex;
+                width: 96px;
+                justify-content: space-between;
+                img{
+                    width: 16px;
+                    height: 16px;
+                    object-fit: contain;
+                }
             }
+            
+            .rating-info-title{
+                font-size: 16px;
+                padding-left: 12px;
+            }
+            
         }
         .rating-content{
-            font-family: 'MontserratRegular';
-            font-size: 16px;
-            color: var(--Darkest);
-            text-align: left;
-            display: inline-block;
-            .commentContentOptionButtonStyle{
+            text-align: justify;
+            button{
+                background-color: transparent;
                 border: none;
                 color: var(--Gray);
-                font-size: 16px;
-                background: none;
-                font-family: 'MontserratRegular';
+            }
+        }
+        .comment-images-container{
+            padding-top: 12px;
+            display: flex;
+            img:hover{
+                box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+            }
+            img{
+                width: 120px;
+                height: 120px;
+                object-fit: contain;
+                transition: box-shadow 0.4s ease;
+                box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+                border-radius: 8px;
+                margin-right: 12px;
             }
         }
         .comment-date{
-            font-family: 'MontserratRegular';
             font-size: 12px;
-            color: var(--Gray);
+            color: var(--Brown);
             text-align: right;
-            margin-top: 12px;
-        }
-        .comment-content-container{
-            background-color: var(--LightGray);
-            border-radius: 12px;
-            padding: 12px;
-            margin: 0;
-            margin-top: 4px;
+            padding-top: 8px;
         }
     }
 }
 
 @media only screen and (max-width:600px ){
     .commment-container{
-        margin-top: 12px;
-        .user-avatar{
-            width: 64px;
-            border-radius: 32px;
-            border: 1px solid var(--Orange);
-            position: absolute;
-        }
-        .user-detail-container{
-            span{
-                font-family: 'MontserratRegular';
-                font-size: 16px;
-                color: var(--Darkest);
-                display: block;
-                padding-left: 68px;
+        padding: 0 0 24px 0;
+        .comment-content-container{
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0 0 0px;
+            .rating-info{
+                display: flex;
+                align-items: center;
+                .rating-stars{
+                    display: flex;
+                    width: 80px;
+                    justify-content: space-between;
+                    img{
+                        width: 12px;
+                        height: 12px;
+                        object-fit: contain;
+                    }
+                }
+                
+                .rating-info-title{
+                    font-size: 12px;
+                    padding-left: 8px;
+                }
             }
-            :first-child{
-                font-family: 'MontserratMedium';
-                font-size: 24px;
+            .rating-content{
+                text-align: justify;
+                font-size: 12px;
             }
-        }
-        .star-image{
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-        }
-        .rating-info{
-            display: block;
-            margin-bottom: 12px;
-            span{
-                font-size: 20px;
-                margin-left: 0;
-                padding: 0;
+            .comment-images-container{
+                padding-top: 12px;
+                display: flex;
+                img{
+                    width: 64px;
+                    height: 64px;
+                    object-fit: contain;
+                    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+                    border-radius: 4px;
+                    margin-right: 8px;
+                }
             }
-        }
-        .rating-content{
-            font-family: 'MontserratRegular';
-            font-size: 16px;
-            color: var(--Darkest);
-            text-align: left;
-            display: inline-block;
-            .commentContentOptionButtonStyle{
-                border: none;
-                color: var(--Gray);
-                font-size: 16px;
-                background: none;
-                font-family: 'MontserratRegular';
+            .comment-date{
+                font-size: 10px;
             }
         }
-        
     }
 }

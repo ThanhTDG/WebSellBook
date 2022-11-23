@@ -1,0 +1,238 @@
+.history-item-container:hover{
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+}
+.history-item-container{
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    background-color: var(--White);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.4s ease;
+    .history-header{
+        display: flex;
+        align-items: center;
+        img{
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        span{
+            display: block;
+            font-size: 18px;
+            font-family: 'MontserratMedium';
+            padding-left: 12px;
+        }
+    }
+    .history-content-container{
+        
+        .history-content-bounder{
+            display: flex;
+            padding: 12px;
+            .history-content{
+                padding-left: 24px;
+                position: relative;
+                span{
+                    display: block;
+                }
+                .book-title{
+                    font-family: 'MontserratMedium';
+                }
+                .book-author{
+                    color: var(--Brown);
+                    font-size: 12px;
+                }
+                .amount{
+                    
+                }
+                .history-prices-container{
+                    position: absolute;
+                    bottom: 0;
+                    .prv-price{
+                        font-size: 16px;
+                        text-decoration: line-through;
+                        color: var(--Brown);
+                    }
+                    .cur-price{
+                        font-size: 24px;
+                        color: var(--Pink);
+                    }
+                }
+            }
+            
+        }
+        .history-botton-option{
+            width: 50%;
+            align-items: baseline;
+            position: relative;
+            .history-bottom-option-bounder{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                .history-checkout-container{
+                    width: 100%;
+                    align-items: baseline;
+                    display: flex;
+                    justify-content: right;
+                    .history-checkout-text{
+                        color: var(--Brown);
+                        font-size: 16px;
+                        padding-right: 12px;
+                    }
+                    span{
+                        font-size: 32px;
+                        color: var(--Pink);
+                    }
+                }
+                .history-options-container{
+                    width: 100%;
+                    display: flex;
+                    justify-content: right;
+                    button{
+                        border: none;
+                        background-color: var(--Pink);
+                        height: 48px;
+                        border-radius: 24px;
+                        padding-left: 48px;
+                        padding-right: 48px;
+                        color: var(--White);
+                        box-shadow: 0px 1px 3px var(--Pink);
+                        transition: box-shadow 0.4s ease;
+                    }
+                    button:hover{
+                        box-shadow: 0px 1px 8px var(--Pink);
+                    }
+                }
+            }
+            
+        }
+        
+        
+    }
+}
+
+@media only screen and (max-width:600px ){
+    .history-book-image{
+        background-size: 180%;
+        width: 96px !important;
+        height: 120px !important;
+        border-radius: 8px !important;
+    }
+    
+    .history-item-container:hover{
+        box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+    }
+    .history-item-container{
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+        background-color: var(--White);
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        transition: box-shadow 0.4s ease;
+        .history-header{
+            display: flex;
+            align-items: center;
+            img{
+                width: 48px;
+                height: 48px;
+                object-fit: contain;
+            }
+            span{
+                display: block;
+                font-size: 18px;
+                font-family: 'MontserratMedium';
+                padding-left: 12px;
+            }
+        }
+        .history-content-container{
+            padding-bottom: 80px;
+            position: relative;
+            .history-content-bounder{
+                display: flex;
+                padding: 12px;
+                width: 100%;
+                .history-content{
+                    padding-left: 12px;
+                    position: relative;
+                    span{
+                        display: block;
+                        font-size: 12px;
+                    }
+                    .book-title{
+                        font-family: 'MontserratMedium';
+                    }
+                    .book-author{
+                        color: var(--Brown);
+                        font-size: 12px;
+                    }
+                    .amount{
+                        
+                    }
+                    .history-prices-container{
+                        position: absolute;
+                        bottom: 0;
+                        .prv-price{
+                            font-size: 16px;
+                            text-decoration: line-through;
+                            color: var(--Brown);
+                        }
+                        .cur-price{
+                            font-size: 20px;
+                            color: var(--Pink);
+                        }
+                    }
+                }
+                
+            }
+            .history-botton-option{
+                width: 100%;
+                align-items: baseline;
+                position: absolute;
+                display: block;
+                bottom: 0;
+                right: 0;
+                .history-bottom-option-bounder{
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    .history-checkout-container{
+                        width: 100%;
+                        align-items: baseline;
+                        display: flex;
+                        justify-content: right;
+                        .history-checkout-text{
+                            color: var(--Brown);
+                            font-size: 12px;
+                            padding-right: 12px;
+                        }
+                        span{
+                            font-size: 16px;
+                            color: var(--Pink);
+                        }
+                    }
+                    .history-options-container{
+                        width: 100%;
+                        display: flex;
+                        justify-content: right;
+                        button{
+                            border: none;
+                            background-color: var(--Pink);
+                            height: 48px;
+                            border-radius: 24px;
+                            padding-left: 48px;
+                            padding-right: 48px;
+                            color: var(--White);
+                            box-shadow: 0px 1px 3px var(--Pink);
+                            transition: box-shadow 0.4s ease;
+                        }
+                        button:hover{
+                            box-shadow: 0px 1px 8px var(--Pink);
+                        }
+                    }
+                }
+                
+            }
+            
+            
+        }
+    }
+}

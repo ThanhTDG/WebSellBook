@@ -18,8 +18,8 @@ const MyFooter = () => {
                     <div className='footer-contact-us'>
                         <div className='footer-title'>{MyVariable.FooterData.contactUs.title}</div>
                         <div className='footer-phone-number'>{MyVariable.FooterData.contactUs.phoneNumber}</div>
-                        <div className='footer-contact-us-info'>{MyVariable.FooterData.contactUs.address}</div>
-                        <div className='footer-contact-us-info'>{MyVariable.FooterData.contactUs.email}</div>
+                        <div className='footer-contact-us-info'>Địa chỉ: {MyVariable.FooterData.contactUs.address}</div>
+                        <div className='footer-contact-us-info'>Email: {MyVariable.FooterData.contactUs.email}</div>
                         <div className='footer-contact-us-social-medias'>{MyVariable.FooterData.contactUs.social.map((social) => (
                             <a href={social.path} className='social-icon'><img src={`${MyVariable.hostName}${social.image}`} alt='social media icons' /></a>
                         ))}</div>

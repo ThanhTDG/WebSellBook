@@ -15,6 +15,11 @@ const ShoppingCart = (props) => {
     // const { booksInCart } = state
     // const bookDataState = booksInCart.find(item=> item.book.id === bookData.id)
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+
     function onHoverTrash() {
         setIsHoverTrash(true)
     }
@@ -22,7 +27,8 @@ const ShoppingCart = (props) => {
         setIsHoverTrash(false)
     }
     const bookInCartImageStyle = {
-        background: `url('${bookData.image}') center center`,
+        backgroundImage: `url('${bookData.image}')`,
+        backgroundPosition:'center',
         width: '124px',
         height: '164px',
         borderRadius: '12px',
@@ -104,32 +110,32 @@ const ShoppingCart = (props) => {
 
     return (
         <div className='book-in-cart-container'>
-            <div style={bookInCartContainer} className='row'>
-                <div className='col-sm-3'>
-                    <input id={`cb-selecte-book-in-cart-${bookData.id}`} style={checkboxStyle} type='checkbox' defaultChecked={isSelectedBook} onChange={(e) => (onChangeCheckbox(e))}></input>
-                    <div style={bookInCartImageStyle}></div>
+            <div style={bookInCartContainer} className='row responsive-row'>
+                <div className='col-sm-3 responsive-col-1'>
+                    <input className='responsive-checkbox' id={`cb-selecte-book-in-cart-${bookData.id}`} style={checkboxStyle} type='checkbox' defaultChecked={isSelectedBook} onChange={(e) => (onChangeCheckbox(e))}></input>
+                    <div style={bookInCartImageStyle} className='responsice-book-image-in-cart'></div>
                 </div>
-                <div style={priceContainerStyle} className='col-sm-4'>
+                <div style={priceContainerStyle} className='col-sm-4 responsive-col-2'>
                     <div className='book-in-cart-contents'>
                         <p className='book-in-cart-title'>{bookData.title}</p>
                         <p className='book-in-cart-author'>{bookData.author}</p>
                     </div>
                     <div className='book-in-cart-prices'>
-                        <span className='book-in-cart-prv-price'>{bookData.prvPrice} đ</span>
+                        <span className='book-in-cart-prv-price'>{formatter.format(parseInt(bookData.prvPrice))}</span>
                         <span className='book-in-cart-discount-rate'> -{bookData.discountrate}</span>
-                        <span className='book-in-cart-cur-price'>{bookData.curPrice} đ</span>
+                        <span className='book-in-cart-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
                     </div>
                 </div>
-                <div className='col-sm-2 book-in-cart-amount-container'>
+                <div className='col-sm-2 book-in-cart-amount-container responsive-col-3'>
                     <div className='book-in-cart-amount'>
                         <button onClick={onDecreaseBookAmount} className='book-in-cart-amount-btn-minus'><img src={require('../../assets/icons/ic-minus-gray.png')} alt='ic-minus' /></button>
                         <input readOnly={true} value={bookAmount}></input>
                         <button onClick={onIncreaseBookAmount} className='book-in-cart-amount-btn-plus'><img src={require('../../assets/icons/ic-plus-gray-cart.png')} alt='ic-minus' /></button>
                     </div>
                 </div>
-                <div className='col-sm-3 book-in-cart-price-container'>
-                    <span className='book-in-cart-price-cur-price'>{bookData.curPrice} đ</span>
-                    <button onClick={() => (onRemoveBookInCart())} onMouseEnter={onHoverTrash} onMouseLeave={onNoneHoverTrash}><img src={require(`../../assets/icons/${isHoverTrash === true ? 'ic-trash.png' : 'ic-trash-gray.png'}`)} alt='ic-close' /></button>
+                <div className='col-sm-3 book-in-cart-price-container responsive-col-4'>
+                    <span className='book-in-cart-price-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
+                    <button className='responsive-remove-btn' onClick={() => (onRemoveBookInCart())} onMouseEnter={onHoverTrash} onMouseLeave={onNoneHoverTrash}><img src={require(`../../assets/icons/${isHoverTrash === true ? 'ic-trash.png' : 'ic-trash-gray.png'}`)} alt='ic-close' /></button>
                 </div>
             </div>
         </div>

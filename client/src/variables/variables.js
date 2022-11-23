@@ -90,8 +90,8 @@ export const MyVariable = {
         contactUs: {
             title: 'Liên hệ chúng tôi tại',
             phoneNumber: '0911 111 205',
-            address: 'Địa chỉ: 01 Phù Đổng Thiên Vương - Phường 8 - Đà Lạt',
-            email: 'Email: toimuasach@gmail.com',
+            address: '01 Phù Đổng Thiên Vương - Phường 8 - Đà Lạt',
+            email: 'toimuasach@gmail.com',
             social: [
                 {
                     path: '/',
@@ -133,27 +133,38 @@ export const MyVariable = {
         {
             title: 'Phổ biến',
             active: true,
-            id: 1
+            id: 1,
+            constant: 'popular'
         },
         {
             title: 'Bán chạy',
             active: false,
-            id: 2
+            id: 2,
+            constant: 'best-seller'
         },
         {
             title: 'Hàng mới',
             active: false,
-            id: 3
+            id: 3,
+            constant: 'newest'
         },
         {
             title: 'Giá thấp đến cao',
             active: false,
-            id: 4
+            id: 4,
+            constant: 'low-to-high'
         },
         {
             title: 'Giá cao đến thấp',
             active: false,
-            id: 5
+            id: 5,
+            constant: 'high-to-low'
+        },
+        {
+            title: 'Giá',
+            active: false,
+            id: 6,
+            constant: 'best-seller'
         }
     ]
 }

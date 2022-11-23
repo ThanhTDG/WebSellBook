@@ -1,0 +1,15 @@
+.loading-user-profile-button{
+    height: 52px;
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-top: 32px;
+    .loading-user-profile-avatar{
+
+    }
+    .loading-user-profile-name{
+        width: 80px;
+        margin-left: 12px;
+    }
+}

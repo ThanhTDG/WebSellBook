@@ -1,11 +1,13 @@
 .category-item-button {
     height: 48px;
     border-radius: 24px;
-    background-color: var(--LightGray);
+    background-color: var(--White);
     padding-left: 12px;
     border: none;
     font-family: 'MontserratRegular';
     font-size: 16px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    transition: box-shadow 0.4s ease;
     img{
         width: 32px;
         height: 32px;
@@ -21,14 +23,19 @@
         display: block;
     }
 }
-.category-item-button-none-child{
+.category-item-button:hover{
+    box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+}
+.category-children-item{
     height: 48px;
     border-radius: 24px;
-    background-color: var(--LightGray);
+    background-color: var(--White);
     padding-left: 12px;
     border: none;
     font-family: 'MontserratRegular';
     font-size: 16px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    transition: box-shadow 0.4s ease;
     img{
         width: 32px;
         height: 32px;
@@ -43,6 +50,9 @@
     .category-item-container{
         display: block;
     }
+}
+.category-children-item:hover{
+    box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
 }
 .category-item-bounder{
     display: block

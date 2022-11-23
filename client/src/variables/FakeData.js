@@ -1,6 +1,72 @@
 import { Categories } from "./CategoriesFake";
 
 export const FakeData = {
+    notifications:[
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: false
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: false
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: true
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: false
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: false
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: false
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: true
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: true
+        },
+        {
+            name:'Tôi mua sách',
+            content:`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+            time:'14/12/2022',
+            avtar:'/assets/icons/ic-logo-only.png',
+            isReaded: true
+        },
+
+    ],
     users: [
         {
             name: 'Nham vương Đế quân',
@@ -124,7 +190,7 @@ export const FakeData = {
             id: 'bk02',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
-            image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
+            image: 'https://lzd-img-global.slatic.net/g/p/e6b9918f30d2bf84c6f90cf1a701659c.jpg_720x720q80.jpg'
             , isfavorite: 'false'
             ,
             description: `Akizuki Takao là một học sinh 15 tuổi, sống với mẹ và anh trai (sắp chuyển ra riêng với bạn gái), và tin rằng "chỉ có đóng giày mới mang cậu thoát khỏi nơi này".
@@ -401,7 +467,7 @@ export const FakeData = {
             id: 'bk06',
             title: 'Khu vườn ngôn từ',
             author: 'Shinkai Makoto',
-            image: 'https://salt.tikicdn.com/cache/w1200/media/catalog/product/k/h/khu_vuon_ngon_tu_-_bia_1.jpg'
+            image: 'https://lzd-img-global.slatic.net/g/p/e6b9918f30d2bf84c6f90cf1a701659c.jpg_720x720q80.jpg'
             , isfavorite: 'false',
             description: `Akizuki Takao là một học sinh 15 tuổi, sống với mẹ và anh trai (sắp chuyển ra riêng với bạn gái), và tin rằng "chỉ có đóng giày mới mang cậu thoát khỏi nơi này".
 
@@ -682,5 +748,7 @@ export const FakeData = {
     //         ]
     //     }
     // ]
+    loading48:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,
+                25,26,27,28,29,30,31,32,33,34,35,36,37,39,40,41,42,43,44,45,46,47,48],
     categories: Categories
 }
