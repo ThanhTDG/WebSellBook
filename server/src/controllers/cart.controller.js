@@ -26,6 +26,27 @@ const getCart = async (req, res) => {
  * @param {Request} req - Request
  * @param {Response} res - Response
  */
+const selectedAll = async (req, res) => {
+  try {
+    const user = req.user;
+    const { selected } = req.body;
+    const data = await Cart.findOne({ userId: user.id }).populate([
+      "items.book",
+      "items.total",
+    ]);
+    data.items.forEach((value) => (value.selected = selected));
+    await data.save();
+
+    await res.json(data);
+  } catch (error) {
+    await res.status(error.statusCode || 400).json({ message: error.message });
+  }
+};
+
+/**
+ * @param {Request} req - Request
+ * @param {Response} res - Response
+ */
 const addBook = async (req, res) => {
   try {
     const bookId = req.params.book;
@@ -91,6 +112,7 @@ const deleteBook = async (req, res) => {
 
 module.exports = {
   getCart,
+  selectedAll,
   addBook,
   updateBook,
   deleteBook,

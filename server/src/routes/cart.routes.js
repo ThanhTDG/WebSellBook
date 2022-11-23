@@ -7,6 +7,7 @@ const controller = require("../controllers/cart.controller");
 const router = express.Router();
 
 router.get("/", authenticate, controller.getCart);
+router.put("/", authenticate, controller.selectedAll);
 
 router.post("/:book", authenticate, controller.addBook);
 router.put("/:book", authenticate, controller.updateBook);
