@@ -58,6 +58,7 @@ const book2Json = (value) => {
   delete obj.tree;
   delete obj.height;
   delete obj.width;
+  delete obj.textSearch;
   // delete obj.createdAt;
   delete obj.updatedAt;
   const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
@@ -97,8 +98,8 @@ const sortMethod = (sort) => {
 const getBooks = async (req, res) => {
   try {
     const { category, search, page = 1, limit = 12, sort } = req.query;
-    // let query = search ? { $text: { $search: search } } : {};
-    query = category ? { tree: category, ...query } : {};
+    let query = search ? { $text: { $search: search } } : {};
+    query = category ? { tree: category, ...query } : query;
     const options = {
       page,
       limit,

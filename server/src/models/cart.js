@@ -43,7 +43,9 @@ cartItemSchema
     justOne: true,
   })
   .get(function (value) {
-    return book2Json(value);
+    if (value) {
+      return book2Json(value);
+    }
   });
 
 cartItemSchema

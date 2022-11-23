@@ -3,12 +3,13 @@ const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
-mongoose.plugin(aggregatePaginate);
-mongoose.plugin(paginate);
-mongoose.plugin(slug);
+const Category = require("./category");
 
 const { BOOK_STATUS } = require("../constants");
+const { normalizeStr } = require("../utils/utils");
 
+mongoose.plugin(aggregatePaginate);
+mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
@@ -21,6 +22,7 @@ const bookSchema = new Schema(
       trim: true,
       unique: true,
     },
+    textSearch: String,
     shortDescription: String,
     description: String,
     slug: {
@@ -70,8 +72,16 @@ const bookSchema = new Schema(
       default: BOOK_STATUS.AVAILABLE,
     },
     expectedDate: Date,
-    countInStock: Number,
-    sold: Number,
+    countInStock: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    sold: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
     originalPrice: {
       type: Number,
       default: 0,
@@ -173,6 +183,10 @@ const getPrice = (originalPrice, discountRate) => {
 };
 
 bookSchema.pre("save", async function (next) {
+  if (this.isModified("name")) {
+    this.textSearch = normalizeStr(this.name);
+  }
+
   if (this.isModified("originalPrice") || this.isModified("discountRate")) {
     this.price = getPrice(this.originalPrice, this.discountRate);
   }
@@ -190,12 +204,12 @@ bookSchema.pre("save", async function (next) {
 
 bookSchema.pre("findOneAndUpdate", async function (next) {
   const update = this.getUpdate();
+  update.textSearch = normalizeStr(update.name);
   update.price = getPrice(update.originalPrice, update.discountRate);
 
   try {
-    // await update.populate("category");
-    // update.tree = [update.category.id, ...update.category.tree];
-    // update.depopulate("category");
+    const category = await Category.findById(update.category);
+    update.tree = [update.category, ...category.tree];
 
     next();
   } catch (error) {
