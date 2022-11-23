@@ -1,10 +1,15 @@
+.books-page-buttons-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
 #category-header{
     font-family: 'MontserratMedium';
     font-size: 24px;
     color: var(--Darkest);
 }
 .books-tool-bar-container{
-    height: 48px;
+    height: 56px;
     padding: 0;
     font-family: 'MontserratMedium';
     font-size: 24px;
@@ -36,11 +41,78 @@
     background-color: var(--White);
     padding-left: 12px;
     padding-right: 12px;
+    box-shadow: none;
+    transition: box-shadow 0.4s ease;
+    height: 32px;
+    border-radius: 16px;
+    margin-right: 4px;
 }
 .btn-tb-container:hover{
-    background-color: var(--LightGray);
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3) !important;
 }
 #books-search-text{
-    color: var(--Orange);
+    color: var(--Pink);
     display: inline;
+}
+#books-btn-tb-6{
+    display: none;
+}
+
+
+
+@media only screen and (max-width:600px ) {
+    .books-tool-bar-container{
+        padding-bottom: 48px !important;
+        position: relative;
+    }
+    .books-responsive-col-1{
+        display: flex;
+        margin-top: 48px;
+        .btn-show-categories{
+            display: inline !important;
+            border: none;
+            height: 24px;
+            background-color: transparent;
+            img{
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+    .books-reponsive-col-search-result{
+        font-size: 16px !important;
+        position: absolute;
+        top: 0;
+    }
+    .books-responsive-col-4{
+        padding: 0;
+        margin: 0;
+    }
+    .categories-col-container{
+        margin-top: 48px;
+    }
+    .books-responsive-toolbar-container{
+        margin-left: 4px;
+        margin-top: 48px;
+        .btn-tb-container{
+            border: none;
+            background-color: var(--White);
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 12px !important;
+        }
+        .books-responsive-btn-tb-title{
+            font-size: 12px !important;
+            text-align: left !important;
+        }
+        #books-btn-tb-6{
+            display: block;
+        }
+        #books-btn-tb-5{
+            display: none;
+        }
+        #books-btn-tb-4{
+            display: none;
+        }
+    }
 }

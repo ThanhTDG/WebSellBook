@@ -1,0 +1,28 @@
+.loading-favorite-book-img{
+    width: 200px;
+    height: 340px;
+    border-radius: 12px;
+}
+.loading-favorite-book-title{
+    width: 100px;
+    height: 12px;
+    border-radius: 6px;
+}
+.loading-favorite-book-author{
+    width: 80%;
+    height: 12px;
+    border-radius: 6px;
+
+}
+.loading-favorite-book-container{
+    width: 100%;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+@media only screen and (max-width:600px ){
+    .shimmer-thumbnai{
+        height: 180px !important;
+    }
+}

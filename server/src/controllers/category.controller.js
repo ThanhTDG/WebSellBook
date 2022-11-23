@@ -1,9 +1,15 @@
 const Category = require("../models/category");
+
 const Controller = require("../utils/controller");
+
+const CategoryController = class extends Controller {
+  constructor(getData, toJson) {
+    super(Category, getData, toJson);
+  }
+};
 
 /**
  * Get data from body of request
- * @param {Object} body Body of request
  */
 const getData = ({ name, parent }) => {
   const data = { name, parent };
@@ -20,9 +26,10 @@ const toJson = (data) => {
   delete obj.__v;
   delete obj.tree;
   delete obj.children;
+  obj.id = data.id;
   return obj;
 };
 
-const controller = new Controller(Category, getData, toJson);
+const controller = new CategoryController(getData, toJson);
 
 module.exports = controller.methods();

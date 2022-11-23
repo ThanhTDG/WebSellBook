@@ -14,14 +14,14 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  version: 1.0.0
+  version: 0.0.9
 servers:
-- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/1.0.0
+- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.8
   description: SwaggerHub API Auto Mocking
-- url: http://localhost:5000/api
+- url: http://localhost:5000/api/v1
   description: Development API server
-- url: https://toi-mua-sach.herokuapp.com/api
-  description: Heroku server
+- url: https://api.toimuasach.click/api/v1
+  description: Production API server
 tags:
 - name: Quản lý danh mục
   description: |
@@ -40,7 +40,10 @@ tags:
     Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
 - name: Sản phẩm
   description: |
-    Sử dụng để lấy danh mục, sách và bình luận của sách, dành cho phân hệ khách hàng
+    Sử dụng để lấy sản phẩm, dành cho phân hệ khách hàng
+- name: Bình luận
+  description: |
+    Sử dụng để lấy bình luận sản phẩm, dành cho phân hệ khách hàng
 - name: Quản lý địa chỉ
   description: |
     Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
@@ -206,8 +209,12 @@ paths:
           format: ObjectId
         example: 634d8da516d1688abe54d4ef
       responses:
-        "204":
+        "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -370,57 +377,29 @@ paths:
           format: ObjectId
         example: 634ed8e4f6a3a7266d992614
       responses:
-        "204":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /users:
-    get:
-      tags:
-      - Quản lý người dùng
-      summary: Sử dụng để lấy danh sách người dùng
-      description: |
-        Lấy danh sách người dùng theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả người dùng.
-      responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /orders:
-    get:
+  /books/{id}/upload:
+    post:
       tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy danh sách hóa đơn
+      - Quản lý sách
+      summary: Sử dụng để tải lên hình ảnh sách
       description: |
-        Lấy danh sách hóa đơn theo trang và giới hạn số lượng lấy. Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả hóa đơn.
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /orders/{id}:
-    get:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy hóa đơn
-      description: |
-        Lấy hóa đơn theo ID hóa đơn cho trước.
+        Tải hình ảnh sách lên nền tảng lưu trữ đám mây.
       parameters:
       - name: id
         in: path
-        description: ID hóa đơn
+        description: ID sách
         required: true
         style: simple
         explode: false
@@ -428,61 +407,19 @@ paths:
           type: string
           format: ObjectId
         example: 634ed8e4f6a3a7266d992614
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/id_upload_body'
+        required: true
       responses:
         "200":
           description: OK
-        "400":
-          description: Lỗi
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-    put:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để sửa thông tin hóa đơn
-      description: |
-        Sửa thông tin hóa đơn theo ID hóa đơn cho trước.
-      parameters:
-      - name: id
-        in: path
-        description: ID hóa đơn
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      tags:
-      - Quản lý hóa đơn
-      summary: Sử dụng để lấy danh sách hóa đơn
-      description: |
-        Xóa hóa đơn theo ID hóa đơn cho trước.
-      parameters:
-      - name: id
-        in: path
-        description: ID hóa đơn
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
+                $ref: '#/components/schemas/inline_response_200'
         "400":
           description: Lỗi
           content:
@@ -511,7 +448,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/respones.SignUp'
+                $ref: '#/components/schemas/inline_response_201'
         "400":
           description: Lỗi
           content:
@@ -540,7 +477,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/inline_response_200_1'
         "400":
           description: Lỗi
           content:
@@ -560,7 +497,38 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/Message'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /auth/verifyaccount:
+    post:
+      tags:
+      - Tài khoản
+      summary: Sử dụng để xác thực tài khoản
+      description: |
+        Người dùng xác thực tài khoản bằng mật khẩu.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.VerifyAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.VerifyAccount'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -597,13 +565,22 @@ paths:
       summary: Sử dụng để cập nhật thông tin tài khoản
       description: |
         Người dùng truy xuất thông tin tài khoản của mình.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/form.Profile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/form.Profile'
+        required: true
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/client.User'
+                $ref: '#/components/schemas/inline_response_201'
         "400":
           description: Lỗi
           content:
@@ -662,7 +639,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_3'
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -789,7 +766,7 @@ paths:
   /comment/{book}:
     get:
       tags:
-      - Sản phẩm
+      - Bình luận
       summary: Sử dụng để lấy danh sách bình luận
       description: |
         Lấy danh sách bình luận theo ID sách cho trước.
@@ -843,11 +820,51 @@ components:
         message:
           type: string
           description: Thông báo
+          example: Success
     Error:
       allOf:
       - $ref: '#/components/schemas/Message'
       - example:
           message: Error
+    Pagination:
+      type: object
+      properties:
+        totalDocs:
+          type: number
+          description: Tổng số document
+          example: 100
+        limit:
+          type: number
+          description: Giới hạn số document trả về
+          example: 12
+        totalPages:
+          type: number
+          description: Tổng số trang
+          example: 9
+        page:
+          type: number
+          description: Trang hiện tại
+          example: 2
+        pagingCounter:
+          type: number
+          description: Index của document đầu tiên trong trang hiện tại
+          example: 13
+        hasPrevPage:
+          type: boolean
+          description: Có trang trước không
+          example: true
+        hasNextPage:
+          type: boolean
+          description: Có trang sau không
+          example: true
+        prevPage:
+          type: number
+          description: Trang trước, nếu không có trả null
+          example: 1
+        nextPage:
+          type: number
+          description: Trang sau, nếu không có trả null
+          example: 3
     admin.Category:
       type: object
       properties:
@@ -948,10 +965,14 @@ components:
           type: number
           description: Trọng lượng (gram)
           example: 350
-        dimension:
-          type: string
-          description: Kích thước (cao x rộng (cm))
-          example: 19 x 13 cm
+        height:
+          type: number
+          description: Chiều cao (cm)
+          example: 19
+        width:
+          type: number
+          description: Chiều rộng (cm)
+          example: 13
         page:
           type: number
           description: Số trang
@@ -1122,93 +1143,25 @@ components:
           format: ObjectId
           example: 634d8da516d1688abe54d4ef
     admin.pagination.Category:
-      type: object
-      properties:
-        docs:
-          type: array
-          description: Mảng document
-          items:
-            $ref: '#/components/schemas/admin.Category'
-        totalDocs:
-          type: number
-          description: Tổng số document
-          example: 100
-        limit:
-          type: number
-          description: Giới hạn số document trả về
-          example: 12
-        totalPages:
-          type: number
-          description: Tổng số trang
-          example: 9
-        page:
-          type: number
-          description: Trang hiện tại
-          example: 2
-        pagingCounter:
-          type: number
-          description: Index của document đầu tiên trong trang hiện tại
-          example: 13
-        hasPrevPage:
-          type: boolean
-          description: Có trang trước không
-          example: true
-        hasNextPage:
-          type: boolean
-          description: Có trang sau không
-          example: true
-        prevPage:
-          type: number
-          description: Trang trước, nếu không có trả null
-          example: 1
-        nextPage:
-          type: number
-          description: Trang sau, nếu không có trả null
-          example: 3
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/admin.Category'
+      - $ref: '#/components/schemas/Pagination'
     admin.pagination.Book:
-      type: object
-      properties:
-        docs:
-          type: array
-          description: Mảng document
-          items:
-            $ref: '#/components/schemas/admin.Book'
-        totalDocs:
-          type: number
-          description: Tổng số document
-          example: 100
-        limit:
-          type: number
-          description: Giới hạn số document trả về
-          example: 12
-        totalPages:
-          type: number
-          description: Tổng số trang
-          example: 9
-        page:
-          type: number
-          description: Trang hiện tại
-          example: 2
-        pagingCounter:
-          type: number
-          description: Index của document đầu tiên trong trang hiện tại
-          example: 13
-        hasPrevPage:
-          type: boolean
-          description: Có trang trước không
-          example: true
-        hasNextPage:
-          type: boolean
-          description: Có trang sau không
-          example: true
-        prevPage:
-          type: number
-          description: Trang trước, nếu không có trả null
-          example: 1
-        nextPage:
-          type: number
-          description: Trang sau, nếu không có trả null
-          example: 3
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/admin.Book'
+      - $ref: '#/components/schemas/Pagination'
     form.SignUp:
       required:
       - email
@@ -1254,6 +1207,41 @@ components:
           type: string
           description: Mật khẩu
           example: 1234abcd
+    form.Profile:
+      required:
+      - email
+      - firstName
+      - lastName
+      - phone
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Tên người dùng
+          example: An
+        lastName:
+          type: string
+          description: Họ người dùng
+          example: Nguyễn Văn
+        email:
+          type: string
+          description: Email
+          format: email
+          example: an@gmail.example.com
+        phone:
+          type: string
+          description: Số điện thoại
+          format: phoneNumber
+          example: "0987654321"
+        sex:
+          type: boolean
+          description: Giới tính
+          example: true
+        birthday:
+          type: string
+          description: Ngày sinh
+          format: date
+          example: 2001-01-01
     form.ChangePassword:
       required:
       - currentPassword
@@ -1268,15 +1256,15 @@ components:
           type: string
           description: Mật khẩu mới
           example: abcd1234
-    respones.SignUp:
+    form.VerifyAccount:
+      required:
+      - password
       type: object
       properties:
-        message:
+        password:
           type: string
-          description: Thông báo
-          example: Success
-        user:
-          $ref: '#/components/schemas/client.User'
+          description: Mật khẩu
+          example: 1234abcd
     client.Category:
       type: object
       properties:
@@ -1509,6 +1497,15 @@ components:
           description: Số điện thoại
           format: phoneNumber
           example: "0987654321"
+        sex:
+          type: boolean
+          description: Giới tính
+          example: true
+        birthday:
+          type: string
+          description: Ngày sinh
+          format: date
+          example: 2001-01-01
         avatar:
           type: string
           description: Link hình ảnh
@@ -1520,93 +1517,25 @@ components:
           format: date
           example: 2022-11-10
     client.pagination.Book:
-      type: object
-      properties:
-        docs:
-          type: array
-          description: Mảng document
-          items:
-            $ref: '#/components/schemas/client.Book'
-        totalDocs:
-          type: number
-          description: Tổng số document
-          example: 100
-        limit:
-          type: number
-          description: Giới hạn số document trả về
-          example: 12
-        totalPages:
-          type: number
-          description: Tổng số trang
-          example: 9
-        page:
-          type: number
-          description: Trang hiện tại
-          example: 2
-        pagingCounter:
-          type: number
-          description: Index của document đầu tiên trong trang hiện tại
-          example: 13
-        hasPrevPage:
-          type: boolean
-          description: Có trang trước không
-          example: true
-        hasNextPage:
-          type: boolean
-          description: Có trang sau không
-          example: true
-        prevPage:
-          type: number
-          description: Trang trước, nếu không có trả null
-          example: 1
-        nextPage:
-          type: number
-          description: Trang sau, nếu không có trả null
-          example: 3
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/client.Book'
+      - $ref: '#/components/schemas/Pagination'
     client.pagination.Comment:
-      type: object
-      properties:
-        docs:
-          type: array
-          description: Mảng document
-          items:
-            $ref: '#/components/schemas/client.Comment'
-        totalDocs:
-          type: number
-          description: Tổng số document
-          example: 100
-        limit:
-          type: number
-          description: Giới hạn số document trả về
-          example: 12
-        totalPages:
-          type: number
-          description: Tổng số trang
-          example: 9
-        page:
-          type: number
-          description: Trang hiện tại
-          example: 2
-        pagingCounter:
-          type: number
-          description: Index của document đầu tiên trong trang hiện tại
-          example: 13
-        hasPrevPage:
-          type: boolean
-          description: Có trang trước không
-          example: true
-        hasNextPage:
-          type: boolean
-          description: Có trang sau không
-          example: true
-        prevPage:
-          type: number
-          description: Trang trước, nếu không có trả null
-          example: 1
-        nextPage:
-          type: number
-          description: Trang sau, nếu không có trả null
-          example: 3
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/client.Comment'
+      - $ref: '#/components/schemas/Pagination'
     RatingRate:
       type: object
       properties:
@@ -1618,21 +1547,45 @@ components:
           type: number
           description: Tỷ lệ đánh giá (%)
           example: 33
+    id_upload_body:
+      required:
+      - images
+      type: object
+      properties:
+        images:
+          type: array
+          description: File ảnh
+          items:
+            type: string
+            format: binary
     inline_response_200:
+      type: object
+      properties:
+        paths:
+          type: array
+          description: Link ảnh
+          example:
+          - https://example.com/example1.png
+          - https://example.com/example2.png
+          items:
+            type: string
+            format: link
+    inline_response_201:
+      allOf:
+      - $ref: '#/components/schemas/Message'
+      - type: object
+        properties:
+          user:
+            $ref: '#/components/schemas/client.User'
+    inline_response_200_1:
       type: object
       properties:
         token:
           type: string
           description: Token
-          example: |
-            eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
-    inline_response_200_1:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Thông báo
-          example: Sign out successful
+          example: eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
+        user:
+          $ref: '#/components/schemas/client.User'
     auth_uploadavatar_body:
       required:
       - avatar
@@ -1645,24 +1598,15 @@ components:
           example: !!binary |-
             ZXhhbXBsZS5wbmc=
     inline_response_200_2:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Thông báo
-          example: Success
-        avatar:
-          type: string
-          description: Link ảnh đại diện
-          format: link
-          example: https://example.com/example.png
-    inline_response_200_3:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Thông báo
-          example: Change password successful
+      allOf:
+      - $ref: '#/components/schemas/Message'
+      - type: object
+        properties:
+          avatar:
+            type: string
+            description: Link ảnh đại diện
+            format: link
+            example: https://example.com/example.png
     client.Comment_user:
       type: object
       properties:

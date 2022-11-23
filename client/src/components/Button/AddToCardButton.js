@@ -7,14 +7,14 @@ const AddToCardButton = (props) => {
     const [state, dispatch] = useStore()
     const [isAddBook, setIsAddBook] = useState(false)
     const buttonStyle = {
-        'font-family': "Montserrat",
-        'font-size': '16px',
+        fontFamily: "Montserrat",
+        fontSize: '16px',
         color: 'var(--White)',
         height: '48px',
         width: '200px',
         border: 'none',
-        'border-radius': '24px',
-        'background-color': 'var(--DarkBlue)',
+        borderRadius: '24px',
+        backgroundColor: 'var(--DarkBlue)',
         transitionDuration: '0.4s'
     }
     // function addToCart(book,e){

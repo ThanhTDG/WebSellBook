@@ -2,25 +2,50 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const cartItemSchema = new Schema({
-  bookId: {
-    type: Schema.Types.ObjectId,
+const cartItemSchema = new Schema(
+  {
+    bookId: {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      default: 1,
+      min: 1,
+      required: true,
+    },
+    selected: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+  },
+  { _id: false }
+);
+
+const book2Json = ({
+  _id,
+  name,
+  images,
+  countInStock,
+  originalPrice,
+  discountRate,
+  price,
+}) => ({ _id, name, images, countInStock, originalPrice, discountRate, price });
+
+cartItemSchema
+  .virtual("book", {
     ref: "Book",
-    required: true,
-    unique: true,
-  },
-  quantity: {
-    type: Number,
-    default: 1,
-    min: 1,
-    required: true,
-  },
-  select: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
-});
+    localField: "bookId",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      return book2Json(value);
+    }
+  });
 
 cartItemSchema
   .virtual("total", {
@@ -32,6 +57,14 @@ cartItemSchema
   .get(function (value) {
     return this.quantity * value.price;
   });
+
+cartItemSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.bookId;
+  obj.book = this.book;
+  obj.total = this.total;
+  return obj;
+};
 
 const cartSchema = new Schema(
   {
@@ -52,7 +85,19 @@ cartSchema.virtual("user", {
 });
 
 cartSchema.virtual("total").get(function () {
-  return this.items.reduce((sum, ele) => sum + ele.total, 0);
+  return this.items
+    .filter((value) => value.selected)
+    .reduce((sum, value) => sum + value.total, 0);
 });
+
+cartSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.__v;
+  delete obj.createdAt;
+  delete obj.updatedAt;
+  obj.items = this.items;
+  obj.total = this.total;
+  return obj;
+};
 
 module.exports = mongoose.model("Cart", cartSchema);

@@ -1,0 +1,21 @@
+.sidebar {
+	height: 100%;
+	position: fixed !important;
+	z-index: 10;
+}
+
+.logo {
+	background-color: rgba(0, 33, 64, 255);
+	border-width: 1px;
+	border-bottom-style: groove;
+	display: flex;
+	width: 100%;
+	height: var(--vertical-navbar);
+	align-items: center;
+	justify-content: center;
+	width: var(--horizontal-sidebar);
+	padding: 0 8px;
+	img {
+		height: 48px;
+	}
+}

@@ -4,7 +4,7 @@ ENV NODE_ENV=production
 
 LABEL authors="Duong Hieu"
 LABEL description="API website ToiMuaSach"
-LABEL version="0.0.4"
+LABEL version="0.0.8"
 
 WORKDIR /usr/app/toi-mua-sach/server
 

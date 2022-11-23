@@ -4,16 +4,16 @@ import './AddToFavoriteButton.scss'
 const AddToFavoriteButton = (props) => {
     const mtop = props.top;
     const buttonStyle ={
-        'font-family': "Montserrat",
-        'font-size': '16px',
+        fontFamily: "Montserrat",
+        fontSize: '16px',
         color: 'var(--White)',
         height: '48px',
         width: '200px',
         border: 'none',
-        'border-radius': '24px',
-        'background-color': 'var(--Gray)',
+        borderRadius: '24px',
+        backgroundColor: 'var(--Gray)',
         position:'relative',
-        'margin-top':`${mtop}px`
+        marginTop:`${mtop}px`
     }
     const imgStyle={
         width :'32px',

@@ -1,0 +1,263 @@
+.data-book-detail-container{
+    margin: 0;
+    padding: 0;
+    margin-left: 48px;
+    margin-right: 48px;
+    margin-top: 24px;
+    font-family: 'MontserratRegular';
+    .bd-left-container{
+        margin: 0;
+        padding: 0;
+        
+        .bd-main-image-container{
+            margin: 0 48px 12px 48px;
+            padding: 12px;  
+            border-radius: 12px;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.3);  
+        }
+        .bd-image-slider{
+            margin:0 12px 0 12px;
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+    .bd-right-container{
+        margin: 0;
+        padding: 0;
+        position: relative;
+        .bd-content-container{
+            .bd-name{
+                font-family: 'MontserratMedium';
+                font-size: 24px;
+            }
+            .bd-author{
+                font-size: 16px;
+                span{
+                    color: var(--DarkBlue)
+                }
+            }
+        }
+        .bd-value-container{
+            display: flex;
+            align-items: center;
+            width: 56%;
+            justify-content: space-between;
+            color: var(--Brown);
+            margin-top: 12px;
+            a{
+                color: var(--Browns);
+            }
+            a:hover{
+                color:var(--Pink)
+            }
+            .bd-value-rating-container{
+                position: relative;
+                width: 126px;
+                img{
+                    height: 24px;
+                }
+                .bd-rating-value{
+                    z-index: -1;
+                    position: absolute;
+                    top:2px;
+                    height: 23px !important;
+                }
+            }
+        }
+        .bd-bottom-content{
+            position: absolute;
+            bottom: 120px;
+            .bd-value-prices-container{
+                .bd-value-original-price{
+                    color: var(--Gray);
+                    text-decoration: line-through;
+                    font-size: 18px;
+                }
+                .bd-value-discount-rate{
+                    font-size: 18px;
+                    color: var(--Pink);
+                }
+                .bd-value-price{
+                    font-family: 'MontserratRegular';
+                    color: var(--Pink);
+                    font-size: 48px;
+                    display: block;
+                }
+            }
+            .bd-options-container{
+                display: flex;
+                .white-space{
+                    width: 24px;
+                }
+            }
+        }
+        
+    }
+}
+.bd-more-title{
+    font-size: 24px;
+    font-family: 'MontserratMedium';
+    margin-bottom: 24px;
+}
+.bdm-container{
+    margin: 48px 0;
+    padding: 0 48px 0 48px;
+    font-family: 'MontserratRegular';
+    .bd-more-title{
+        font-size: 24px;
+        font-family: 'MontserratMedium';
+        margin-bottom: 24px;
+    }
+    .bdm-left-container{
+        margin: 0;
+        padding: 0;
+        .bdm-info-container{
+            margin-bottom: 12px;
+            span{
+                display: block;
+            }
+            .bdm-info-title{
+                color: var(--Brown);
+                font-size: 12px;
+            }
+            .bdm-info-value{
+                font-size: 16px;
+            }
+        }
+    }
+    .bdm-right-container{
+        margin: 0;
+        padding: 0;
+        .bdm-description{
+            text-align: justify;
+            button{
+                border: none;
+                background-color: transparent;
+                color: var(--Brown);
+            }
+        }
+    }
+}
+
+.bd-rating-container{
+    margin: 0 0;
+    padding: 0 48px 48px 48px;
+    .bd-rating-left-container{
+        margin: 0;
+        padding: 0;
+    }
+    .bd-rating-right-container{
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.bd-comment-container{
+    margin: 0 0;
+    padding: 0 48px 48px 48px;
+    .bd-comment-left-container{
+        margin: 0;
+        padding: 0;
+    }
+    .bd-comment-right-container{
+        margin: 0;
+        padding: 0;
+        .bd-more-title{
+            margin-bottom: 24px !important;
+        }
+    }
+}
+
+
+@media only screen and (max-width:600px ){
+    .data-book-detail-container{
+        .bd-left-container{
+            .bd-main-image-container{
+                margin: 0 0 12px 0;
+                padding: 12px;  
+                border-radius: 12px;
+                box-shadow: 0px 1px 3px rgba(0,0,0,0.3);  
+            }
+            .bd-image-slider{
+                margin:0;
+                .bd-image-slider-item{
+                    width: 52px !important;
+                    height: 52px !important;
+                }
+            }
+        }
+        .bd-right-container{
+            margin-top: 48px;
+            .bd-content-container{
+                .bd-name{
+                    font-size: 16px;
+                }
+                .bd-author{
+                    font-size: 12px;
+                }
+            }
+            .bd-value-container{
+                display: block;
+                width: 100%;
+                margin-top: 12px;
+                font-size: 12px !important;
+                .bd-value-rating-container{
+                    margin-bottom: 12px;
+                    .bd-rating-value{
+                        left: 2px;
+                        height: 21px !important;
+                    }
+                }
+                span{
+                    display: block;
+                }
+            }
+            .bd-bottom-content{
+                position: relative;
+                bottom: 0;
+                margin-top: 12px;
+                .bd-value-prices-container{
+                    .bd-value-original-price{
+                        font-size: 16px;
+                    }
+                    .bd-value-discount-rate{
+                        font-size: 16px;
+                    }
+                    .bd-value-price{
+                        font-size: 32px;
+                    }
+                }
+                .bd-options-container{
+                    display: block;
+                    margin-top: 12px;
+                    .white-space{
+                        height: 8px;
+                    }
+                }
+            }
+            
+        }
+    }
+
+    .bdm-container{
+        .bd-more-title{
+            margin-bottom: 12px;
+        }
+        .bdm-info-value{
+            font-size: 12px;
+        }
+        .bdm-right-container{
+            .bd-more-title{
+                margin-top: 12px;
+            }
+            .bdm-description{
+                font-size: 12px;
+                button{
+                    border: none;
+                    background-color: transparent;
+                    color: var(--Brown);
+                }
+            }
+        }
+    }
+}

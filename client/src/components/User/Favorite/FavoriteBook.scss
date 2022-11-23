@@ -1,0 +1,84 @@
+.option-page-favorites{
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    gap: 24px;
+    a{
+        text-decoration: none;
+        color: var(--Darkest);
+    }
+    a:hover{
+        color: var(--Pink);
+    }
+}
+.user-favorite-book-img{
+    transition: filter 0.4s ease ;
+    transition: transform 0.4s ease;
+    transform: none;
+}
+.user-favorite-book-options{
+    visibility: hidden;
+    position: absolute;
+    bottom: 4px;
+    opacity: 0;
+    transition: visibility 0.4s;
+    transition: opacity 0.4s ease;
+    filter: none !important;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.user-favorite-book-bounder{
+    position: relative;
+    width: 100%;
+    display: block;
+}
+.user-spacing{
+    height: 4px;
+}
+
+.user-favorite-book-bounder:hover{
+    .user-favorite-book-img:hover{
+        filter: brightness(0.6) !important;
+        transform: scale(1.06) !important;
+    }
+    .user-favorite-book-options{
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.user-favorite-book-content{
+    padding-top: 12px;
+    span{
+        display: block;
+        transition-duration: 0.4s;
+    }
+    .user-favorite-book-title{
+        font-size: 16px;
+        font-family: 'MontserratMedium';
+    }
+    .user-favorite-book-author{
+        font-size: 12px;
+        color: var(--Brown);
+        font-family: 'MontserratRegular';
+    }   
+}
+@media only screen and (max-width:600px ){
+    .option-page-favorites{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        gap: 24px;
+    }
+    .user-favorite-book-img{
+        height: 180px !important;
+    }
+    .user-favorite-book-content{
+        .user-favorite-book-title{
+            font-size: 12px;
+            font-family: 'MontserratMedium';
+        }
+        .user-favorite-book-author{
+            font-size: 10px;
+            color: var(--Brown);
+        }   
+    }
+}

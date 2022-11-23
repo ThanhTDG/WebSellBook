@@ -3,6 +3,29 @@
   grid-template-columns: 24% 24% 24% 24%;
   background-color: var(--White);
   width: 100%;
-  padding-top: 0;
-  grid-gap: 12px;
+  padding-top: 48px;
+  grid-gap: 24px;
+  padding-right: 48px;
+}
+@media only screen and (max-width:1400px ) {
+  .books-style-container {
+    grid-template-columns: 24% 24% 24% 24%;
+  }
+}
+@media only screen and (max-width:1000px ) {
+  .books-style-container {
+    grid-template-columns: 32% 32% 32%;
+  }
+}
+@media only screen and (max-width:600px) {
+  .books-style-container {
+    display: inline-grid;
+    grid-template-columns: 50% 50%;
+    background-color: var(--White);
+    width: 100%;
+    padding-top: 24px;
+    grid-gap: 12px;
+    padding-right: 36px;
+    padding-left: 24px;
+  }
 }

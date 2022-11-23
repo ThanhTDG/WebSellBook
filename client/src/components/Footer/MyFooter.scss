@@ -45,6 +45,10 @@
         a{
             text-decoration: none;
             color: var(--Darkest);
+            transition-duration: 0.4s;
+        }
+        a:hover{
+            color: var(--Pink);
         }
     }
     
@@ -84,10 +88,10 @@
                 color: var(--Pink);
             }
             .footer-contact-us-info{
-                font-size: 16px;
+                font-size: 12px;
             }
             .footer-contact-us-social-medias{
-                margin-top: 12px;
+                margin-top: 16px;
                 .social-icon{
                     margin-right: 8px;
                 }

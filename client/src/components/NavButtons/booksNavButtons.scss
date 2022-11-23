@@ -1,0 +1,77 @@
+.page-link{
+    font-family: 'MontserratRegular';
+    font-size: 16px;
+    position: relative;
+    display: flex;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    color: var(--Brown);
+    text-decoration: none;
+    border: none;
+    margin-right: 12px;
+
+    &:hover {
+        z-index: 2;
+        color: var(--White);
+        text-decoration: none;
+        background-color: var(--Pink);
+        border: none;
+    }
+    &:focus {
+        z-index: 3;
+        color: var(--White);
+        background-color: var(--Pink);
+        outline: none;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    }
+    &.active,
+    .active > & {
+        z-index: 3;
+        color: var(--White);
+        background-color: var(--Pink);
+    }
+    // &.disabled,
+    // .disabled > & {
+    //     color: var(--White);
+    //     pointer-events: none;
+    //     background-color: var(--Pink);
+    //     border-color: none;
+    // }
+}
+
+.books-nav-buttons-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button{
+        border: none;
+        margin-left: 12px;
+        margin-right: 12px;
+        box-shadow: none;
+        transition: box-shadow 0.4s ease;
+        color: var(--Brown);
+    }
+    button:hover{
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+    }
+    .books-nav-button{
+        background-color: transparent;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+    }
+    .books-nav-option-button{
+        background-color: transparent;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        img{
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+    }
+}
