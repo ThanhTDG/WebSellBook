@@ -3,13 +3,9 @@ const mongoose = require("mongoose");
 const ErrorHandler = require("./errorHandler");
 
 /**
- * @typedef {Object} data
- */
-
-/**
  * Callback get data from body of request
  * @callback GetData
- * @param {data} body Body of request
+ * @param {Object} body Body of request
  * @returns {void}
  */
 

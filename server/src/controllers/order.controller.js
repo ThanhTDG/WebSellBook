@@ -2,15 +2,43 @@ const Order = require("../models/order");
 
 const Controller = require("../utils/controller");
 
+const OrderController = class extends Controller {
+  constructor(getData, toJson) {
+    super(Order, getData, toJson);
+  }
+};
+
 /**
  * Get data from body of request
- * @param {Object} body Body of request
  */
-const getData = ({ }) => {
-//   const data = { name, parent };
-//   Object.keys(data).forEach((key) => !data[key] && delete data[key]);
-//   return data;
-};
+const getData = ({
+  userId,
+  fullName,
+  phone,
+  region,
+  district,
+  ward,
+  address,
+  shippingCode,
+  purchaseDate,
+  shippingMethod,
+  paymentMethod,
+  items,
+  status,
+  transportFee,
+  discount,
+}) => ({
+  userId,
+  shippingInfo: { fullName, phone, region, district, ward, address },
+  shippingCode,
+  purchaseDate,
+  shippingMethod,
+  paymentMethod,
+  items,
+  status,
+  transportFee,
+  discount,
+});
 
 /**
  * Convert data to custom json
@@ -18,13 +46,11 @@ const getData = ({ }) => {
  */
 const toJson = (data) => {
   const obj = data.toObject();
-//   delete obj.__v;
-//   delete obj.tree;
-//   delete obj.children;
-//   obj.id = data.id;
+  delete obj.__v;
+  obj.id = data.id;
   return obj;
 };
 
-const controller = new Controller(Order, getData, toJson);
+const controller = new OrderController(getData, toJson);
 
 module.exports = controller.methods();

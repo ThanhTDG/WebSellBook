@@ -3,9 +3,40 @@ const Book = require("../models/book");
 const Controller = require("../utils/controller");
 const { isEmpty } = require("../utils/utils");
 
+const BookController = class extends Controller {
+  constructor(getData, toJson) {
+    super(Book, getData, toJson);
+  }
+
+  /**
+   * Upload images
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  uploadImgs = async (req, res) => {
+    try {
+      const files = req.files;
+      const paths = files.map((file) => file.path);
+      await res.json({ paths });
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
+
+  methods = () => ({
+    getAll: this.getAll,
+    get: this.get,
+    create: this.create,
+    update: this.update,
+    remove: this.remove,
+    uploadImgs: this.uploadImgs,
+  });
+};
+
 /**
  * Get data from body of request
- * @param {Object} body - body of request
  */
 const getData = ({
   name,
@@ -72,24 +103,6 @@ const toJson = (data) => {
   return obj;
 };
 
-const controller = new Controller(Book, getData, toJson);
+const controller = new BookController(getData, toJson);
 
-/**
- * Upload images
- * @param {Request} req Request
- * @param {Response} res Response
- */
-const uploadImgs = async (req, res) => {
-  try {
-    const files = req.files;
-    const paths = files.map((file) => file.path);
-    await res.json({ paths });
-  } catch (error) {
-    await res.status(error.statusCode || 400).json({ message: error.message });
-  }
-};
-
-module.exports = {
-  ...controller.methods(),
-  uploadImgs,
-};
+module.exports = controller.methods();

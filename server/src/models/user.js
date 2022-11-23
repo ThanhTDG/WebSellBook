@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate-v2");
 const validator = require("validator").default;
 
-mongoose.plugin(paginate);
-
 const { ROLE } = require("../constants");
+
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");
 const { signToken } = require("../utils/jwt");
+
+mongoose.plugin(paginate);
 
 const Schema = mongoose.Schema;
 
