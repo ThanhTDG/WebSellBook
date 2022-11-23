@@ -2,7 +2,6 @@ const { BOOK_SORT } = require("../constants");
 
 const Book = require("../models/book");
 const Category = require("../models/category");
-const Comment = require("../models/comment");
 
 const ErrorHandler = require("../utils/errorHandler");
 
@@ -21,7 +20,7 @@ const category2Json = (value) => {
 };
 
 /**
- * @param {Category[]} value Array of categories
+ * @param {Category[]} array Array of categories
  */
 const categories2Json = (array) => {
   array = array.map((value) => {
