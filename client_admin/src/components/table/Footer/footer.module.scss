@@ -1,0 +1,16 @@
+.wrapper {
+	justify-content: right;
+	margin-top: 8px;
+}
+.controls {
+	display: flex;
+	margin-right: 0;
+	margin-left: auto;
+	width: 750px;
+	align-items: center;
+	padding: 8px;
+	justify-content: space-between;
+	.row-selector {
+		max-width: 96px;
+	}
+}
