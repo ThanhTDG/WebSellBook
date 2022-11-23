@@ -14,9 +14,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  version: 1.0.0
+  version: 0.0.8
 servers:
-- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/1.0.0
+- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.8
   description: SwaggerHub API Auto Mocking
 - url: http://localhost:5000/api/v1
   description: Development API server
@@ -380,6 +380,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /books/{id}/upload:
+    post:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để tải ảnh sách lên
+      description: |
+        Tải ảnh sách lên nền tảng lưu trữ đám mây.
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/id_upload_body'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /users:
     get:
       tags:
@@ -542,7 +579,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/inline_response_200_1'
         "400":
           description: Lỗi
           content:
@@ -673,7 +710,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
+                $ref: '#/components/schemas/inline_response_200_2'
         "400":
           description: Lỗi
           content:
@@ -1612,6 +1649,29 @@ components:
           type: number
           description: Tỷ lệ đánh giá (%)
           example: 33
+    id_upload_body:
+      required:
+      - images
+      type: object
+      properties:
+        images:
+          type: array
+          description: File ảnh
+          items:
+            type: string
+            format: binary
+    inline_response_200:
+      type: object
+      properties:
+        paths:
+          type: array
+          description: Link ảnh
+          example:
+          - https://example.com/example1.png
+          - https://example.com/example2.png
+          items:
+            type: string
+            format: link
     inline_response_201:
       allOf:
       - $ref: '#/components/schemas/Message'
@@ -1619,7 +1679,7 @@ components:
         properties:
           user:
             $ref: '#/components/schemas/client.User'
-    inline_response_200:
+    inline_response_200_1:
       type: object
       properties:
         token:
@@ -1639,7 +1699,7 @@ components:
           format: binary
           example: !!binary |-
             ZXhhbXBsZS5wbmc=
-    inline_response_200_1:
+    inline_response_200_2:
       allOf:
       - $ref: '#/components/schemas/Message'
       - type: object

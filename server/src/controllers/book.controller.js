@@ -83,7 +83,7 @@ const uploadImgs = async (req, res) => {
   try {
     const files = req.files;
     const paths = files.map((file) => file.path);
-    await res.json(paths);
+    await res.json({ paths });
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
