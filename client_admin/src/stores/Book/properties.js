@@ -1,5 +1,6 @@
 const properties = {
 	initialValues: {
+		id: "",
 		name: "",
 		description: "",
 		authors: "",
@@ -10,7 +11,7 @@ const properties = {
 		supplier: "",
 		publisher: "",
 		publisherDate: "",
-		images: [""],
+		images: [],
 		weight: null,
 		height: null,
 		width: null,
@@ -52,13 +53,7 @@ const properties = {
 		config: { min: "0", max: "100", step: "1" },
 		rules: ["isByteLength"],
 	},
-	type: {
-		title: "Thể loại",
-		desc: "Khoảng n ký tự đóa",
-		require: true,
-		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
-	},
+
 	details: {
 		title: "Thông tin chi tiết",
 		desc: "Khoảng n ký tự đóa",

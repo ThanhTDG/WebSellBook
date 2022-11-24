@@ -10,9 +10,9 @@ import { Breadcrumb, Layout, Menu } from "antd";
 import classNames from "classnames/bind";
 import styles from "./defaultLayout.module.scss";
 import { getKey } from "~/utils/util";
-import PageConfig from "~/config/pages";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Nabar";
+import PageConfig from "~/stores/pages";
+import Sidebar from "../components/SidebarCustom";
+import Navbar from "../components/HeaderCustom";
 const cx = classNames.bind(styles);
 
 const { Header, Sider, Content } = Layout;

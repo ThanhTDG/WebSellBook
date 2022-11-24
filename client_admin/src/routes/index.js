@@ -1,4 +1,4 @@
-import PageConfig from "~/config/pages";
+import PageConfig from "~/stores/pages";
 
 // Public routes
 const publicRoutes = [];

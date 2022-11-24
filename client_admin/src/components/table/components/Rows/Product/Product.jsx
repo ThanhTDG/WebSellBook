@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { generatePath, Link } from "react-router-dom";
 import Table from "~/components/table/components";
-import BookConfig from "~/config/Book";
+import BookConfig from "~/stores/Book";
 import classNames from "classnames/bind";
 
 import styles from "./Product.module.scss";
-import PageConfig from "~/config/pages";
+import PageConfig from "~/stores/pages";
 import Popper, { PopperWrapper } from "~/components/Popper";
 import Controls from "~/components/controls";
 

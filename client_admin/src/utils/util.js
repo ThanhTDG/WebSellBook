@@ -1,4 +1,4 @@
-import PageConfig from "~/config/pages";
+import PageConfig from "~/stores/pages";
 const getKey = (keyFind, value) => {
 	let key = "";
 	Object.keys(PageConfig).forEach((page) => {

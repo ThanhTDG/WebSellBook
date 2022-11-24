@@ -34,9 +34,38 @@ const table = {
 			},
 		],
 	},
+	customer: {
+		headers: [
+			{
+				key: "name",
+				align: "left",
+				title: "Tên",
+				engTitle: "Name",
+			},
+			{
+				key: "email",
+				align: "left",
+				title: "Email",
+				engTitle: "Email",
+			},
+
+			{
+				key: "phone",
+				align: "right",
+				title: "Số điện thoại",
+				engTitle: "Phone Number",
+			},
+			{
+				key: "status",
+				align: "right",
+				title: "Trạng thái",
+				engTitle: "Status",
+			},
+		],
+	},
 };
 const limitRow = {
-	title: "Số trang",
+	title: "Số dòng",
 	options: [25, 50, 100],
 };
 

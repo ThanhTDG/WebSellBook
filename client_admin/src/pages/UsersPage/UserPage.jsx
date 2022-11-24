@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./product.module.scss";
 import Tabs from "../components/Tabs";
-import BookConfig from "~/config/Book";
+import BookConfig from "~/stores/Book";
 import { TableProduct } from "~/components/table/product";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
-import * as productService from "~/services/productsService";
+import * as productService from "~/services/productService";
 import * as stores from "~/stores";
-import * as initState from "~/config/initialStates";
+import * as initState from "~/stores/initialStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";

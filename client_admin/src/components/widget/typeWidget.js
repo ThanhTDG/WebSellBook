@@ -6,26 +6,26 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 export const type = {
 	user: {
 		key: "users",
-		title: "USERS",
+		title: "Người dùng",
 		isMoney: false,
-		link: "See all users",
+		link: "Xem tất cả",
 	},
 	order: {
 		key: "order",
-		title: "ORDER",
+		title: "Đơn hàng",
 		isMoney: false,
-		link: "View all order",
+		link: "Xem tất cả đơn hàng",
 	},
 	earning: {
 		key: "earning",
-		title: "EARNING",
+		title: "Doanh thu",
 		isMoney: true,
-		link: "View net earnings",
+		link: "Xem doanh thu",
 	},
 
 	balance: {
 		key: "balance",
-		title: "BALANCE",
+		title: "Bảng cân đối",
 		isMoney: true,
 		link: "View detail",
 	},

@@ -2,9 +2,9 @@ import { icons } from "~/assets/images";
 import React from "react";
 import { navbarOptions } from "./navbarOption.js";
 import { Search } from "@mui/icons-material";
-import styles from "./navbar.module.scss";
+import styles from "./header.module.scss";
 import classNames from "classnames/bind";
-import PageConfig from "~/config/pages.js";
+import PageConfig from "~/stores/pages.js";
 const cx = classNames.bind(styles);
 function Header() {
 	return (

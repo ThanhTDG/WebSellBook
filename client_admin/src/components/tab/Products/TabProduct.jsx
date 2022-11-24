@@ -7,7 +7,7 @@ import { useProductMgt, actions } from "~/stores";
 import { SelectNumberOfRows } from "~/components/Widget";
 import styles from "./tabProduct.module.scss";
 import classNames from "classnames/bind";
-import { limitRowsBook } from "~/config/table";
+import { limitRowsBook } from "~/stores/table";
 import { Paper } from "@mui/material";
 
 const cx = classNames.bind(styles);

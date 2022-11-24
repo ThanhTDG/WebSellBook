@@ -1,8 +1,9 @@
 import Home from "~/pages/Home";
-import NewProduct from "~/pages/NewProduct";
+import NewProduct from "~/pages/Product/NewProduct";
 import Products from "~/pages/Products";
 import TestLayout from "~/pages/test/TestLayout";
 import CustomerPage from "~/pages/CustomerPage";
+import ViewProduct from "~/pages/Product/ViewProduct/ViewProduct";
 
 const PageConfig = {
 	home: {
@@ -34,7 +35,7 @@ const PageConfig = {
 		key: "product",
 		route: "/product/:id",
 		label: "Sản phẩm",
-		component: NewProduct,
+		component: ViewProduct,
 	},
 	// mgt users
 

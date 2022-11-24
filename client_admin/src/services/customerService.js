@@ -1,6 +1,7 @@
+import { ErrorDialog } from "~/utils/dialog";
 import * as request from "~/utils/request";
 
-export const getProducts = async (query) => {
+export const getCustomers = async (query) => {
 	const { limit, page } = query;
 	let test = {
 		params: {
@@ -9,7 +10,7 @@ export const getProducts = async (query) => {
 		},
 	};
 	try {
-		const response = await request.get("/books", {
+		const response = await request.get("/users", {
 			params: {
 				limit,
 				page,
@@ -17,6 +18,6 @@ export const getProducts = async (query) => {
 		});
 		return response;
 	} catch (error) {
-		console.log(error);
+		ErrorDialog();
 	}
 };

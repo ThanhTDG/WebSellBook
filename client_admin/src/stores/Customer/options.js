@@ -1,7 +1,7 @@
 const typeSearch = {
 	name: "Tìm theo",
 	value: [
-		{ id: "fullName", name: "Tên khách hàng" },
+		{ id: "name", name: "Tên khách hàng" },
 		{ id: "email", name: "emal" },
 		{ id: "phone", name: "Số điện thoại" },
 	],

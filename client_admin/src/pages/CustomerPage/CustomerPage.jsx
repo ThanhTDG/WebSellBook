@@ -6,7 +6,7 @@ import TabsCustomer from "~/components/tab/TabCustomer";
 import { ProductMgtProvider } from "~/stores";
 import globalStyles from "~/pages/stylePages/pagesTabTable.module.scss";
 import localStyles from "./customerPage.module.scss";
-import PageConfig from "~/config/pages";
+import PageConfig from "~/stores/pages";
 import { getKey } from "~/utils/util";
 const gcx = classNames.bind(globalStyles);
 const lcx = classNames.bind(localStyles);

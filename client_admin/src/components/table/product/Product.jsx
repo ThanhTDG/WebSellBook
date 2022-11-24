@@ -2,14 +2,14 @@ import { Paper } from "@mui/material";
 import React, { useReducer, memo } from "react";
 
 import Table from "~/components/table/components";
-import { table as tableConfig, limitRow } from "~/config/table";
+import { table as tableConfig, limitRow } from "~/stores/table";
 
 import { actions, useProductMgt } from "~/stores";
 import Footer from "../Footer";
 import { useEffect } from "react";
 import * as constant from "~/stores/constants";
 import { useDebounce } from "~/hooks";
-import * as productService from "~/services/productsService";
+import * as productService from "~/services/productService";
 import Loading from "~/components/Loading";
 const bookConfig = tableConfig.book;
 

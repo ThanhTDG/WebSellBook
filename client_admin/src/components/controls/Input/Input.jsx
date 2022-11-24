@@ -16,7 +16,7 @@ function Input(props) {
 		disabled = false,
 		type = null,
 		placeholder = null,
-		error = null,
+		error = false,
 		endAdornment = null,
 		startAdornment = null,
 		configNumber = null,
@@ -48,28 +48,29 @@ function Input(props) {
 	if (configNumber) {
 		inputProps.inputProps = configNumber;
 	}
-
+	console.log("Loi ne", name, error);
 	return (
-		<FormControl
+		// <FormControl
+		// 	fullWidth={fullWidth}
+		// 	className={className}
+		// >
+		<TextField
+			{...(error && { error: true, helperText: error })}
 			fullWidth={fullWidth}
-			className={className}
-		>
-			<TextField
-				placeholder={placeholder}
-				variant={variant}
-				label={label}
-				required={required}
-				disabled={disabled}
-				id={id}
-				InputProps={{ ...inputProps }}
-				size={size}
-				name={name}
-				value={value}
-				onChange={onChange}
-				type={type}
-				{...(error && { error: true, helperText: error })}
-			/>
-		</FormControl>
+			placeholder={placeholder}
+			variant={variant}
+			label={label}
+			disabled={disabled}
+			id={id}
+			size={size}
+			name={name}
+			value={value}
+			onChange={onChange}
+			type={type}
+			required={required}
+			InputProps={{ ...inputProps }}
+		/>
+		// </FormControl>
 	);
 }
 

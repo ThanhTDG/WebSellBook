@@ -41,11 +41,38 @@ export const setCategoryProducts = (payload) => ({
 	payload,
 });
 
-export const setSortProducts = (payload) => ({
-	type: constants.SET_SORT_PRODUCTS,
+export const setSortTable = (payload) => ({
+	type: constants.SET_SORT_TABLE,
 	payload,
 });
-export const setFilterProducts = (payload) => ({
-	type: constants.SET_FILTER_PRODUCTS,
+export const setFilterTable = (payload) => ({
+	type: constants.SET_FILTER_TABLE,
+	payload,
+});
+
+export const setPageTable = (payload) => ({
+	type: constants.SET_PAGE_TABLE,
+	payload,
+});
+export const setStatusTable = (payload) => ({
+	type: constants.SET_STATUS_TABLE,
+	payload,
+});
+
+export const setNewPropTable = (payload) => ({
+	type: constants.SET_NEW_PROP_TABLE,
+	payload,
+});
+
+export const setTypeSearchTable = (payload) => ({
+	type: constants.SET_TYPE_SEARCH_TABLE,
+	payload,
+});
+export const setSearchTable = (payload) => ({
+	type: constants.SET_SEARCH_TABLE,
+	payload,
+});
+export const setCategoryTable = (payload) => ({
+	type: constants.SET_CATEGORY_TABLE,
 	payload,
 });

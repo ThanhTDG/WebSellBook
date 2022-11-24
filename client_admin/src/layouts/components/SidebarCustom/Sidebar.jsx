@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import images, { icons } from "~/assets/images";
 import { getKey } from "~/utils/util";
-import PageConfig from "~/config/pages";
+import PageConfig from "~/stores/pages";
 import styles from "./sidebar.module.scss";
 import classNames from "classnames/bind";
-import MenuConfig from "~/config/Menu";
+import MenuConfig from "~/stores/Menu";
 import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
