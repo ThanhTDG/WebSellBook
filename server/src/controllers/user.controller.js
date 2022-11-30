@@ -8,6 +8,4 @@ const UserController = class extends Controller {
   }
 };
 
-const controller = new UserController();
-
-module.exports = controller.methods();
+module.exports = new UserController();

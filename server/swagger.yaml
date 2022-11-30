@@ -16,7 +16,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 0.0.9
 servers:
-- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.8
+- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.9
   description: SwaggerHub API Auto Mocking
 - url: http://localhost:5000/api/v1
   description: Development API server
@@ -420,6 +420,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /books/{id}/destroy:
+    post:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để xóa hình ảnh sách
+      description: |
+        Xóa hình ảnh sách trên nền tảng lưu trữ đám mây.
+      parameters:
+      - name: id
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d992614
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/id_destroy_body'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/id_destroy_body_1'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
         "400":
           description: Lỗi
           content:
@@ -1570,6 +1610,22 @@ components:
           items:
             type: string
             format: link
+    id_destroy_body:
+      type: object
+      properties:
+        image:
+          type: string
+          description: Link ảnh
+          format: link
+          example: https://example.com/example.png
+    id_destroy_body_1:
+      type: object
+      properties:
+        image:
+          type: string
+          description: Link ảnh
+          format: link
+          example: https://example.com/example.png
     inline_response_201:
       allOf:
       - $ref: '#/components/schemas/Message'

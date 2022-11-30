@@ -24,6 +24,13 @@ const upload = (folder) => {
   return multer({ storage });
 };
 
+/**
+ * @param {string} public_id
+ */
+const destroy = async (public_id) =>
+  await cloudinary.uploader.destroy(public_id);
+
 module.exports = {
   upload,
+  destroy,
 };

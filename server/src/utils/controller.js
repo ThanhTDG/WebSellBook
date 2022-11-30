@@ -134,14 +134,6 @@ const Controller = class {
         .json({ message: error.message });
     }
   };
-
-  methods = () => ({
-    getAll: this.getAll,
-    get: this.get,
-    create: this.create,
-    update: this.update,
-    remove: this.remove,
-  });
 };
 
 module.exports = Controller;

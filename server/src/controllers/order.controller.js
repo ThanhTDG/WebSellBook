@@ -51,6 +51,4 @@ const toJson = (data) => {
   return obj;
 };
 
-const controller = new OrderController(getData, toJson);
-
-module.exports = controller.methods();
+module.exports = new OrderController(getData, toJson);

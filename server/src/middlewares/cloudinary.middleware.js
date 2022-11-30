@@ -1,4 +1,4 @@
-const { upload } = require("../services/upload.service");
+const { upload } = require("../services/cloudinary.service");
 
 /**
  * Upload avatar

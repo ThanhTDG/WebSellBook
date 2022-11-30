@@ -30,6 +30,4 @@ const toJson = (data) => {
   return obj;
 };
 
-const controller = new CategoryController(getData, toJson);
-
-module.exports = controller.methods();
+module.exports = new CategoryController(getData, toJson);

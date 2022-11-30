@@ -2,7 +2,7 @@ const express = require("express");
 
 const controller = require("../controllers/book.controller");
 
-const { uploadBookImgs } = require("../middlewares/upload.middleware");
+const { uploadBookImgs } = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
 
@@ -14,5 +14,6 @@ router.put("/:id", controller.update);
 router.delete("/:id", controller.remove);
 
 router.post("/:id/upload", uploadBookImgs, controller.uploadImgs);
+router.post("/:id/destroy", controller.destroyImgs);
 
 module.exports = router;
