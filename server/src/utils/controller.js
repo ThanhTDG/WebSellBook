@@ -6,7 +6,7 @@ const ErrorHandler = require("./errorHandler");
  * Callback get data from body of request
  * @callback GetData
  * @param {Object} body Body of request
- * @returns {void}
+ * @returns {Object}
  */
 
 /**
@@ -24,8 +24,8 @@ const Controller = class {
    */
   constructor(model, getData, toJson) {
     this.model = model;
-    this.getData = getData;
-    this.toJson = toJson;
+    this.getData = getData || ((body) => body);
+    this.toJson = toJson || ((data) => data);
   }
 
   /**
@@ -42,9 +42,7 @@ const Controller = class {
         pagination: page && limit,
       };
       const data = await this.model.paginate({}, options);
-      if (this.toJson) {
-        data.docs = data.docs.map((value) => this.toJson(value));
-      }
+      data.docs = data.docs.map((value) => this.toJson(value));
 
       await res.json(data);
     } catch (error) {

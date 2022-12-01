@@ -11,39 +11,7 @@ mongoose.plugin(paginate);
 
 const Schema = mongoose.Schema;
 
-const addressSchema = new Schema({
-  phone: {
-    type: String,
-    require: true,
-    trim: true,
-    validate(value) {
-      if (!validator.isMobilePhone(value, "vi-VN")) {
-        throw new Error("Phone number is invalid");
-      }
-    },
-  },
-  region: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  district: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  ward: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  address: {
-    type: String,
-    trim: true,
-  },
-});
-
-const userSchema = new Schema(
+const adminSchema = new Schema(
   {
     firstName: {
       type: String,
@@ -112,13 +80,6 @@ const userSchema = new Schema(
         return generateAvatar(this.firstName);
       },
     },
-    addresses: [addressSchema],
-    favorites: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Book",
-      },
-    ],
     lastSession: {
       type: Date,
       default: Date.now,
@@ -127,7 +88,7 @@ const userSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-userSchema.virtual("fullName").get(function () {
+adminSchema.virtual("fullName").get(function () {
   return `${this.lastName} ${this.firstName}`;
 });
 
@@ -135,7 +96,7 @@ userSchema.virtual("fullName").get(function () {
  * Generate token
  * @returns {string}
  */
-userSchema.methods.generateAuthToken = function () {
+adminSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
 };
@@ -144,14 +105,14 @@ userSchema.methods.generateAuthToken = function () {
  * Validate password
  * @param {string} password
  */
-userSchema.methods.validatePassword = async function (password) {
+adminSchema.methods.validatePassword = async function (password) {
   return await validatePassword(password, this.password);
 };
 
 /**
  * To JSON
  */
-userSchema.methods.toJSON = function () {
+adminSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
   return obj;
@@ -162,8 +123,8 @@ userSchema.methods.toJSON = function () {
  * @param {string} username
  * @param {string} password
  */
-userSchema.statics.findByCredentials = async (username, password) => {
-  const user = await User.findOne({
+adminSchema.statics.findByCredentials = async (username, password) => {
+  const user = await Admin.findOne({
     $or: [{ email: username }, { phone: username }],
   });
   if (!user) {
@@ -178,7 +139,7 @@ userSchema.statics.findByCredentials = async (username, password) => {
   return user;
 };
 
-userSchema.pre("save", async function (next) {
+adminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
@@ -191,6 +152,6 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-const User = mongoose.model("User", userSchema);
+const Admin = mongoose.model("Admin", adminSchema);
 
-module.exports = User;
+module.exports = Admin;
