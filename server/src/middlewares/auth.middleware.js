@@ -29,24 +29,30 @@ const login = (req, user, next) =>
  * @param {Response} res Response
  * @param {Function} next Next function
  */
-const requiredLogin = (req, res, next) =>
-  passport.authenticate("local", opts, async (err, user) => {
-    try {
-      if (err) {
-        throw new ErrorHandler(401, err.message);
-      }
+const requiredLogin = async (req, res, next) => {
+  try {
+    const strategy = req.body.isAdmin ? "local-admin" : "local-customer";
+    passport.authenticate(strategy, opts, async (err, user) => {
+      try {
+        if (err) {
+          throw new ErrorHandler(401, err.message);
+        }
 
-      if (!user) {
-        throw new ErrorHandler(401, "Authentication failed");
-      }
+        if (!user) {
+          throw new ErrorHandler(401, "Authentication failed");
+        }
 
-      login(req, user, next);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 401)
-        .json({ message: error.message });
-    }
-  })(req, res, next);
+        login(req, user, next);
+      } catch (error) {
+        await res
+          .status(error.statusCode || 401)
+          .json({ message: error.message });
+      }
+    })(req, res, next);
+  } catch {
+    await res.status(error.statusCode || 401).json({ message: error.message });
+  }
+};
 
 /**
  * Authenticate token

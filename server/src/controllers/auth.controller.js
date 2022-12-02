@@ -22,6 +22,7 @@ const user2json = ({
   birthday,
   avatar,
   lastSession,
+  roles,
 }) => ({
   _id,
   firstName,
@@ -33,6 +34,7 @@ const user2json = ({
   birthday,
   avatar,
   lastSession,
+  roles,
 });
 
 /**

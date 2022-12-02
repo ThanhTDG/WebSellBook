@@ -6,6 +6,8 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("../models/user");
+const Admin = require("../models/admin");
+const Customer = require("../models/customer");
 
 passport.serializeUser((user, done) => done(null, user.id));
 
@@ -18,24 +20,33 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+const verify = (done, credentials) => {
+  const user = credentials;
+  if (!user) {
+    return done(null, false);
+  }
+
+  return done(null, user);
+};
+
 const localOpts = {
   session: true,
 };
 
-passport.use(
+const createLocalStrategy = (credentialsCb) =>
   new LocalStrategy(localOpts, async (username, password, done) => {
     try {
-      const user = await User.findByCredentials(username, password);
-      if (!user) {
-        return done(null, false);
-      }
-
-      return done(null, user);
+      const credentials = await credentialsCb(username, password);
+      return verify(done, credentials);
     } catch (error) {
       return done(error, false);
     }
-  })
-);
+  });
+
+passport
+  .use(createLocalStrategy(User.findByCredentials))
+  .use("local-admin", createLocalStrategy(Admin.findByCredentials))
+  .use("local-customer", createLocalStrategy(Customer.findByCredentials));
 
 const cookieExtractor = (req) =>
   req.signedCookies.token || ExtractJwt.fromAuthHeaderAsBearerToken()(req);
@@ -48,12 +59,8 @@ const jwtOpts = {
 passport.use(
   new JwtStrategy(jwtOpts, async (payload, done) => {
     try {
-      const user = await User.findById(payload.id);
-      if (!user) {
-        return done(null, false);
-      }
-
-      return done(null, user);
+      const credentials = await User.findById(payload.id);
+      return verify(done, credentials);
     } catch (error) {
       return done(error, false);
     }

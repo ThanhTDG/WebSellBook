@@ -1,122 +1,17 @@
 const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate-v2");
-const validator = require("validator").default;
+
+const User = require("./user");
 
 const ErrorHandler = require("../utils/errorHandler");
-const { generateAvatar } = require("../utils/generateAvatar");
-const { hashPassword, validatePassword } = require("../utils/hashPassword");
-const { signToken } = require("../utils/jwt");
-
-mongoose.plugin(paginate);
 
 const Schema = mongoose.Schema;
 
-const adminSchema = new Schema(
-  {
-    firstName: {
-      type: String,
-      minLength: 1,
-      maxLength: 255,
-      required: true,
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      minLength: 1,
-      maxLength: 255,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      lowercase: true,
-      require: true,
-      trim: true,
-      unique: true,
-      validate: {
-        validator: (value) => validator.isEmail(value),
-        message: "Email is invalid",
-      },
-    },
-    phone: {
-      type: String,
-      require: true,
-      trim: true,
-      unique: true,
-      validate: {
-        validator: (value) => validator.isMobilePhone(value, "vi-VN"),
-        message: "Phone number is invalid",
-      },
-    },
-    password: {
-      type: String,
-      required: true,
-      // select: false,
-      // minLength: [
-      //   8,
-      //   "Password is shorter than the minimum allowed length (8).",
-      // ],
-      // maxLength: [
-      //   255,
-      //   "Password is longer than the maximum allowed length (255).",
-      // ],
-      // validate: {
-      //   validator: (value) =>
-      //     /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,255}$/.test(value),
-      //   message: "Password is invalid",
-      // },
-    },
-    sex: {
-      type: Boolean,
-      default: true,
-    },
-    birthday: {
-      type: Date,
-      default: new Date("01/01/2001"),
-    },
-    avatar: {
-      type: String,
-      default: function () {
-        return generateAvatar(this.firstName);
-      },
-    },
-    lastSession: {
-      type: Date,
-      default: Date.now,
-    },
+const adminSchema = new Schema({
+  roles: {
+    type: [Schema.Types.ObjectId],
+    ref: "Role",
   },
-  { timestamps: true, toJSON: { virtuals: true } }
-);
-
-adminSchema.virtual("fullName").get(function () {
-  return `${this.lastName} ${this.firstName}`;
 });
-
-/**
- * Generate token
- * @returns {string}
- */
-adminSchema.methods.generateAuthToken = function () {
-  const token = signToken({ id: this.id });
-  return token;
-};
-
-/**
- * Validate password
- * @param {string} password
- */
-adminSchema.methods.validatePassword = async function (password) {
-  return await validatePassword(password, this.password);
-};
-
-/**
- * To JSON
- */
-adminSchema.methods.toJSON = function () {
-  const obj = this.toObject();
-  delete obj.password;
-  return obj;
-};
 
 /**
  * Credential account
@@ -139,19 +34,6 @@ adminSchema.statics.findByCredentials = async (username, password) => {
   return user;
 };
 
-adminSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
-
-  try {
-    this.password = await hashPassword(this.password);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
-const Admin = mongoose.model("Admin", adminSchema);
+const Admin = User.discriminator("Admin", adminSchema);
 
 module.exports = Admin;
