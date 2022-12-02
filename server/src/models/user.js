@@ -96,6 +96,7 @@ userSchema.virtual("fullName").get(function () {
 });
 
 /**
+ * Can access
  * @param {string} action
  * @param {string} subject
  */

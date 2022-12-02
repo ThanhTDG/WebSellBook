@@ -35,6 +35,7 @@ adminSchema.statics.findByCredentials = async (username, password) => {
 };
 
 /**
+ * Can access
  * @param {string} action
  * @param {string} subject
  */

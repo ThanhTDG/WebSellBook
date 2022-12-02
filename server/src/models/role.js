@@ -23,6 +23,7 @@ const roleSchema = new Schema(
 );
 
 /**
+ * Can access
  * @param {string} action
  * @param {string} subject
  */
