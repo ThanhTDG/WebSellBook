@@ -32,6 +32,6 @@ router.use("/comment", comment);
 router.use("/cart", cart);
 router.use("/favorite", favorite);
 
-router.use("/test", test);
+// router.use("/test", test);
 
 module.exports = router;

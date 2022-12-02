@@ -96,6 +96,14 @@ userSchema.virtual("fullName").get(function () {
 });
 
 /**
+ * @param {string} action
+ * @param {string} subject
+ */
+userSchema.methods.can = async function (action, subject) {
+  return false;
+};
+
+/**
  * Generate token
  * @returns {string}
  */

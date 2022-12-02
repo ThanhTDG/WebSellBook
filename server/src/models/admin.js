@@ -34,6 +34,24 @@ adminSchema.statics.findByCredentials = async (username, password) => {
   return user;
 };
 
+/**
+ * @param {string} action
+ * @param {string} subject
+ */
+adminSchema.methods.can = async function (action, subject) {
+  try {
+    await this.populate("roles");
+    const hasPerm = this.roles.some(
+      async (role) => await role.can(action, subject)
+    );
+    this.depopulate("roles");
+
+    return hasPerm;
+  } catch (error) {
+    return false;
+  }
+};
+
 const Admin = User.discriminator("Admin", adminSchema);
 
 module.exports = Admin;

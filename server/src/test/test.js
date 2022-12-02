@@ -6,7 +6,7 @@ const router = express.Router();
 
 const Customer = require("../models/customer");
 
-let users = require("../../users.json");
+// let users = require("../../users.json");
 
 router.get("/", async (req, res) => {
   try {
