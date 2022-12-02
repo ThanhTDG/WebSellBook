@@ -1,4 +1,5 @@
 module.exports = {
+  ALL: "all",
   CREATE: "create",
   READ: "read",
   UPDATE: "update",

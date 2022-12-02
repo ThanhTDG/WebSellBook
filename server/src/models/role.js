@@ -29,9 +29,8 @@ const roleSchema = new Schema(
 roleSchema.methods.can = async function (action, subject) {
   try {
     await this.populate("permissions");
-    const hasPerm = this.permissions.some(
-      (permission) =>
-        permission.action === action && permission.subject === subject
+    const hasPerm = this.permissions.some((permission) =>
+      permission.can(action, subject)
     );
     this.depopulate("permissions");
 
