@@ -77,15 +77,6 @@ app.use("/api/v1", router);
 const swaggerDoc = YAML.load("./swagger.yaml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-// console.log(`NODE_ENV = ${NODE_ENV}`);
-// if (NODE_ENV === PROC) {
-//   // TODO
-//   app.use();
-//   app.get("*", (req, res) => {
-//     // TODO
-//   });
-// }
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`Starting server at http://localhost:${PORT}`)
