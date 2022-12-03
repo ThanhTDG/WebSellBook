@@ -289,6 +289,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /books/upload:
+    post:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để tải lên hình ảnh sách
+      description: |
+        Tải hình ảnh sách lên nền tảng lưu trữ đám mây.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/books_upload_body'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /books/destroy:
+    post:
+      tags:
+      - Quản lý sách
+      summary: Sử dụng để xóa hình ảnh sách
+      description: |
+        Xóa hình ảnh sách trên nền tảng lưu trữ đám mây.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/books_destroy_body'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/books_destroy_body_1'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /books/{id}:
     get:
       tags:
@@ -376,83 +431,6 @@ paths:
           type: string
           format: ObjectId
         example: 634ed8e4f6a3a7266d992614
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /books/{id}/upload:
-    post:
-      tags:
-      - Quản lý sách
-      summary: Sử dụng để tải lên hình ảnh sách
-      description: |
-        Tải hình ảnh sách lên nền tảng lưu trữ đám mây.
-      parameters:
-      - name: id
-        in: path
-        description: ID sách
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/id_upload_body'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/inline_response_200'
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /books/{id}/destroy:
-    post:
-      tags:
-      - Quản lý sách
-      summary: Sử dụng để xóa hình ảnh sách
-      description: |
-        Xóa hình ảnh sách trên nền tảng lưu trữ đám mây.
-      parameters:
-      - name: id
-        in: path
-        description: ID sách
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d992614
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/id_destroy_body'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/id_destroy_body_1'
-        required: true
       responses:
         "200":
           description: OK
@@ -1587,7 +1565,7 @@ components:
           type: number
           description: Tỷ lệ đánh giá (%)
           example: 33
-    id_upload_body:
+    books_upload_body:
       required:
       - images
       type: object
@@ -1610,7 +1588,7 @@ components:
           items:
             type: string
             format: link
-    id_destroy_body:
+    books_destroy_body:
       type: object
       properties:
         image:
@@ -1618,7 +1596,7 @@ components:
           description: Link ảnh
           format: link
           example: https://example.com/example.png
-    id_destroy_body_1:
+    books_destroy_body_1:
       type: object
       properties:
         image:

@@ -27,21 +27,7 @@ const destroyAvatar = async (req, res, next) => {
  * Upload images
  * @param {string} folder
  */
-const uploadImgs =
-  (folder) =>
-  /**
-   * @param {Request} req Request
-   * @param {Response} res Response
-   * @param {Function} next Next function
-   */
-  async (req, res, next) => {
-    try {
-      const id = req.params.id;
-      upload(`${folder}/${id}`).array("images")(req, res, next);
-    } catch (error) {
-      await res.status(400).json({ message: error.message });
-    }
-  };
+const uploadImgs = (folder) => upload(`${folder}`).array("images");
 
 /**
  * Destroy images
@@ -56,10 +42,9 @@ const destroyImg =
    */
   async (req, res, next) => {
     try {
-      const id = req.params.id;
       const image = req.body.image;
       const public_id = image.split("/").pop().split(".")[0];
-      await destroy(`${folder}/${id}/${public_id}`);
+      await destroy(`${folder}/${public_id}`);
       next();
     } catch (error) {
       await res.status(400).json({ message: error.message });

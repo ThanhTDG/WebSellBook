@@ -20,21 +20,21 @@ const canAccess = access(BOOK);
 router.get("/", canAccess(ACTION.READ), controller.getAll);
 router.post("/", canAccess(ACTION.CREATE), controller.create);
 
-router.get("/:id", canAccess(ACTION.READ), controller.get);
-router.put("/:id", canAccess(ACTION.UPDATE), controller.update);
-router.delete("/:id", canAccess(ACTION.DELETE), controller.remove);
-
 router.post(
-  "/:id/upload",
+  "/upload",
   canAccess(ACTION.UPDATE),
   uploadImgs("books"),
   controller.uploadImgs
 );
 router.post(
-  "/:id/destroy",
+  "/destroy",
   canAccess(ACTION.UPDATE),
   destroyImg("books"),
   controller.destroyImg
 );
+
+router.get("/:id", canAccess(ACTION.READ), controller.get);
+router.put("/:id", canAccess(ACTION.UPDATE), controller.update);
+router.delete("/:id", canAccess(ACTION.DELETE), controller.remove);
 
 module.exports = router;
