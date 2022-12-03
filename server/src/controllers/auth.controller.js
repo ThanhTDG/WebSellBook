@@ -1,4 +1,4 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 
 const {
   NODE_ENV: { PROC },
@@ -8,6 +8,8 @@ const User = require("../models/user");
 
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
+
+dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV;
 

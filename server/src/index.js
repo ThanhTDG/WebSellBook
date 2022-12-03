@@ -1,12 +1,16 @@
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const express = require("express");
 const session = require("express-session");
-const mongoose = require("mongoose");
 const morgan = require("morgan");
 const passport = require("passport");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
+
+const { configCloudinary } = require("./configs/cloudinary.config");
+const { connectDatabase } = require("./configs/mongoose.config");
+const { configPassport } = require("./configs/passport.config");
 
 const {
   NODE_ENV: { PROC },
@@ -14,19 +18,16 @@ const {
 
 const router = require("./router");
 
-require("dotenv").config();
+dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV;
 
 // Database connection
-const MONGO_URI = process.env.MONGO_URI;
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Successfully connect to MongoDB"))
-  .catch((err) => console.log(err));
+connectDatabase();
+
+// Configures
+configCloudinary();
+configPassport();
 
 // App
 const app = express();
@@ -62,11 +63,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./configs/passport.config");
-
 app.use(
   morgan(
-    ":date - :method: :url :status  :res[content-length] byte - :response-time ms"
+    ":date - :method: :url :status  :res[content-length] bytes - :response-time ms"
   )
 );
 
