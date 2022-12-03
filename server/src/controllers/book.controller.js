@@ -1,7 +1,5 @@
 const Book = require("../models/book");
 
-const { destroy } = require("../services/cloudinary.service");
-
 const Controller = require("../utils/controller");
 const { isEmpty } = require("../utils/utils");
 
@@ -28,23 +26,12 @@ const BookController = class extends Controller {
   };
 
   /**
-   * Destroy images
+   * Destroy image
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  destroyImgs = async (req, res) => {
-    try {
-      const id = req.params.id;
-      const image = req.body.image;
-      const public_id = image.split("/").pop().split(".")[0];
-      await destroy(`books/${id}/${public_id}`);
-      await res.json({ message: "Delete image successfully" });
-    } catch (error) {
-      await res
-        .status(error.statusCode || 400)
-        .json({ message: error.message });
-    }
-  };
+  destroyImg = async (req, res) =>
+    await res.json({ message: "Delete image successfully" });
 };
 
 /**

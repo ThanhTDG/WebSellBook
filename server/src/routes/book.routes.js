@@ -8,7 +8,10 @@ const {
 const controller = require("../controllers/book.controller");
 
 const { access } = require("../middlewares/access.middleware");
-const { uploadBookImgs } = require("../middlewares/cloudinary.middleware");
+const {
+  uploadImgs,
+  destroyImg,
+} = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
 
@@ -24,9 +27,14 @@ router.delete("/:id", canAccess(ACTION.DELETE), controller.remove);
 router.post(
   "/:id/upload",
   canAccess(ACTION.UPDATE),
-  uploadBookImgs,
+  uploadImgs("books"),
   controller.uploadImgs
 );
-router.post("/:id/destroy", canAccess(ACTION.UPDATE), controller.destroyImgs);
+router.post(
+  "/:id/destroy",
+  canAccess(ACTION.UPDATE),
+  destroyImg("books"),
+  controller.destroyImg
+);
 
 module.exports = router;
