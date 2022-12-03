@@ -50,7 +50,7 @@ const _login =
  * @param {Response} res Response
  * @param {Function} next Next function
  */
-const requiredLogin = async (req, res, next) => {
+const requiredLogin = (req, res, next) => {
   const strategy = req.body.isAdmin ? "local-admin" : "local-customer";
   return passport.authenticate(strategy, opts, _login(req, res, next))(req, res, next);
 };
@@ -61,7 +61,7 @@ const requiredLogin = async (req, res, next) => {
  * @param {Response} res Response
  * @param {Function} next Next function
  */
-const authenticate = async (req, res, next) =>
+const authenticate = (req, res, next) =>
   passport.authenticate("jwt", opts, _login(req, res, next))(req, res, next);
 
 module.exports = {
