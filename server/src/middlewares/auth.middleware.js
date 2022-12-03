@@ -7,21 +7,42 @@ const opts = { session: false };
 /**
  * Login
  * @param {Request} req Request
- * @param {any} user User
+ * @param {Response} res Response
  * @param {Function} next Next function
  */
-const login = (req, user, next) =>
-  req.login(user, async (err) => {
-    if (err) {
-      return await res
-        .status(err.statusCode || 401)
-        .json({ message: err.message });
-    }
+const _login =
+  (req, res, next) =>
+  /**
+   * @param {Error} err Error
+   * @param {any} user User
+   */
+  async (err, user) => {
+    try {
+      if (err) {
+        throw new ErrorHandler(401, err.message);
+      }
 
-    user.lastSession = new Date();
-    await user.save();
-    next();
-  });
+      if (!user) {
+        throw new ErrorHandler(401, "Authentication failed");
+      }
+
+      req.login(user, async (err) => {
+        if (err) {
+          return await res
+            .status(err.statusCode || 401)
+            .json({ message: err.message });
+        }
+
+        user.lastSession = new Date();
+        await user.save();
+        next();
+      });
+    } catch (error) {
+      await res
+        .status(error.statusCode || 401)
+        .json({ message: error.message });
+    }
+  };
 
 /**
  * Required login
@@ -31,23 +52,7 @@ const login = (req, user, next) =>
  */
 const requiredLogin = async (req, res, next) => {
   const strategy = req.body.isAdmin ? "local-admin" : "local-customer";
-  return passport.authenticate(strategy, opts, async (err, user) => {
-    try {
-      if (err) {
-        throw new ErrorHandler(401, err.message);
-      }
-
-      if (!user) {
-        throw new ErrorHandler(401, "Authentication failed");
-      }
-
-      login(req, user, next);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 401)
-        .json({ message: error.message });
-    }
-  })(req, res, next);
+  return passport.authenticate(strategy, opts, _login(req, res, next))(req, res, next);
 };
 
 /**
@@ -57,23 +62,7 @@ const requiredLogin = async (req, res, next) => {
  * @param {Function} next Next function
  */
 const authenticate = async (req, res, next) =>
-  passport.authenticate("jwt", opts, async (err, user) => {
-    try {
-      if (err) {
-        throw new ErrorHandler(401, err.message);
-      }
-
-      if (!user) {
-        throw new ErrorHandler(401, "Authentication failed");
-      }
-
-      login(req, user, next);
-    } catch (error) {
-      await res
-        .status(error.statusCode || 401)
-        .json({ message: error.message });
-    }
-  })(req, res, next);
+  passport.authenticate("jwt", opts, _login(req, res, next))(req, res, next);
 
 module.exports = {
   requiredLogin,
