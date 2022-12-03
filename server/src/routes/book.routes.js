@@ -8,32 +8,25 @@ const {
 const controller = require("../controllers/book.controller");
 
 const { access } = require("../middlewares/access.middleware");
-const { authenticate } = require("../middlewares/auth.middleware");
 const { uploadBookImgs } = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
 
 const canAccess = access(BOOK);
 
-router.get("/", authenticate, canAccess(ACTION.READ), controller.getAll);
-router.post("/", authenticate, canAccess(ACTION.READ), controller.create);
+router.get("/", canAccess(ACTION.READ), controller.getAll);
+router.post("/", canAccess(ACTION.CREATE), controller.create);
 
-router.get("/:id", authenticate, canAccess(ACTION.READ), controller.get);
-router.put("/:id", authenticate, canAccess(ACTION.READ), controller.update);
-router.delete("/:id", authenticate, canAccess(ACTION.READ), controller.remove);
+router.get("/:id", canAccess(ACTION.READ), controller.get);
+router.put("/:id", canAccess(ACTION.UPDATE), controller.update);
+router.delete("/:id", canAccess(ACTION.DELETE), controller.remove);
 
 router.post(
   "/:id/upload",
-  authenticate,
-  canAccess(ACTION.READ),
+  canAccess(ACTION.UPDATE),
   uploadBookImgs,
   controller.uploadImgs
 );
-router.post(
-  "/:id/destroy",
-  authenticate,
-  canAccess(ACTION.READ),
-  controller.destroyImgs
-);
+router.post("/:id/destroy", canAccess(ACTION.UPDATE), controller.destroyImgs);
 
 module.exports = router;

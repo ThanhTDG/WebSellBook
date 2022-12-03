@@ -35,7 +35,7 @@ adminSchema.statics.findByCredentials = async (username, password) => {
 };
 
 /**
- * Can access
+ * Can access action and subject
  * @param {string} action
  * @param {string} subject
  */
@@ -46,6 +46,38 @@ adminSchema.methods.can = async function (action, subject) {
       async (role) => await role.can(action, subject)
     );
     this.depopulate("roles");
+
+    return hasPerm;
+  } catch (error) {
+    return false;
+  }
+};
+
+/**
+ * Can access all actions and subjects
+ * @param  {...[string, string]} actionsAndSubjects Actions and subjects
+ */
+adminSchema.methods.canAll = async function (...actionsAndSubjects) {
+  try {
+    const hasPerm = actionsAndSubjects.every(
+      async ([action, subject]) => await this.can(action, subject)
+    );
+
+    return hasPerm;
+  } catch (error) {
+    return false;
+  }
+};
+
+/**
+ * Can access any action and subject
+ * @param  {...[string, string]} actionsAndSubjects Actions and subjects
+ */
+adminSchema.methods.canAny = async function (...actionsAndSubjects) {
+  try {
+    const hasPerm = actionsAndSubjects.some(
+      async ([action, subject]) => await this.can(action, subject)
+    );
 
     return hasPerm;
   } catch (error) {

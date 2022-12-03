@@ -71,16 +71,14 @@ const updateBook = async (req, res) => {
   try {
     const bookId = req.params.book;
     const { quantity, selected } = req.body;
-    console.log(quantity, selected);
+    const set = {};
+    if (quantity) set["items.$.quantity"] = quantity;
+    if (selected) set["items.$.selected"] = selected;
+
     const user = req.user;
     const data = await Cart.findOneAndUpdate(
       { userId: user.id, "items.bookId": bookId },
-      {
-        $set: {
-          "items.$.quantity": quantity || 1,
-          "items.$.selected": selected || false,
-        },
-      },
+      { $set: set },
       { new: true }
     ).populate(["items.book", "items.total"]);
 

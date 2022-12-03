@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate-v2");
-const permission = require("./permission");
 
 mongoose.plugin(paginate);
 
@@ -14,6 +13,7 @@ const roleSchema = new Schema(
       trim: true,
       unique: true,
     },
+    description: String,
     permissions: {
       type: [Schema.Types.ObjectId],
       ref: "Permission",

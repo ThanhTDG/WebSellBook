@@ -1,5 +1,8 @@
 const express = require("express");
 
+const { isAdmin } = require("./middlewares/access.middleware");
+const { authenticate } = require("./middlewares/auth.middleware");
+
 // TODO: import routes here
 const auth = require("./routes/auth.routes");
 
@@ -21,16 +24,16 @@ const router = express.Router();
 // TODO: use routes here
 router.use("/auth", auth);
 
-router.use("/categories", category);
-router.use("/books", book);
-router.use("/orders", order);
-router.use("/roles", role);
-router.use("/users", user);
+router.use("/categories", authenticate, isAdmin, category);
+router.use("/books", authenticate, isAdmin, book);
+router.use("/orders", authenticate, isAdmin, order);
+router.use("/roles", authenticate, isAdmin, role);
+router.use("/users", authenticate, isAdmin, user);
 
 router.use("/", product);
 router.use("/comment", comment);
-router.use("/cart", cart);
-router.use("/favorite", favorite);
+router.use("/cart", authenticate, cart);
+router.use("/favorite", authenticate, favorite);
 
 // router.use("/test", test);
 

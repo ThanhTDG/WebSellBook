@@ -4,4 +4,5 @@ module.exports = {
   READ: "read",
   UPDATE: "update",
   DELETE: "delete",
+  STATISTIC: "statistic",
 };

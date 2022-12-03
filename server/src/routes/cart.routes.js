@@ -1,16 +1,14 @@
 const express = require("express");
 
-const { authenticate } = require("../middlewares/auth.middleware");
-
 const controller = require("../controllers/cart.controller");
 
 const router = express.Router();
 
-router.get("/", authenticate, controller.getCart);
-router.put("/", authenticate, controller.selectedAll);
+router.get("/", controller.getCart);
+router.put("/", controller.selectedAll);
 
-router.post("/:book", authenticate, controller.addBook);
-router.put("/:book", authenticate, controller.updateBook);
-router.delete("/:book", authenticate, controller.deleteBook);
+router.post("/:book", controller.addBook);
+router.put("/:book", controller.updateBook);
+router.delete("/:book", controller.deleteBook);
 
 module.exports = router;

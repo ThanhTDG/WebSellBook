@@ -8,17 +8,16 @@ const {
 const controller = require("../controllers/user.controller");
 
 const { access } = require("../middlewares/access.middleware");
-const { authenticate } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
 const canAccess = access(USER);
 
-router.get("/", authenticate, controller.getAll);
-router.post("/", authenticate, controller.create);
+router.get("/", controller.getAll);
+router.post("/", controller.create);
 
-router.get("/:id", authenticate, controller.get);
-router.put("/:id", authenticate, controller.update);
-router.delete("/:id", authenticate, controller.remove);
+router.get("/:id", controller.get);
+router.put("/:id", controller.update);
+router.delete("/:id", controller.remove);
 
 module.exports = router;
