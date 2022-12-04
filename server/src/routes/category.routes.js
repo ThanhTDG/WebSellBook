@@ -7,7 +7,7 @@ const {
 
 const controller = require("../controllers/category.controller");
 
-const { access } = require("../middlewares/access.middleware");
+const { access, canAny } = require("../middlewares/access.middleware");
 
 const router = express.Router();
 
