@@ -29,12 +29,15 @@ tags:
 - name: Quản lý sách
   description: |
     Sử dụng để quản lý sách, dành cho phân hệ quản trị
-- name: Quản lý người dùng
-  description: |
-    Sử dụng để quản lý người dùng, dành cho phân hệ quản trị
 - name: Quản lý hóa đơn
   description: |
     Sử dụng để quản lý hóa đơn, dành cho phân hệ quản trị
+- name: Quản lý quyền
+  description: |
+    Sử dụng để quản lý quyền và vai trò của người dùng quản trị, dành cho phân hệ quản trị
+- name: Quản lý người dùng
+  description: |
+    Sử dụng để quản lý người dùng, dành cho phân hệ quản trị
 - name: Tài khoản
   description: |
     Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
@@ -88,11 +91,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Category'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     post:
       tags:
       - Quản lý danh mục
@@ -116,11 +133,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.Category'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /categories/{id}:
     get:
       tags:
@@ -147,11 +178,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.Category'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     put:
       tags:
       - Quản lý danh mục
@@ -185,12 +230,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Category'
-        "500":
-          description: Lỗi
+        "400":
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     delete:
       tags:
       - Quản lý danh mục
@@ -216,11 +275,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /books:
     get:
       tags:
@@ -256,11 +329,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Book'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     post:
       tags:
       - Quản lý sách
@@ -284,11 +371,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.Book'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /books/upload:
     post:
       tags:
@@ -310,11 +411,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /books/destroy:
     post:
       tags:
@@ -339,11 +454,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /books/{id}:
     get:
       tags:
@@ -370,11 +499,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.Book'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     put:
       tags:
       - Quản lý sách
@@ -409,11 +552,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/admin.Book'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
     delete:
       tags:
       - Quản lý sách
@@ -439,11 +596,317 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /roles:
+    get:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để lấy danh sách vai trò
+      description: |
+        Lấy danh sách vai trò theo trang và giới hạn số lượng lấy.
+        Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả vai trò.
+      parameters:
+      - name: page
+        in: query
+        description: Trang
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.pagination.Role'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để thêm vai trò mới
+      description: |
+        Thêm vai trò mới.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin.form.Role'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/admin.form.Role'
+        required: true
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Role'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /roles/{id}:
+    get:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để lấy vai trò
+      description: |
+        Lấy vai trò theo ID vai trò cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID vai trò
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 638c76f64700d09a7fde9be3
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Role'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    put:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để sửa thông tin vai trò
+      description: |
+        Sửa thông tin vai trò theo ID vai trò cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID vai trò
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 638c76f64700d09a7fde9be3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin.form.Role'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/admin.form.Role'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Role'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để xóa vai trò
+      description: |
+        Xóa vai trò theo ID vai trò cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID vai trò
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 638c76f64700d09a7fde9be3
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /permissions:
+    get:
+      tags:
+      - Quản lý quyền
+      summary: Sử dụng để lấy danh sách quyền
+      description: |
+        Lấy danh sách quyền theo trang và giới hạn số lượng lấy.
+        Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả quyền.
+      parameters:
+      - name: page
+        in: query
+        description: Trang
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.pagination.Role'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /auth/signup:
     post:
       tags:
@@ -497,7 +960,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -517,7 +986,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -548,7 +1023,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -570,7 +1051,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/client.User'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -600,7 +1087,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_201'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -628,7 +1121,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200_2'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -659,7 +1158,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
         "400":
-          description: Lỗi
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
@@ -1037,6 +1542,52 @@ components:
           description: ID danh mục cha
           format: ObjectId
           example: 634d8da516d1688abe54d4ef
+    admin.Role:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID vai trò
+          format: ObjectId
+          example: 638c76f64700d09a7fde9be3
+        name:
+          type: string
+          description: Tên vai trò
+          example: admin
+        description:
+          type: string
+          description: Mô tả
+          example: Người quản trị
+        permissions:
+          type: array
+          description: Danh sách ID quyền truy cập
+          items:
+            type: string
+            description: ID quyền truy cập
+            format: ObjectId
+            example: 638c7606e13b091e37dd84d3
+        createdDate:
+          type: string
+          description: Ngày khởi tạo
+          format: date
+          example: 2022-11-01
+        updatedDate:
+          type: string
+          description: Ngày cập nhật
+          format: date
+          example: 2022-11-02
+    admin.Permission:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID vai trò
+          format: ObjectId
+          example: 638c7606e13b091e37dd84d3
+        description:
+          type: string
+          description: Mô tả
+          example: Có thể toàn quyền truy cập tất cả
     admin.form.Category:
       required:
       - name
@@ -1160,6 +1711,27 @@ components:
           description: ID danh mục cha
           format: ObjectId
           example: 634d8da516d1688abe54d4ef
+    admin.form.Role:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Tên vai trò
+          example: admin
+        description:
+          type: string
+          description: Mô tả
+          example: Người quản trị
+        permissions:
+          type: array
+          description: Danh sách ID quyền truy cập
+          items:
+            type: string
+            description: ID quyền truy cập
+            format: ObjectId
+            example: 638c7606e13b091e37dd84d3
     admin.pagination.Category:
       allOf:
       - type: object
@@ -1179,6 +1751,26 @@ components:
             description: Mảng document
             items:
               $ref: '#/components/schemas/admin.Book'
+      - $ref: '#/components/schemas/Pagination'
+    admin.pagination.Role:
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/admin.Role'
+      - $ref: '#/components/schemas/Pagination'
+    admin.pagination.Permission:
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            description: Mảng document
+            items:
+              $ref: '#/components/schemas/admin.Permission'
       - $ref: '#/components/schemas/Pagination'
     form.SignUp:
       required:
@@ -1225,6 +1817,10 @@ components:
           type: string
           description: Mật khẩu
           example: 1234abcd
+        isAdmin:
+          type: boolean
+          description: Đăng nhập với tư cách quản trị
+          example: false
     form.Profile:
       required:
       - email

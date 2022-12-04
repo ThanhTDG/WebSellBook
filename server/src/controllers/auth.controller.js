@@ -110,7 +110,7 @@ const signOut = async (req, res) => {
         .json({ message: "Log out successful" });
     });
   } catch (error) {
-    await res.status(401).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -163,9 +163,10 @@ const setProfile = async (req, res) => {
       { new: true }
     );
 
-    await res
-      .status(200)
-      .json({ message: "User modified successfully", user: user2json(data) });
+    await res.json({
+      message: "User modified successfully",
+      user: user2json(data),
+    });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -182,6 +183,7 @@ const uploadAvatar = async (req, res) => {
     const user = req.user;
     user.avatar = file.path;
     await user.save();
+
     await res.json({
       message: "Avatar uploaded successfully",
       avatar: user.avatar,
@@ -207,6 +209,7 @@ const changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
+
     await res.json({ message: "Change password successfully" });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });

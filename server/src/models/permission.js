@@ -20,6 +20,7 @@ const permissionSchema = new Schema(
       required: true,
     },
     description: String,
+    weight: Number,
   },
   { timestamps: true }
 );
