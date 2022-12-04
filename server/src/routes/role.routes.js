@@ -2,8 +2,7 @@ const express = require("express");
 
 const {
   ACTION,
-  SUBJECT: { ROLE },
-  SUBJECT,
+  SUBJECT: { ROLE, USER, ADMIN },
 } = require("../constants");
 
 const controller = require("../controllers/role.controller");
@@ -17,13 +16,13 @@ const canAccess = access(ROLE);
 router.get(
   "/",
   canAny(
-    [ACTION.READ, SUBJECT.ROLE],
-    [ACTION.CREATE, SUBJECT.USER],
-    [ACTION.READ, SUBJECT.USER],
-    [ACTION.UPDATE, SUBJECT.USER],
-    [ACTION.CREATE, SUBJECT.ADMIN],
-    [ACTION.READ, SUBJECT.ADMIN],
-    [ACTION.UPDATE, SUBJECT.ADMIN]
+    [ACTION.READ, ROLE],
+    [ACTION.CREATE, USER],
+    [ACTION.READ, USER],
+    [ACTION.UPDATE, USER],
+    [ACTION.CREATE, ADMIN],
+    [ACTION.READ, ADMIN],
+    [ACTION.UPDATE, ADMIN]
   ),
   controller.getAll
 );

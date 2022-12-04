@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   ACTION,
-  SUBJECT: { CATEGORY },
+  SUBJECT: { CATEGORY, BOOK },
 } = require("../constants");
 
 const controller = require("../controllers/category.controller");
@@ -13,7 +13,16 @@ const router = express.Router();
 
 const canAccess = access(CATEGORY);
 
-router.get("/", canAccess(ACTION.READ), controller.getAll);
+router.get(
+  "/",
+  canAny(
+    [ACTION.READ, CATEGORY],
+    [ACTION.CREATE, BOOK],
+    [ACTION.READ, BOOK],
+    [ACTION.UPDATE, BOOK]
+  ),
+  controller.getAll
+);
 router.post("/", canAccess(ACTION.CREATE), controller.create);
 
 router.get("/:id", canAccess(ACTION.READ), controller.get);
