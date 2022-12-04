@@ -1,23 +1,31 @@
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
- * @param {Request} req Request
- * @param {Response} res Response
- * @param {Function} next Next function
+ * Is user type?
+ * @param {"Admin"|"Customer"} type
  */
-const isAdmin = async (req, res, next) => {
-  try {
-    const user = req.user;
-    const hasPerm = user.__t === "Admin";
-    if (!hasPerm) {
-      throw new ErrorHandler(403, "Permission denied");
-    }
+const isUser =
+  (type) =>
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   * @param {Function} next Next function
+   */
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      const hasPerm = user.__t === type;
+      if (!hasPerm) {
+        throw new ErrorHandler(403, "Permission denied");
+      }
 
-    next();
-  } catch (error) {
-    await res.status(error.statusCode || 403).json({ message: error.message });
-  }
-};
+      next();
+    } catch (error) {
+      await res
+        .status(error.statusCode || 403)
+        .json({ message: error.message });
+    }
+  };
 
 /**
  * Can access
@@ -103,7 +111,7 @@ const accessAny =
     canAny(...actions.map((action) => [action, subject]));
 
 module.exports = {
-  isAdmin,
+  isUser,
   can,
   canAll,
   canAny,
