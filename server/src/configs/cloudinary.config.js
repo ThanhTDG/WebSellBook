@@ -3,6 +3,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+/**
+ * Configure cloudinary
+ */
 const configCloudinary = () =>
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

@@ -9,6 +9,7 @@ const auth = require("./routes/auth.routes");
 const category = require("./routes/category.routes");
 const book = require("./routes/book.routes");
 const order = require("./routes/order.routes");
+const permission = require("./routes/permission.routes");
 const role = require("./routes/role.routes");
 const user = require("./routes/user.routes");
 
@@ -30,6 +31,7 @@ router.use("/auth", auth);
 router.use("/categories", authenticate, isAdmin, category);
 router.use("/books", authenticate, isAdmin, book);
 router.use("/orders", authenticate, isAdmin, order);
+router.use("/permissions", authenticate, isAdmin, permission);
 router.use("/roles", authenticate, isAdmin, role);
 router.use("/users", authenticate, isAdmin, user);
 
