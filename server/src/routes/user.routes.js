@@ -14,9 +14,9 @@ const router = express.Router();
 const canAccess = access(USER);
 
 router.get("/", controller.getAll);
-router.get("/admin");
+router.get("/admin", controller.getAdmins);
 router.post("/admin");
-router.get("/customer");
+router.get("/customer", controller.getCustomers);
 
 router.get("/:id", controller.get);
 router.put("/:id", controller.update);

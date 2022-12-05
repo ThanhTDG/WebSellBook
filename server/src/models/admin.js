@@ -7,6 +7,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const Schema = mongoose.Schema;
 
 const adminSchema = new Schema({
+  username: String,
   roles: {
     type: [Schema.Types.ObjectId],
     ref: "Role",
@@ -20,7 +21,7 @@ const adminSchema = new Schema({
  */
 adminSchema.statics.findByCredentials = async (username, password) => {
   const user = await Admin.findOne({
-    $or: [{ email: username }, { phone: username }],
+    $or: [{ username }, { email: username }, { phone: username }],
   });
   if (!user) {
     throw new ErrorHandler(401, "Unable to login");

@@ -157,6 +157,10 @@ const setProfile = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, sex, birthday } = req.body;
     const user = req.user;
+    if (user.isRootAdmin()) {
+      throw new ErrorHandler(403, "Cannot modified admin account");
+    }
+
     const data = await User.findByIdAndUpdate(
       user._id,
       { firstName, lastName, email, phone, sex, birthday },

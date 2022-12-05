@@ -111,6 +111,13 @@ userSchema.methods.isAdmin = function () {
 };
 
 /**
+ * Is root admin
+ */
+userSchema.methods.isRootAdmin = function () {
+  return this.isAdmin() && this.username === "admin";
+};
+
+/**
  * Validate password
  * @param {string} password
  */

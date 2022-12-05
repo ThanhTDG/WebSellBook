@@ -28,8 +28,8 @@ const isAdmin =
 
 /**
  * Can access
- * @param {string} method
- * @param  {...any} args
+ * @param {string} method Method name
+ * @param  {...any} args Arguments
  */
 const _can =
   (method, ...args) =>
