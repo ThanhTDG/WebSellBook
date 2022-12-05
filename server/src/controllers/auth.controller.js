@@ -4,6 +4,7 @@ const {
   NODE_ENV: { PROC },
 } = require("../constants");
 
+const Customer = require("../models/customer");
 const User = require("../models/user");
 
 const ErrorHandler = require("../utils/errorHandler");
@@ -49,7 +50,7 @@ const signUp = async (req, res) => {
     const { firstName, lastName, email, phone, password } = req.body;
     const avatar = generateAvatar(firstName);
     const body = { firstName, lastName, email, phone, password, avatar };
-    const data = new User(body);
+    const data = new Customer(body);
     const newData = await data.save();
 
     const user = user2json(newData);

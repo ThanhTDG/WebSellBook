@@ -28,7 +28,7 @@ const permissionSchema = new Schema(
 permissionSchema.index({ subject: 1, action: 1 }, { unique: true });
 
 /**
- * Can access
+ * Can access with action and subject
  * @param {string} action
  * @param {string} subject
  */

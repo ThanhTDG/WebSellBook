@@ -31,8 +31,38 @@ const isAdmin =
  * @param {string} method Method name
  * @param  {...any} args Arguments
  */
-const _can =
-  (method, ...args) =>
+// FIXME: Error
+// const _can =
+//   (method, ...args) =>
+//   /**
+//    * @param {Request} req Request
+//    * @param {Response} res Response
+//    * @param {Function} next Next function
+//    */
+//   async (req, res, next) => {
+//     try {
+//       const user = req.user;
+//       const hasPerm = await user.can(args);
+//       if (!hasPerm) {
+//         throw new ErrorHandler(403, "Permission denied");
+//       }
+
+//       next();
+//     } catch (error) {
+//       await res
+//         .status(error.statusCode || 403)
+//         .json({ message: error.message });
+//     }
+//   };
+
+/**
+ * Can access action and subject
+ * @param {string} action
+ * @param {string} subject
+ */
+const can =
+  (action, subject) =>
+  //_can("can", action, subject);
   /**
    * @param {Request} req Request
    * @param {Response} res Response
@@ -41,7 +71,7 @@ const _can =
   async (req, res, next) => {
     try {
       const user = req.user;
-      const hasPerm = await user[method](...args);
+      const hasPerm = await user.can(action, subject);
       if (!hasPerm) {
         throw new ErrorHandler(403, "Permission denied");
       }
@@ -55,23 +85,60 @@ const _can =
   };
 
 /**
- * Can access action and subject
- * @param {string} action
- * @param {string} subject
- */
-const can = (action, subject) => _can("can", action, subject);
-
-/**
  * Can access all actions and subjects
  * @param  {...[string, string]} actionsAndSubjects Actions and subjects
  */
-const canAll = (...actionsAndSubjects) => _can("canAll", ...actionsAndSubjects);
+const canAll =
+  (...actionsAndSubjects) =>
+  //  _can("canAll", ...actionsAndSubjects);
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   * @param {Function} next Next function
+   */
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      const hasPerm = await user.canAll(...actionsAndSubjects);
+      if (!hasPerm) {
+        throw new ErrorHandler(403, "Permission denied");
+      }
+
+      next();
+    } catch (error) {
+      await res
+        .status(error.statusCode || 403)
+        .json({ message: error.message });
+    }
+  };
 
 /**
  * Can access any action and subject
  * @param  {...[string, string]} actionsAndSubjects Actions and subjects
  */
-const canAny = (...actionsAndSubjects) => _can("canAny", ...actionsAndSubjects);
+const canAny =
+  (...actionsAndSubjects) =>
+  // _can("canAny", ...actionsAndSubjects);
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   * @param {Function} next Next function
+   */
+  async (req, res, next) => {
+    try {
+      const user = req.user;
+      const hasPerm = await user.canAny(...actionsAndSubjects);
+      if (!hasPerm) {
+        throw new ErrorHandler(403, "Permission denied");
+      }
+
+      next();
+    } catch (error) {
+      await res
+        .status(error.statusCode || 403)
+        .json({ message: error.message });
+    }
+  };
 
 /**
  * Access subject with action

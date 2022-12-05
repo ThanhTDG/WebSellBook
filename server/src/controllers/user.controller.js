@@ -53,6 +53,54 @@ const UserController = class extends Controller {
       await res.status(400).json({ message: error.message });
     }
   };
+
+  /**
+   * Create admin
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  createAdmin = async (req, res) => {
+    try {
+      const body = this.getData(req.body);
+      body.avatar = generateAvatar(body.firstName);
+      const data = new Admin(body);
+      const newData = await data.save();
+
+      const user = this.toJson(newData);
+      await res
+        .status(201)
+        .json({ message: "User created successfully", user });
+    } catch (error) {
+      await res.status(400).json({ message: error.message });
+    }
+  };
+};
+
+/**
+ * Get data from body of request
+ */
+const getData = ({
+  firstName,
+  lastName,
+  email,
+  phone,
+  password,
+  birthday,
+  sex,
+  roles,
+}) => {
+  const data = {
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    birthday,
+    sex,
+    roles,
+  };
+  Object.keys(data).forEach((key) => !data[key] && delete data[key]);
+  return data;
 };
 
 /**
@@ -69,4 +117,4 @@ const toJson = (data) => {
   return obj;
 };
 
-module.exports = new UserController(null, toJson);
+module.exports = new UserController(getData, toJson);
