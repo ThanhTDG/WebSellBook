@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { isUser } = require("./middlewares/access.middleware");
+const { isAdmin } = require("./middlewares/access.middleware");
 const { authenticate } = require("./middlewares/auth.middleware");
 
 // TODO: import routes here
@@ -20,22 +20,19 @@ const favorite = require("./routes/favorite.routes");
 
 const router = express.Router();
 
-const isAdmin = isUser("Admin");
-const isCustomer = isUser("Customer");
-
 // TODO: use routes here
 router.use("/auth", auth);
 
-router.use("/categories", authenticate, isAdmin, category);
-router.use("/books", authenticate, isAdmin, book);
-router.use("/orders", authenticate, isAdmin, order);
-router.use("/permissions", authenticate, isAdmin, permission);
-router.use("/roles", authenticate, isAdmin, role);
-router.use("/users", authenticate, isAdmin, user);
+router.use("/categories", authenticate, isAdmin(true), category);
+router.use("/books", authenticate, isAdmin(true), book);
+router.use("/orders", authenticate, isAdmin(true), order);
+router.use("/permissions", authenticate, isAdmin(true), permission);
+router.use("/roles", authenticate, isAdmin(true), role);
+router.use("/users", authenticate, isAdmin(true), user);
 
 router.use("/", product);
 router.use("/comment", comment);
 router.use("/cart", authenticate, cart);
-router.use("/favorite", authenticate, isCustomer, favorite);
+router.use("/favorite", authenticate, isAdmin(false), favorite);
 
 module.exports = router;

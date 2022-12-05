@@ -1,11 +1,11 @@
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
- * Is user type?
- * @param {"Admin"|"Customer"} type
+ * Check is admin
+ * @param {boolean} check If check is true, check user is admin, otherwise check user is customer
  */
-const isUser =
-  (type) =>
+const isAdmin =
+  (check) =>
   /**
    * @param {Request} req Request
    * @param {Response} res Response
@@ -14,8 +14,7 @@ const isUser =
   async (req, res, next) => {
     try {
       const user = req.user;
-      const hasPerm = user.__t === type;
-      if (!hasPerm) {
+      if (check !== user.isAdmin()) {
         throw new ErrorHandler(403, "Permission denied");
       }
 
@@ -111,7 +110,7 @@ const accessAny =
     canAny(...actions.map((action) => [action, subject]));
 
 module.exports = {
-  isUser,
+  isAdmin,
   can,
   canAll,
   canAny,

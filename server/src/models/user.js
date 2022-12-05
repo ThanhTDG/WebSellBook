@@ -97,11 +97,17 @@ userSchema.virtual("fullName").get(function () {
 
 /**
  * Generate token
- * @returns {string}
  */
 userSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
+};
+
+/**
+ * Is admin
+ */
+userSchema.methods.isAdmin = function () {
+  return this.__t === "Admin";
 };
 
 /**
