@@ -8,6 +8,7 @@ const {
 const controller = require("../controllers/user.controller");
 
 const { access, canAny } = require("../middlewares/access.middleware");
+const { accessUser } = require("../middlewares/user.middleware");
 
 const router = express.Router();
 
@@ -30,8 +31,8 @@ router.get(
   controller.getCustomers
 );
 
-router.get("/:id", controller.get);
-router.put("/:id", controller.update);
-router.delete("/:id", controller.remove);
+router.get("/:id", accessUser(ACTION.READ), controller.get);
+router.put("/:id", accessUser(ACTION.UPDATE), controller.update);
+router.delete("/:id", accessUser(ACTION.DELETE), controller.remove);
 
 module.exports = router;

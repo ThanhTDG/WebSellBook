@@ -55,6 +55,9 @@ tags:
 - name: Quản lý đơn hàng
   description: |
     Sử dụng để quản lý đơn hàng, dành cho phân hệ khách hàng
+- name: Quản lý sách yêu thích
+  description: |
+    Sử dụng để quản lý sách yêu thích, dành cho phân hệ khách hàng
 paths:
   /categories:
     get:
@@ -1335,6 +1338,129 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /favorite:
+    get:
+      tags:
+      - Quản lý sách yêu thích
+      summary: Sử dụng để lấy danh sách sách yêu thích
+      description: |
+        Lấy danh sách sách yêu thích.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.array.BookLite'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /favorite/{book}:
+    post:
+      tags:
+      - Quản lý sách yêu thích
+      summary: Sử dụng để thêm sách yêu thích
+      description: |
+        Thêm sách yêu thích theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99261e
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Quản lý sách yêu thích
+      summary: Sử dụng để xóa sách yêu thích
+      description: |
+        Xóa sách yêu thích theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99261e
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.array.BookLite'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
 components:
   schemas:
     Message:
@@ -1886,7 +2012,7 @@ components:
       properties:
         images:
           type: array
-          description: File ảnh
+          description: File hình ảnh
           items:
             type: string
             format: binary
@@ -1896,9 +2022,15 @@ components:
       type: object
       properties:
         images:
-          description: Link hình ảnh, nếu một hình ảnh có thể truyền string, nhiều hình ảnh thì truyền mảng
+          type: array
+          description: |
+            Link hình ảnh. Lưu ý: nếu chỉ có một hình ảnh có thể truyền string, không cần truyền mảng
           example:
-          - https://example.com/example.png
+          - https://example.com/example1.png
+          - https://example.com/example2.png
+          items:
+            type: string
+            format: link
     client.Category:
       type: object
       properties:
@@ -2069,6 +2201,37 @@ components:
             rate: 63
           items:
             $ref: '#/components/schemas/RatingRate'
+    client.BookLite:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID sách
+          format: ObjectId
+          example: 634ed8e4f6a3a7266d99276d
+        name:
+          type: string
+          description: Tên sách
+          example: Thiên Sứ Nhà Bên – Tập 3
+        images:
+          type: array
+          items:
+            type: string
+            description: Link hình ảnh sách
+            format: link
+            example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
+        originalPrice:
+          type: number
+          description: Giá bìa
+          example: 95000
+        discountRate:
+          type: number
+          description: Giảm giá (%)
+          example: 25
+        price:
+          type: number
+          description: Giá hiện tại
+          example: 72000
     client.Comment:
       type: object
       properties:
@@ -2170,6 +2333,10 @@ components:
             items:
               $ref: '#/components/schemas/client.Comment'
       - $ref: '#/components/schemas/Pagination'
+    client.array.BookLite:
+      type: array
+      items:
+        $ref: '#/components/schemas/client.BookLite'
     RatingRate:
       type: object
       properties:
