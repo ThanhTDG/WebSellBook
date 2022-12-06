@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
@@ -8,7 +7,6 @@ const Category = require("./category");
 const { BOOK_STATUS } = require("../constants");
 const { normalizeStr } = require("../utils/utils");
 
-// mongoose.plugin(aggregatePaginate);
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 

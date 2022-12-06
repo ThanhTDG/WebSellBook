@@ -1,8 +1,8 @@
+const async = require("async");
 const mongoose = require("mongoose");
 
 const User = require("./user");
 
-const { asyncSome2, asyncEvery2 } = require("../utils/async-array");
 const ErrorHandler = require("../utils/errorHandler");
 
 const Schema = mongoose.Schema;
@@ -44,7 +44,7 @@ adminSchema.statics.findByCredentials = async (username, password) => {
 adminSchema.methods.can = async function (action, subject) {
   try {
     await this.populate("roles");
-    const hasPerm = await asyncSome2(
+    const hasPerm = await async.some(
       this.roles,
       async (role) => await role.can(action, subject)
     );
@@ -62,7 +62,7 @@ adminSchema.methods.can = async function (action, subject) {
  */
 adminSchema.methods.canAll = async function (...actionsAndSubjects) {
   try {
-    const hasPerm = await asyncEvery2(
+    const hasPerm = await async.every(
       actionsAndSubjects,
       async ([action, subject]) => await this.can(action, subject)
     );
@@ -79,7 +79,7 @@ adminSchema.methods.canAll = async function (...actionsAndSubjects) {
  */
 adminSchema.methods.canAny = async function (...actionsAndSubjects) {
   try {
-    const hasPerm = await asyncSome2(
+    const hasPerm = await async.some(
       actionsAndSubjects,
       async ([action, subject]) => await this.can(action, subject)
     );
