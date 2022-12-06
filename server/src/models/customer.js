@@ -41,13 +41,33 @@ const addressSchema = new Schema({
 
 const customerSchema = new Schema({
   addresses: [addressSchema],
-  favorites: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
+  favorites: {
+    type: [Schema.Types.ObjectId],
+    ref: "Book",
+  },
 });
+
+const book2Json = ({
+  _id,
+  name,
+  images,
+  countInStock,
+  originalPrice,
+  discountRate,
+  price,
+}) => ({ _id, name, images, countInStock, originalPrice, discountRate, price });
+
+customerSchema
+  .virtual("favorite", {
+    ref: "Book",
+    localField: "favorites",
+    foreignField: "_id",
+  })
+  .get(function (value) {
+    if (value) {
+      return value.map((v) => book2Json(v));
+    }
+  });
 
 /**
  * Credential account

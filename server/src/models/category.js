@@ -24,12 +24,10 @@ const categorySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Category",
     },
-    tree: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
+    tree: {
+      type: [Schema.Types.ObjectId],
+      ref: "Category",
+    },
   },
   { timestamps: true }
 );

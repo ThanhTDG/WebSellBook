@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const Customer = require("../models/customer");
 
 /**
  * @param {Request} req Request
@@ -7,7 +7,8 @@ const User = require("../models/user");
 const getFavorites = async (req, res) => {
   try {
     const user = req.user;
-    await res.json(user.favorites);
+    await user.populate("favorite");
+    await res.json(user.favorite);
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -21,7 +22,7 @@ const addFavorite = async (req, res) => {
   try {
     const bookId = req.params.book;
     const user = req.user;
-    await User.findByIdAndUpdate(
+    await Customer.findByIdAndUpdate(
       user.id,
       { $addToSet: { favorites: bookId } },
       { new: true }
@@ -41,13 +42,13 @@ const removeFavorite = async (req, res) => {
   try {
     const bookId = req.params.book;
     const user = req.user;
-    const data = await User.findByIdAndUpdate(
+    const data = await Customer.findByIdAndUpdate(
       user.id,
       { $pull: { favorites: bookId } },
       { new: true }
-    );
+    ).populate("favorite");
 
-    await res.json(data.favorites);
+    await res.json(data.favorite);
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }

@@ -100,12 +100,10 @@ const bookSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    tree: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
+    tree: {
+      type: [Schema.Types.ObjectId],
+      ref: "Category",
+    },
   },
   { timestamps: true }
 );

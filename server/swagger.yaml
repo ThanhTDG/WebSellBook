@@ -401,7 +401,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/books_upload_body'
+              $ref: '#/components/schemas/form.UploadImages'
         required: true
       responses:
         "200":
@@ -441,10 +441,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/books_destroy_body'
+              $ref: '#/components/schemas/form.DestroyImages'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/books_destroy_body_1'
+              $ref: '#/components/schemas/form.DestroyImages'
         required: true
       responses:
         "200":
@@ -886,7 +886,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/admin.pagination.Role'
+                $ref: '#/components/schemas/admin.pagination.Permission'
         "400":
           description: Lỗi request
           content:
@@ -1819,7 +1819,7 @@ components:
           example: 1234abcd
         isAdmin:
           type: boolean
-          description: Đăng nhập với tư cách quản trị
+          description: Đăng nhập với tư cách quản trị (yêu cầu mặc định `true` khi đăng nhập bên quản trị, trường này không có bên khách hàng)
           example: false
     form.Profile:
       required:
@@ -1879,6 +1879,26 @@ components:
           type: string
           description: Mật khẩu
           example: 1234abcd
+    form.UploadImages:
+      required:
+      - images
+      type: object
+      properties:
+        images:
+          type: array
+          description: File ảnh
+          items:
+            type: string
+            format: binary
+    form.DestroyImages:
+      required:
+      - images
+      type: object
+      properties:
+        images:
+          description: Link hình ảnh, nếu một hình ảnh có thể truyền string, nhiều hình ảnh thì truyền mảng
+          example:
+          - https://example.com/example.png
     client.Category:
       type: object
       properties:
@@ -2161,45 +2181,18 @@ components:
           type: number
           description: Tỷ lệ đánh giá (%)
           example: 33
-    books_upload_body:
-      required:
-      - images
-      type: object
-      properties:
-        images:
-          type: array
-          description: File ảnh
-          items:
-            type: string
-            format: binary
     inline_response_200:
       type: object
       properties:
         paths:
           type: array
-          description: Link ảnh
+          description: Link hình ảnh
           example:
           - https://example.com/example1.png
           - https://example.com/example2.png
           items:
             type: string
             format: link
-    books_destroy_body:
-      type: object
-      properties:
-        image:
-          type: string
-          description: Link ảnh
-          format: link
-          example: https://example.com/example.png
-    books_destroy_body_1:
-      type: object
-      properties:
-        image:
-          type: string
-          description: Link ảnh
-          format: link
-          example: https://example.com/example.png
     inline_response_201:
       allOf:
       - $ref: '#/components/schemas/Message'
@@ -2234,7 +2227,7 @@ components:
         properties:
           avatar:
             type: string
-            description: Link ảnh đại diện
+            description: Link hình ảnh đại diện
             format: link
             example: https://example.com/example.png
     client.Comment_user:
