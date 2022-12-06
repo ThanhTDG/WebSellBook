@@ -10,7 +10,7 @@ const controller = require("../controllers/book.controller");
 const { access } = require("../middlewares/access.middleware");
 const {
   uploadImgs,
-  destroyImg,
+  destroyImgs,
 } = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
@@ -29,8 +29,8 @@ router.post(
 router.post(
   "/destroy",
   canAccess(ACTION.UPDATE),
-  destroyImg("books"),
-  controller.destroyImg
+  destroyImgs("books"),
+  controller.destroyImgs
 );
 
 router.get("/:id", canAccess(ACTION.READ), controller.get);

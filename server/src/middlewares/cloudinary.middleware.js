@@ -33,7 +33,7 @@ const uploadImgs = (folder) => upload(`${folder}`).array("images");
  * Destroy images
  * @param {string} folder
  */
-const destroyImg =
+const destroyImgs =
   (folder) =>
   /**
    * @param {Request} req Request
@@ -42,9 +42,15 @@ const destroyImg =
    */
   async (req, res, next) => {
     try {
-      const image = req.body.image;
-      const public_id = image.split("/").pop().split(".")[0];
-      await destroy(`${folder}/${public_id}`);
+      const images =
+        typeof req.body.images === "string"
+          ? [req.body.images]
+          : req.body.images;
+      images.forEach(async (image) => {
+        const public_id = image.split("/").pop().split(".")[0];
+        await destroy(`${folder}/${public_id}`);
+      });
+
       next();
     } catch (error) {
       await res.status(400).json({ message: error.message });
@@ -55,5 +61,5 @@ module.exports = {
   uploadAvatar,
   destroyAvatar,
   uploadImgs,
-  destroyImg,
+  destroyImgs,
 };

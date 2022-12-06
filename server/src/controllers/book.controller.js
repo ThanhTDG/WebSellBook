@@ -26,11 +26,11 @@ const BookController = class extends Controller {
   };
 
   /**
-   * Destroy image
+   * Destroy images
    * @param {Request} req Request
    * @param {Response} res Response
    */
-  destroyImg = async (req, res) =>
+  destroyImgs = async (req, res) =>
     await res.json({ message: "Delete image successfully" });
 };
 
