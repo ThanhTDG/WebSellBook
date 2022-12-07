@@ -51,9 +51,9 @@ const signUp = async (req, res) => {
     const avatar = generateAvatar(firstName);
     const body = { firstName, lastName, email, phone, password, avatar };
     const data = new Customer(body);
-    const newData = await data.save();
+    await data.save();
 
-    const user = user2json(newData);
+    const user = user2json(data);
     await res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     await res.status(400).json({ message: error.message });

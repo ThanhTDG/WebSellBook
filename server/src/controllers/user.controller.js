@@ -64,9 +64,9 @@ const UserController = class extends Controller {
       const body = this.getData(req.body);
       body.avatar = generateAvatar(body.firstName);
       const data = new Admin(body);
-      const newData = await data.save();
+      await data.save();
 
-      const user = this.toJson(newData);
+      const user = this.toJson(data);
       await res
         .status(201)
         .json({ message: "User created successfully", user });
