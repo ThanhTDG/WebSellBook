@@ -16,6 +16,7 @@ const user = require("./routes/user.routes");
 const product = require("./routes/product.routes");
 const comment = require("./routes/comment.routes");
 const cart = require("./routes/cart.routes");
+const address = require('./routes/address.routes');
 const favorite = require("./routes/favorite.routes");
 
 const router = express.Router();
@@ -33,6 +34,7 @@ router.use("/users", authenticate, isAdmin(true), user);
 router.use("/", product);
 router.use("/comment", comment);
 router.use("/cart", authenticate, cart);
+router.use("/address", authenticate, isAdmin(false), address);
 router.use("/favorite", authenticate, isAdmin(false), favorite);
 
 module.exports = router;

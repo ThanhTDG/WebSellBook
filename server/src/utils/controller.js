@@ -46,7 +46,9 @@ const Controller = class {
 
       await res.json(data);
     } catch (error) {
-      await res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 
@@ -80,10 +82,12 @@ const Controller = class {
     try {
       const body = this.getData(req.body);
       const data = new this.model(body);
-      const newData = await data.save();
-      await res.status(201).json(this.toJson(newData));
+      await data.save();
+      await res.status(201).json(this.toJson(data));
     } catch (error) {
-      await res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 

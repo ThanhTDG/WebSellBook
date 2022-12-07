@@ -8,6 +8,11 @@ const ErrorHandler = require("../utils/errorHandler");
 const Schema = mongoose.Schema;
 
 const addressSchema = new Schema({
+  fullName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   phone: {
     type: String,
     require: true,
