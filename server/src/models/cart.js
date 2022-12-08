@@ -101,6 +101,22 @@ cartSchema.methods.clearCookie = async function (res) {
 };
 
 /**
+ * Merge cart
+ * @param {Cart} cart
+ */
+cartSchema.methods.merge = async function (cart) {
+  cart.items.forEach((item) => {
+    const cartItem = this.items.find((i) => (i.bookId = item.bookId));
+    if (cartItem) {
+      cartItem.$set(item);
+    } else {
+      this.items.addToSet(item);
+    }
+  });
+  await this.save();
+};
+
+/**
  * Save to cookie
  * @param {Response} res Response
  */
@@ -118,4 +134,6 @@ cartSchema.methods.toJson = function () {
   return obj;
 };
 
-module.exports = mongoose.model("Cart", cartSchema);
+const Cart = mongoose.model("Cart", cartSchema);
+
+module.exports = Cart;

@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 
 dotenv.config();
 
+mongoose.set("strictQuery", false);
+
 /**
  * Connect to database
  */

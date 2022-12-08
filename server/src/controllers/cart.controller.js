@@ -23,7 +23,7 @@ const selectedAll = async (req, res) => {
     const user = req.user;
     const cart = req.cart;
     cart.items.forEach((value) => (value.selected = selected));
-    user ? await cart.save : await cart.saveCookie(res);
+    await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 
     await res.json(cart.toJson());
@@ -41,8 +41,10 @@ const addBook = async (req, res) => {
     const bookId = req.params.book;
     const user = req.user;
     const cart = req.cart;
-    cart.items.addToSet({ bookId });
-    await (user ? cart.save() : cart.saveCookie(res));
+    if (cart.items.every((item) => item.bookId != bookId)) {
+      cart.items.push({ bookId });
+      await (user ? cart.save() : cart.saveCookie(res));
+    }
     await cart.populate(["items.book", "items.total"]);
 
     await res.json(cart.toJson());
@@ -60,8 +62,8 @@ const updateBook = async (req, res) => {
     const bookId = req.params.book;
     const { quantity, selected } = req.body;
     const set = {};
-    if (quantity) set["items.$.quantity"] = quantity;
-    if (selected) set["items.$.selected"] = selected;
+    if (quantity) set.quantity = quantity;
+    if (selected) set.selected = selected;
 
     const user = req.user;
     const cart = req.cart;

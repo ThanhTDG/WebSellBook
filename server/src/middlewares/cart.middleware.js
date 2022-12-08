@@ -22,11 +22,8 @@ const getCart = async (req, res, next) => {
         await cart.save();
       }
     } else {
-      cart = new Cart(req.cookies.cart);
-      if (!cart) {
-        cart = new Cart();
-        await cart.saveCookie(res);
-      }
+      cart = new Cart(req.cookies.cart || null);
+      await cart.saveCookie(res);
     }
     req.cart = cart;
 

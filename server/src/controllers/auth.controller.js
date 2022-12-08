@@ -1,3 +1,4 @@
+const Cart = require("../models/cart");
 const Customer = require("../models/customer");
 const User = require("../models/user");
 
@@ -59,9 +60,17 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const user = req.user;
-    const token = user.generateAuthToken();
 
+    const token = user.generateAuthToken();
     await saveCookie(res, "token", token, true);
+
+    const cart =
+      (await Cart.findOne({ userId: user.id })) ||
+      new Cart({ userId: user.id });
+    const cookieCart = new Cart(req.cookies.cart || null);
+    cart.merge(cookieCart);
+    cookieCart.clearCookie(res);
+
     await res.json({ token, user: user2json(user) });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
