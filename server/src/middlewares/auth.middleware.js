@@ -51,7 +51,7 @@ const _login =
  * @param {Function} next Next function
  */
 const requiredLogin = (req, res, next) => {
-  const strategy = req.body.isAdmin ? "local-admin" : "local-customer";
+  const strategy = req.body.isAdmin === true ? "local-admin" : "local-customer";
   return passport.authenticate(strategy, opts, _login(req, res, next))(req, res, next);
 };
 
