@@ -35,4 +35,10 @@ router.get("/:id", accessUser(ACTION.READ), controller.get);
 router.put("/:id", accessUser(ACTION.UPDATE), controller.update);
 router.delete("/:id", accessUser(ACTION.DELETE), controller.remove);
 
+router.put(
+  "/:id/resetpassword",
+  accessUser(ACTION.UPDATE),
+  controller.resetPassword
+);
+
 module.exports = router;

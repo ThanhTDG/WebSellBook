@@ -6,6 +6,8 @@ const { canAny } = require("../middlewares/access.middleware");
 
 const User = require("../models/user");
 
+const ErrorHandler = require("../utils/errorHandler");
+
 /**
  * Can access user with action
  * @param {string} action
@@ -22,7 +24,7 @@ const accessUser =
       const id = req.params.id;
       const user = await User.findById(id);
       if (!user) {
-        throw new ErrorHandler(400, `Userwith {_id: '${id}'} not found`);
+        throw new ErrorHandler(400, `User with {_id: '${id}'} not found`);
       }
 
       if (user.isAdmin()) {

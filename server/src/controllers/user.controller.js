@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+
 const Admin = require("../models/admin");
 const Customer = require("../models/customer");
 const User = require("../models/user");
@@ -5,6 +7,8 @@ const User = require("../models/user");
 const Controller = require("../utils/controller");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
+
+dotenv.config();
 
 const UserController = class extends Controller {
   constructor(getData, toJson) {
@@ -64,6 +68,7 @@ const UserController = class extends Controller {
     try {
       const body = this.getData(req.body);
       body.avatar = generateAvatar(body.firstName);
+      body.password = process.env.PASSWORD;
       const data = new Admin(body);
       await data.save();
 
@@ -77,7 +82,6 @@ const UserController = class extends Controller {
   };
 
   /**
-   * Update data by id
    * @param {Request} req Request
    * @param {Response} res Response
    */
@@ -107,7 +111,6 @@ const UserController = class extends Controller {
   };
 
   /**
-   * Delete data by id
    * @param {Request} req Request
    * @param {Response} res Response
    */
@@ -128,6 +131,35 @@ const UserController = class extends Controller {
       await res.json({
         message: `Document with {_id: '${id}'} has been deleted...`,
       });
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
+
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  resetPassword = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const data = await this.model.findOne({
+        _id: id,
+        username: { $ne: "admin" },
+      });
+      if (!data) {
+        throw new ErrorHandler(
+          400,
+          `Document with {_id: '${id}'} not found or cannot reset password of admin user`
+        );
+      }
+
+      data.password = process.env.PASSWORD;
+      await data.save();
+
+      await res.json({ message: "Password reset successful" });
     } catch (error) {
       await res
         .status(error.statusCode || 400)
