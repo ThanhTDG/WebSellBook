@@ -15,6 +15,17 @@ const adminSchema = new Schema({
   },
 });
 
+adminSchema
+  .virtual("_roles", { ref: "Role", localField: "roles", foreignField: "_id" })
+  .get(function (values) {
+    if (values) {
+      return values.map((value) => {
+        const { _id, id, name } = value;
+        return { _id, id, name };
+      });
+    }
+  });
+
 /**
  * Credential account
  * @param {string} username

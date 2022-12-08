@@ -11,8 +11,8 @@ const { generateAvatar } = require("../utils/generateAvatar");
 dotenv.config();
 
 const UserController = class extends Controller {
-  constructor(getData, toJson) {
-    super(User, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(User, getData, toJson, populate);
   }
 
   /**
@@ -27,6 +27,7 @@ const UserController = class extends Controller {
         page,
         limit,
         pagination: page && limit,
+        populate: this.populate,
       };
       const data = await Admin.paginate({}, options);
       data.docs = data.docs.map((value) => this.toJson(value));
@@ -206,7 +207,8 @@ const toJson = (data) => {
   delete obj.username;
   delete obj.password;
   obj.id = data.id;
+  obj.roles = data._roles;
   return obj;
 };
 
-module.exports = new UserController(getData, toJson);
+module.exports = new UserController(getData, toJson, "_roles");

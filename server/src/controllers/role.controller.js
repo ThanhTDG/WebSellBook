@@ -4,8 +4,8 @@ const Controller = require("../utils/controller");
 const ErrorHandler = require("../utils/errorHandler");
 
 const RoleController = class extends Controller {
-  constructor(getData, toJson) {
-    super(Role, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(Role, getData, toJson, populate);
   }
 
   /**
@@ -85,7 +85,8 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   obj.id = data.id;
+  obj.permissions = data._permissions;
   return obj;
 };
 
-module.exports = new RoleController(getData, toJson);
+module.exports = new RoleController(getData, toJson, "_permissions");

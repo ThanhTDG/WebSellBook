@@ -3,8 +3,8 @@ const Category = require("../models/category");
 const Controller = require("../utils/controller");
 
 const CategoryController = class extends Controller {
-  constructor(getData, toJson) {
-    super(Category, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(Category, getData, toJson, populate);
   }
 };
 
@@ -27,7 +27,8 @@ const toJson = (data) => {
   delete obj.tree;
   delete obj.children;
   obj.id = data.id;
+  obj.parent = data._parent;
   return obj;
 };
 
-module.exports = new CategoryController(getData, toJson);
+module.exports = new CategoryController(getData, toJson, "_parent");

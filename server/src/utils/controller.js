@@ -21,11 +21,13 @@ const Controller = class {
    * @param {mongoose.Model} model
    * @param {GetData} getData
    * @param {ToJson} toJson
+   * @param {string|string[]} populate
    */
-  constructor(model, getData, toJson) {
+  constructor(model, getData, toJson, populate) {
     this.model = model;
     this.getData = getData || ((body) => body);
     this.toJson = toJson || ((data) => data);
+    this.populate = populate;
   }
 
   /**
@@ -40,6 +42,7 @@ const Controller = class {
         page,
         limit,
         pagination: page && limit,
+        populate: this.populate,
       };
       const data = await this.model.paginate({}, options);
       data.docs = data.docs.map((value) => this.toJson(value));
@@ -60,7 +63,7 @@ const Controller = class {
   get = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await this.model.findById(id);
+      const data = await this.model.findById(id).populate(this.populate);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }

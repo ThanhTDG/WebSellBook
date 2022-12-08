@@ -4,8 +4,8 @@ const Controller = require("../utils/controller");
 const { isEmpty } = require("../utils/utils");
 
 const BookController = class extends Controller {
-  constructor(getData, toJson) {
-    super(Book, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(Book, getData, toJson, populate);
   }
 
   /**
@@ -98,8 +98,11 @@ const getData = ({
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
+  delete obj.tree;
+  delete obj.textSearch;
   obj.id = data._id;
+  obj.category = data._category;
   return obj;
 };
 
-module.exports = new BookController(getData, toJson);
+module.exports = new BookController(getData, toJson, "_category");

@@ -22,6 +22,21 @@ const roleSchema = new Schema(
   { timestamps: true }
 );
 
+roleSchema
+  .virtual("_permissions", {
+    ref: "Permission",
+    localField: "permissions",
+    foreignField: "_id",
+  })
+  .get(function (values) {
+    if (values) {
+      return values.map((value) => {
+        const { _id, id, description } = value;
+        return { _id, id, description };
+      });
+    }
+  });
+
 /**
  * Can access with action and subject
  * @param {string} action

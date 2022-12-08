@@ -32,6 +32,20 @@ const categorySchema = new Schema(
   { timestamps: true }
 );
 
+categorySchema
+  .virtual("_parent", {
+    ref: "Category",
+    localField: "parent",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      const { _id, id, name } = value;
+      return { _id, id, name };
+    }
+  });
+
 categorySchema.virtual("children", {
   ref: "Category",
   localField: "_id",

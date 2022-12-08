@@ -110,6 +110,20 @@ const bookSchema = new Schema(
 
 bookSchema.index({ name: "text" });
 
+bookSchema
+  .virtual("_category", {
+    ref: "Category",
+    localField: "category",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      const { _id, id, name } = value;
+      return { _id, id, name };
+    }
+  });
+
 bookSchema.virtual("shortDes").get(function () {
   const des = this.description;
   if (des.length < 200) {
