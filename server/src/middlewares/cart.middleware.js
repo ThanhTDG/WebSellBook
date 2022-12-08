@@ -11,6 +11,7 @@ const getCart = async (req, res, next) => {
   try {
     const user = req.user;
     let cart;
+
     if (user) {
       if (user.isAdmin()) {
         throw new ErrorHandler(403, "Permission denied");

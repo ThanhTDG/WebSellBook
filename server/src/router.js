@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { isAdmin } = require("./middlewares/access.middleware");
-const { authenticate } = require("./middlewares/auth.middleware");
+const { authenticate, hasUser } = require("./middlewares/auth.middleware");
 const { getCart } = require("./middlewares/cart.middleware");
 
 // TODO: import routes here
@@ -34,7 +34,7 @@ router.use("/users", authenticate, isAdmin(true), user);
 
 router.use("/", product);
 router.use("/comment", comment);
-router.use("/cart", getCart, cart);
+router.use("/cart", hasUser, getCart, cart);
 router.use("/address", authenticate, isAdmin(false), address);
 router.use("/favorite", authenticate, isAdmin(false), favorite);
 
