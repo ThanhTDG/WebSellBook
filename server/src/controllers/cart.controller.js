@@ -1,22 +1,13 @@
-const Cart = require("../models/cart");
-
 /**
  * @param {Request} req - Request
  * @param {Response} res - Response
  */
 const getCart = async (req, res) => {
   try {
-    const user = req.user;
-    let data = await Cart.findOne({ userId: user.id }).populate([
-      "items.book",
-      "items.total",
-    ]);
-    if (!data) {
-      data = new Cart({ userId: user.id });
-      data = await data.save();
-    }
+    const cart = req.cart;
+    await cart.populate(["items.book", "items.total"]);
 
-    await res.json(data);
+    await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -28,16 +19,14 @@ const getCart = async (req, res) => {
  */
 const selectedAll = async (req, res) => {
   try {
-    const user = req.user;
     const { selected } = req.body;
-    const data = await Cart.findOne({ userId: user.id }).populate([
-      "items.book",
-      "items.total",
-    ]);
-    data.items.forEach((value) => (value.selected = selected));
-    await data.save();
+    const user = req.user;
+    const cart = req.cart;
+    cart.items.forEach((value) => (value.selected = selected));
+    user ? await cart.save : await cart.saveCookie(res);
+    await cart.populate(["items.book", "items.total"]);
 
-    await res.json(data);
+    await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -51,13 +40,12 @@ const addBook = async (req, res) => {
   try {
     const bookId = req.params.book;
     const user = req.user;
-    const data = await Cart.findOneAndUpdate(
-      { userId: user.id },
-      { $addToSet: { items: { bookId } } },
-      { new: true, upsert: true }
-    ).populate(["items.book", "items.total"]);
+    const cart = req.cart;
+    cart.items.addToSet({ bookId });
+    await (user ? cart.save() : cart.saveCookie(res));
+    await cart.populate(["items.book", "items.total"]);
 
-    await res.json(data);
+    await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -76,13 +64,12 @@ const updateBook = async (req, res) => {
     if (selected) set["items.$.selected"] = selected;
 
     const user = req.user;
-    const data = await Cart.findOneAndUpdate(
-      { userId: user.id, "items.bookId": bookId },
-      { $set: set },
-      { new: true }
-    ).populate(["items.book", "items.total"]);
+    const cart = req.cart;
+    cart.items.find({ bookId }).$set(set);
+    await (user ? cart.save() : cart.saveCookie(res));
+    await cart.populate(["items.book", "items.total"]);
 
-    await res.json(data);
+    await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -96,13 +83,12 @@ const deleteBook = async (req, res) => {
   try {
     const bookId = req.params.book;
     const user = req.user;
-    const data = await Cart.findOneAndUpdate(
-      { userId: user.id },
-      { $pull: { items: { bookId } } },
-      { new: true }
-    ).populate(["items.book", "items.total"]);
+    const cart = req.cart;
+    cart.items.pull({ bookId });
+    await (user ? cart.save() : cart.saveCookie(res));
+    await cart.populate(["items.book", "items.total"]);
 
-    await res.json(data);
+    await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }

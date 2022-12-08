@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const { saveCookie, clearCookie } = require("../utils/cookie");
+
 const Schema = mongoose.Schema;
 
 const cartItemSchema = new Schema(
@@ -58,7 +60,7 @@ cartItemSchema
     return this.quantity * value.price;
   });
 
-cartItemSchema.methods.toJSON = function () {
+cartItemSchema.methods.toJson = function () {
   const obj = this.toObject();
   delete obj.bookId;
   obj.book = this.book;
@@ -90,12 +92,28 @@ cartSchema.virtual("total").get(function () {
     .reduce((sum, value) => sum + value.total, 0);
 });
 
-cartSchema.methods.toJSON = function () {
+/**
+ * Clear cookie
+ * @param {Response} res Response
+ */
+cartSchema.methods.clearCookie = async function (res) {
+  return await clearCookie(res, "cart", false);
+};
+
+/**
+ * Save to cookie
+ * @param {Response} res Response
+ */
+cartSchema.methods.saveCookie = async function (res) {
+  return await saveCookie(res, "cart", this, false);
+};
+
+cartSchema.methods.toJson = function () {
   const obj = this.toObject();
   delete obj.__v;
   delete obj.createdAt;
   delete obj.updatedAt;
-  obj.items = this.items;
+  obj.items = this.items.map((item) => item.toJson());
   obj.total = this.total;
   return obj;
 };

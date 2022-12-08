@@ -1,18 +1,9 @@
-const dotenv = require("dotenv");
-
-const {
-  NODE_ENV: { PROC },
-} = require("../constants");
-
 const Customer = require("../models/customer");
 const User = require("../models/user");
 
+const { saveCookie, clearCookie } = require("../utils/cookie");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
-
-dotenv.config();
-
-const NODE_ENV = process.env.NODE_ENV;
 
 const user2json = ({
   _id,
@@ -69,17 +60,9 @@ const signIn = async (req, res) => {
   try {
     const user = req.user;
     const token = user.generateAuthToken();
-    const cookieOpts = {
-      signed: true,
-      httpOnly: true,
-      secure: NODE_ENV === PROC,
-      maxAge: process.env.JWT_EXPIRES,
-      sameSite: NODE_ENV === PROC ? "none" : "lax",
-    };
 
-    await res
-      .cookie("token", token, cookieOpts)
-      .json({ token, user: user2json(user) });
+    await saveCookie(res, "token", token, true);
+    await res.json({ token, user: user2json(user) });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -99,16 +82,8 @@ const signOut = async (req, res) => {
           .json({ message: err.message });
       }
 
-      const cookieOpts = {
-        httpOnly: true,
-        secure: NODE_ENV === PROC,
-        maxAge: process.env.JWT_EXPIRES,
-        sameSite: NODE_ENV === PROC ? "none" : "lax",
-      };
-
-      await res
-        .clearCookie("token", cookieOpts)
-        .json({ message: "Log out successful" });
+      await clearCookie(res, "token", false);
+      await res.json({ message: "Log out successful" });
     });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
