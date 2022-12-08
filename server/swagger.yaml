@@ -1,10 +1,10 @@
 ---
 openapi: 3.0.0
 info:
-  title: API Document của website ToiMuaSach
+  title: Tài liệu API của website ToiMuaSach
   description: |
     API này được sử dụng cho team dev để phát triển hệ thống.
-    Không được để lộ API với mọi hình thức.
+    Không được để lộ API dưới mọi hình thức.
 
     _Hệ thống này được xây dựng bởi Dương Hiếu._
   contact:
@@ -47,14 +47,14 @@ tags:
 - name: Bình luận
   description: |
     Sử dụng để lấy bình luận sản phẩm, dành cho phân hệ khách hàng
-- name: Quản lý địa chỉ
-  description: |
-    Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
 - name: Quản lý giỏ hàng
   description: "Sử dụng để quản lý giỏ hàng, dành cho phân hệ khách hàng \n"
 - name: Quản lý đơn hàng
   description: |
     Sử dụng để quản lý đơn hàng, dành cho phân hệ khách hàng
+- name: Quản lý địa chỉ
+  description: |
+    Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
 - name: Quản lý sách yêu thích
   description: |
     Sử dụng để quản lý sách yêu thích, dành cho phân hệ khách hàng
@@ -1338,6 +1338,392 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /cart:
+    get:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để lấy giỏ hàng
+      description: |
+        Lấy giỏ hàng.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cart/selectall:
+    put:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để chọn/bỏ chọn mua tất cả sách trong giỏ hàng
+      description: |
+        Chọn/bỏ chọn mua tất cả sách trong giỏ hàng.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.SelectAllCart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.SelectAllCart'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cart/{book}:
+    put:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng
+      description: |
+        Chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99276d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.Cart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.Cart'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để thêm sách vào giỏ hàng
+      description: |
+        Thêm sách vào giỏ hàng theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99276d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để xóa sách khỏi giỏ hàng
+      description: |
+        Xóa sách khỏi giỏ hàng theo ID sách cho trước.
+      parameters:
+      - name: book
+        in: path
+        description: ID sách
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 634ed8e4f6a3a7266d99261e
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        "400":
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /address:
+    get:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để lấy danh sách địa chỉ giao hàng
+      description: |
+        Lấy danh sách địa chỉ giao hàng.
+      parameters:
+      - name: page
+        in: query
+        description: Trang
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 1
+      - name: limit
+        in: query
+        description: Giới hạn số document trả về
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+        example: 12
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.array.Address'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để thêm địa chỉ giao hàng mới
+      description: |
+        Thêm địa chỉ giao hàng mới.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.Address'
+        required: true
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.array.Address'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+  /address/{id}:
+    get:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để lấy địa chỉ giao hàng
+      description: |
+        Lấy địa chỉ giao hàng theo ID địa chỉ cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 6390023e68b6bce81199e74d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Address'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    put:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để sửa thông tin địa chỉ giao hàng
+      description: |
+        Sửa thông tin địa chỉ giao hàng theo ID địa chỉ cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 6390023e68b6bce81199e74d
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.Address'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Address'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để xóa địa chỉ giao hàng
+      description: |
+        Xóa địa chỉ theo ID địa chỉ cho trước.
+      parameters:
+      - name: id
+        in: path
+        description: ID danh mục
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: ObjectId
+        example: 6390023e68b6bce81199e74d
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.array.Address'
+        "400":
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - BearerAuth: []
   /favorite:
     get:
       tags:
@@ -2313,6 +2699,91 @@ components:
           description: Lần đăng nhập gần nhất
           format: date
           example: 2022-11-10
+    client.CartItem:
+      type: object
+      properties:
+        book:
+          $ref: '#/components/schemas/client.BookLite'
+        selected:
+          type: boolean
+          description: Đánh dấu chọn mua
+          example: false
+        quantity:
+          type: number
+          description: Số lượng mua
+          example: 1
+        total:
+          type: number
+          description: Tổng giá tiền
+          example: 72000
+    client.Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          example: 637cc21ce94542c1056e6c68
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/client.CartItem'
+        total:
+          type: number
+          description: Tổng giá tiền
+          example: 0
+    client.Address:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          example: 6390023e68b6bce81199e74d
+        fullName:
+          type: string
+          description: Họ tên người nhận
+          example: Nguyen Van A
+        phone:
+          type: string
+          description: Số điên thoại người nhận
+          example: "0987654321"
+        region:
+          type: string
+          description: Tỉnh/Thành phố
+          example: Lâm Đồng
+        district:
+          type: string
+          description: Quận/Huyện
+          example: TP. Đà Lạt
+        ward:
+          type: string
+          description: Phường/Xã
+          example: Phường 8
+        address:
+          type: string
+          description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
+          example: 17 Phù Đổng Thiên Vương
+    client.form.SelectAllCart:
+      required:
+      - selected
+      type: object
+      properties:
+        selected:
+          type: boolean
+          description: |
+            `true` chọn, `false` bỏ chọn tất cả
+          example: true
+    client.form.Cart:
+      type: object
+      properties:
+        selected:
+          type: boolean
+          description: |
+            `true` chọn, `false` bỏ chọn mua
+          example: true
+        quantity:
+          type: number
+          description: Số lượng mua
+          example: 2
     client.pagination.Book:
       allOf:
       - type: object
@@ -2323,6 +2794,39 @@ components:
             items:
               $ref: '#/components/schemas/client.Book'
       - $ref: '#/components/schemas/Pagination'
+    client.form.Address:
+      required:
+      - district
+      - fullName
+      - phone
+      - region
+      - ward
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Họ tên người nhận
+          example: Nguyen Van A
+        phone:
+          type: string
+          description: Số điên thoại người nhận
+          example: "0987654321"
+        region:
+          type: string
+          description: Tỉnh/Thành phố
+          example: Lâm Đồng
+        district:
+          type: string
+          description: Quận/Huyện
+          example: TP. Đà Lạt
+        ward:
+          type: string
+          description: Phường/Xã
+          example: Phường 8
+        address:
+          type: string
+          description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
+          example: 17 Phù Đổng Thiên Vương
     client.pagination.Comment:
       allOf:
       - type: object
@@ -2337,6 +2841,10 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/client.BookLite'
+    client.array.Address:
+      type: array
+      items:
+        $ref: '#/components/schemas/client.Address'
     RatingRate:
       type: object
       properties:

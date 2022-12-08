@@ -47,6 +47,9 @@ const AddressController = class extends Controller {
     try {
       const user = req.user;
       const body = this.getData(req.body);
+      if (!body.fullName) body.fullName = user.fullName;
+      if (!body.phone) body.phone = user.phone;
+
       user.addresses.push(body);
       await user.save();
 
@@ -67,6 +70,9 @@ const AddressController = class extends Controller {
       const id = req.params.id;
       const user = req.user;
       const body = this.getData(req.body);
+      if (!body.fullName) body.fullName = user.fullName;
+      if (!body.phone) body.phone = user.phone;
+
       const address = user.addresses.id(id).$set(body);
       await user.save();
 
