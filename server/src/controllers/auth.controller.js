@@ -64,12 +64,14 @@ const signIn = async (req, res) => {
     const token = user.generateAuthToken();
     await saveCookie(res, "token", token, true);
 
-    const cart =
-      (await Cart.findOne({ userId: user.id })) ||
-      new Cart({ userId: user.id });
-    const cookieCart = new Cart(req.cookies.cart || null);
-    cart.merge(cookieCart);
-    cookieCart.clearCookie(res);
+    if (!user.isAdmin()) {
+      const cart =
+        (await Cart.findOne({ userId: user.id })) ||
+        new Cart({ userId: user.id });
+      const cookieCart = new Cart(req.cookies.cart || null);
+      cart.merge(cookieCart);
+      cookieCart.clearCookie(res);
+    }
 
     await res.json({ token, user: user2json(user) });
   } catch (error) {

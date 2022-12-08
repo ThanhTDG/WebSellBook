@@ -3,6 +3,7 @@ const Customer = require("../models/customer");
 const User = require("../models/user");
 
 const Controller = require("../utils/controller");
+const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 
 const UserController = class extends Controller {
@@ -72,6 +73,65 @@ const UserController = class extends Controller {
         .json({ message: "User created successfully", user });
     } catch (error) {
       await res.status(400).json({ message: error.message });
+    }
+  };
+
+  /**
+   * Update data by id
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  update = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const body = this.getData(req.body);
+      const options = { new: true };
+      const data = await this.model.findOneAndUpdate(
+        { _id: id, username: { $ne: "admin" } },
+        body,
+        options
+      );
+      if (!data) {
+        throw new ErrorHandler(
+          400,
+          `Document with {_id: '${id}'} not found or cannot update admin user`
+        );
+      }
+
+      await res.json(this.toJson(data));
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
+
+  /**
+   * Delete data by id
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  remove = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const data = await this.model.findOneAndDelete({
+        _id: id,
+        username: { $ne: "admin" },
+      });
+      if (!data) {
+        throw new ErrorHandler(
+          400,
+          `Document with {_id: '${id}'} not found or cannot delete admin user`
+        );
+      }
+
+      await res.json({
+        message: `Document with {_id: '${id}'} has been deleted...`,
+      });
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 };
