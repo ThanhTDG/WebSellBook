@@ -67,7 +67,7 @@ const updateBook = async (req, res) => {
 
     const user = req.user;
     const cart = req.cart;
-    cart.items.find({ bookId }).$set(set);
+    cart.items.find((item) => item.bookId.equals(bookId)).$set(set);
     await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 
