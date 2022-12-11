@@ -52,7 +52,7 @@ const _login =
  */
 const requiredLogin = (req, res, next) => {
   const strategy =
-    req.body.isAdmin === "true" ? "local-admin" : "local-customer";
+    Boolean(req.body.isAdmin) === true ? "local-admin" : "local-customer";
   return passport.authenticate(strategy, opts, _login(req, res, next))(req, res, next);
 };
 
