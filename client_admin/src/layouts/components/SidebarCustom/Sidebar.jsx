@@ -7,6 +7,7 @@ import styles from "./sidebar.module.scss";
 import classNames from "classnames/bind";
 import MenuConfig from "~/stores/Menu";
 import { Link } from "react-router-dom";
+import { constants } from "~/stores";
 
 const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
@@ -35,7 +36,11 @@ function getItem(label, key, icon, children) {
 }
 function Sidebar({ collapsed, setCollapsed }) {
 	let currentPath = window.location.pathname;
-	let key = getKey("route", currentPath);
+	console.log("curren path", currentPath);
+	let key = "home";
+	if (currentPath !== "/") {
+		key = getKey("route", currentPath);
+	}
 	return (
 		<Sider
 			className={cx("sidebar")}
@@ -49,10 +54,9 @@ function Sidebar({ collapsed, setCollapsed }) {
 			>
 				<img
 					src={collapsed ? images.logo : images.logoAndText}
-					alt="Tôi Mua Sách"
+					alt={constants.WEB_NAME}
 				/>
 			</Link>
-
 			<Menu
 				onClick={(e) => {
 					console.log(e);

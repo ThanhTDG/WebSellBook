@@ -51,6 +51,11 @@ input,
 a[href] {
 	text-decoration: none;
 }
-.single-line{
-	
+div#root {
+	height: 100vh;
+}
+.single-line {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: pre;
 }

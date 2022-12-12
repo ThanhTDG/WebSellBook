@@ -9,27 +9,19 @@ export const getProducts = async (query) => {
 			page,
 		},
 	};
-	try {
-		const response = await request.get("/books", {
-			params: {
-				limit,
-				page,
-			},
-		});
-		return response;
-	} catch (error) {
-		ErrorDialog();
-	}
+
+	const response = await request.get("/books", {
+		params: {
+			limit,
+			page,
+		},
+	});
+	return response;
 };
 export const getProductById = async (query) => {
 	const { id } = query;
-
-	try {
-		const response = await request.get(`/books/${id}`, {});
-		return response;
-	} catch (error) {
-		ErrorDialog();
-	}
+	const response = await request.get(`/books/${id}`, {});
+	return response;
 };
 export const postProduct = async (query) => {
 	return {

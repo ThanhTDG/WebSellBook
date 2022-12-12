@@ -4,6 +4,7 @@ import Products from "~/pages/Products";
 import TestLayout from "~/pages/test/TestLayout";
 import CustomerPage from "~/pages/CustomerPage";
 import ViewProduct from "~/pages/Product/ViewProduct/ViewProduct";
+import LoginPage from "~/pages/Auth/LoginPage/LoginPage";
 
 const PageConfig = {
 	home: {
@@ -18,6 +19,14 @@ const PageConfig = {
 		label: "Bảng điều khiển",
 		component: Home,
 	},
+	/// auth
+	login: {
+		key: "login",
+		route: "/login",
+		label: "Trang đăng nhập",
+		component: LoginPage,
+	},
+
 	// mgt product
 	products: {
 		key: "products",

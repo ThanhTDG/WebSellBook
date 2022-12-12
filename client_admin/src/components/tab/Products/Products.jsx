@@ -4,13 +4,13 @@ import styles from "./product.module.scss";
 import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
 import BookConfig from "~/stores/Book";
-import { TableProduct } from "~/components/table/product";
+import ProductTable from "~/components/table/ProductTable";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
 import * as productService from "~/services/productService";
 import * as stores from "~/stores";
-import * as initState from "~/stores/initialStates";
+import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
@@ -183,7 +183,7 @@ function Products() {
 								height={500}
 							/>
 						) : (
-							<TableProduct
+							<ProductTable
 								categories={categories}
 								state={state}
 								products={products}

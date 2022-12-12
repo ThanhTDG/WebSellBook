@@ -76,3 +76,10 @@ export const setCategoryTable = (payload) => ({
 	type: constants.SET_CATEGORY_TABLE,
 	payload,
 });
+
+/// global state
+
+export const setIsLogin = (payload) => ({
+	type: constants.SET_IS_LOGIN,
+	payload,
+});

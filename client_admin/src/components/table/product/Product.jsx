@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 import React, { useReducer, memo } from "react";
 
 import Table from "~/components/table/components";
-import { table as tableConfig, limitRow } from "~/stores/table";
+import { table as tableConfig, limitRow } from "~/stores/ComponentConfigs/table";
 
 import { actions, useProductMgt } from "~/stores";
 import Footer from "../Footer";

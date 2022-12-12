@@ -1,6 +1,18 @@
-import { constants } from "~/stores";
+import * as constants from "~/stores/constants";
 
-export function reducer(state, action) {
+export const globalStateReducer = (state, action) => {
+	console.log("global reducer", action.payload);
+	switch (action.type) {
+		case constants.SET_IS_LOGIN: {
+			return {
+				...state,
+				isLogin: action.payload,
+			};
+		}
+	}
+};
+
+export function TabTableReduce(state, action) {
 	switch (action.type) {
 		case constants.SET_LIMIT_ROWS:
 			return {

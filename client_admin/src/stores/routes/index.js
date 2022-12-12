@@ -1,7 +1,7 @@
 import PageConfig from "~/stores/pages";
 
 // Public routes
-const publicRoutes = [];
+const publicRoutes = [{ path: PageConfig.login.route, component: PageConfig.login.component, layout: null }];
 const privateRoutes = [
 	{ path: PageConfig.home.route, component: PageConfig.home.component },
 	{ path: PageConfig.products.route, component: PageConfig.products.component },

@@ -9,15 +9,15 @@ import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
 import * as customerService from "~/services/customerService";
 import * as stores from "~/stores";
-import * as initState from "~/stores/initialStates";
+import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
 import Search from "~/components/Search";
 import CustomerConfig from "~/stores/Customer";
-import { reducer } from "../reducer";
 import CustomerTable from "~/components/table/CustomerTable";
 import fakeCustomer from "./fakeCustomers";
+import { TabTableReduce } from "~/stores/Reducer";
 
 const listStatus = CustomerConfig.listStatus;
 const options = CustomerConfig.options;
@@ -28,7 +28,7 @@ const initFilter = initState.filterProduct;
 const tabTableStyles = classNames.bind(tabStyle);
 
 function TabCustomer() {
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(TabTableReduce, initialState);
 	const [filter, setFilter] = useState(initFilter);
 	const [customers, setCustomers] = useState([]);
 	const [isUpdate, setIsUpdate] = useState(true);

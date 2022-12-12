@@ -1,5 +1,5 @@
 import BookConfig from "./Book";
-import { limitRow } from "./table";
+import { limitRow } from "./ComponentConfigs/table";
 import CustomerConfig from "./Customer";
 export const products = {
 	indexStatus: 0,
@@ -26,4 +26,7 @@ export const filterCustomer = {
 	category: "",
 	search: "",
 	sort: "",
+};
+export const globalState = {
+	isLogin: false,
 };

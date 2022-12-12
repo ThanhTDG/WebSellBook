@@ -4,7 +4,7 @@ import styles from "./outlinedBox.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
-function OutlinedBox({ icon, title, type = "normal", className = null, children }) {
+function OutlinedBox({ icon, title, type = "normal", classNameHeader, className = null, children }) {
 	const classesTitle = cx("title", {
 		[type]: type,
 	});
@@ -12,7 +12,7 @@ function OutlinedBox({ icon, title, type = "normal", className = null, children 
 		[className]: className,
 	});
 	return (
-		<div className={cx("wrapper")}>
+		<div className={cx("wrapper", classNameHeader)}>
 			<div className={cx("header")}>
 				<div className={cx("headerBorderBefore")}></div>
 				{(icon || title) && (

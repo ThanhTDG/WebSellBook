@@ -9,15 +9,11 @@ export const getCustomers = async (query) => {
 			page,
 		},
 	};
-	try {
-		const response = await request.get("/users", {
-			params: {
-				limit,
-				page,
-			},
-		});
-		return response;
-	} catch (error) {
-		ErrorDialog();
-	}
+	const response = await request.get("/users", {
+		params: {
+			limit,
+			page,
+		},
+	});
+	return response;
 };

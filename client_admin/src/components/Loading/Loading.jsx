@@ -7,20 +7,23 @@ import styles from "./loading.module.scss";
 const cx = classNames.bind(styles);
 
 function Loading(props) {
-	const { className = null, height, size = 20 } = props;
+	const { className = null, size = 20, isLoading = true, children } = props;
 	return (
-		<div
-			style={{ height: height }}
-			className={cx("wrapper")}
-		>
-			<div className={cx("spinner")}>
-				<ClimbingBoxLoader
-					color="#001344"
-					size={size}
-					speedMultiplier={5}
-				/>
-			</div>
-		</div>
+		<>
+			{isLoading ? (
+				<div className={cx("wrapper")}>
+					<div className={cx("spinner")}>
+						<ClimbingBoxLoader
+							color="#001344"
+							size={size}
+							speedMultiplier={5}
+						/>
+					</div>
+				</div>
+			) : (
+				children
+			)}
+		</>
 	);
 }
 

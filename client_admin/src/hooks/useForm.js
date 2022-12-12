@@ -10,7 +10,7 @@ function useForm(initialValues, validateOnChange = false, validate) {
 			[name]: value,
 		});
 		if (validateOnChange) {
-			validate({ [name]: value },errors,setError);
+			validate({ [name]: value }, errors, setError);
 		}
 	};
 	return {

@@ -32,7 +32,6 @@ function TabProduct() {
 					allowScrollButtonsMobile
 				>
 					{TitleTabProducts.map((title, index) => {
-						consolt.log(title);
 						return (
 							<Tab
 								sx={{ fontSize: "subtitle1.fontSize" }}

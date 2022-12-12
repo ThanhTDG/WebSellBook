@@ -13,7 +13,7 @@ import classNames from "classnames/bind";
 import "./formMuiCustom.scss";
 import { icons } from "~/assets/images";
 import Button from "~/components/controls/Button";
-import unit from "~/stores/unit";
+import unit from "~/stores/ComponentConfigs/unit";
 import BookConfig from "~/stores/Book";
 import UpLoadImage from "~/components/UpLoadImage";
 import Image from "~/components/Image";
@@ -126,7 +126,6 @@ function FormProduct(props) {
 			}
 		}
 	};
-	console.log(values);
 	return (
 		<Form onSubmit={handleSubmit}>
 			<FormControl className="form-control">

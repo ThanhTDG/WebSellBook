@@ -4,21 +4,23 @@ import { styled } from "@mui/material/styles";
 import TableRow from "@mui/material/TableRow";
 
 function Cell(props) {
-	const { size = "medium", align = "right", width: refWidth = null, children, ...passProps } = props;
-	let sx = {};
-	let value = 150;
-
+	const { size = "medium", align = "right", isLast = true, children, ...passProps } = props;
+	let lastCellStyle = {};
+	if (isLast) {
+		lastCellStyle = {
+			width: "1%",
+			whiteSpace: "nowrap",
+		};
+	}
 	const StyledTableCell = styled(TableCellMui)(({ theme }) => ({
 		[`&.${tableCellClasses.head}`]: {
 			backgroundColor: theme.palette.common.black,
 			color: theme.palette.common.white,
-			width: refWidth ? refWidth : 184,
-			"min-width": "184px",
+			...lastCellStyle,
 		},
 		[`&.${tableCellClasses.body}`]: {
 			fontSize: 14,
-			width: refWidth ? refWidth : 184,
-			"min-width": "184px",
+			...lastCellStyle,
 		},
 	}));
 	return (
@@ -28,16 +30,6 @@ function Cell(props) {
 		>
 			{children}
 		</StyledTableCell>
-		// <TableCellMui
-		// 	sx={sx}
-		// 	key={key}
-		// 	size={size}
-		// 	align={align}
-		// 	style={style}
-		// 	{...passProps}
-		// >
-		// 	{children}
-		// </TableCellMui>
 	);
 }
 
