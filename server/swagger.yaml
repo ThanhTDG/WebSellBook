@@ -2458,7 +2458,7 @@ components:
         permissions:
           type: array
           items:
-            $ref: admin.Role_permissions
+            $ref: '#/components/schemas/admin.Role_permissions'
         createdDate:
           type: string
           description: Ngày khởi tạo
@@ -2527,7 +2527,7 @@ components:
         roles:
           type: array
           items:
-            $ref: admin.User_roles
+            $ref: '#/components/schemas/admin.User_roles'
         lastSession:
           type: string
           description: Lần đăng nhập gần nhất
