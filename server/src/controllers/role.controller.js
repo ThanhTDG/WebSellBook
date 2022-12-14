@@ -85,7 +85,6 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   obj.id = data.id;
-  obj.permissions = data._permissions;
   return obj;
 };
 
