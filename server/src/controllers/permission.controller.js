@@ -36,8 +36,8 @@ const PermissionController = class extends Controller {
  * @param {Object} data
  */
 const toJson = (data) => {
-  const { _id, id, description } = data;
-  return { _id, id, description };
+  const { _id, id, description, action, subject } = data;
+  return { _id, id, description, action, subject };
 };
 
 module.exports = new PermissionController(null, toJson);
