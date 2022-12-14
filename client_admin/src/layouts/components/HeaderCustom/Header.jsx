@@ -5,6 +5,7 @@ import { Search } from "@mui/icons-material";
 import styles from "./header.module.scss";
 import classNames from "classnames/bind";
 import PageConfig from "~/stores/pages.js";
+import { constants } from "~/stores";
 const cx = classNames.bind(styles);
 function Header() {
 	return (
@@ -17,7 +18,7 @@ function Header() {
 				<div className={cx("item")}>
 					<img
 						src="https://i.pinimg.com/236x/62/9e/92/629e9282db7c2e44d4b6a1790952d11d.jpg"
-						alt=""
+						alt={constants.AVATAR}
 						className={cx("avatar")}
 					/>
 				</div>

@@ -7,7 +7,6 @@ const request = axios.create({
 });
 const handleResponse = (response) => {
 	if (response) {
-		console.log(response, "handleResponse");
 		switch (response.status) {
 			///2xx
 			case 200:

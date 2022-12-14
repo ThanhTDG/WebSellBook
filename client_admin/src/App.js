@@ -11,6 +11,7 @@ import Loading from "./components/Loading";
 import { getProfile } from "./services/authService";
 import { actions } from "./stores";
 import styles from "./app.module.scss";
+import { getPermission } from "./services/roleService";
 
 const cx = classNames.bind(styles);
 function App() {
@@ -39,6 +40,8 @@ function App() {
 	useState(() => {
 		const checkLogin = async () => {
 			const response = await getProfile();
+			const permissions = await getPermission();
+			console.log(permissions);
 			setIsLoading(false);
 			if (response) {
 				dispatch(actions.setIsLogin(true));

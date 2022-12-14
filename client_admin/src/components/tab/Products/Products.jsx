@@ -177,12 +177,11 @@ function Products() {
 						value={state.indexStatus}
 						index={index}
 					>
-						{isLoading ? (
-							<Loading
-								size={25}
-								height={500}
-							/>
-						) : (
+						<Loading
+							size={25}
+							height={500}
+							isLoading={isLoading}
+						>
 							<ProductTable
 								categories={categories}
 								state={state}
@@ -190,7 +189,7 @@ function Products() {
 								onPageChange={handlePageChange}
 								onLimitChange={handleLimitChange}
 							/>
-						)}
+						</Loading>
 					</TabPanel>
 				);
 			});

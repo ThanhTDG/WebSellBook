@@ -1,0 +1,326 @@
+const roles = {
+	all: {
+		all: {
+			id: "638c7606e13b091e37dd84d3",
+			name: "Quản lý tất cả",
+			desc: "Quyền hạn cho phép truy cập và chỉnh sửa tất cả toàn bộ trong trang web",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84d4",
+			name: "Tạo tất cả",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84d5",
+			name: "Xem chi tiết tất cả",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84d6",
+			name: "Cập nhật tất cả",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84d7",
+			name: "Xóa tất cả",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84d8",
+			name: "Thống kê tất cả",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	category: {
+		all: {
+			id: "638c7606e13b091e37dd84d9",
+			name: "Toàn quyền quản lý danh mục",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84da",
+			name: "Tạo danh mục",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84db",
+			name: "Xem chi tiết danh mục",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84dc",
+			name: "Cập nhật danh mục",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84dd",
+			name: "Xóa danh mục",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84de",
+			name: "Thống kê danh mục",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	product: {
+		all: {
+			id: "638c7606e13b091e37dd84df",
+			name: "Toàn quyền quản lý sách",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84e0",
+			name: "Tạo sách",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84e1",
+			name: "Xem chi tiết sách",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84e2",
+			name: "Cập nhật sách",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84e3",
+			name: "Xóa sách",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84e4",
+			name: "Thống kê sách",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	order: {
+		all: {
+			id: "638c7606e13b091e37dd84e5",
+			name: "Toàn quyền quản lý hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84e6",
+			name: "Tạo hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84e7",
+			name: "Xem chi tiết hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84e8",
+			name: "Cập nhật hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84e9",
+			name: "Xóa hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84ea",
+			name: "Thống kê hóa đơn",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	role: {
+		all: {
+			id: "638c7606e13b091e37dd84eb",
+			name: "Toàn quyền quản lý vai trò",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84ec",
+			name: "Tạo vai trò",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84ed",
+			name: "Xem chi tiết vai trò",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84ee",
+			name: "Cập nhật vai trò",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84ef",
+			name: "Xóa vai trò",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84f0",
+			name: "Thống kê vai trò",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	admin: {
+		all: {
+			id: "638c7606e13b091e37dd84f7",
+			name: "Toàn quyền quản lý người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84f8",
+			name: "Tạo người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84f9",
+			name: "Xem chi tiết người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84fa",
+			name: "Cập nhật người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84fb",
+			name: "Xóa người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84fc",
+			name: "Thống kê người quản trị",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	customer: {
+		all: {
+			id: "638c7606e13b091e37dd84fd",
+			name: "Toàn quyền quản lý khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84fe",
+			name: "Tạo khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84ff",
+			name: "Xem chi tiết khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd8500",
+			name: "Cập nhật khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd8501",
+			name: "Xóa khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd8502",
+			name: "Thống kê khách hàng",
+			desc: "",
+			dangerous: false,
+		},
+	},
+	user: {
+		all: {
+			id: "638c7606e13b091e37dd84f1",
+			name: "Toàn quyền quản lý người dùng",
+			desc: "",
+			dangerous: false,
+		},
+		create: {
+			id: "638c7606e13b091e37dd84f2",
+			name: "Tạo người dùng",
+			desc: "",
+			dangerous: false,
+		},
+		view: {
+			id: "638c7606e13b091e37dd84f3",
+			name: "Xem chi tiết người dùng",
+			desc: "",
+			dangerous: false,
+		},
+		update: {
+			id: "638c7606e13b091e37dd84f4",
+			name: "Cập nhật người dùng",
+			desc: "",
+			dangerous: false,
+		},
+		delete: {
+			id: "638c7606e13b091e37dd84f5",
+			name: "Xóa người dùng",
+			desc: "",
+			dangerous: false,
+		},
+		statistic: {
+			id: "638c7606e13b091e37dd84f6",
+			name: "Thống kê người dùng",
+			desc: "",
+			dangerous: false,
+		},
+	},
+};
+const actions = {
+	all: "all",
+	create: "create",
+	view: "view",
+	update: "update",
+	delete: "delete",
+	statistic: "statistic",
+};
+const types = {
+	all: "all",
+	category: "category",
+	product: "product",
+	order: "order",
+	role: "role",
+	admin: "admin",
+	customer: "customer",
+	user: "user",
+};
+
+export { roles, actions, types };

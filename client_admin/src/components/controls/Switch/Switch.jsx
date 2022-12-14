@@ -55,11 +55,13 @@ const IOSSwitch = styled((props) => (
 }));
 
 function Switch(props) {
-	const { checked, onChange, ...passProp } = props;
+	const { checked, name, onChange, ...passProp } = props;
+
 	return (
 		<FormControlLabel
 			control={
 				<IOSSwitch
+					name={name}
 					checked={checked}
 					onChange={onChange}
 					{...passProp}

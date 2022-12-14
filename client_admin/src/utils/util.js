@@ -33,5 +33,8 @@ const convertToTree = (data) => {
 	});
 	return tree;
 };
+export const copyObject = (source) => {
+	return JSON.parse(JSON.stringify(source));
+};
 
 export { getKey, convertToTree };

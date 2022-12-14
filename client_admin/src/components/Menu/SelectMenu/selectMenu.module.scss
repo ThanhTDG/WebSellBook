@@ -1,0 +1,21 @@
+.menu-item {
+	border-radius: 5px !important;
+	height: 48px;
+}
+.menu-item-select {
+	background-color: white !important;
+	border-radius: 10px !important;
+	border-right: 0 !important;
+	border-left: 0 !important;
+	border-top: 1px solid var(--primaryDark) !important;
+	border-bottom: 1px solid var(--primaryDark) !important;
+	font-weight: 600 !important;
+	color: var(--primary) !important;
+	border-radius: 10px 0px 0px 10px !important;
+	margin-left: 2px;
+}
+.add-role {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}

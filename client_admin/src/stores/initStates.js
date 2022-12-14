@@ -1,3 +1,5 @@
+import { FastRewind } from "@mui/icons-material";
+import { constants } from ".";
 import BookConfig from "./Book";
 import { limitRow } from "./ComponentConfigs/table";
 import CustomerConfig from "./Customer";
@@ -29,4 +31,178 @@ export const filterCustomer = {
 };
 export const globalState = {
 	isLogin: false,
+};
+export const editState = {
+	isNew: false,
+	isEdit: false,
+};
+export const newRole = {
+	id: null,
+	name: constants.NEW_ROLE_NAME,
+	description: "",
+	permissions: [],
+	createdDate: "",
+	updatedDate: "",
+};
+export const role = {
+	all: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	category: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	product: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	order: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	role: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	admin: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	customer: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
+	user: {
+		all: {
+			enable: false,
+		},
+		create: {
+			enable: false,
+		},
+		view: {
+			enable: false,
+		},
+		update: {
+			enable: false,
+		},
+		delete: {
+			enable: false,
+		},
+		statistic: {
+			enable: false,
+		},
+	},
 };

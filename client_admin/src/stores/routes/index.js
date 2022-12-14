@@ -4,10 +4,16 @@ import PageConfig from "~/stores/pages";
 const publicRoutes = [{ path: PageConfig.login.route, component: PageConfig.login.component, layout: null }];
 const privateRoutes = [
 	{ path: PageConfig.home.route, component: PageConfig.home.component },
+	/// product
 	{ path: PageConfig.products.route, component: PageConfig.products.component },
 	{ path: PageConfig.product.route, component: PageConfig.product.component },
-	{ path: PageConfig.customer.route, component: PageConfig.customer.component },
 	{ path: PageConfig.newProduct.route, component: PageConfig.newProduct.component },
+	/// customer
+	{ path: PageConfig.customer.route, component: PageConfig.customer.component },
+
+	/// role
+	{ path: PageConfig.role.route, component: PageConfig.role.component },
+
 	{ path: PageConfig.test.route, component: PageConfig.test.component, layout: null },
 ];
 

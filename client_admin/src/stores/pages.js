@@ -5,6 +5,7 @@ import TestLayout from "~/pages/test/TestLayout";
 import CustomerPage from "~/pages/CustomerPage";
 import ViewProduct from "~/pages/Product/ViewProduct/ViewProduct";
 import LoginPage from "~/pages/Auth/LoginPage/LoginPage";
+import RolePage from "~/pages/RolePage";
 
 const PageConfig = {
 	home: {
@@ -48,25 +49,26 @@ const PageConfig = {
 	},
 	// mgt users
 
-	// mgt customer
 	customer: {
 		key: "customer",
 		route: "/customer",
 		label: "Quản lý khách hàng",
 		component: CustomerPage,
 	},
-
-	orders: {
-		key: "orders",
-		route: "/orders",
-		label: "Quản lý đơn hàng",
-		component: TestLayout,
-	},
+	/// order
 	order: {
 		key: "order",
 		route: "/order@:id",
 		label: "Đơn hàng",
 		component: TestLayout,
+	},
+
+	/// role
+	role: {
+		key: "role",
+		route: "/role",
+		label: "Vai trò",
+		component: RolePage,
 	},
 	test: {
 		key: "test",

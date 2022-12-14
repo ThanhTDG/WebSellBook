@@ -23,6 +23,10 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ListIcon from "@mui/icons-material/List";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import AddIcon from "@mui/icons-material/Add";
+
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -39,6 +43,12 @@ const Sidebar = ({ className }) => {
 	return {
 		list: <ListIcon className={className} />,
 		home: <DashboardIcon className={className} />,
+		role: (
+			<SettingsAccessibilityIcon
+				Icon
+				className={className}
+			/>
+		),
 		products: <StorefrontIcon className={className} />,
 		orders: <CreditCardIcon className={className} />,
 		users: <ManageAccountsIcon className={className} />,
@@ -69,6 +79,8 @@ const Widget = ({ className }) => {
 const Button = ({ className }) => {
 	return {
 		users: <PersonOutlineIcon className={className} />,
+		add: <AddIcon className={className} />,
+		addBox: <AddBoxIcon className={className} />,
 		order: <ShoppingCartOnOutlinedIcon className={className} />,
 		earning: <MonetizationOnOutlinedIcon className={className} />,
 		balance: <AccountBalanceWalletIcon className={className} />,

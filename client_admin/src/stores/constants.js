@@ -1,6 +1,17 @@
 // string
 export const WEB_NAME = "Tôi mua sách";
-
+export const HOME = "Trang chủ";
+export const PRODUCT = "Sản phẩm";
+export const CUSTOMER = "Khách hàng";
+export const ROLE = "Vai trò";
+export const AVATAR = "Hình đại diện";
+export const ADD_NEW = "Thêm mới";
+export const BASIC_INFO = "Cơ bản";
+export const PERMISSIONS = "Cấp quyền";
+export const ACCOUNT = "Tài khoản";
+export const ROLE_NAME = "Tên vai trò";
+export const NEW_ROLE_NAME = "Vai trò mới";
+export const DESC = "Mô tả";
 //
 export const SET_TAB_MGT_PRODUCT = "set_tab_mgt_product";
 export const SET_PAGE_MGT_PRODUCT = "set_page_mgt_product";
