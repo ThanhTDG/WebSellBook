@@ -8,10 +8,9 @@ import Controls from "../controls";
 import styles from "./search.module.scss";
 const cx = classNames.bind(styles);
 
-function Search(props) {
+function SearchBar(props) {
 	const { className = null, label = "Tìm kiếm", value = "", onChange, size = "normal" } = props;
 
-	const inputRef = useRef();
 	const handleSearch = (e) => {
 		let value = e.target.value;
 		if (!(value.length === 1 && value === " ")) {
@@ -36,4 +35,4 @@ function Search(props) {
 	);
 }
 
-export default Search;
+export default SearchBar;

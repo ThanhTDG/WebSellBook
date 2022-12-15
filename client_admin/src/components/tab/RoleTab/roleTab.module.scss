@@ -31,15 +31,15 @@
 }
 .content,
 .permissions {
-	padding: 32px 16px;
+	padding: 16px 16px;
 	width: 100%;
-	height: 100%;
 	display: flex;
 	justify-content: center;
 	background-color: rgb(255, 255, 255);
 }
 .permissions {
 	flex-direction: column;
+	align-items: center;
 }
 .btn-change {
 	position: fixed;

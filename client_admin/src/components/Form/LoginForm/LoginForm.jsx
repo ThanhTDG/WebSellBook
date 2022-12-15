@@ -13,7 +13,7 @@ import PageConfig from "~/stores/pages";
 import Cookies from "js-cookie";
 import { Window } from "@mui/icons-material";
 import { useGlobalState } from "~/hooks/useGlobalState";
-import { globalContext } from "~/stores/Context";
+import { globalContext } from "~/stores/contexts";
 import { actions } from "~/stores";
 
 const cx = classNames.bind(styles);
@@ -29,7 +29,6 @@ function LoginForm() {
 	const navigate = useNavigate();
 	const [handling, setHandling] = useState(stateHandling);
 	const [globalState, dispatch] = useGlobalState(globalContext);
-	console.log("global State", globalState);
 	const { values, setValues, errors, setError, handleInputChange } = Hooks.useForm(initialUser);
 	const handleSubmit = (e) => {
 		setHandling({
@@ -67,7 +66,6 @@ function LoginForm() {
 	};
 	const getProfileAccount = async () => {
 		const profile = await getProfile();
-		console.log("profile", profile);
 	};
 	return (
 		<Form onSubmit={handleSubmit}>

@@ -8,7 +8,6 @@ import styles from "./banner.module.scss";
 const cx = classNames.bind(styles);
 function Banner(props) {
 	const { src = images.banners, autoplay = true } = props;
-	console.log(src);
 	return (
 		<div className={cx("wrapper")}>
 			<Carousel

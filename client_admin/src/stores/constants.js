@@ -37,3 +37,9 @@ export const SET_NEW_PROP_TABLE = "set_new_prop_table";
 
 /// global state
 export const SET_IS_LOGIN = "set_is_login";
+
+/// categories
+export const SET_TREE_CATEGORIES = "set_tree_categories";
+export const SET_LIST_CATEGORIES = "set_list_categories";
+export const SET_CATEGORIES = "set_categories";
+export const SET_IS_UPDATE = "set_is_update";

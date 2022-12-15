@@ -32,6 +32,11 @@ export const filterCustomer = {
 export const globalState = {
 	isLogin: false,
 };
+export const categoriesState = {
+	isUpdate: false,
+	list: [],
+	tree: [],
+};
 export const editState = {
 	isNew: false,
 	isEdit: false,

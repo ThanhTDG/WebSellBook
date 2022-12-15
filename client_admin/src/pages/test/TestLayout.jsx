@@ -13,19 +13,23 @@ function TestLayout() {
 			username: "khachhang@example.com",
 			password: "1234abcd",
 		});
-		console.log("login", res.data);
 	};
 
 	const profile = async () => {
 		const res = await instance.get("/auth/profile");
-		console.log("profile", res.data);
 	};
 	return (
 		<div>
-			<Button primary onClick={login}>
+			<Button
+				primary
+				onClick={login}
+			>
 				Login
 			</Button>
-			<Button primary onClick={profile}>
+			<Button
+				primary
+				onClick={profile}
+			>
 				Profile
 			</Button>
 		</div>

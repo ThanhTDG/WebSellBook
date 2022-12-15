@@ -11,7 +11,6 @@ import * as Icons from "~/assets/images/icons";
 const cx = classNames.bind(styles);
 function SelectMenu(props) {
 	const { idSelect, options, disableFistItem = false, haveNewItem = true, onChange } = props;
-
 	return (
 		<MenuList id="select-menu">
 			{haveNewItem && (

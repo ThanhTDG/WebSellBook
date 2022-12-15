@@ -14,8 +14,8 @@ import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
-import Search from "~/components/Search";
-import { getCategories, getCategoriesTree } from "~/services/categoriesSerivce";
+import Search from "~/components/SearchBar";
+import { getCategories, getCategoriesTree } from "~/services/categoriesService";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
 
 const listStatus = BookConfig.listStatus;

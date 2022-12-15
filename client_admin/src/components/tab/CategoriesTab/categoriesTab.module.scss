@@ -1,0 +1,17 @@
+.wrapper {
+	min-height: 450px;
+	padding: 0px 4px;
+}
+.loading {
+	height: 420px;
+	border-radius: 0px 0px 15px 15px;
+	background-color: white;
+	border: 1px solid var(--primaryDark);
+}
+.search-bar {
+	margin-bottom: 4px;
+	background-color: white;
+}
+.full-screen {
+	height: 67vh;
+}

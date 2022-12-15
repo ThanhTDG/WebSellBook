@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import React from "react";
 import PageConfig from "~/stores/pages";
+import ProviderContext from "~/stores/ProviderContext";
 import { getKey } from "~/utils/util";
-
 import styles from "./layoutHeaderButton.module.scss";
 const cx = classNames.bind(styles);
 function LayoutHeaderButton(props) {
@@ -12,7 +12,6 @@ function LayoutHeaderButton(props) {
 	if (key) {
 		label = PageConfig[key].label;
 	}
-	console.log(lastComp);
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("future-manager")}>

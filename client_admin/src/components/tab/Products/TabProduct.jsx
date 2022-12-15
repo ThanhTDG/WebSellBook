@@ -18,7 +18,6 @@ function TabProduct() {
 		dispatch(actions.setTabMgtProduct(tabSelected));
 	};
 
-	console.log(state);
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("title-tab")}>

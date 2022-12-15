@@ -18,7 +18,6 @@ function ViewProduct() {
 	useEffect(() => {
 		const fetchApi = async () => {
 			let response = await getProductById({ id: id });
-			console.log("re", response);
 			handleProduct(response);
 			setIsLoading(false);
 		};
@@ -34,7 +33,6 @@ function ViewProduct() {
 			});
 		}
 	};
-	console.log(product);
 
 	return (
 		<div className={cx("wrapper")}>

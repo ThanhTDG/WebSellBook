@@ -76,7 +76,6 @@ function FormProduct(props) {
 						{
 							response = await postProduct(values);
 							if (response) {
-								console.log(response._id);
 								let convert = {
 									target: {
 										name: "id",
@@ -272,7 +271,7 @@ function CriticalInformation(props) {
 	};
 	return (
 		<OutlinedBox
-			title={propsBook.criticalInformation.title}
+			label={propsBook.criticalInformation.title}
 			className={cx("critical-information")}
 		>
 			<div className={cx("name")}>
@@ -332,6 +331,7 @@ function CriticalInformation(props) {
 				<OutlinedBox
 					title={propsBook.type.title}
 					type={"small"}
+					className={cx("category")}
 				>
 					<Controls.RadioGroup
 						label={"Ngôn ngữ"}
@@ -370,7 +370,7 @@ function Details(props) {
 
 	return (
 		<OutlinedBox
-			title={propsBook.details.title}
+			label={propsBook.details.title}
 			className={cx("details")}
 		>
 			<div className={cx("writer")}>
@@ -542,7 +542,7 @@ function DescNImage(props) {
 	const { values, handleInputChange, errors } = props;
 	return (
 		<OutlinedBox
-			title={propsBook.descNImage.title}
+			label={propsBook.descNImage.title}
 			className={cx("descNImage")}
 		>
 			<div className={cx("title-desc")}>

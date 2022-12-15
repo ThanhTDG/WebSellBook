@@ -15,7 +15,7 @@
 .descNImage {
 	width: 100%;
 	padding: 4px (var(--space)) !important;
-	margin-bottom: 16px;
+	margin: 16px 0px;
 	display: flex;
 	flex-direction: column;
 	gap: var(--space);
@@ -29,7 +29,6 @@
 .code,
 .writer,
 .wrapper-status,
-.wrapper-box,
 .properties-book,
 .producer,
 .dimension,
@@ -85,4 +84,17 @@
 .btn-confirm {
 	min-width: 124px;
 	margin-right: 24px;
+}
+.childrenContainer {
+	margin: 16px 0px;
+}
+.category {
+	margin: 16px;
+}
+.wrapper-box {
+	display: flex;
+	margin: 16px;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 16px;
 }

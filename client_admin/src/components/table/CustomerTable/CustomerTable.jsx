@@ -17,7 +17,6 @@ const sizeCellBody = "small";
 
 function CustomerTable(props) {
 	const { state, customers, onLimitChange, onPageChange } = props;
-	console.log(customers);
 	return (
 		<Paper>
 			<Table.Frame style={{ maxHeight: 700, width: "auto" }}>
@@ -63,7 +62,6 @@ function CustomerTable(props) {
 }
 function CustomerRow(props) {
 	const { customer, key } = props;
-	console.log(customer);
 	const [isHovering, setIsHovering] = useState(false);
 	const [isEnable, setIsEnable] = useState(customer.status !== status.banned);
 	const handleMouseOut = () => {

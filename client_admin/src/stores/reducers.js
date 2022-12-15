@@ -62,3 +62,31 @@ export function TabTableReduce(state, action) {
 			throw new Error("valid action");
 	}
 }
+export function CategoriesReduce(state, action) {
+	switch (action.type) {
+		case constants.SET_TREE_CATEGORIES:
+			return {
+				...state,
+				tree: action.payload,
+			};
+		case constants.SET_LIST_CATEGORIES:
+			return {
+				...state,
+				list: action.payload,
+			};
+		case constants.SET_CATEGORIES:
+			const [tree, list] = action.payload;
+			return {
+				...state,
+				tree: tree,
+				list: list,
+			};
+		case constants.SET_IS_UPDATE:
+			return {
+				...state,
+				isUpdate: action.payload,
+			};
+		default:
+			throw new Error("valid action");
+	}
+}

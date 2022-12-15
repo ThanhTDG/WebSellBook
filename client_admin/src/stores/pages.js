@@ -6,6 +6,7 @@ import CustomerPage from "~/pages/CustomerPage";
 import ViewProduct from "~/pages/Product/ViewProduct/ViewProduct";
 import LoginPage from "~/pages/Auth/LoginPage/LoginPage";
 import RolePage from "~/pages/RolePage";
+import CategoriesPage from "~/pages/CategoriesPage";
 
 const PageConfig = {
 	home: {
@@ -27,7 +28,13 @@ const PageConfig = {
 		label: "Trang đăng nhập",
 		component: LoginPage,
 	},
-
+	/// categories
+	categories: {
+		key: "categories",
+		route: "/categories",
+		label: "Danh mục",
+		component: CategoriesPage,
+	},
 	// mgt product
 	products: {
 		key: "products",

@@ -48,7 +48,6 @@ function Input(props) {
 	if (configNumber) {
 		inputProps.inputProps = configNumber;
 	}
-	console.log("Loi ne", name, error);
 	return (
 		// <FormControl
 		// 	fullWidth={fullWidth}

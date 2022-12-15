@@ -11,7 +11,7 @@ function Loading(props) {
 	return (
 		<>
 			{isLoading ? (
-				<div className={cx("wrapper")}>
+				<div className={cx("wrapper", className)}>
 					<div className={cx("spinner")}>
 						<ClimbingBoxLoader
 							color="#001344"

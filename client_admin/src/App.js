@@ -6,7 +6,7 @@ import classNames from "classnames/bind";
 import { DefaultLayout } from "~/layouts";
 import PageConfig from "./stores/pages";
 import { useGlobalState } from "./hooks/useGlobalState";
-import { globalContext } from "./stores/Context";
+import { globalContext } from "./stores/contexts";
 import Loading from "./components/Loading";
 import { getProfile } from "./services/authService";
 import { actions } from "./stores";
@@ -16,6 +16,7 @@ import { getPermission } from "./services/roleService";
 const cx = classNames.bind(styles);
 function App() {
 	const [state, dispatch] = useGlobalState(globalContext);
+	
 	const [isLoading, setIsLoading] = useState(true);
 	const setPage = (route, index) => {
 		const Page = route.component;
@@ -41,7 +42,6 @@ function App() {
 		const checkLogin = async () => {
 			const response = await getProfile();
 			const permissions = await getPermission();
-			console.log(permissions);
 			setIsLoading(false);
 			if (response) {
 				dispatch(actions.setIsLogin(true));

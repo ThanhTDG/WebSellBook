@@ -19,8 +19,16 @@ import * as rolesConfig from "~/stores/roles";
 import { AllInbox } from "@mui/icons-material";
 import { copyObject } from "~/utils/util";
 const cx = classNames.bind(styles);
+// function getAllID(list) {
+// 	const listID = [];
+// 	console.log(list);
+// 	list.map((item) => {
+// 		listID.push(item.id);
+// 	});
+// 	return listID;
+// }
 function RoleTab(props) {
-	const { role, permissions } = props;
+	const { role } = props;
 	const [edit, setEdit] = useState({ ...copyObject(initState.editState), isNew: role === null });
 	const [roleDetail, setRoleDetail] = useState(
 		role ? copyObject(role) : edit.isNew ? copyObject(initState.newRole) : undefined
@@ -38,7 +46,7 @@ function RoleTab(props) {
 			if (roleDetail.permissions.length !== 0) {
 				Object.keys(rolesConfig.types).map((type) => {
 					Object.keys(rolesConfig.actions).map((action) => {
-						if (roleDetail.permissions.find((role) => role.id === rolesConfig.roles[type][action].id)) {
+						if (roleDetail.permissions.find((id) => id === rolesConfig.roles[type][action].id)) {
 							roleAvailable[type][action].enable = true;
 						} else {
 							roleAvailable[type][action].enable = false;
@@ -52,7 +60,6 @@ function RoleTab(props) {
 	}, []);
 	useEffect(() => {
 		if (JSON.stringify(roleDetail) !== JSON.stringify(role)) {
-			console.log(roleDetail, role);
 			if (!edit.isNew) {
 				setEdit({ ...edit, isEdit: true });
 			}
@@ -64,12 +71,11 @@ function RoleTab(props) {
 		setTabIndex(newValue);
 	};
 	const handleRoleChange = (enable, value, type, action) => {
-		let permission = permissions.find((item) => item.id === value);
 		let userPermissions = copyObject(roleDetail.permissions);
 		if (enable) {
-			userPermissions.push(permission);
+			userPermissions.push(value);
 		} else {
-			userPermissions = roleDetail.permissions.filter((item) => item.id !== permission.id);
+			userPermissions = roleDetail.permissions.filter((id) => id !== value);
 		}
 		setRoleDetail({
 			...roleDetail,

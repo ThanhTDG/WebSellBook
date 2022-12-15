@@ -5,7 +5,6 @@ const permissionsPath = "/permissions";
 
 export const getRoles = async () => {
 	const response = await request.get(rolePath);
-	console.log(response, "response");
 	return response;
 };
 export const getPermission = async () => {

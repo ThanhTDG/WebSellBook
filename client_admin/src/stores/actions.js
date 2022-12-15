@@ -83,3 +83,21 @@ export const setIsLogin = (payload) => ({
 	type: constants.SET_IS_LOGIN,
 	payload,
 });
+
+/// categories
+export const setTreeCategories = (payload) => ({
+	type: constants.SET_TREE_CATEGORIES,
+	payload,
+});
+export const setListCategories = (payload) => ({
+	type: constants.SET_LIST_CATEGORIES,
+	payload,
+});
+export const setCategories = (payload) => ({
+	type: constants.SET_CATEGORIES,
+	payload,
+});
+export const setIsUpdate = (payload) => ({
+	type: constants.SET_IS_UPDATE,
+	payload,
+});

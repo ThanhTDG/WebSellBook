@@ -44,7 +44,12 @@ function RolePage() {
 							/>
 						</div>
 						<div className={cx("detail")}>
-							{idSelect === null && <RoleTab role={idSelect} />}
+							{idSelect === null && (
+								<RoleTab
+									role={idSelect}
+									permissions={permissions}
+								/>
+							)}
 							{roles.map((role) => {
 								return (
 									idSelect === role.id && (

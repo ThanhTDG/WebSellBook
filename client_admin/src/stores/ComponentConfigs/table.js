@@ -6,11 +6,11 @@ const table = {
 			title: "Tên",
 			engTitle: "Name product",
 		},
-		countOfStock: {
-			key: "countOfStock",
+		countInStock: {
+			key: "countInStock",
 			align: "right",
 			title: "Tồn kho",
-			engTitle: "Count Of Stock",
+			engTitle: "Count In Stock",
 		},
 		sold: {
 			key: "sold",

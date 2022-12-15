@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import TableRow from "@mui/material/TableRow";
 
 function Cell(props) {
-	const { size = "medium", align = "right", isLast = true, children, ...passProps } = props;
+	const { size = "small", align = "right", isLast = true, children, ...passProps } = props;
 	let lastCellStyle = {};
 	if (isLast) {
 		lastCellStyle = {
