@@ -79,17 +79,21 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-cartSchema.virtual("user", {
-  ref: "User",
-  localField: "userId",
-  foreignField: "_id",
-  justOne: true,
+cartSchema.virtual("isSelectedAll").get(function () {
+  return this.items.every((value) => value.isSelected === true);
 });
 
 cartSchema.virtual("total").get(function () {
   return this.items
     .filter((value) => value.selected)
     .reduce((sum, value) => sum + value.total, 0);
+});
+
+cartSchema.virtual("user", {
+  ref: "User",
+  localField: "userId",
+  foreignField: "_id",
+  justOne: true,
 });
 
 /**
@@ -130,6 +134,7 @@ cartSchema.methods.toJson = function () {
   delete obj.createdAt;
   delete obj.updatedAt;
   obj.items = this.items.map((item) => item.toJson());
+  obj.isSelectedAll = this.isSelectedAll;
   obj.total = this.total;
   return obj;
 };
