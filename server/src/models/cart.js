@@ -80,7 +80,7 @@ const cartSchema = new Schema(
 );
 
 cartSchema.virtual("isSelectedAll").get(function () {
-  return this.items.every((value) => value.isSelected === true);
+  return this.items.every((value) => value.selected === true);
 });
 
 cartSchema.virtual("total").get(function () {
