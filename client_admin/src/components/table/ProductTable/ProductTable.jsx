@@ -75,7 +75,6 @@ function ProductTable(props) {
 
 function RowProduct(props) {
 	const { product } = props;
-	console.log(product);
 	const [isHovering, setIsHovering] = useState(false);
 	const [isEnable, setIsEnable] = useState(product.status !== bookStatus.disable);
 	const handleMouseOut = () => {

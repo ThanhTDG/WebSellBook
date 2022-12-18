@@ -11,7 +11,16 @@ export const PERMISSIONS = "Cấp quyền";
 export const ACCOUNT = "Tài khoản";
 export const ROLE_NAME = "Tên vai trò";
 export const NEW_ROLE_NAME = "Vai trò mới";
+export const CATEGORY = "Danh mục";
 export const DESC = "Mô tả";
+export const NAME_CATEGORY = "Tên danh mục";
+export const PARENT_CATEGORY = "Danh mục cha";
+export const CHANGE = "Thay đổi";
+export const EDIT = "Chỉnh sửa";
+export const ADD = "Thêm mới";
+export const CONFIRM = "Xác nhận";
+export const CANCEL = "Hủy";
+export const SAVE_CHANGE = "Lưu thay đổi";
 //
 export const SET_TAB_MGT_PRODUCT = "set_tab_mgt_product";
 export const SET_PAGE_MGT_PRODUCT = "set_page_mgt_product";

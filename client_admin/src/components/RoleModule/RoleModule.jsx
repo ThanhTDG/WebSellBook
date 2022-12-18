@@ -15,14 +15,14 @@ function RoleModule(props) {
 	};
 	return (
 		<div className={cx("wrapper")}>
-			
 			{Object.keys(rolesConfig.actions).map((action) => (
 				<RoleItem
+					keys={rolesModule[type]}
 					role={rolesModule[action]}
 					onChange={(e) => onChange(e.target.checked, e.target.value, type, action)}
 					disable={!values[type].all || !values.all[action] || !values.all.all}
 					isChecked={values[type][action].enable}
-					main={action === "all"}
+					main={action === rolesConfig.actions.all}
 				/>
 			))}
 		</div>

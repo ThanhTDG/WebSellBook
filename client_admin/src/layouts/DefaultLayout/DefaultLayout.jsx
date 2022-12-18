@@ -6,7 +6,7 @@ import {
 	UserOutlined,
 	VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Layout } from "antd";
 import classNames from "classnames/bind";
 import styles from "./defaultLayout.module.scss";
 import { getKey } from "~/utils/util";
@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
 
 function DefaultLayout({ children }) {
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapsed, setCollapsed] = useState(true);
 
 	return (
 		<Layout style={{ minHeight: "100vh" }}>

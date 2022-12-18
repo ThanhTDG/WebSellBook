@@ -14,6 +14,11 @@ const sidebar = [
 		icon: icons.Sidebar("icon").list,
 		children: [
 			{
+				key: PageConfig.categories.key,
+				label: <Link to={PageConfig.categories.route}>{constants.CATEGORY}</Link>,
+				icon: icons.Sidebar("icon").categories,
+			},
+			{
 				key: PageConfig.products.key,
 				label: <Link to={PageConfig.products.route}>{constants.PRODUCT}</Link>,
 				icon: icons.Sidebar("icon").products,

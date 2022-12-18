@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import classNames from "classnames/bind";
 import React from "react";
 import { useState } from "react";
@@ -7,31 +7,47 @@ import CategoriesTab from "~/components/tab/CategoriesTab";
 import styles from "./pickCategory.module.scss";
 import CategoryForm from "~/components/Form/CategoryForm";
 import { copyObject, FindLevelNode, renderTreeLevel } from "~/utils/util";
+import Controls from "~/components/controls";
+import { constants } from "~/stores";
+import "./dialog.scss";
 const cx = classNames.bind(styles);
 function PickCategory(props) {
-	const { categories, onChange, onOK, onCancel, category } = props;
+	const { categories, onOK, title = "Chọn", category } = props;
 	const [level, setLevel] = useState(2 - FindLevelNode(category.id, copyObject(categories.tree)));
 	const [open, setOpen] = useState(false);
 	const [newId, setNewID] = useState("");
 	const handleSelect = (id) => {
 		setNewID(id);
 	};
+	const handleOpen = () => {
+		console.log("test ");
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
 	return (
-		<div>
-			<Button
-				type="primary"
-				onClick={() => setOpen(true)}
+		<>
+			<Controls.Button
+				className={cx("btn-change")}
+				primary
+				onClick={handleOpen}
 				disabled={level == 0}
 			>
-				Open Modal of 1000px width
-			</Button>
+				{constants.CHANGE}
+			</Controls.Button>
 			<Modal
 				className={cx("wrapper")}
-				title="Modal 1000px width"
+				title={title}
 				centered
 				open={open}
-				onOk={onOK}
-				onCancel={onCancel}
+				onOk={() => {
+					handleClose();
+					onOK(newId);
+				}}
+				okText={constants.CONFIRM}
+				cancelText={constants.CANCEL}
+				onCancel={handleClose}
 			>
 				<div className="layout">
 					{categories.tree && categories.tree.length > 0 && (
@@ -45,10 +61,9 @@ function PickCategory(props) {
 						</div>
 					)}
 					<div>
-						{newId !== category.parent && (
+						{newId && category.parent && newId !== category.parent.id && (
 							<div className={cx("value-change")}>
 								<div className={cx("old-value")}>
-									{}
 									Thay đổi từ:{" "}
 									{category.parent ? (category.parent.name ? category.parent.name : "Lỗi gì đấy") : " không có"}
 								</div>
@@ -60,7 +75,7 @@ function PickCategory(props) {
 					</div>
 				</div>
 			</Modal>
-		</div>
+		</>
 	);
 }
 

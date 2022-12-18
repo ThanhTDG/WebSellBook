@@ -15,12 +15,14 @@ import { useGlobalState } from "~/hooks/useGlobalState";
 import { actions } from "~/stores";
 import { useReducer } from "react";
 import { renderTreeLevel } from "~/utils/util";
+import InfoLayout from "~/layouts/InfoLayout";
 
 const cx = classNames.bind(styles);
 function CategoriesPage() {
 	const [state, dispatch] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
 	const [isLoading, setIsLoading] = useState(false);
-	const [idSelect, setIdSelect] = useState("");
+	const [category, setCategory] = useState({});
+
 	useEffect(() => {
 		fetchApi();
 	}, []);
@@ -32,31 +34,41 @@ function CategoriesPage() {
 			setIsLoading(false);
 		}
 	};
+	const handleCategoryChange = (id) => {
+		setCategory({ ...state.list.find((item) => item.id === id) });
+	};
+	const handleChangeParent = (newId) => {
+		setCategory((state) => ({
+			...state,
+			parent: state.list.find((item) => newId === item.id),
+		}));
+	};
+	console.log(category);
 	return (
-		<LayoutHeaderButton className={cx("wrapper")}>
-			<Loading isLoading={isLoading}>
-				{state.tree && state.tree.length > 0 && (
-					<div className={cx("category-tab")}>
-						<CategoriesTab
-							treeCategories={state.tree}
-							onChange={setIdSelect}
-							idSelect={idSelect}
-						/>
-					</div>
-				)}
-				{state.list &&
-					state.list.length > 0 &&
-					state.list.map(
-						(category) =>
-							category.id === idSelect && (
-								<CategoryForm
-									data={category}
-									listCategory={state}
-								/>
-							)
+		<InfoLayout showFeature={category}>
+			<div className={cx("wrapper")}>
+				<Loading isLoading={isLoading}>
+					{state.tree && state.tree.length > 0 && (
+						<div className={cx("category-tab")}>
+							<CategoriesTab
+								className={cx("categories")}
+								fullScreen={true}
+								treeCategories={state.tree}
+								onChange={handleCategoryChange}
+								idSelect={category.idSelect}
+							/>
+						</div>
 					)}
-			</Loading>
-		</LayoutHeaderButton>
+					{!(category === {}) && (
+						<CategoryForm
+							category={category}
+							categories={state}
+							handleChangeParent={handleChangeParent}
+						/>
+					)}
+				</Loading>
+			</div>
+		</InfoLayout>
 	);
 }
 function addId(array) {

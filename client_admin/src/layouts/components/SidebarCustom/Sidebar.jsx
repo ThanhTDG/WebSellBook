@@ -11,20 +11,6 @@ import { constants } from "~/stores";
 
 const cx = classNames.bind(styles);
 const { Header, Sider, Content } = Layout;
-const items = [
-	getItem("Option 1", "1", icons.Button("test").close),
-	getItem("Option 2", "2", icons.Button("test").close),
-	getItem("User", "sub1", icons.Button("test").close, [
-		getItem("Tom", "3"),
-		getItem("Bill", "4"),
-		getItem("Alex", "5"),
-	]),
-	getItem("Team", "sub2", icons.Button("test").close, [
-		getItem("Team", "sub2", icons.Button("test").close, [getItem("Team", "sub2", icons.Button("test").close)]),
-		getItem("Team 2", "8"),
-	]),
-	getItem("Files", "9", icons.Button("test").close),
-];
 
 function getItem(label, key, icon, children) {
 	return {

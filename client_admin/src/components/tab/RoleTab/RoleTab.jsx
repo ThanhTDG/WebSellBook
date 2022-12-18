@@ -18,22 +18,16 @@ import RoleModule from "~/components/RoleModule";
 import * as rolesConfig from "~/stores/roles";
 import { AllInbox } from "@mui/icons-material";
 import { copyObject } from "~/utils/util";
+import CreateNUpdateDay from "~/components/CreateNUpdateDay";
 const cx = classNames.bind(styles);
-// function getAllID(list) {
-// 	const listID = [];
-// 	console.log(list);
-// 	list.map((item) => {
-// 		listID.push(item.id);
-// 	});
-// 	return listID;
-// }
 function RoleTab(props) {
 	const { role } = props;
 	const [edit, setEdit] = useState({ ...copyObject(initState.editState), isNew: role === null });
 	const [roleDetail, setRoleDetail] = useState(
 		role ? copyObject(role) : edit.isNew ? copyObject(initState.newRole) : undefined
 	);
-	const [userRoles, setUserRoles] = useState(Object.assign({}, initState.role));
+	console.log(roleDetail);
+	const [userRoles, setUserRoles] = useState(copyObject(initState.role));
 	const [tabIndex, setTabIndex] = useState("1");
 	const [users, setUsers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +41,7 @@ function RoleTab(props) {
 				Object.keys(rolesConfig.types).map((type) => {
 					Object.keys(rolesConfig.actions).map((action) => {
 						if (roleDetail.permissions.find((id) => id === rolesConfig.roles[type][action].id)) {
+							console.log(true);
 							roleAvailable[type][action].enable = true;
 						} else {
 							roleAvailable[type][action].enable = false;
@@ -130,6 +125,13 @@ function RoleTab(props) {
 										label={constants.ROLE_NAME}
 										value={roleDetail.name}
 									></Controls.Input>
+									{roleDetail.createdAt && roleDetail.updatedAt && (
+										<CreateNUpdateDay
+											className={""}
+											createdAt={roleDetail.createdAt}
+											updatedAt={roleDetail.updatedAt}
+										/>
+									)}
 									<div className={cx("desc")}>
 										<div className={cx("title-desc")}>{constants.DESC}</div>
 										<Controls.Textarea value={roleDetail.description} />
@@ -144,6 +146,7 @@ function RoleTab(props) {
 							<div className={cx("permissions")}>
 								{Object.keys(rolesConfig.types).map((type) => (
 									<RoleModule
+										keys={type}
 										rolesModule={rolesConfig.roles[type]}
 										type={type}
 										onChange={handleRoleChange}

@@ -1,8 +1,10 @@
 .wrapper {
 	min-height: 450px;
+	width: 100%;
 	padding: 0px 4px;
 }
 .loading {
+	min-width: 260px;
 	height: 420px;
 	border-radius: 0px 0px 15px 15px;
 	background-color: white;
@@ -13,5 +15,5 @@
 	background-color: white;
 }
 .full-screen {
-	height: 67vh;
+	height: 80vh;
 }

@@ -26,7 +26,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AddIcon from "@mui/icons-material/Add";
-
+import ClassIcon from "@mui/icons-material/Class";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -43,12 +43,8 @@ const Sidebar = ({ className }) => {
 	return {
 		list: <ListIcon className={className} />,
 		home: <DashboardIcon className={className} />,
-		role: (
-			<SettingsAccessibilityIcon
-				Icon
-				className={className}
-			/>
-		),
+		role: <SettingsAccessibilityIcon className={className} />,
+		categories: <ClassIcon className={className} />,
 		products: <StorefrontIcon className={className} />,
 		orders: <CreditCardIcon className={className} />,
 		users: <ManageAccountsIcon className={className} />,

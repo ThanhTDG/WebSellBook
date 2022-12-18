@@ -4,6 +4,15 @@
 	max-height: 480px !important;
 }
 .category-tab {
+	display: flex;
+	align-content: center;
 	width: 400px;
 	max-height: 480px !important;
+}
+.category-parent {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.btn-change {
 }

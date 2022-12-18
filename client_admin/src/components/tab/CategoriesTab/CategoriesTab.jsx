@@ -12,7 +12,7 @@ import styles from "./categoriesTab.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoriesTab(props) {
-	const { treeCategories, idSelect, onChange, fullScreen = false, ...passProps } = props;
+	const { treeCategories, idSelect, onChange, fullScreen = false, className, ...passProps } = props;
 	const [expanded, setExpanded] = useState([]);
 	const [searchCategory, setSearch] = useState([]);
 	const [categories, setCategories] = useState(treeCategories);
@@ -49,7 +49,7 @@ function CategoriesTab(props) {
 		}
 	}, [term]);
 	return (
-		<div className={cx("wrapper")}>
+		<div className={cx("wrapper", className)}>
 			<SearchBar
 				className={cx("search-bar")}
 				size="small"

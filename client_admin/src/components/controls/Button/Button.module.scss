@@ -13,7 +13,9 @@
 	user-select: none;
 	&.disable {
 		pointer-events: none;
-		opacity: 0.5;
+		border: 1px solid #999999;
+		background-color: #cccccc;
+		color: #666666;
 	}
 }
 
@@ -22,7 +24,7 @@
 	color: var(--white);
 	background-color: var(--primary);
 	&.hover {
-		background: var(--primaryHover);
+		background: var(--border);
 	}
 }
 .rounded {
@@ -61,4 +63,14 @@
 .large {
 	padding: 14px 16px;
 	min-width: 144px;
+}
+button:disabled,
+button[disabled] {
+	border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
+}
+.icon {
+	display: flex;
+	align-content: flex-end;
 }

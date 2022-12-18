@@ -9,6 +9,7 @@ import TabCustomer from "~/components/tab/TabCustomer";
 import LayoutHeaderButton from "~/layouts/LayoutHeaderButton";
 import { getPermission, getRoles } from "~/services/roleService";
 import styles from "./rolePage.module.scss";
+import InfoLayout from "~/layouts/InfoLayout";
 
 const cx = classNames.bind(styles);
 function RolePage() {
@@ -31,8 +32,9 @@ function RolePage() {
 	const onChangeMenuItem = (id) => {
 		setIdSelect(id);
 	};
+	console.log(permissions);
 	return (
-		<LayoutHeaderButton className={cx("content")}>
+		<InfoLayout>
 			<Loading isLoading={isLoading}>
 				<div className={cx("wrapper")}>
 					<div className={cx("layout")}>
@@ -64,7 +66,7 @@ function RolePage() {
 					</div>
 				</div>
 			</Loading>
-		</LayoutHeaderButton>
+		</InfoLayout>
 	);
 }
 

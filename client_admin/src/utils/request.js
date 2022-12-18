@@ -15,7 +15,7 @@ const handleResponse = (response) => {
 
 			/// 4xx
 			case 401:
-				ErrorDialog("Đăng nhập");
+				//	ErrorDialog("Đăng nhập");
 				return;
 			default:
 				ErrorDialog("unknown Error");

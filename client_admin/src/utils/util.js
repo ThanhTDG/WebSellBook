@@ -1,4 +1,5 @@
 import { CatchingPokemonSharp } from "@mui/icons-material";
+import dayjs from "dayjs";
 import PageConfig from "~/stores/pages";
 const getKey = (keyFind, value) => {
 	let key = "";
@@ -38,7 +39,6 @@ export const copyObject = (source) => {
 	return JSON.parse(JSON.stringify(source));
 };
 export const FindLevelNode = (id, array) => {
-	console.log(id, array);
 	let data = {
 		value: "",
 	};
@@ -77,7 +77,6 @@ export const FindLevelNode = (id, array) => {
 };
 export const renderTreeLevel = (data, maxLevel) => {
 	if (maxLevel === 0) return [];
-	console.log(maxLevel);
 	const dfs = (node, currentLevel, maxLevel) => {
 		if (currentLevel === maxLevel) {
 			if (node.children && node.children.length > 0) {
@@ -102,6 +101,11 @@ export const renderTreeLevel = (data, maxLevel) => {
 		dfs(node, i, maxLevel);
 	});
 	return data;
+};
+export const displayDay = (dateString) => {
+	if (!dateString) return "";
+	const dayConvert = dayjs(dateString).format("HH:mm DD/MM/YYYY");
+	return dayConvert;
 };
 
 export { getKey, convertToTree };

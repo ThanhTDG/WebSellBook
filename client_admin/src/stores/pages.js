@@ -28,11 +28,12 @@ const PageConfig = {
 		label: "Trang đăng nhập",
 		component: LoginPage,
 	},
+
 	/// categories
 	categories: {
 		key: "categories",
 		route: "/categories",
-		label: "Danh mục",
+		label: "Quản lý danh mục",
 		component: CategoriesPage,
 	},
 	// mgt product

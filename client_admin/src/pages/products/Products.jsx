@@ -6,21 +6,22 @@ import { TabProduct } from "~/components/tab/Products";
 import PageConfig from "~/stores/pages";
 import LayoutHeaderButton from "~/layouts/LayoutHeaderButton";
 import { constants } from "~/stores";
+import { useNavigate } from "react-router-dom";
+import InfoLayout from "~/layouts/InfoLayout";
+import featureType from "~/stores/types/featureType";
 function Products() {
+	const navigate = useNavigate();
+	const handleNewProduct = () => {
+		window.open(PageConfig.newProduct.route, "_blank");
+		console.log("isClick");
+	};
 	return (
-		<LayoutHeaderButton
-			lastComp={
-				<Controls.Button
-					primary
-					to={PageConfig.newProduct.route}
-					target={"_blank"}
-				>
-					{constants.ADD_NEW}
-				</Controls.Button>
-			}
+		<InfoLayout
+			addAction={handleNewProduct}
+			type={featureType.isNew}
 		>
 			<TabProduct />
-		</LayoutHeaderButton>
+		</InfoLayout>
 	);
 }
 

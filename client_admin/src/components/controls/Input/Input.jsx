@@ -54,7 +54,6 @@ function Input(props) {
 		// 	className={className}
 		// >
 		<TextField
-			{...(error && { error: true, helperText: error })}
 			fullWidth={fullWidth}
 			placeholder={placeholder}
 			variant={variant}
@@ -68,6 +67,7 @@ function Input(props) {
 			type={type}
 			required={required}
 			InputProps={{ ...inputProps }}
+			{...(error && { error: true, helperText: error })}
 		/>
 		// </FormControl>
 	);

@@ -92,14 +92,6 @@ function LoginForm() {
 				>
 					Đăng nhập
 				</Controls.Button>
-				<Controls.Button
-					type="button"
-					className={cx("btn-login")}
-					primary
-					onClick={handleGetProfile}
-				>
-					getProfile
-				</Controls.Button>
 			</div>
 		</Form>
 	);
