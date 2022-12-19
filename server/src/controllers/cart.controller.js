@@ -1,3 +1,5 @@
+const ErrorHandler = require("../utils/errorHandler");
+
 /**
  * @param {Request} req - Request
  * @param {Response} res - Response
@@ -61,13 +63,18 @@ const updateBook = async (req, res) => {
   try {
     const bookId = req.params.book;
     const { quantity, selected } = req.body;
-    const set = {};
-    if (quantity) set.quantity = quantity;
-    if (selected) set.selected = selected;
 
     const user = req.user;
     const cart = req.cart;
-    cart.items.find((item) => item.bookId.equals(bookId)).$set(set);
+
+    const item = cart.items.find((item) => item.bookId.equals(bookId));
+    if (!item) {
+      throw new ErrorHandler(400, "Item not in cart");
+    }
+
+    if (quantity) item.quantity = quantity;
+    if (selected) item.selected = selected;
+
     await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 
