@@ -81,12 +81,47 @@ export function CategoriesReduce(state, action) {
 				tree: tree,
 				list: list,
 			};
-		case constants.SET_IS_UPDATE:
+		case constants.SET_NEED_UPDATE:
 			return {
 				...state,
 				isUpdate: action.payload,
 			};
 		default:
 			throw new Error("valid action");
+	}
+}
+export function EditModeReducer(state, action) {
+	console.log(action.type, state, action);
+	switch (action.type) {
+		case constants.SET_ENABLE_EDIT:
+			return {
+				...state,
+				isNew: false,
+				enableEdit: action.payload,
+			};
+		case constants.SET_IS_NEW:
+			return {
+				...state,
+				enableEdit: false,
+				isNew: action.payload,
+			};
+		case constants.SET_IS_CHANGE:
+			return {
+				...state,
+				isChange: action.payload,
+			};
+		case constants.SET_VALUE_CHANGE:
+			return {
+				...state,
+				value: action.payload,
+			};
+		case constants.SET_NEW_VALUE:
+			return {
+				...state,
+				isNew: true,
+				value: { ...action.payload },
+			};
+		default:
+			throw new Error("invalid action");
 	}
 }

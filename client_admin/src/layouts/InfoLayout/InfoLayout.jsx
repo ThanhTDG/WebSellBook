@@ -5,7 +5,7 @@ import styles from "./InfoLayout.module.scss";
 import { useEffect } from "react";
 import featureType from "~/stores/types/featureType";
 import Header from "../components/HeaderCustom/Header";
-import { constants } from "~/stores";
+import { actions, constants } from "~/stores";
 import Controls from "~/components/controls";
 import { icons } from "~/assets/images";
 import { getKey } from "~/utils/util";
@@ -17,19 +17,18 @@ function InfoLayout(props) {
 	const {
 		data = null,
 		newData = null,
+		editMode,
+		dispatchEditMode,
 		type = featureType.isEdit,
 		showFeature = true,
-		onClickChange = false,
-		lastComp = null,
+		onClickChange = true,
 		addAction,
 		children,
 	} = props;
-	const [isEdit, setIsEdit] = useState(false);
-	const [isChange, setIsChange] = useState(JSON.stringify(data) === JSON.stringify(newData));
 	const [navbar, setNavbar] = useState(false);
-	let pageName = "Tên là alo";
+	let pageName = "";
 	const handleIsEditChange = (e) => {
-		setIsEdit(e.target.checked);
+		dispatchEditMode(actions.setEnableEdit(e.target.checked));
 	};
 	const getPageName = () => {
 		let string = "";
@@ -72,7 +71,7 @@ function InfoLayout(props) {
 							{showFeature && (
 								<TypeFeature
 									type={type}
-									value={isEdit}
+									value={editMode ? editMode.enableEdit : false}
 									onChange={actionFeature[type]}
 								/>
 							)}
@@ -86,15 +85,17 @@ function InfoLayout(props) {
 					{showFeature && (
 						<TypeFeature
 							type={type}
-							value={isEdit}
+							value={editMode ? editMode.enableEdit : false}
 							onChange={actionFeature[type]}
 						/>
 					)}
 				</div>
-				<div className={cx("content", isEdit && onClickChange ? "more-bottom" : "")}>{children}</div>
-				{displayAction(type, isEdit, onClickChange) && (
+				<div className={cx("content", editMode ? editMode.enableEdit : false && onClickChange ? "more-bottom" : "")}>
+					{children}
+				</div>
+				{displayAction(type, editMode ? editMode.enableEdit : false, onClickChange) && (
 					<TypeAction
-						isChange={isChange}
+						isChange={editMode.isChange}
 						type={type}
 						action={onClickChange}
 					/>
@@ -103,6 +104,7 @@ function InfoLayout(props) {
 		</div>
 	);
 }
+
 function TypeFeature(props) {
 	const { type, onChange, value } = props;
 	switch (type) {
@@ -134,7 +136,6 @@ function TypeFeature(props) {
 function TypeAction(props) {
 	const { action, type, isChange } = props;
 	let title = "";
-
 	switch (type) {
 		case featureType.isEdit:
 			title = constants.SAVE_CHANGE;

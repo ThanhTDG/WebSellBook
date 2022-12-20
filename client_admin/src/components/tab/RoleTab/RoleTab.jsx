@@ -22,7 +22,7 @@ import CreateNUpdateDay from "~/components/CreateNUpdateDay";
 const cx = classNames.bind(styles);
 function RoleTab(props) {
 	const { role } = props;
-	const [edit, setEdit] = useState({ ...copyObject(initState.editState), isNew: role === null });
+	const [edit, setEdit] = useState({ ...copyObject(initState.editModeState), isNew: role === null });
 	const [roleDetail, setRoleDetail] = useState(
 		role ? copyObject(role) : edit.isNew ? copyObject(initState.newRole) : undefined
 	);

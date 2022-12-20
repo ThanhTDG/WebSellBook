@@ -97,7 +97,28 @@ export const setCategories = (payload) => ({
 	type: constants.SET_CATEGORIES,
 	payload,
 });
-export const setIsUpdate = (payload) => ({
-	type: constants.SET_IS_UPDATE,
+export const setNeedUpdate = (payload) => ({
+	type: constants.SET_NEED_UPDATE,
+	payload,
+});
+/// edit mode
+export const setEnableEdit = (payload) => ({
+	type: constants.SET_ENABLE_EDIT,
+	payload,
+});
+export const setIsNew = (payload) => ({
+	type: constants.SET_IS_NEW,
+	payload,
+});
+export const setIsChange = (payload) => ({
+	type: constants.SET_IS_CHANGE,
+	payload,
+});
+export const setValueChange = (payload) => ({
+	type: constants.SET_VALUE_CHANGE,
+	payload,
+});
+export const setNewValue = (payload) => ({
+	type: constants.SET_NEW_VALUE,
 	payload,
 });

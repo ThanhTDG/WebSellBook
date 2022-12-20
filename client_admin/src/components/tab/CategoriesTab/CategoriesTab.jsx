@@ -1,10 +1,14 @@
 import classNames from "classnames/bind";
 import React, { useEffect, useState } from "react";
+import { icons } from "~/assets/images";
+import Controls from "~/components/controls";
+import CreateCategory from "~/components/Dialog/CreateCategory";
 import Loading from "~/components/Loading";
 
 import SearchBar from "~/components/SearchBar";
 import TreeView from "~/components/TreeView";
 import useDebounce from "~/hooks/useDebounce";
+import { constants } from "~/stores";
 import { convertToSearch, convertToSlug } from "~/utils/convertObject";
 import { copyObject } from "~/utils/util";
 
@@ -12,7 +16,7 @@ import styles from "./categoriesTab.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoriesTab(props) {
-	const { treeCategories, idSelect, onChange, fullScreen = false, className, ...passProps } = props;
+	const { treeCategories, idSelect, onChange, fullScreen = false, className, CreateCategory, ...passProps } = props;
 	const [expanded, setExpanded] = useState([]);
 	const [searchCategory, setSearch] = useState([]);
 	const [categories, setCategories] = useState(treeCategories);
@@ -49,7 +53,8 @@ function CategoriesTab(props) {
 		}
 	}, [term]);
 	return (
-		<div className={cx("wrapper", className)}>
+		<div className={cx("wrapper")}>
+			{CreateCategory && <div className={cx("add-category")}>{CreateCategory}</div>}
 			<SearchBar
 				className={cx("search-bar")}
 				size="small"
@@ -60,14 +65,16 @@ function CategoriesTab(props) {
 				isLoading={isLoading}
 				className={cx("loading", fullScreen ? "full-screen" : "")}
 			>
-				<TreeView
-					treeItems={categories}
-					idSelect={idSelect}
-					onChange={onChange}
-					expanded={expanded}
-					handleToggle={handleToggle}
-					{...passProps}
-				></TreeView>
+				<div className={cx(className)}>
+					<TreeView
+						treeItems={categories}
+						idSelect={idSelect}
+						onChange={onChange}
+						expanded={expanded}
+						handleToggle={handleToggle}
+						{...passProps}
+					></TreeView>
+				</div>
 			</Loading>
 		</div>
 	);

@@ -34,12 +34,25 @@ export const globalState = {
 };
 export const categoriesState = {
 	isUpdate: false,
+	isChange: false,
+	category: {},
 	list: [],
 	tree: [],
 };
-export const editState = {
+export const editModeState = {
+	enableEdit: false,
+	isChange: false,
 	isNew: false,
-	isEdit: false,
+	value: {},
+};
+export const openCategory = {
+	isOpen: false,
+	newId: null,
+};
+export const category = {
+	id: "",
+	name: "",
+	parent: null,
 };
 export const newRole = {
 	id: null,

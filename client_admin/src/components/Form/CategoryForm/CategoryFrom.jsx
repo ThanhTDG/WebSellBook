@@ -1,36 +1,59 @@
 import classNames from "classnames/bind";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Controls from "~/components/controls";
 import CreateNUpdateDay from "~/components/CreateNUpdateDay";
 import PickCategory from "~/components/Dialog/PickCategory";
-import { constants } from "~/stores";
+import useDebounce from "~/hooks/useDebounce";
+import useForm from "~/hooks/useForm";
+import { actions, constants } from "~/stores";
 import styles from "./categoryForm.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoryFrom(props) {
-	const { category, categories, handleChangeParent } = props;
+	const { className, category, editMode, canEdit = false, dispatchEditMode, PickParent } = props;
+	const { values, setValues, errors, setError, handleInputChange } = useForm(category, false);
+	console.log(canEdit, editMode);
+
+	useEffect(() => {
+		if (category.id !== values.id) {
+			setValues({ ...category });
+			return;
+		}
+		if (canEdit) {
+			if (JSON.stringify(category) !== JSON.stringify(values)) {
+				dispatchEditMode(
+					actions.setValueChange({
+						...values,
+					})
+				);
+			} else {
+				//dispatchEditMode(actions.setIsChange(false));
+			}
+			console.log(editMode);
+		}
+	}, [values, category]);
 
 	return (
-		<div className={cx("wrapper")}>
+		<div className={cx("wrapper", className)}>
 			<div className={cx("form")}>
 				<Controls.Input
-					name="nameCategory"
+					name="name"
 					fullWidth
 					label={constants.NAME_CATEGORY}
-					value={category.name ? category.name : ""}
+					onChange={canEdit ? handleInputChange : () => {}}
+					value={values.name ? values.name : ""}
 				/>
 				<div className={cx("category-parent")}>
 					<Controls.Input
+						disabled={true}
 						name="parentCategory"
+						fullWidth
 						label={constants.PARENT_CATEGORY}
-						value={category.parent ? categories.list.find((item) => category.parent.id === item.id).name : ""}
+						value={category.parent ? category.parent.name : ""}
 					/>
-					<PickCategory
-						onOK={handleChangeParent}
-						categories={categories}
-						category={category}
-					/>
+					{PickParent}
 				</div>
 				{category.createdAt && category.updatedAt && (
 					<CreateNUpdateDay

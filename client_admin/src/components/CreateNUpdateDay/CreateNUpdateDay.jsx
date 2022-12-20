@@ -12,10 +12,12 @@ function CreateNUpdateDay(props) {
 	return (
 		<div className={cx("wrapper", className)}>
 			<Controls.Input
+				name="createdAt"
 				label="Ngày khởi tạo"
 				value={displayDay(createdAt)}
 			/>
 			<Controls.Input
+				name="updateAt"
 				label="Cập nhật lần cuối"
 				value={displayDay(updatedAt)}
 			/>

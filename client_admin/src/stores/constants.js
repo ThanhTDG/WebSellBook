@@ -13,14 +13,22 @@ export const ROLE_NAME = "Tên vai trò";
 export const NEW_ROLE_NAME = "Vai trò mới";
 export const CATEGORY = "Danh mục";
 export const DESC = "Mô tả";
-export const NAME_CATEGORY = "Tên danh mục";
-export const PARENT_CATEGORY = "Danh mục cha";
 export const CHANGE = "Thay đổi";
+export const NOT_CHANGE = "Không đổi";
 export const EDIT = "Chỉnh sửa";
-export const ADD = "Thêm mới";
+export const ADD = "Thêm";
 export const CONFIRM = "Xác nhận";
 export const CANCEL = "Hủy";
 export const SAVE_CHANGE = "Lưu thay đổi";
+export const NONE = "Không có";
+export const DELETE = "Xóa";
+export const PICK = "Chọn";
+export const CURRENT = "Hiện tại";
+/// category
+export const NAME_CATEGORY = "Tên danh mục";
+export const PARENT_CATEGORY = "Danh mục cha";
+export const CREATE_CATEGORY = "Thêm danh mục";
+export const PICK_PARENT_CATEGORY = "Chọn danh mục cha";
 //
 export const SET_TAB_MGT_PRODUCT = "set_tab_mgt_product";
 export const SET_PAGE_MGT_PRODUCT = "set_page_mgt_product";
@@ -51,4 +59,11 @@ export const SET_IS_LOGIN = "set_is_login";
 export const SET_TREE_CATEGORIES = "set_tree_categories";
 export const SET_LIST_CATEGORIES = "set_list_categories";
 export const SET_CATEGORIES = "set_categories";
-export const SET_IS_UPDATE = "set_is_update";
+export const SET_NEED_UPDATE = "set_need_update";
+
+// edit mode
+export const SET_ENABLE_EDIT = "set_enable_edit";
+export const SET_IS_NEW = "set_is_new";
+export const SET_IS_CHANGE = "set_is_change";
+export const SET_VALUE_CHANGE = "set_value_change";
+export const SET_NEW_VALUE = "set_new_value";

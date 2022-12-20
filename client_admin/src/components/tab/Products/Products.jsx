@@ -223,7 +223,7 @@ function Products() {
 						onClick={handleConfirm}
 						className={tabTableStyles("confirm")}
 					>
-						Xác nhận
+						{stores.constants.CONFIRM}
 					</Controls.Button>
 				</div>
 

@@ -28,13 +28,13 @@ const getTreeItemsFromData = (treeItems) => {
 };
 
 function TreeView(props) {
-	const { treeItems, idSelect, onChange, expanded, handleToggle, ...passProp } = props;
+	const { treeItems, idSelect, onChange, expanded, className, handleToggle, ...passProp } = props;
 	const handleNodeChange = (e, NID) => {
 		onChange(NID);
 	};
 	return (
 		<TreeViewMui
-			className={cx("tree-view")}
+			className={className}
 			aria-label="treeView"
 			selected={idSelect}
 			expanded={expanded}

@@ -27,6 +27,10 @@ import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AddIcon from "@mui/icons-material/Add";
 import ClassIcon from "@mui/icons-material/Class";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CloseIcon from "@mui/icons-material/Close";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -61,9 +65,16 @@ const Sidebar = ({ className }) => {
 const Chart = ({ className }) => {
 	return {
 		increase: <TrendingUpIcon className={className} />,
+		left: <ArrowForwardIcon className={className} />,
+		close: <CloseIcon className={className} />,
 	};
 };
-
+const Dialog = ({ className }) => {
+	return {
+		question: <QuestionMarkIcon className={className} />,
+		warning: <WarningAmberIcon className={className} />,
+	};
+};
 const Widget = ({ className }) => {
 	return {
 		users: <PersonOutlineIcon className={className} />,
@@ -84,4 +95,4 @@ const Button = ({ className }) => {
 		search: <SearchIcon className={className} />,
 	};
 };
-export { Navbar, Sidebar, Chart, Widget, Button };
+export { Navbar, Sidebar, Chart, Widget, Button, Dialog };
