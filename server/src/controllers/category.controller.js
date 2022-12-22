@@ -22,6 +22,21 @@ const CategoryController = class extends Controller {
   };
 
   /**
+   * @param {Category[]} array Array of categories
+   */
+  categories2Json = (array) => {
+    array = array.map((value) => {
+      value = this.category2Json(value);
+      value.children = this.categories2Json(value.children);
+      if (value.children.length === 0) {
+        delete value.children;
+      }
+      return value;
+    });
+    return array;
+  };
+
+  /**
    * Get array of documents
    * @param {Request} req Request
    * @param {Response} res Response
@@ -32,7 +47,7 @@ const CategoryController = class extends Controller {
       let data;
       if (tree) {
         data = await this.model.find({ parent: null });
-        data = this.category2Json(data);
+        data = this.categories2Json(data);
       } else {
         const options = {
           page,
