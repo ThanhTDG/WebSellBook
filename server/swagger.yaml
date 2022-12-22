@@ -68,6 +68,15 @@ paths:
         Lấy danh sách danh mục theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả danh mục.
       parameters:
+      - name: tree
+        in: query
+        description: Hiển thị dạng cây
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+        example: true
       - name: page
         in: query
         description: Trang
@@ -2458,7 +2467,7 @@ components:
         permissions:
           type: array
           items:
-            $ref: '#/components/schemas/admin.Role_permissions'
+            $ref: admin.Role_permissions
         createdDate:
           type: string
           description: Ngày khởi tạo
@@ -2527,7 +2536,7 @@ components:
         roles:
           type: array
           items:
-            $ref: '#/components/schemas/admin.User_roles'
+            $ref: admin.User_roles
         lastSession:
           type: string
           description: Lần đăng nhập gần nhất
