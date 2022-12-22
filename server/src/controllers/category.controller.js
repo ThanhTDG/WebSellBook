@@ -77,4 +77,4 @@ const toJson = (data) => {
   return obj;
 };
 
-module.exports = new CategoryController(getData, toJson, "_parent");
+module.exports = new CategoryController(getData, toJson, ["_parent", "level"]);
