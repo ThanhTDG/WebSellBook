@@ -76,7 +76,7 @@ paths:
         explode: true
         schema:
           type: boolean
-        example: true
+        example: false
       - name: page
         in: query
         description: Trang
