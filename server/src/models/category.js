@@ -78,7 +78,7 @@ categorySchema.pre("save", async function (next) {
 
 categorySchema.pre("find", async function (next) {
   try {
-    this.populate("children");
+    this.populate(["children", "level"]);
     next();
   } catch (error) {
     next(error);

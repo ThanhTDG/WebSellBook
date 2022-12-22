@@ -17,7 +17,6 @@ const CategoryController = class extends Controller {
     delete obj.tree;
     obj.id = data.id;
     obj.children = data.children;
-    data.populate("level");
     obj.level = data.level;
     return obj;
   };
@@ -46,7 +45,7 @@ const CategoryController = class extends Controller {
     try {
       const { tree = false, page = 0, limit = 0 } = req.query;
       let data;
-      if (tree) {
+      if (tree === "true" || tree === true) {
         data = await this.model.find({ parent: null });
         data = this.categories2Json(data);
       } else {
@@ -93,4 +92,4 @@ const toJson = (data) => {
   return obj;
 };
 
-module.exports = new CategoryController(getData, toJson, ["_parent", "level"]);
+module.exports = new CategoryController(getData, toJson, "_parent");
