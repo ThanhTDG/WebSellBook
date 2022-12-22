@@ -16,6 +16,7 @@ const category2Json = (value) => {
   delete obj.createdAt;
   delete obj.updatedAt;
   obj.children = value.children;
+  obj.level = value.level;
   return obj;
 };
 

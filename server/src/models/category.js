@@ -52,6 +52,17 @@ categorySchema.virtual("children", {
   foreignField: "parent",
 });
 
+categorySchema
+  .virtual("level", {
+    ref: "Category",
+    localField: "parent",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    return value ? 1 + value.level : 0;
+  });
+
 categorySchema.pre("save", async function (next) {
   try {
     if (this.parent) {
