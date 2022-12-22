@@ -31,7 +31,7 @@ const CategoryController = class extends Controller {
       const { tree = false, page = 0, limit = 0 } = req.query;
       let data;
       if (tree) {
-        data = await Category.find({ parent: null });
+        data = await this.model.find({ parent: null });
         data = this.category2Json(data);
       } else {
         const options = {
