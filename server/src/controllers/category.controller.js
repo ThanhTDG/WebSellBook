@@ -12,9 +12,9 @@ const CategoryController = class extends Controller {
    */
   category2Json = (data) => {
     const obj = data.toObject();
+    delete obj.__v;
     delete obj.parent;
-    delete obj.createdAt;
-    delete obj.updatedAt;
+    delete obj.tree;
     obj.id = data.id;
     obj.children = data.children;
     obj.level = data.level;
@@ -46,7 +46,7 @@ const CategoryController = class extends Controller {
       const { tree = false, page = 0, limit = 0 } = req.query;
       let data;
       if (tree) {
-        data = await this.model.find({ parent: null });
+        data = await this.model.find({ parent: null }).populate(this.populate);
         data = this.categories2Json(data);
       } else {
         const options = {
