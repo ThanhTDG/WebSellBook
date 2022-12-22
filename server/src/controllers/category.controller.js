@@ -2,39 +2,41 @@ const Category = require("../models/category");
 
 const Controller = require("../utils/controller");
 
+/**
+ * @param {Category} data Category
+ */
+const category2Json = (data) => {
+  const obj = data.toObject();
+  delete obj.__v;
+  delete obj.parent;
+  delete obj.tree;
+  obj.id = data.id;
+  obj.children = data.children;
+  console.log(data.populate("level"));
+  console.log(data.level);
+  obj.level = data.level;
+  return obj;
+};
+
+/**
+ * @param {Category[]} array Array of categories
+ */
+const categories2Json = (array) => {
+  array = array.map((value) => {
+    value = category2Json(value);
+    value.children = categories2Json(value.children);
+    if (value.children.length === 0) {
+      delete value.children;
+    }
+    return value;
+  });
+  return array;
+};
+
 const CategoryController = class extends Controller {
   constructor(getData, toJson, populate) {
     super(Category, getData, toJson, populate);
   }
-
-  /**
-   * @param {Category} data Category
-   */
-  category2Json = (data) => {
-    const obj = data.toObject();
-    delete obj.__v;
-    delete obj.parent;
-    delete obj.tree;
-    obj.id = data.id;
-    obj.children = data.children;
-    obj.level = data.level;
-    return obj;
-  };
-
-  /**
-   * @param {Category[]} array Array of categories
-   */
-  categories2Json = (array) => {
-    array = array.map((value) => {
-      value = this.category2Json(value);
-      value.children = this.categories2Json(value.children);
-      if (value.children.length === 0) {
-        delete value.children;
-      }
-      return value;
-    });
-    return array;
-  };
 
   /**
    * Get array of documents
@@ -47,7 +49,7 @@ const CategoryController = class extends Controller {
       let data;
       if (tree === "true" || tree === true) {
         data = await this.model.find({ parent: null });
-        data = this.categories2Json(data);
+        data = categories2Json(data);
       } else {
         const options = {
           page,
