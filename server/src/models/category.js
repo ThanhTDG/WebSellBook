@@ -78,8 +78,10 @@ categorySchema.pre("save", async function (next) {
 
 categorySchema.pre("find", async function (next) {
   try {
-    this.populate("children");
-    console.log(this.populated('children'))
+    if (this.options.hasChildren === true) {
+      this.populate({ path: "children", options: { hasChildren: true } });
+    }
+    this.populate("level");
     next();
   } catch (error) {
     next(error);

@@ -11,10 +11,8 @@ const category2Json = (data) => {
   delete obj.parent;
   delete obj.tree;
   obj.id = data.id;
-  obj.children = data.children;
-  console.log(data.populate("level"));
-  console.log(data.level);
   obj.level = data.level;
+  obj.children = data.children;
   return obj;
 };
 
@@ -48,7 +46,11 @@ const CategoryController = class extends Controller {
       const { tree = false, page = 0, limit = 0 } = req.query;
       let data;
       if (tree === "true" || tree === true) {
-        data = await this.model.find({ parent: null });
+        data = await this.model.find(
+          { parent: null },
+          {},
+          { hasChildren: true }
+        );
         data = categories2Json(data);
       } else {
         const options = {

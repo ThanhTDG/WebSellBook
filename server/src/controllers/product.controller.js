@@ -5,6 +5,10 @@ const Category = require("../models/category");
 
 const ErrorHandler = require("../utils/errorHandler");
 
+// const util = require('util');
+
+// util.ins
+
 /**
  * @param {Category} data Category
  */
@@ -16,7 +20,6 @@ const category2Json = (data) => {
   delete obj.createdAt;
   delete obj.updatedAt;
   obj.children = data.children;
-  obj.level = data.level;
   return obj;
 };
 
@@ -41,7 +44,11 @@ const categories2Json = (array) => {
  */
 const getCategories = async (req, res) => {
   try {
-    const data = await Category.find({ parent: null }).sort("_id");
+    const data = await Category.find(
+      { parent: null },
+      {},
+      { hasChildren: true }
+    ).sort("_id");
     await res.json(categories2Json(data));
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
