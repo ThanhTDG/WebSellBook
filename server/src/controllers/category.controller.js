@@ -8,16 +8,16 @@ const CategoryController = class extends Controller {
   }
 
   /**
-   * @param {Category} value Category
+   * @param {Category} data Category
    */
-  category2Json = (value) => {
-    const obj = value.toObject();
+  category2Json = (data) => {
+    const obj = data.toObject();
     delete obj.parent;
     delete obj.createdAt;
     delete obj.updatedAt;
     obj.id = data.id;
-    obj.children = value.children;
-    obj.level = value.level;
+    obj.children = data.children;
+    obj.level = data.level;
     return obj;
   };
 
@@ -73,7 +73,7 @@ const toJson = (data) => {
   delete obj.children;
   obj.id = data.id;
   obj.parent = data._parent;
-  obj.level = value.level;
+  obj.level = data.level;
   return obj;
 };
 

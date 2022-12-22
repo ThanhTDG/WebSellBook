@@ -6,17 +6,17 @@ const Category = require("../models/category");
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
- * @param {Category} value Category
+ * @param {Category} data Category
  */
-const category2Json = (value) => {
-  const obj = value.toObject();
+const category2Json = (data) => {
+  const obj = data.toObject();
   delete obj.__v;
   delete obj.parent;
   delete obj.tree;
   delete obj.createdAt;
   delete obj.updatedAt;
-  obj.children = value.children;
-  obj.level = value.level;
+  obj.children = data.children;
+  obj.level = data.level;
   return obj;
 };
 
@@ -49,10 +49,10 @@ const getCategories = async (req, res) => {
 };
 
 /**
- * @param {Book} value Book
+ * @param {Book} data Book
  */
-const book2Json = (value) => {
-  let obj = value.toObject();
+const book2Json = (data) => {
+  let obj = data.toObject();
   delete obj.__v;
   delete obj.category;
   delete obj.tree;
@@ -61,7 +61,7 @@ const book2Json = (value) => {
   delete obj.textSearch;
   // delete obj.createdAt;
   delete obj.updatedAt;
-  const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
+  const { shortDes, dimension, numOfReviews, rating, ratingRate } = data;
   obj = {
     ...obj,
     shortDes,
