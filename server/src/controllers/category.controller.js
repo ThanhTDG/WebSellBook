@@ -73,6 +73,7 @@ const toJson = (data) => {
   delete obj.children;
   obj.id = data.id;
   obj.parent = data._parent;
+  obj.level = value.level;
   return obj;
 };
 
