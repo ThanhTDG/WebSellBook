@@ -17,6 +17,7 @@ const CategoryController = class extends Controller {
     delete obj.tree;
     obj.id = data.id;
     obj.children = data.children;
+    data.populate("level");
     obj.level = data.level;
     return obj;
   };
@@ -46,7 +47,7 @@ const CategoryController = class extends Controller {
       const { tree = false, page = 0, limit = 0 } = req.query;
       let data;
       if (tree) {
-        data = await this.model.find({ parent: null }).populate(this.populate);
+        data = await this.model.find({ parent: null });
         data = this.categories2Json(data);
       } else {
         const options = {
