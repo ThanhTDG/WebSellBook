@@ -28,6 +28,7 @@ function SearchBar(props) {
 				classNames={cx("search-input")}
 				onChange={handleSearch}
 				value={value}
+				fullWidth={true}
 				endAdornment={value && <IconButton onClick={clearSearch}>{icons.Button("icon").close}</IconButton>}
 				startAdornment={icons.Button("icon").search}
 			/>

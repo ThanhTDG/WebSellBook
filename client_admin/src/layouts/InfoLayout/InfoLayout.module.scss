@@ -96,3 +96,18 @@
 .more-bottom {
 	margin-bottom: 80px;
 }
+
+.edit-n-delete {
+	display: flex;
+	height: 100%;
+	gap: 16px;
+	.btn-delete {
+		background-color: var(--red-pink);
+		color: white;
+	}
+}
+.title {
+	.label-edit {
+		color: white;
+	}
+}

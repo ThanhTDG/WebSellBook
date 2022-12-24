@@ -118,7 +118,29 @@ export const setValueChange = (payload) => ({
 	type: constants.SET_VALUE_CHANGE,
 	payload,
 });
-export const setNewValue = (payload) => ({
-	type: constants.SET_NEW_VALUE,
+export const setResetAll = (payload) => ({
+	type: constants.SET_RESET_ALL,
+	payload,
+});
+export const setValue = (payload) => ({
+	type: constants.SET_VALUE,
+	payload,
+});
+
+export const setStatusLoad = (payload) => ({
+	type: constants.SET_STATUS_LOAD,
+	payload,
+});
+export const setStatusIsLoading = (payload) => ({
+	type: constants.SET_STATUS_IS_LOADING,
+	payload,
+});
+export const setStatusIsSuccess = (payload) => ({
+	type: constants.SET_STATUS_IS_SUCCESS,
+	payload,
+});
+
+export const setStatusIsError = (payload) => ({
+	type: constants.SET_STATUS_IS_ERROR,
 	payload,
 });

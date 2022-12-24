@@ -80,7 +80,6 @@ export const putProduct = async (query) => {
 	}
 };
 export const upLoadImages = async (query) => {
-	console.log(query);
 	const { id, fmData } = query;
 	try {
 		const response = await request.post(`/books/${id}/upload`, fmData, {

@@ -6,20 +6,22 @@ const request = axios.create({
 	withCredentials: true,
 });
 const handleResponse = (response) => {
+	console.log(request);
 	if (response) {
 		switch (response.status) {
 			///2xx
 			case 200:
 				return response.data;
 			/// 3xx
-
+			case 201:
+				return response.data;
 			/// 4xx
 			case 401:
 				//	ErrorDialog("Đăng nhập");
 				return;
 			default:
 				ErrorDialog("unknown Error");
-				return;
+				return null;
 		}
 	}
 };
@@ -43,6 +45,14 @@ export const post = async (path, option = {}, config = {}) => {
 export const put = async (path, option = {}) => {
 	try {
 		const response = await request.put(path, option);
+		return handleResponse(response);
+	} catch (error) {
+		if (error.response) return handleResponse(error.response);
+	}
+};
+export const deleteReq = async (path, option = {}) => {
+	try {
+		const response = await request.delete(path, option);
 		return handleResponse(response);
 	} catch (error) {
 		if (error.response) return handleResponse(error.response);

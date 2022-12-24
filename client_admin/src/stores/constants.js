@@ -24,6 +24,7 @@ export const NONE = "Không có";
 export const DELETE = "Xóa";
 export const PICK = "Chọn";
 export const CURRENT = "Hiện tại";
+export const MAX_LEVEL = 2;
 /// category
 export const NAME_CATEGORY = "Tên danh mục";
 export const PARENT_CATEGORY = "Danh mục cha";
@@ -67,3 +68,9 @@ export const SET_IS_NEW = "set_is_new";
 export const SET_IS_CHANGE = "set_is_change";
 export const SET_VALUE_CHANGE = "set_value_change";
 export const SET_NEW_VALUE = "set_new_value";
+export const SET_VALUE = "set_value";
+export const SET_RESET_ALL = "set_reset_all";
+export const SET_STATUS_LOAD = "set_status_load";
+export const SET_STATUS_IS_LOADING = "set_status_is_loading";
+export const SET_STATUS_IS_SUCCESS = "set_status_is_success";
+export const SET_STATUS_IS_ERROR = "set_status_is_error";

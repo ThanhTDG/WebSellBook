@@ -25,6 +25,28 @@ export const convertTreeObject = (array = []) => {
 		return;
 	}
 };
+export const convertTree = (list = [], maxLevel = 3) => {
+	let result = [];
+	if (list.length === 0) return [];
+	let currentLevel = 0;
+	const addList = (item, array, currentLevel, maxLevel) => {
+		if (currentLevel > maxLevel) return;
+		currentLevel += 1;
+		let children = array.filter((child) => child.parent && child.parent.id === item.id);
+		if (children.length > 0) {
+			children = children.map((child) => addList(child, array, currentLevel, maxLevel));
+		}
+		return {
+			...item,
+			children: children,
+			level: currentLevel,
+		};
+	};
+	result = list.filter((item) => !item.parent);
+	result = result.map((item) => addList(item, list, currentLevel, maxLevel));
+	return result;
+};
+
 export const convertToSlug = (str) => {
 	// Chuyển hết sang chữ thường
 	str = str.toLowerCase();

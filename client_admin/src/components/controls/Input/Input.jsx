@@ -17,6 +17,7 @@ function Input(props) {
 		type = null,
 		placeholder = null,
 		error = false,
+		autoComplete = "on",
 		endAdornment = null,
 		startAdornment = null,
 		configNumber = null,
@@ -59,6 +60,7 @@ function Input(props) {
 			variant={variant}
 			label={label}
 			disabled={disabled}
+			autoComplete={autoComplete}
 			id={id}
 			size={size}
 			name={name}

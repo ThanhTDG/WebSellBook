@@ -1,0 +1,24 @@
+.wrapper {
+	display: flex;
+	width: 100%;
+}
+.small {
+	width: 40px !important;
+}
+.normal {
+	width: 56px !important;
+}
+.btn {
+	height: 100%;
+	padding: 0 !important;
+	min-width: 0 !important;
+}
+.feature {
+}
+.pick {
+	z-index: 1;
+	margin-left: -14px;
+}
+.icon-parent {
+	color: var(--enable) !important;
+}

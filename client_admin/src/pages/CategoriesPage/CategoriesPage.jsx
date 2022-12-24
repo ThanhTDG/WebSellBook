@@ -4,45 +4,83 @@ import CategoryForm from "~/components/Form/CategoryForm";
 
 import Loading from "~/components/Loading";
 import CategoriesTab from "~/components/tab/CategoriesTab/CategoriesTab";
-import LayoutHeaderButton from "~/layouts/LayoutHeaderButton";
 import * as categoriesService from "~/services/categoriesService";
-import ProviderContext from "~/stores/ProviderContext";
 import styles from "./categoryPage.module.scss";
 import * as initStates from "~/stores/initStates";
 import * as reducers from "~/stores/reducers";
-import * as contexts from "~/stores/contexts";
-import { useGlobalState } from "~/hooks/useGlobalState";
-import { actions } from "~/stores";
+import { actions, constants } from "~/stores";
 import { useReducer } from "react";
-import { renderTreeLevel } from "~/utils/util";
 import InfoLayout from "~/layouts/InfoLayout";
-import hooks from "~/hooks";
-import { useMemo } from "react";
 import CreateCategory from "~/components/Dialog/CreateCategory";
+import useForm from "~/hooks/useForm";
+import LoadingDialog from "~/components/Dialog/LoadingDialog";
+import TextFelidCategory from "~/components/TextFelidCategory";
+import { deepCategory } from "~/utils/util";
 
 const cx = classNames.bind(styles);
 function CategoriesPage() {
 	const [categories, dispatchCategories] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
 	const [isLoading, setIsLoading] = useState(false);
 	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
-	const [category, setCategory] = useState({});
-	let displayCategory = Object.keys(category).length !== 0;
-
+	const [category, setCategory] = useState(null);
+	const formCategory = useForm({}, false);
+	const { values, setValues, errors, setError, handleInputChange } = formCategory;
+	let displayCategory = category && !editMode.isNew;
+	let levelPick = deepCategory(category, categories.list);
+	useEffect(() => {
+		setValues({ ...category });
+	}, [editMode.enableEdit]);
+	useEffect(() => {
+		if (values !== {} && values.id ? JSON.stringify(values) !== JSON.stringify(category) : false) {
+			dispatchEditMode(actions.setIsChange(true));
+			if (!editMode.enableEdit) dispatchEditMode(actions.setEnableEdit(true));
+		}
+	}, [values]);
 	const fetchApi = async () => {
+		setIsLoading(true);
 		const [treeCategory, listCategory] = await Promise.all([
 			categoriesService.getCategoriesTree(),
 			categoriesService.getCategories(),
 		]);
 		if (treeCategory && listCategory) {
-			addId(treeCategory);
 			dispatchCategories(actions.setCategories([treeCategory, listCategory.docs]));
-			setIsLoading(false);
+			dispatchEditMode(actions.setResetAll());
 		}
+		setIsLoading(false);
 	};
 	const fetchUpdateCategory = async () => {
 		const response = await categoriesService.updateCategory(editMode.value);
 		if (response) {
+			setCategory(response);
 		} else {
+		}
+	};
+	const handleDeleteCategory = () => {
+		deleteCategory();
+	};
+	const handleUpdateCategory = () => {
+		updateCategory();
+	};
+	const updateCategory = async () => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await categoriesService.updateCategory(values);
+		if (response) {
+			await fetchApi();
+			dispatchEditMode(actions.setStatusIsSuccess());
+			setCategory(response);
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
+	};
+	const deleteCategory = async () => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await categoriesService.deleteCategory(category.id);
+		if (response) {
+			await fetchApi();
+			dispatchEditMode(actions.setStatusIsSuccess());
+			setCategory(null);
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
 		}
 	};
 
@@ -50,61 +88,80 @@ function CategoriesPage() {
 		fetchApi();
 	}, []);
 	const handleCategoryChange = (id) => {
-		setCategory({ ...categories.list.find((item) => item.id === id) });
+		let itemFind = { ...categories.list.find((item) => item.id === id) };
+		dispatchEditMode(actions.setResetAll());
+		setCategory(itemFind);
+		setValues(itemFind);
 	};
 	const handleChangeParent = (newId) => {
-		setCategory((state) => ({
-			...state,
-			parent: state.list.find((item) => newId === item.id),
-		}));
+		if (newId) {
+			setCategory({
+				...category,
+				parent: { ...categories.list.find((item) => item.id === newId) },
+			});
+		} else {
+			setCategory({
+				...category,
+				parent: "",
+			});
+		}
 	};
-	const handleUpdateCategory = () => {};
-
-	const MemoCategoriesTab = useMemo(() => {
-		return (
-			categories.tree &&
-			categories.tree.length > 0 && (
-				<div className={cx("category-tab")}>
-					{console.log("rerender")}
-					<CategoriesTab
-						className={cx("tree-view-categories")}
-						fullScreen={true}
-						treeCategories={categories.tree}
-						onChange={handleCategoryChange}
-						idSelect={category.id ? category.id : ""}
-						CreateCategory={
-							<CreateCategory
-								editMode={editMode}
-								dispatchEditMode={dispatchEditMode}
-								categories={categories}
-								category={editMode.value}
-							/>
-						}
-					/>
-				</div>
-			)
-		);
-	}, [categories, category]);
 	return (
 		<InfoLayout
 			showFeature={displayCategory}
 			editMode={editMode}
+			onClickChange={handleUpdateCategory}
 			dispatchEditMode={dispatchEditMode}
+			handleDelete={handleDeleteCategory}
+			typeModel={constants.CATEGORY.toLocaleLowerCase()}
 		>
 			<div className={cx("wrapper")}>
-				<Loading isLoading={isLoading}>
-					{MemoCategoriesTab}
-					{displayCategory && (
+				<div className={cx("category-tab")}>
+					<Loading isLoading={isLoading}>
+						<CategoriesTab
+							className={cx("tree-view-categories")}
+							list={categories.list}
+							tree={categories.tree}
+							fullScreen={true}
+							onChange={handleCategoryChange}
+							idSelect={category ? category.id : ""}
+							CreateCategory={
+								<CreateCategory
+									fetchCategories={fetchApi}
+									categories={categories}
+									category={initStates.category}
+									setCategory={setCategory}
+								/>
+							}
+						/>
+					</Loading>
+				</div>
+				{displayCategory && (
+					<div className={cx("display-form")}>
 						<CategoryForm
+							className={cx("form-category")}
+							form={formCategory}
 							editMode={editMode}
 							dispatchEditMode={dispatchEditMode}
-							category={category}
+							data={category}
 							categories={categories}
 							canEdit={editMode.enableEdit}
+							PickParent={
+								<TextFelidCategory
+									label={constants.PARENT_CATEGORY}
+									category={values}
+									setCategory={setValues}
+									list={categories.list}
+									tree={categories.tree}
+									disabled={constants.MAX_LEVEL - levelPick === 0}
+									levelDisplay={constants.MAX_LEVEL - levelPick - 1}
+								/>
+							}
 						/>
-					)}
-				</Loading>
+					</div>
+				)}
 			</div>
+		
 		</InfoLayout>
 	);
 }

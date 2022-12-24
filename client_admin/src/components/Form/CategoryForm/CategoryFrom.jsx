@@ -2,39 +2,20 @@ import classNames from "classnames/bind";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+
+import * as initStates from "~/stores/initStates";
 import Controls from "~/components/controls";
 import CreateNUpdateDay from "~/components/CreateNUpdateDay";
 import PickCategory from "~/components/Dialog/PickCategory";
 import useDebounce from "~/hooks/useDebounce";
-import useForm from "~/hooks/useForm";
 import { actions, constants } from "~/stores";
 import styles from "./categoryForm.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoryFrom(props) {
-	const { className, category, editMode, canEdit = false, dispatchEditMode, PickParent } = props;
-	const { values, setValues, errors, setError, handleInputChange } = useForm(category, false);
-	console.log(canEdit, editMode);
-
-	useEffect(() => {
-		if (category.id !== values.id) {
-			setValues({ ...category });
-			return;
-		}
-		if (canEdit) {
-			if (JSON.stringify(category) !== JSON.stringify(values)) {
-				dispatchEditMode(
-					actions.setValueChange({
-						...values,
-					})
-				);
-			} else {
-				//dispatchEditMode(actions.setIsChange(false));
-			}
-			console.log(editMode);
-		}
-	}, [values, category]);
-
+	const { className, data, canEdit = true, form, PickParent } = props;
+	const { values, setValues, errors, setError, handleInputChange } = form;
+	const category = canEdit ? values : data;
 	return (
 		<div className={cx("wrapper", className)}>
 			<div className={cx("form")}>
@@ -43,18 +24,9 @@ function CategoryFrom(props) {
 					fullWidth
 					label={constants.NAME_CATEGORY}
 					onChange={canEdit ? handleInputChange : () => {}}
-					value={values.name ? values.name : ""}
+					value={category.name ? category.name : ""}
 				/>
-				<div className={cx("category-parent")}>
-					<Controls.Input
-						disabled={true}
-						name="parentCategory"
-						fullWidth
-						label={constants.PARENT_CATEGORY}
-						value={category.parent ? category.parent.name : ""}
-					/>
-					{PickParent}
-				</div>
+				<div className={cx("category-parent")}>{PickParent}</div>
 				{category.createdAt && category.updatedAt && (
 					<CreateNUpdateDay
 						createdAt={category.createdAt}

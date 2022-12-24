@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { icons } from "~/assets/images";
 import Controls from "~/components/controls";
 import CreateCategory from "~/components/Dialog/CreateCategory";
@@ -16,59 +16,59 @@ import styles from "./categoriesTab.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoriesTab(props) {
-	const { treeCategories, idSelect, onChange, fullScreen = false, className, CreateCategory, ...passProps } = props;
+	const {
+		tree,
+		idSelect,
+		list,
+		idVisible = "",
+		maxLevel = constants.MAX_LEVEL,
+		onChange,
+		fullScreen = false,
+		className,
+		CreateCategory,
+		...passProps
+	} = props;
 	const [expanded, setExpanded] = useState([]);
-	const [searchCategory, setSearch] = useState([]);
-	const [categories, setCategories] = useState(treeCategories);
+	const [categories, setCategories] = useState(tree);
 	const [isLoading, setIsLoading] = useState(false);
 	const [term, setTerm] = useState("");
 	const debounce = useDebounce(term, 750);
 	const handleToggle = (event, nodeIds) => {
 		setExpanded(nodeIds);
 	};
+
 	useEffect(() => {
-		const arraySearch = copyObject(treeCategories);
-		removeVietnamese(arraySearch);
-		setSearch(arraySearch);
-	}, []);
-	useEffect(() => {
-		if (term) {
-			const [result, listExpand] = search(debounce, searchCategory);
+		if (term !== debounce) {
+			setIsLoading(true);
+			return;
+		}
+		if (debounce) {
+			const [result, listExpand] = search(debounce, tree);
 			setExpanded(listExpand);
 			setCategories(result);
 		} else {
-			setCategories(treeCategories);
+			setCategories(tree);
 		}
 		setIsLoading(false);
-	}, [debounce]);
-	useEffect(() => {
-		if (term !== debounce) {
-			if (!isLoading) {
-				setIsLoading(true);
-			}
-			return;
+	}, [debounce, term]);
+
+	const controlTree = () => {
+		if (expanded.length > 0) {
+			setExpanded([]);
 		}
-		if (!term) {
-			setIsLoading(false);
-		}
-	}, [term]);
-	return (
-		<div className={cx("wrapper")}>
-			{CreateCategory && <div className={cx("add-category")}>{CreateCategory}</div>}
-			<SearchBar
-				className={cx("search-bar")}
-				size="small"
-				value={term}
-				onChange={setTerm}
-			/>
+	};
+	const treeView = useMemo(
+		() => (
 			<Loading
 				isLoading={isLoading}
 				className={cx("loading", fullScreen ? "full-screen" : "")}
 			>
 				<div className={cx(className)}>
 					<TreeView
+						maxLevel={maxLevel}
 						treeItems={categories}
 						idSelect={idSelect}
+						idVisible={idVisible}
 						onChange={onChange}
 						expanded={expanded}
 						handleToggle={handleToggle}
@@ -76,13 +76,37 @@ function CategoriesTab(props) {
 					></TreeView>
 				</div>
 			</Loading>
+		),
+		[expanded, isLoading, idSelect, list, tree]
+	);
+	return (
+		<div className={cx("wrapper")}>
+			{CreateCategory && <div className={cx("add-category")}>{CreateCategory}</div>}
+			<div className={cx("future")}>
+				<SearchBar
+					className={cx("search-bar")}
+					size="small"
+					value={term}
+					onChange={setTerm}
+				/>
+				{
+					<Controls.Button
+						primary
+						className={cx("btn-control-tree")}
+						onClick={controlTree}
+						disable={!(categories.length > 0 && expanded.length > 0 && !term)}
+					>
+						{icons.Button("").unless}
+					</Controls.Button>
+				}
+			</div>
+			{treeView}
 		</div>
 	);
 }
 
 function dfs(node, term, foundIDS, listID) {
-	let isMatching = node.slug && node.slug.indexOf(term) > -1;
-
+	let isMatching = node.name && node.name.toLowerCase().indexOf(term) > -1;
 	if (Array.isArray(node.children)) {
 		listID.push(node.id);
 		node.children.forEach((child) => {
@@ -96,22 +120,6 @@ function dfs(node, term, foundIDS, listID) {
 
 	return isMatching;
 }
-function removeVietnamese(array) {
-	array.forEach((item) => {
-		dfsRemoveVietnamese(item);
-	});
-}
-function dfsRemoveVietnamese(node) {
-	node = {
-		...node,
-		name: convertToSearch(node.name),
-	};
-	if (Array.isArray(node.children)) {
-		node.children.forEach((child) => {
-			dfsRemoveVietnamese(child);
-		});
-	}
-}
 
 function filter(data, matchedIDS) {
 	return data
@@ -123,7 +131,8 @@ function filter(data, matchedIDS) {
 }
 
 function search(term, data) {
-	term = convertToSlug(term);
+	term = term.toLowerCase().trim();
+	console.log(term);
 	const dataNode = {
 		children: data,
 	};

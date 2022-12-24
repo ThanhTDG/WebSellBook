@@ -10,18 +10,29 @@ import { copyObject, FindLevelNode, renderTreeLevel } from "~/utils/util";
 import Controls from "~/components/controls";
 import { constants } from "~/stores";
 import "./dialog.scss";
+import Change from "~/components/Change";
 const cx = classNames.bind(styles);
 function PickCategory(props) {
-	const { categories, onOK, title = "Chọn", category } = props;
-	const [level, setLevel] = useState(2 - FindLevelNode(category.id, copyObject(categories.tree)));
+	const {
+		onOK,
+		title = "Chọn",
+		list,
+		tree,
+		idVisible = "",
+		className,
+		currentValue,
+		disabled,
+		displayText = constants.CHANGE,
+		maxLevel,
+	} = props;
 	const [open, setOpen] = useState(false);
 	const [newId, setNewID] = useState("");
 	const handleSelect = (id) => {
 		setNewID(id);
 	};
 	const handleOpen = () => {
-		console.log("test ");
 		setOpen(true);
+		setNewID("");
 	};
 	const handleClose = () => {
 		setOpen(false);
@@ -29,12 +40,12 @@ function PickCategory(props) {
 	return (
 		<>
 			<Controls.Button
-				className={cx("btn-change")}
+				className={cx("btn-change", className)}
 				primary
 				onClick={handleOpen}
-				disabled={level == 0}
+				disabled={disabled}
 			>
-				{constants.CHANGE}
+				{displayText}
 			</Controls.Button>
 			<Modal
 				className={cx("wrapper")}
@@ -50,29 +61,25 @@ function PickCategory(props) {
 				onCancel={handleClose}
 			>
 				<div className="layout">
-					{categories.tree && categories.tree.length > 0 && (
+					{tree && (
 						<div className={cx("category-tab")}>
 							<CategoriesTab
+								tree={tree}
+								list={list}
+								maxLevel={maxLevel}
+								idVisible={idVisible}
 								sx={{ height: 400, flexGrow: 1, overflowY: "auto" }}
-								treeCategories={renderTreeLevel(copyObject(categories.tree), level)}
 								onChange={handleSelect}
 								idSelect={newId}
 							/>
 						</div>
 					)}
-					<div>
-						{newId && category.parent && newId !== category.parent.id && (
-							<div className={cx("value-change")}>
-								<div className={cx("old-value")}>
-									Thay đổi từ:{" "}
-									{category.parent ? (category.parent.name ? category.parent.name : "Lỗi gì đấy") : " không có"}
-								</div>
-								<div className={cx("new-value")}>
-									Thành: {newId && categories.list.find((item) => item.id === newId).name}
-								</div>
-							</div>
-						)}
-					</div>
+					{newId && (
+						<Change
+							oldValue={currentValue.parent ? currentValue.parent.name : ""}
+							newValue={newId && list.find((item) => item.id === newId).name}
+						/>
+					)}
 				</div>
 			</Modal>
 		</>

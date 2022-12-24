@@ -31,6 +31,10 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CloseIcon from "@mui/icons-material/Close";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import SortIcon from "@mui/icons-material/Sort";
+import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -86,6 +90,7 @@ const Widget = ({ className }) => {
 const Button = ({ className }) => {
 	return {
 		users: <PersonOutlineIcon className={className} />,
+		parent: <InsertLinkIcon className={className} />,
 		add: <AddIcon className={className} />,
 		addBox: <AddBoxIcon className={className} />,
 		order: <ShoppingCartOnOutlinedIcon className={className} />,
@@ -93,6 +98,10 @@ const Button = ({ className }) => {
 		balance: <AccountBalanceWalletIcon className={className} />,
 		close: <HighlightOffOutlinedIcon className={className} />,
 		search: <SearchIcon className={className} />,
+		delete: <DeleteOutlineIcon className={className} />,
+		link: <InsertLinkIcon className={className} />,
+		list: <SortIcon className={className} />,
+		unless: <UnfoldLessIcon className={className} />,
 	};
 };
 export { Navbar, Sidebar, Chart, Widget, Button, Dialog };

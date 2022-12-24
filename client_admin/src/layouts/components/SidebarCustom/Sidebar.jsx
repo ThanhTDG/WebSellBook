@@ -22,7 +22,6 @@ function getItem(label, key, icon, children) {
 }
 function Sidebar({ collapsed, setCollapsed }) {
 	let currentPath = window.location.pathname;
-	console.log("curren path", currentPath);
 	let key = "home";
 	if (currentPath !== "/") {
 		key = getKey("route", currentPath);
@@ -44,9 +43,7 @@ function Sidebar({ collapsed, setCollapsed }) {
 				/>
 			</Link>
 			<Menu
-				onClick={(e) => {
-					console.log(e);
-				}}
+				onClick={(e) => {}}
 				theme="dark"
 				defaultSelectedKeys={key}
 				mode="inline"

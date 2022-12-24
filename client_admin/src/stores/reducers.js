@@ -1,7 +1,7 @@
 import * as constants from "~/stores/constants";
-
+import * as initStates from "~/stores/initStates";
+import loadStatus, { messageStatus } from "./statusLoad";
 export const globalStateReducer = (state, action) => {
-	console.log("global reducer", action.payload);
 	switch (action.type) {
 		case constants.SET_IS_LOGIN: {
 			return {
@@ -91,7 +91,6 @@ export function CategoriesReduce(state, action) {
 	}
 }
 export function EditModeReducer(state, action) {
-	console.log(action.type, state, action);
 	switch (action.type) {
 		case constants.SET_ENABLE_EDIT:
 			return {
@@ -111,15 +110,51 @@ export function EditModeReducer(state, action) {
 				isChange: action.payload,
 			};
 		case constants.SET_VALUE_CHANGE:
+			let { isChange, value } = action.payload;
 			return {
 				...state,
-				value: action.payload,
+				isChange: isChange,
+				value: value,
 			};
 		case constants.SET_NEW_VALUE:
 			return {
 				...state,
 				isNew: true,
-				value: { ...action.payload },
+				value: action.payload,
+			};
+		case constants.SET_RESET_ALL:
+			return {
+				...initStates.editModeState,
+			};
+		case constants.SET_STATUS_LOAD:
+			return {
+				...initStates.editModeState,
+				statusLoad: action.payload,
+			};
+		case constants.SET_STATUS_IS_LOADING:
+			return {
+				...state,
+				statusLoad: loadStatus.loading,
+				messageStatus: action.payload,
+			};
+		case constants.SET_STATUS_IS_SUCCESS:
+			return {
+				...initStates.editModeState,
+				statusLoad: loadStatus.success,
+				messageStatus: action.payload,
+			};
+		case constants.SET_STATUS_IS_ERROR:
+			return {
+				...initStates.editModeState,
+				statusLoad: loadStatus.error,
+				messageStatus: action.payload,
+			};
+		case constants.SET_NEED_UPDATE:
+			let { needUpdate, valueUpdate } = action.payload;
+			return {
+				...initStates.editModeState,
+				value: valueUpdate,
+				isNeedUpdate: needUpdate,
 			};
 		default:
 			throw new Error("invalid action");

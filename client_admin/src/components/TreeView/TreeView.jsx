@@ -9,29 +9,41 @@ import "./treeView.scss";
 import styles from "./treeView.module.scss";
 
 const cx = classNames.bind(styles);
-const getTreeItemsFromData = (treeItems) => {
+const getTreeItemsFromData = (treeItems, maxLevel, idVisible) => {
 	return treeItems.map((treeItemData) => {
 		let children = undefined;
 		if (treeItemData.children && treeItemData.children.length > 0) {
-			children = getTreeItemsFromData(treeItemData.children);
+			children = getTreeItemsFromData(treeItemData.children, maxLevel);
 		}
-		return (
-			<TreeItem
-				className={cx("tree-item")}
-				key={treeItemData._id}
-				nodeId={treeItemData._id}
-				label={treeItemData.name}
-				children={children}
-			/>
-		);
+		if (treeItemData.level <= maxLevel && idVisible !== treeItemData.id)
+			return (
+				<TreeItem
+					className={cx("tree-item")}
+					key={treeItemData.id}
+					nodeId={treeItemData.id}
+					label={treeItemData.name}
+					children={children}
+				/>
+			);
 	});
 };
 
 function TreeView(props) {
-	const { treeItems, idSelect, onChange, expanded, className, handleToggle, ...passProp } = props;
+	const {
+		treeItems,
+		idSelect,
+		onChange,
+		expanded,
+		className,
+		idVisible = "",
+		handleToggle,
+		maxLevel,
+		...passProp
+	} = props;
 	const handleNodeChange = (e, NID) => {
 		onChange(NID);
 	};
+	console.log(maxLevel);
 	return (
 		<TreeViewMui
 			className={className}
@@ -44,7 +56,7 @@ function TreeView(props) {
 			defaultExpandIcon={<ChevronRightIcon />}
 			{...passProp}
 		>
-			{getTreeItemsFromData(treeItems)}
+			{getTreeItemsFromData(treeItems, maxLevel, idVisible)}
 		</TreeViewMui>
 	);
 }

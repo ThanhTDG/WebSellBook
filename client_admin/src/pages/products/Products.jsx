@@ -10,15 +10,16 @@ import { useNavigate } from "react-router-dom";
 import InfoLayout from "~/layouts/InfoLayout";
 import featureType from "~/stores/types/featureType";
 function Products() {
+	
 	const navigate = useNavigate();
 	const handleNewProduct = () => {
 		window.open(PageConfig.newProduct.route, "_blank");
-		console.log("isClick");
 	};
 	return (
 		<InfoLayout
 			addAction={handleNewProduct}
 			type={featureType.isNew}
+			showAction={false}
 		>
 			<TabProduct />
 		</InfoLayout>

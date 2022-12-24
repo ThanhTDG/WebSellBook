@@ -1,5 +1,7 @@
 import { CatchingPokemonSharp } from "@mui/icons-material";
 import dayjs from "dayjs";
+import { constants } from "~/stores";
+import { category } from "~/stores/initStates";
 import PageConfig from "~/stores/pages";
 const getKey = (keyFind, value) => {
 	let key = "";
@@ -38,70 +40,31 @@ const convertToTree = (data) => {
 export const copyObject = (source) => {
 	return JSON.parse(JSON.stringify(source));
 };
-export const FindLevelNode = (id, array) => {
-	let data = {
-		value: "",
-	};
-	const dfs = (node, id, data) => {
-		if (node.id === id) {
-			data.value = { ...node };
-			return;
-		}
-		if (node.children && node.children.length > 0) {
-			node.children.forEach((child) => {
-				dfs(child, id, data);
-			}, data);
-		}
-	};
-	array.forEach((node) => {
-		dfs(node, id, data);
-	}, data);
-	const node = { ...data.value };
-	if (node.children && node.children.length > 0) {
-		let deep = 1;
-		let addDeep = false;
-		node.children.map((child) => {
-			if (child.children && child.children.length > 0) {
-				addDeep = true;
-				return;
+export const deepCategory = (category, array) => {
+	if (!category) {
+		return;
+	}
+	if (category.level === constants.MAX_LEVEL) return 0;
+	let list = [];
+	list.push(category);
+	let deep = 0;
+	let children = array.filter((child) => child.parent && child.parent.id === category.id);
+	if (children.length > 0) {
+		deep++;
+		let haveChild = false;
+		children.map((child) => {
+			let list = array.filter((item) => item.parent && item.parent.id === child.id);
+			if (list.length > 0) {
+				haveChild = true;
 			}
 		});
-		if (addDeep) {
-			return deep + 1;
-		} else {
-			return deep;
+		if (haveChild) {
+			deep++;
 		}
-	} else {
-		return 0;
 	}
+	return deep;
 };
-export const renderTreeLevel = (data, maxLevel) => {
-	if (maxLevel === 0) return [];
-	const dfs = (node, currentLevel, maxLevel) => {
-		if (currentLevel === maxLevel) {
-			if (node.children && node.children.length > 0) {
-				delete node.children;
-			}
-			return;
-		} else if (maxLevel < currentLevel) {
-			node = [];
-			data = [];
-			return;
-		}
-		{
-			if (node.children && node.children.length > 0) {
-				node.children.forEach((child) => {
-					dfs(child, currentLevel + 1, maxLevel);
-				});
-			}
-		}
-	};
-	data.forEach((node) => {
-		let i = 1;
-		dfs(node, i, maxLevel);
-	});
-	return data;
-};
+
 export const displayDay = (dateString) => {
 	if (!dateString) return "";
 	const dayConvert = dayjs(dateString).format("HH:mm DD/MM/YYYY");

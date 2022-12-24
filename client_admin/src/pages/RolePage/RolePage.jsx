@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useEffect } from "react";
 import Loading from "~/components/Loading";
 import SelectMenu from "~/components/Menu/SelectMenu";
@@ -10,12 +10,21 @@ import LayoutHeaderButton from "~/layouts/LayoutHeaderButton";
 import { getPermission, getRoles } from "~/services/roleService";
 import styles from "./rolePage.module.scss";
 import InfoLayout from "~/layouts/InfoLayout";
-
+import * as initStates from "~/stores/initStates";
+import * as reducers from "~/stores/reducers";
+import { actions, constants } from "~/stores";
+import useForm from "~/hooks/useForm";
+import featureType from "~/stores/types/featureType";
+import { Modal } from "antd";
 const cx = classNames.bind(styles);
+const { confirm } = Modal;
 function RolePage() {
+	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
+
+	const [role, setRole] = useState([]);
 	const [roles, setRoles] = useState([]);
 	const [permissions, setPermissions] = useState([]);
-	const [idSelect, setIdSelect] = useState();
+	const [idSelect, setIdSelect] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
 		fetchApi();
@@ -29,12 +38,31 @@ function RolePage() {
 		}
 		setIsLoading(false);
 	};
+
 	const onChangeMenuItem = (id) => {
-		setIdSelect(id);
+		if (editMode.isChange) {
+			confirm({
+				title: <div>Hừm bạn đang thay đổi</div>,
+				onOk: () => {
+					dispatchEditMode(actions.setResetAll());
+					setIdSelect(id);
+				},
+			});
+		} else {
+			setIdSelect(id);
+		}
 	};
-	console.log(permissions);
+	console.log(editMode);
 	return (
-		<InfoLayout>
+		<InfoLayout
+			editMode={editMode}
+			onClickChange={"oke"}
+			dispatchEditMode={dispatchEditMode}
+			typeModel={constants.ROLE.toLocaleLowerCase()}
+			showFeature={idSelect}
+			textConfirm={idSelect ? "" : constants.ADD_NEW}
+			type={idSelect !== null ? featureType.isEdit : featureType.isNew}
+		>
 			<Loading isLoading={isLoading}>
 				<div className={cx("wrapper")}>
 					<div className={cx("layout")}>
@@ -48,14 +76,18 @@ function RolePage() {
 						<div className={cx("detail")}>
 							{idSelect === null && (
 								<RoleTab
-									role={idSelect}
+									dispatchEditMode={dispatchEditMode}
+									role={initStates.role}
 									permissions={permissions}
+									isEdit={true}
 								/>
 							)}
 							{roles.map((role) => {
 								return (
 									idSelect === role.id && (
 										<RoleTab
+											dispatchEditMode={dispatchEditMode}
+											isEdit={editMode.enableEdit}
 											permissions={permissions}
 											role={role}
 										/>

@@ -43,7 +43,9 @@ export const editModeState = {
 	enableEdit: false,
 	isChange: false,
 	isNew: false,
-	value: {},
+	value: null,
+	statusLoad: "",
+	statusMessage: "",
 };
 export const openCategory = {
 	isOpen: false,
@@ -52,17 +54,16 @@ export const openCategory = {
 export const category = {
 	id: "",
 	name: "",
-	parent: null,
+	level: constants.MAX_LEVEL,
+	parent: "",
 };
-export const newRole = {
+export const role = {
 	id: null,
 	name: constants.NEW_ROLE_NAME,
 	description: "",
 	permissions: [],
-	createdDate: "",
-	updatedDate: "",
 };
-export const role = {
+export const permissions = {
 	all: {
 		all: {
 			enable: false,
