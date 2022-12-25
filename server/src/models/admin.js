@@ -52,7 +52,7 @@ adminSchema
 adminSchema.statics.findByCredentials = async (username, password) => {
   const user = await Admin.findOne({
     $or: [{ username }, { email: username }, { phone: username }],
-  }).populate({ path: "permissions", populate: { path: "permissions" } });
+  });
   if (!user) {
     throw new ErrorHandler(401, "Unable to login");
   }

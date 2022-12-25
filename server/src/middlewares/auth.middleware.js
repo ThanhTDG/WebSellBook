@@ -33,6 +33,11 @@ const _login =
             .json({ message: err.message });
         }
 
+        await user.populate({
+          path: "permissions",
+          populate: { path: "permissions" },
+        });
+
         user.lastSession = new Date();
         await user.save();
         next();
