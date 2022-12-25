@@ -76,7 +76,7 @@ categorySchema.pre("save", async function (next) {
   }
 });
 
-categorySchema.pre("find", async function (next) {
+categorySchema.pre(/find|findOne/, async function (next) {
   try {
     if (this.options.hasChildren === true) {
       this.populate({ path: "children", options: { hasChildren: true } });
@@ -87,5 +87,7 @@ categorySchema.pre("find", async function (next) {
     next(error);
   }
 });
+
+categorySchema.pre("update", async function (next) {});
 
 module.exports = mongoose.model("Category", categorySchema);
