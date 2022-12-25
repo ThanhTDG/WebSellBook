@@ -18,6 +18,7 @@ const user2json = ({
   avatar,
   lastSession,
   roles,
+  permissions,
 }) => ({
   _id,
   firstName,
@@ -30,6 +31,7 @@ const user2json = ({
   avatar,
   lastSession,
   roles,
+  permissions,
 });
 
 /**
@@ -61,9 +63,6 @@ const signIn = async (req, res) => {
   try {
     const user = req.user;
 
-    const token = user.generateAuthToken();
-    await saveCookie(res, "token", token, true);
-
     if (!user.isAdmin()) {
       const cart =
         (await Cart.findOne({ userId: user.id })) ||
@@ -72,6 +71,9 @@ const signIn = async (req, res) => {
       cart.merge(cookieCart);
       cookieCart.clearCookie(res);
     }
+
+    const token = user.generateAuthToken();
+    await saveCookie(res, "token", token, true);
 
     await res.json({ token, user: user2json(user) });
   } catch (error) {

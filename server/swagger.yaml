@@ -1,63 +1,68 @@
----
 openapi: 3.0.0
+
 info:
   title: Tài liệu API của website ToiMuaSach
   description: |
     API này được sử dụng cho team dev để phát triển hệ thống.
     Không được để lộ API dưới mọi hình thức.
-
+    
     _Hệ thống này được xây dựng bởi Dương Hiếu._
   contact:
     name: Dương Hiếu
-    url: https://github.com/DuongHieu0712z
     email: 1914745@dlu.edu.vn
+    url: https://github.com/DuongHieu0712z
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 0.0.9
+  
 servers:
-- url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.9
-  description: SwaggerHub API Auto Mocking
-- url: http://localhost:5000/api/v1
-  description: Development API server
-- url: https://api.toimuasach.click/api/v1
-  description: Production API server
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/DuongHieu0712z/ToiMuaSach/0.0.9
+  - description: Development API server
+    url: http://localhost:5000/api/v1
+  - description: Production API server
+    url: https://api.toimuasach.click/api/v1
+    
 tags:
-- name: Quản lý danh mục
-  description: |
-    Sử dụng để quản lý danh mục, dành cho phân hệ quản trị
-- name: Quản lý sách
-  description: |
-    Sử dụng để quản lý sách, dành cho phân hệ quản trị
-- name: Quản lý hóa đơn
-  description: |
-    Sử dụng để quản lý hóa đơn, dành cho phân hệ quản trị
-- name: Quản lý quyền
-  description: |
-    Sử dụng để quản lý quyền và vai trò của người dùng quản trị, dành cho phân hệ quản trị
-- name: Quản lý người dùng
-  description: |
-    Sử dụng để quản lý người dùng, dành cho phân hệ quản trị
-- name: Tài khoản
-  description: |
-    Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
-- name: Sản phẩm
-  description: |
-    Sử dụng để lấy sản phẩm, dành cho phân hệ khách hàng
-- name: Bình luận
-  description: |
-    Sử dụng để lấy bình luận sản phẩm, dành cho phân hệ khách hàng
-- name: Quản lý giỏ hàng
-  description: "Sử dụng để quản lý giỏ hàng, dành cho phân hệ khách hàng \n"
-- name: Quản lý đơn hàng
-  description: |
-    Sử dụng để quản lý đơn hàng, dành cho phân hệ khách hàng
-- name: Quản lý địa chỉ
-  description: |
-    Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
-- name: Quản lý sách yêu thích
-  description: |
-    Sử dụng để quản lý sách yêu thích, dành cho phân hệ khách hàng
+  - name: Quản lý danh mục
+    description: |
+      Sử dụng để quản lý danh mục, dành cho phân hệ quản trị
+  - name: Quản lý sách
+    description: |
+      Sử dụng để quản lý sách, dành cho phân hệ quản trị
+  - name: Quản lý hóa đơn
+    description: |
+      Sử dụng để quản lý hóa đơn, dành cho phân hệ quản trị
+  - name: Quản lý quyền
+    description: |
+      Sử dụng để quản lý quyền và vai trò của người dùng quản trị, dành cho phân hệ quản trị
+  - name: Quản lý người dùng
+    description: |
+      Sử dụng để quản lý người dùng, dành cho phân hệ quản trị
+  - name: Tài khoản
+    description: |
+      Sử dụng để quản lý tài khoản của người dùng, các vấn đề liên quan đến tài khoản và xác thực người dùng
+  - name: Sản phẩm
+    description: |
+      Sử dụng để lấy sản phẩm, dành cho phân hệ khách hàng
+  - name: Bình luận
+    description: |
+      Sử dụng để lấy bình luận sản phẩm, dành cho phân hệ khách hàng
+  - name: Quản lý giỏ hàng
+    description: |
+      Sử dụng để quản lý giỏ hàng, dành cho phân hệ khách hàng 
+  - name: Quản lý đơn hàng
+    description: |
+      Sử dụng để quản lý đơn hàng, dành cho phân hệ khách hàng
+  - name: Quản lý địa chỉ
+    description: |
+      Sử dụng để quản lý sổ địa chỉ giao hàng, dành cho phân hệ khách hàng
+  - name: Quản lý sách yêu thích
+    description: |
+      Sử dụng để quản lý sách yêu thích, dành cho phân hệ khách hàng
+    
 paths:
   /categories:
     get:
@@ -67,68 +72,63 @@ paths:
       description: |
         Lấy danh sách danh mục theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả danh mục.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: tree
-        in: query
+      - in: query
+        name: tree
         description: Hiển thị dạng cây
-        required: false
-        style: form
-        explode: true
         schema:
           type: boolean
         example: false
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Category'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
     post:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để thêm danh mục mới
       description: |
         Thêm danh mục mới.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -136,34 +136,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Category'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Category'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /categories/{id}:
     get:
       tags:
@@ -171,62 +169,62 @@ paths:
       summary: Sử dụng để lấy danh mục
       description: |
         Lấy danh mục theo ID danh mục cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634d8da516d1688abe54d4ef
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Category'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+    
     put:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để sửa thông tin danh mục
       description: |
         Sửa thông tin danh mục theo ID danh mục cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634d8da516d1688abe54d4ef
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -234,78 +232,75 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Category'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Category'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý danh mục
       summary: Sử dụng để xóa danh mục
       description: |
         Xóa danh mục theo ID danh mục cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634d8da516d1688abe54d4ef
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /books:
     get:
       tags:
@@ -314,59 +309,57 @@ paths:
       description: |
         Lấy danh sách sách theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả sách.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Book'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
     post:
       tags:
       - Quản lý sách
       summary: Sử dụng để thêm sách mới
       description: |
         Thêm sách mới.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -374,34 +367,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Book'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Book'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /books/upload:
     post:
       tags:
@@ -409,39 +400,50 @@ paths:
       summary: Sử dụng để tải lên hình ảnh sách
       description: |
         Tải hình ảnh sách lên nền tảng lưu trữ đám mây.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/form.UploadImages'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
-        "400":
+                type: object
+                properties:
+                  paths:
+                    type: array
+                    items:
+                      type: string
+                      format: link
+                    description: Link hình ảnh
+                    example:
+                    - https://example.com/example1.png
+                    - https://example.com/example2.png
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /books/destroy:
     post:
       tags:
@@ -449,7 +451,10 @@ paths:
       summary: Sử dụng để xóa hình ảnh sách
       description: |
         Xóa hình ảnh sách trên nền tảng lưu trữ đám mây.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -457,34 +462,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.DestroyImages'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /books/{id}:
     get:
       tags:
@@ -492,62 +495,62 @@ paths:
       summary: Sử dụng để lấy sách
       description: |
         Lấy sách theo ID sách cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d992614
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Book'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+    
     put:
       tags:
       - Quản lý sách
       summary: Sử dụng để sửa thông tin sách
       description: |
         Sửa thông tin sách theo ID sách cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d992614
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -555,78 +558,75 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Book'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Book'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý sách
       summary: Sử dụng để xóa sách
       description: |
         Xóa sách theo ID sách cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d992614
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /roles:
     get:
       tags:
@@ -635,59 +635,57 @@ paths:
       description: |
         Lấy danh sách vai trò theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả vai trò.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Role'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
     post:
       tags:
       - Quản lý quyền
       summary: Sử dụng để thêm vai trò mới
       description: |
         Thêm vai trò mới.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -695,34 +693,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Role'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Role'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /roles/{id}:
     get:
       tags:
@@ -730,62 +726,62 @@ paths:
       summary: Sử dụng để lấy vai trò
       description: |
         Lấy vai trò theo ID vai trò cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID vai trò
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 638c76f64700d09a7fde9be3
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Role'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+    
     put:
       tags:
       - Quản lý quyền
       summary: Sử dụng để sửa thông tin vai trò
       description: |
         Sửa thông tin vai trò theo ID vai trò cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID vai trò
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 638c76f64700d09a7fde9be3
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -793,78 +789,75 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.Role'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Role'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý quyền
       summary: Sử dụng để xóa vai trò
       description: |
         Xóa vai trò theo ID vai trò cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID vai trò
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 638c76f64700d09a7fde9be3
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /permissions:
     get:
       tags:
@@ -873,52 +866,47 @@ paths:
       description: |
         Lấy danh sách quyền theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả quyền.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.Permission'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /users:
     get:
       tags:
@@ -927,52 +915,47 @@ paths:
       description: |
         Lấy danh sách người dùng theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả người dùng.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /users/admin:
     get:
       tags:
@@ -981,59 +964,57 @@ paths:
       description: |
         Lấy danh sách người quản trị theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả người quản trị.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
     post:
       tags:
       - Quản lý người dùng
       summary: Sử dụng để thêm người quản trị mới
       description: |
         Thêm người quản trị mới.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1041,34 +1022,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.User'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /users/customer:
     get:
       tags:
@@ -1077,52 +1056,47 @@ paths:
       description: |
         Lấy danh sách khách hàng theo trang và giới hạn số lượng lấy.
         Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả khách hàng.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.pagination.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /users/{id}:
     get:
       tags:
@@ -1130,62 +1104,62 @@ paths:
       summary: Sử dụng để lấy người dùng
       description: |
         Lấy người dùng theo ID người dùng cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID người dùng
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634e8609071be9c0c9f52ca7
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+    
     put:
       tags:
       - Quản lý người dùng
       summary: Sử dụng để sửa thông tin người dùng
       description: |
         Sửa thông tin người dùng theo ID người dùng cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID người dùng
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634e8609071be9c0c9f52ca7
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1193,78 +1167,75 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/admin.form.User'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/admin.Category'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý người dùng
       summary: Sử dụng để xóa người dùng
       description: |
         Xóa người dùng theo ID người dùng cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID người dùng
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634e8609071be9c0c9f52ca7
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /users/{id}/resetpassword:
     put:
       tags:
@@ -1272,44 +1243,43 @@ paths:
       summary: Sử dụng để sửa thông tin người dùng
       description: |
         Sửa thông tin người dùng theo ID người dùng cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID người dùng
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634e8609071be9c0c9f52ca7
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /auth/signup:
     post:
       tags:
@@ -1318,6 +1288,7 @@ paths:
       description: |
         Khách hàng đăng ký tài khoản mới, chỉ sử dụng cho phân hệ khách hàng.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1325,20 +1296,25 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.SignUp'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
-        "400":
+                allOf:
+                - $ref: '#/components/schemas/Message'
+                - type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/client.User'
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /auth/signin:
     post:
       tags:
@@ -1347,6 +1323,7 @@ paths:
       description: |
         Người dùng đăng nhập vào website.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1354,26 +1331,33 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.SignIn'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-        "400":
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Token
+                    example: eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
+                  user:
+                    $ref: '#/components/schemas/client.User'
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  
   /auth/signout:
     post:
       tags:
@@ -1381,27 +1365,28 @@ paths:
       summary: Sử dụng để đăng xuất tài khoản
       description: |
         Người dùng đăng xuất tài khoản.
+      security: 
+      - BearerAuth: []
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /auth/verifyaccount:
     post:
       tags:
@@ -1409,7 +1394,10 @@ paths:
       summary: Sử dụng để xác thực tài khoản
       description: |
         Người dùng xác thực tài khoản bằng mật khẩu.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1417,28 +1405,26 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.VerifyAccount'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /auth/profile:
     get:
       tags:
@@ -1446,34 +1432,37 @@ paths:
       summary: Sử dụng để lấy thông tin tài khoản
       description: |
         Người dùng truy xuất thông tin tài khoản của mình.
+      security: 
+      - BearerAuth: []
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.User'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
     put:
       tags:
       - Tài khoản
       summary: Sử dụng để cập nhật thông tin tài khoản
       description: |
         Người dùng truy xuất thông tin tài khoản của mình.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1481,28 +1470,31 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.Profile'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_201'
-        "400":
+                allOf:
+                - $ref: '#/components/schemas/Message'
+                - type: object
+                  properties:
+                    user:
+                      $ref: '#/components/schemas/client.User'
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /auth/uploadavatar:
     put:
       tags:
@@ -1510,33 +1502,50 @@ paths:
       summary: Sử dụng để thay đổi ảnh đại diện
       description: |
         Người dùng thay đổi ảnh đại diện.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/auth_uploadavatar_body'
-        required: true
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                  description: File ảnh đại diện
+                  example: example.png
+              required: 
+              - avatar
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
-        "400":
+                allOf:
+                - $ref: '#/components/schemas/Message'
+                - type: object
+                  properties:
+                    avatar: 
+                      type: string
+                      format: link
+                      description: Link hình ảnh đại diện
+                      example: https://example.com/example.png
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+  
   /auth/changepassword:
     put:
       tags:
@@ -1544,7 +1553,10 @@ paths:
       summary: Sử dụng để thay đổi mật khẩu
       description: |
         Người dùng thay đổi mật khẩu.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1552,28 +1564,26 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/form.ChangePassword'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /category:
     get:
       tags:
@@ -1582,18 +1592,19 @@ paths:
       description: |
         Lấy danh sách danh mục theo dạng cây.
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Category'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/Error' 
+                
   /book:
     get:
       tags:
@@ -1602,40 +1613,28 @@ paths:
       description: |
         Lấy danh sách sách theo ID danh mục cho trước.
       parameters:
-      - name: category
-        in: query
+      - in: query
+        name: category
         description: ID danh mục
-        required: false
-        style: form
-        explode: true
         schema:
           type: string
           format: ObjectId
         example: 634d8da516d1688abe54d4ef
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang (mặc định 1)
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về (mặc định 12)
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
-      - name: sort
-        in: query
+      - in: query
+        name: sort
         description: Sắp xếp (mặc định "popular")
-        required: false
-        style: form
-        explode: true
         schema:
           type: string
           enum:
@@ -1646,18 +1645,19 @@ paths:
           - high-to-low
         example: popular
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.pagination.Book'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /book/{id}:
     get:
       tags:
@@ -1666,29 +1666,28 @@ paths:
       description: |
         Lấy sách theo ID sách cho trước.
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99276d
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Book'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /comment/{book}:
     get:
       tags:
@@ -1697,47 +1696,40 @@ paths:
       description: |
         Lấy danh sách bình luận theo ID sách cho trước.
       parameters:
-      - name: book
-        in: path
+      - in: path
+        name: book
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99261e
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang (mặc định 1)
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về (mặc định 12)
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.pagination.Comment'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /cart:
     get:
       tags:
@@ -1746,18 +1738,19 @@ paths:
       description: |
         Lấy giỏ hàng.
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Cart'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /cart/selectall:
     put:
       tags:
@@ -1766,6 +1759,7 @@ paths:
       description: |
         Chọn/bỏ chọn mua tất cả sách trong giỏ hàng.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1773,60 +1767,21 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/client.form.SelectAllCart'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Cart'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /cart/{book}:
-    put:
-      tags:
-      - Quản lý giỏ hàng
-      summary: Sử dụng để chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng
-      description: |
-        Chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng theo ID sách cho trước.
-      parameters:
-      - name: book
-        in: path
-        description: ID sách
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: ObjectId
-        example: 634ed8e4f6a3a7266d99276d
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/client.form.Cart'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/client.form.Cart'
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/client.Cart'
-        "400":
-          description: Lỗi
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
     post:
       tags:
       - Quản lý giỏ hàng
@@ -1834,29 +1789,66 @@ paths:
       description: |
         Thêm sách vào giỏ hàng theo ID sách cho trước.
       parameters:
-      - name: book
-        in: path
+      - in: path
+        name: book
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99276d
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Cart'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
+    put:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng
+      description: |
+        Chọn/bỏ chọn và thay đổi số lượng mua trong giỏ hàng theo ID sách cho trước.
+      parameters:
+      - in: path
+        name: book
+        description: ID sách
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 634ed8e4f6a3a7266d99276d
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.Cart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.Cart'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Cart'
+        400:
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
     delete:
       tags:
       - Quản lý giỏ hàng
@@ -1864,29 +1856,28 @@ paths:
       description: |
         Xóa sách khỏi giỏ hàng theo ID sách cho trước.
       parameters:
-      - name: book
-        in: path
+      - in: path
+        name: book
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99261e
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Cart'
-        "400":
+        400:
           description: Lỗi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
   /address:
     get:
       tags:
@@ -1894,59 +1885,57 @@ paths:
       summary: Sử dụng để lấy danh sách địa chỉ giao hàng
       description: |
         Lấy danh sách địa chỉ giao hàng.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: page
-        in: query
+      - in: query
+        name: page
         description: Trang
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 1
-      - name: limit
-        in: query
+      - in: query
+        name: limit
         description: Giới hạn số document trả về
-        required: false
-        style: form
-        explode: true
         schema:
           type: number
         example: 12
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.array.Address'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
     post:
       tags:
       - Quản lý địa chỉ
       summary: Sử dụng để thêm địa chỉ giao hàng mới
       description: |
         Thêm địa chỉ giao hàng mới.
+      security: 
+      - BearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1954,34 +1943,32 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/client.form.Address'
-        required: true
       responses:
-        "201":
+        201:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.array.Address'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /address/{id}:
     get:
       tags:
@@ -1989,62 +1976,62 @@ paths:
       summary: Sử dụng để lấy địa chỉ giao hàng
       description: |
         Lấy địa chỉ giao hàng theo ID địa chỉ cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 6390023e68b6bce81199e74d
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Address'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+    
     put:
       tags:
       - Quản lý địa chỉ
       summary: Sử dụng để sửa thông tin địa chỉ giao hàng
       description: |
         Sửa thông tin địa chỉ giao hàng theo ID địa chỉ cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 6390023e68b6bce81199e74d
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -2052,78 +2039,75 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/client.form.Address'
-        required: true
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.Address'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý địa chỉ
       summary: Sử dụng để xóa địa chỉ giao hàng
       description: |
         Xóa địa chỉ theo ID địa chỉ cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: id
-        in: path
+      - in: path
+        name: id
         description: ID danh mục
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 6390023e68b6bce81199e74d
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.array.Address'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /favorite:
     get:
       tags:
@@ -2131,33 +2115,34 @@ paths:
       summary: Sử dụng để lấy danh sách sách yêu thích
       description: |
         Lấy danh sách sách yêu thích.
+      security: 
+      - BearerAuth: []
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.array.BookLite'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
   /favorite/{book}:
     post:
       tags:
@@ -2165,89 +2150,93 @@ paths:
       summary: Sử dụng để thêm sách yêu thích
       description: |
         Thêm sách yêu thích theo ID sách cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: book
-        in: path
+      - in: path
+        name: book
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99261e
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+                
     delete:
       tags:
       - Quản lý sách yêu thích
       summary: Sử dụng để xóa sách yêu thích
       description: |
         Xóa sách yêu thích theo ID sách cho trước.
+      security: 
+      - BearerAuth: []
       parameters:
-      - name: book
-        in: path
+      - in: path
+        name: book
         description: ID sách
-        required: true
-        style: simple
-        explode: false
         schema:
           type: string
           format: ObjectId
+        required: true
         example: 634ed8e4f6a3a7266d99261e
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/client.array.BookLite'
-        "400":
+        400:
           description: Lỗi request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "401":
+        401:
           description: Không xác thực được tài khoản
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        "403":
+        403:
           description: Không cho phép truy cập
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-      - BearerAuth: []
+
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
   schemas:
     Message:
       type: object
@@ -2256,11 +2245,13 @@ components:
           type: string
           description: Thông báo
           example: Success
+        
     Error:
       allOf:
       - $ref: '#/components/schemas/Message'
       - example:
           message: Error
+          
     Pagination:
       type: object
       properties:
@@ -2300,13 +2291,14 @@ components:
           type: number
           description: Trang sau, nếu không có trả null
           example: 3
+          
     admin.Category:
       type: object
       properties:
         _id:
           type: string
-          description: ID danh mục
           format: ObjectId
+          description: ID danh mục
           example: 634d8da516d1688abe54d4ef
         name:
           type: string
@@ -2317,24 +2309,35 @@ components:
           description: Slug danh mục
           example: light-novel
         parent:
-          $ref: '#/components/schemas/admin.Category_parent'
+          type: object
+          properties:
+            _id: 
+              type: string
+              format: ObjectId
+              description: ID danh mục cha
+              example: 634d8da216d1688abe54d40c
+            name:
+              type: string
+              description: Tên danh mục cha
+              example: Văn học
         createdDate:
           type: string
-          description: Ngày khởi tạo
           format: date
+          description: Ngày khởi tạo
           example: 2022-11-01
         updatedDate:
           type: string
-          description: Ngày cập nhật
           format: date
+          description: Ngày cập nhật
           example: 2022-11-02
+    
     admin.Book:
       type: object
       properties:
         _id:
           type: string
-          description: ID sách
           format: ObjectId
+          description: ID sách
           example: 634ed8e4f6a3a7266d99276d
         name:
           type: string
@@ -2359,19 +2362,19 @@ components:
           example: Trân Trân
         sku:
           type: string
-          description: Mã kho hàng
           format: number
-          example: "8935244872972"
+          description: Mã kho hàng
+          example: 8935244872972
         isbn13:
           type: string
-          description: Mã ISBN 13
           format: isbn13
+          description: Mã ISBN 13
           example: 978-0134494166
         isbn10:
           type: string
-          description: Mã ISBN 10
           format: isbn10
-          example: "0134494164"
+          description: Mã ISBN 10
+          example: 0134494164
         supplier:
           type: string
           description: Nhà cung cấp/nhà phát hành
@@ -2382,17 +2385,17 @@ components:
           example: NXB Kim Đồng
         publisherDate:
           type: string
-          description: Ngày xuất bản
           format: date
-          example: 2022-04-30
+          description: Ngày xuất bản
+          example: '2022-04-30'
         images:
           type: array
-          description: Các link hình ảnh sách
           items:
             type: string
-            description: Link hình ảnh sách
             format: link
+            description: Link hình ảnh sách
             example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
+          description: Các link hình ảnh sách
         weight:
           type: number
           description: Trọng lượng (gram)
@@ -2415,17 +2418,17 @@ components:
           example: Bìa mềm
         status:
           type: string
-          description: Trạng thái sách
-          example: available
-          enum:
+          enum: 
           - coming_soon
           - available
           - out_of_stock
+          description: Trạng thái sách
+          example: available
         expectedDate:
           type: string
-          description: Ngày dự kiến có hàng
           format: date
-          example: 2022-04-30
+          description: Ngày dự kiến có hàng
+          example: '2022-04-30'
         countInStock:
           type: number
           description: Tồn kho
@@ -2447,14 +2450,25 @@ components:
           description: Giá hiện tại
           example: 72000
         category:
-          $ref: '#/components/schemas/admin.Book_category'
+          type: object
+          properties:
+            _id:
+              type: string
+              format: ObjectId
+              description: ID danh mục
+              example: 634d8da516d1688abe54d4ef
+            name:
+              type: string
+              description: Tên danh mục
+              example: Light novel
+          
     admin.Role:
       type: object
       properties:
         _id:
           type: string
-          description: ID vai trò
           format: ObjectId
+          description: ID vai trò
           example: 638c76f64700d09a7fde9be3
         name:
           type: string
@@ -2467,29 +2481,33 @@ components:
         permissions:
           type: array
           items:
-            $ref: admin.Role_permissions
+            type: string
+            description: ID quyền
+            example: 638c7606e13b091e37dd84d3
         createdDate:
           type: string
-          description: Ngày khởi tạo
           format: date
+          description: Ngày khởi tạo
           example: 2022-11-01
         updatedDate:
           type: string
-          description: Ngày cập nhật
           format: date
+          description: Ngày cập nhật
           example: 2022-11-02
+          
     admin.Permission:
       type: object
       properties:
         _id:
           type: string
-          description: ID vai trò
           format: ObjectId
+          description: ID vai trò
           example: 638c7606e13b091e37dd84d3
         description:
           type: string
           description: Mô tả
           example: Có thể toàn quyền truy cập tất cả
+
     admin.User:
       type: object
       properties:
@@ -2511,50 +2529,59 @@ components:
           example: Nguyễn Văn An
         email:
           type: string
-          description: Email
           format: email
+          description: Email
           example: an@gmail.example.com
         phone:
           type: string
-          description: Số điện thoại
           format: phoneNumber
-          example: "0987654321"
+          description: Số điện thoại
+          example: '0987654321'
         sex:
           type: boolean
           description: Giới tính
           example: true
         birthday:
           type: string
-          description: Ngày sinh
           format: date
+          description: Ngày sinh
           example: 2001-01-01
         avatar:
           type: string
-          description: Link hình ảnh
           format: link
+          description: Link hình ảnh
           example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96
         roles:
           type: array
           items:
-            $ref: admin.User_roles
+            type: object
+            properties:
+              _id:
+                type: string
+                format: ObjectId
+                description: ID vai trò
+                example: 638c76f64700d09a7fde9be3
+              name:
+                type: string
+                description: Tên vai trò
+                example: admin
         lastSession:
           type: string
-          description: Lần đăng nhập gần nhất
           format: date
+          description: Lần đăng nhập gần nhất
           example: 2022-11-10
         createdDate:
           type: string
-          description: Ngày khởi tạo
           format: date
+          description: Ngày khởi tạo
           example: 2022-11-01
         updatedDate:
           type: string
-          description: Ngày cập nhật
           format: date
+          description: Ngày cập nhật
           example: 2022-11-02
+      
     admin.form.Category:
-      required:
-      - name
       type: object
       properties:
         name:
@@ -2563,13 +2590,13 @@ components:
           example: Light novel
         parent:
           type: string
-          description: ID danh mục cha
           format: ObjectId
+          description: ID danh mục cha
           example: 634d8da216d1688abe54d40c
-    admin.form.Book:
       required:
-      - category
       - name
+      
+    admin.form.Book:
       type: object
       properties:
         name:
@@ -2591,19 +2618,19 @@ components:
           example: Trân Trân
         sku:
           type: string
-          description: Mã kho hàng
           format: number
-          example: "8935244872972"
+          description: Mã kho hàng
+          example: 8935244872972
         isbn13:
           type: string
-          description: Mã ISBN 13
           format: isbn13
+          description: Mã ISBN 13
           example: 978-0134494166
         isbn10:
           type: string
-          description: Mã ISBN 10
           format: isbn10
-          example: "0134494164"
+          description: Mã ISBN 10
+          example: 0134494164
         supplier:
           type: string
           description: Nhà cung cấp/nhà phát hành
@@ -2614,17 +2641,17 @@ components:
           example: NXB Kim Đồng
         publisherDate:
           type: string
-          description: Ngày xuất bản
           format: date
-          example: 2022-04-30
+          description: Ngày xuất bản
+          example: '2022-04-30'
         images:
           type: array
-          description: Các link hình ảnh sách
           items:
             type: string
-            description: Link hình ảnh sách
             format: link
+            description: Link hình ảnh sách
             example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
+          description: Các link hình ảnh sách
         weight:
           type: number
           description: Trọng lượng (gram)
@@ -2647,17 +2674,17 @@ components:
           example: Bìa mềm
         status:
           type: string
-          description: Trạng thái sách
-          example: available
-          enum:
+          enum: 
           - coming_soon
           - available
           - out_of_stock
+          description: Trạng thái sách
+          example: available
         expectedDate:
           type: string
-          description: Ngày dự kiến có hàng
           format: date
-          example: 2022-04-30
+          description: Ngày dự kiến có hàng
+          example: '2022-04-30'
         countInStock:
           type: number
           description: Tồn kho
@@ -2672,12 +2699,14 @@ components:
           example: 25
         category:
           type: string
-          description: ID danh mục cha
           format: ObjectId
+          description: ID danh mục cha
           example: 634d8da516d1688abe54d4ef
-    admin.form.Role:
       required:
       - name
+      - category
+  
+    admin.form.Role:
       type: object
       properties:
         name:
@@ -2690,18 +2719,16 @@ components:
           example: Người quản trị
         permissions:
           type: array
-          description: Danh sách ID quyền truy cập
           items:
             type: string
-            description: ID quyền truy cập
             format: ObjectId
+            description: ID quyền truy cập
             example: 638c7606e13b091e37dd84d3
-    admin.form.User:
+          description: Danh sách ID quyền truy cập
       required:
-      - email
-      - firstName
-      - lastName
-      - phone
+      - name
+      
+    admin.form.User:
       type: object
       properties:
         firstName:
@@ -2714,88 +2741,93 @@ components:
           example: Nguyễn Văn
         email:
           type: string
-          description: Email
           format: email
+          description: Email
           example: an@gmail.example.com
         phone:
           type: string
-          description: Số điện thoại
           format: phoneNumber
-          example: "0987654321"
+          description: Số điện thoại
+          example: '0987654321'
         sex:
           type: boolean
           description: Giới tính
           example: true
         birthday:
           type: string
-          description: Ngày sinh
           format: date
+          description: Ngày sinh
           example: 2001-01-01
         roles:
           type: array
-          description: Danh sách vai trò
           items:
             type: string
-            description: ID vai trò
             format: ObjectId
+            description: ID vai trò
             example: 638c76f64700d09a7fde9be3
+          description: Danh sách vai trò
+      required:
+      - firstName
+      - lastName
+      - email
+      - phone
+      
     admin.pagination.Category:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/admin.Category'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+          
     admin.pagination.Book:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/admin.Book'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+      
     admin.pagination.Role:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/admin.Role'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+      
     admin.pagination.Permission:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/admin.Permission'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+      
     admin.pagination.User:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/admin.User'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+      
     form.SignUp:
-      required:
-      - email
-      - firstName
-      - lastName
-      - password
-      - phone
       type: object
       properties:
         firstName:
@@ -2808,22 +2840,26 @@ components:
           example: Nguyễn Văn
         email:
           type: string
-          description: Email
           format: email
+          description: Email
           example: an@gmail.example.com
         phone:
           type: string
-          description: Số điện thoại
           format: phoneNumber
-          example: "0987654321"
+          description: Số điện thoại
+          example: '0987654321'
         password:
           type: string
           description: Mật khẩu (dài ít nhất 8 ký tự, có cả chữ và số)
           example: 1234abcd
-    form.SignIn:
       required:
+      - firstName
+      - lastName
+      - email
+      - phone
       - password
-      - username
+      
+    form.SignIn:
       type: object
       properties:
         username:
@@ -2833,17 +2869,16 @@ components:
         password:
           type: string
           description: Mật khẩu
-          example: 1234abcd
+          example:  1234abcd
         isAdmin:
           type: boolean
           description: Đăng nhập với tư cách quản trị (yêu cầu mặc định `true` khi đăng nhập bên quản trị, trường này không có bên khách hàng)
           example: false
+      required: 
+      - username
+      - password
+      
     form.Profile:
-      required:
-      - email
-      - firstName
-      - lastName
-      - phone
       type: object
       properties:
         firstName:
@@ -2856,27 +2891,30 @@ components:
           example: Nguyễn Văn
         email:
           type: string
-          description: Email
           format: email
+          description: Email
           example: an@gmail.example.com
         phone:
           type: string
-          description: Số điện thoại
           format: phoneNumber
-          example: "0987654321"
+          description: Số điện thoại
+          example: '0987654321'
         sex:
           type: boolean
           description: Giới tính
           example: true
         birthday:
           type: string
-          description: Ngày sinh
           format: date
+          description: Ngày sinh
           example: 2001-01-01
-    form.ChangePassword:
       required:
-      - currentPassword
-      - newPassword
+      - firstName
+      - lastName
+      - email
+      - phone
+              
+    form.ChangePassword:
       type: object
       properties:
         currentPassword:
@@ -2887,48 +2925,55 @@ components:
           type: string
           description: Mật khẩu mới
           example: abcd1234
+      required: 
+      - currentPassword
+      - newPassword
+              
     form.VerifyAccount:
-      required:
-      - password
       type: object
       properties:
         password:
           type: string
           description: Mật khẩu
           example: 1234abcd
+      required: 
+      - password
+      
     form.UploadImages:
-      required:
-      - images
       type: object
       properties:
         images:
           type: array
-          description: File hình ảnh
           items:
             type: string
             format: binary
-    form.DestroyImages:
-      required:
+          description: File hình ảnh
+      required: 
       - images
+      
+    form.DestroyImages:
       type: object
       properties:
         images:
           type: array
+          items:
+            type: string
+            format: link
           description: |
             Link hình ảnh. Lưu ý: nếu chỉ có một hình ảnh có thể truyền string, không cần truyền mảng
           example:
           - https://example.com/example1.png
           - https://example.com/example2.png
-          items:
-            type: string
-            format: link
+      required: 
+      - images
+    
     client.Category:
       type: object
       properties:
         _id:
           type: string
-          description: ID danh mục
           format: ObjectId
+          description: ID danh mục
           example: 634d8da216d1688abe54d40c
         name:
           type: string
@@ -2940,21 +2985,22 @@ components:
           example: van-hoc
         children:
           type: array
+          items:
+            $ref: '#/components/schemas/client.Category'
           description: Mảng danh mục con
-          example:
+          example: 
           - _id: 634d8da516d1688abe54d4ef
             name: Light novel
             slug: light-novel
             children: []
-          items:
-            $ref: '#/components/schemas/client.Category'
+            
     client.Book:
       type: object
       properties:
         _id:
           type: string
-          description: ID sách
           format: ObjectId
+          description: ID sách
           example: 634ed8e4f6a3a7266d99276d
         name:
           type: string
@@ -2984,19 +3030,19 @@ components:
           example: Trân Trân
         sku:
           type: string
-          description: Mã kho hàng
           format: number
-          example: "8935244872972"
+          description: Mã kho hàng
+          example: 8935244872972
         isbn13:
           type: string
-          description: Mã ISBN 13
           format: isbn13
+          description: Mã ISBN 13
           example: 978-0134494166
         isbn10:
           type: string
-          description: Mã ISBN 10
           format: isbn10
-          example: "0134494164"
+          description: Mã ISBN 10
+          example: 0134494164
         supplier:
           type: string
           description: Nhà cung cấp/nhà phát hành
@@ -3007,17 +3053,17 @@ components:
           example: NXB Kim Đồng
         publisherDate:
           type: string
-          description: Ngày xuất bản
           format: date
-          example: 2022-04-30
+          description: Ngày xuất bản
+          example: '2022-04-30'
         images:
           type: array
-          description: Các link hình ảnh sách
           items:
             type: string
-            description: Link hình ảnh sách
             format: link
+            description: Link hình ảnh sách
             example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
+          description: Các link hình ảnh sách
         weight:
           type: number
           description: Trọng lượng (gram)
@@ -3025,7 +3071,7 @@ components:
         dimension:
           type: string
           description: Kích thước (cao x rộng (cm))
-          example: 19 x 13 cm
+          example: '19 x 13 cm'
         page:
           type: number
           description: Số trang
@@ -3036,17 +3082,17 @@ components:
           example: Bìa mềm
         status:
           type: string
-          description: Trạng thái sách
-          example: available
-          enum:
+          enum: 
           - coming_soon
           - available
           - out_of_stock
+          description: Trạng thái sách
+          example: available
         expectedDate:
           type: string
-          description: Ngày dự kiến có hàng
           format: date
-          example: 2022-04-30
+          description: Ngày dự kiến có hàng
+          example: '2022-04-30'
         countInStock:
           type: number
           description: Tồn kho
@@ -3077,9 +3123,11 @@ components:
           example: 4.8
         ratingRate:
           type: array
+          items: 
+            $ref: '#/components/schemas/RatingRate'
           description: |
             Tỷ lệ sao đánh giá (ghi chú: ratingRate[0] là 1 sao, ratingRate[4] là 5 sao)
-          example:
+          example: 
           - amount: 0
             rate: 0
           - amount: 0
@@ -3090,15 +3138,14 @@ components:
             rate: 31
           - amount: 20
             rate: 63
-          items:
-            $ref: '#/components/schemas/RatingRate'
+            
     client.BookLite:
       type: object
       properties:
         _id:
           type: string
-          description: ID sách
           format: ObjectId
+          description: ID sách
           example: 634ed8e4f6a3a7266d99276d
         name:
           type: string
@@ -3108,8 +3155,8 @@ components:
           type: array
           items:
             type: string
-            description: Link hình ảnh sách
             format: link
+            description: Link hình ảnh sách
             example: https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg
         originalPrice:
           type: number
@@ -3123,16 +3170,27 @@ components:
           type: number
           description: Giá hiện tại
           example: 72000
+            
     client.Comment:
       type: object
       properties:
         _id:
           type: string
-          description: ID sách
           format: ObjectId
+          description: ID sách
           example: 634f52bbab3c008e233fb1ec
         user:
-          $ref: '#/components/schemas/client.Comment_user'
+          type: object
+          properties:
+            fullName:
+              type: string
+              description: Họ tên
+              example: Hồng Ánh
+            avatar:
+              type: string
+              format: link
+              description: Ảnh đại diện
+              example: https://ui-avatars.com/api/?name=Ánh&background=random&color=random&length=1&size=96
         rate:
           type: number
           description: Số sao đánh giá
@@ -3144,18 +3202,19 @@ components:
             CHU DU QUA TRANG SÁCH CÙNG ĐINH HẰNG\nLà một người yêu thích du lịch, mình thích xem những chia sẻ của các bạn travel blogger để được chu du qua thật nhiều vùng đất cùng các bạn. Mỗi bạn một bản sắc riêng, và Hằng là một travel blogger nữ mà mình thường để ở chế độ Xem đầu tiên. Cảm giác như thế nào nhỉ? Hâm mộ, khâm phục, và cả ước ao, giá như mình có thể đi nhiều nơi như bạn ấy. Chắc hẳn đó không phải là mơ ước của chỉ riêng mình. Với một travel blogger nữ, hẳn bạn cũng phải vượt qua nhiều khó khăn, trở ngại hơn là với nam giới để tiếp tục với đam mê của mình. Vậy nên, nỗ lực và đam mê của bạn là đáng khâm phục.\n\nLại nói về quyển sách \"Người tình Havana\", mình theo dõi trang cá nhân của Hằng cũng vừa đủ lâu, nhưng chưa kịp lâu để biết đến hai quyển sách trước của Hằng. Vậy nên khi Hằng thông báo đã xuất bản quyển sách này thì mình đặt mua ngay. Mình thích quyển sách này vì nhiều lẽ:\n- Mình cũng là một dịch giả (cũng có sách bán trên tiki từ nhiều năm trước), nên mình rất quan tâm đến nội dung sách và cách viết - thể hiện cá tính của người viết. Và mình hoàn toàn hài lòng. Sách được biên tập kỹ, chỉnh chu trong từng câu chữ. Hãy thử đọc qua một đoạn văn miêu tả sống động như vầy xem bạn có thích thú không nhé \"La Floridita trở nên nổi tiếng thế giới một phần nhờ sự \"bảo chứng\" của Ernest Hemingway, một khách hàng quen thuộc lui tới đây gần như mỗi ngày. Tại góc quen thuộc của Hemingway, người ta còn đặt hẳn một bức tượng bằng đồng tạc ông bằng kích cỡ người thật, khuỷu tay trái gác lên quầy trong lúc tay phải chống nạnh một cách thư thái, hướng vào quầy bar chất đống các loại chai lọ trên tủ gỗ màu đỏ\". Thật sinh động biết bao!\n- Được sống một cuộc đời khác, được chu du qua một đất nước Mỹ Latin hoàn toàn xa lạ và khác biệt - Cuba với cuộc sống thường nhật đầy những khó khăn nhưng vẫn luôn lạc quan yêu đời. Mình yêu đất nước Achentina với thần tượng Maradona và điệu nhảy Tango huyền thoại, và mình tìm thấy sự đồng cảm, vô vàn điều thú vị từ quyển sách này\n- Lý do thứ 3 trong vô vàn lý do đó chính vì tác giả của quyển sách. Ấp ủ một quyển sách qua rất nhiều năm trời, chắc hẳn Hằng đã có sự cân nhắc rất nhiều để giới thiệu Cuba trong vô vàn nơi mà Hằng đã đi qua, vì vậy nên quyển sách vừa hấp dẫn bởi địa điểm và những câu chuyện về con người nơi đó, vừa thú vị vì cách Hằng chia sẻ - rất đời và rất chạm, chạm đến niềm ước ao được làm một Guliver du ký - như Hằng đã và đang làm.
         images:
           type: array
+          items:
+            type: string
           description: Hình ảnh
           example:
           - https://salt.tikicdn.com/ts/review/79/67/a0/3aa834855d62f0c126d51a7248023250.jpg
           - https://salt.tikicdn.com/ts/review/7d/c9/4f/c4c7374569d77edb074b2114c6104761.jpg
           - https://salt.tikicdn.com/ts/review/b3/00/77/3e200edd38529edae01d8dfee45104af.jpg
-          items:
-            type: string
         createdAt:
           type: string
-          description: Ngày tạo
           format: date
+          description: Ngày tạo
           example: 2022-10-09
+          
     client.User:
       type: object
       properties:
@@ -3177,33 +3236,34 @@ components:
           example: Nguyễn Văn An
         email:
           type: string
-          description: Email
           format: email
+          description: Email
           example: an@gmail.example.com
         phone:
           type: string
-          description: Số điện thoại
           format: phoneNumber
-          example: "0987654321"
+          description: Số điện thoại
+          example: '0987654321'
         sex:
           type: boolean
           description: Giới tính
           example: true
         birthday:
           type: string
-          description: Ngày sinh
           format: date
+          description: Ngày sinh
           example: 2001-01-01
         avatar:
           type: string
-          description: Link hình ảnh
           format: link
+          description: Link hình ảnh
           example: https://ui-avatars.com/api/?name=An&background=random&color=random&length=1&size=96
         lastSession:
           type: string
-          description: Lần đăng nhập gần nhất
           format: date
+          description: Lần đăng nhập gần nhất
           example: 2022-11-10
+          
     client.CartItem:
       type: object
       properties:
@@ -3221,6 +3281,7 @@ components:
           type: number
           description: Tổng giá tiền
           example: 72000
+          
     client.Cart:
       type: object
       properties:
@@ -3236,6 +3297,7 @@ components:
           type: number
           description: Tổng giá tiền
           example: 0
+          
     client.Address:
       type: object
       properties:
@@ -3250,7 +3312,7 @@ components:
         phone:
           type: string
           description: Số điên thoại người nhận
-          example: "0987654321"
+          example: '0987654321'
         region:
           type: string
           description: Tỉnh/Thành phố
@@ -3267,45 +3329,43 @@ components:
           type: string
           description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
           example: 17 Phù Đổng Thiên Vương
+          
     client.form.SelectAllCart:
-      required:
-      - selected
       type: object
       properties:
         selected:
           type: boolean
-          description: |
+          description: | 
             `true` chọn, `false` bỏ chọn tất cả
           example: true
+      required:
+      - selected
+      
     client.form.Cart:
       type: object
       properties:
         selected:
           type: boolean
-          description: |
+          description: | 
             `true` chọn, `false` bỏ chọn mua
           example: true
         quantity:
           type: number
           description: Số lượng mua
           example: 2
+    
     client.pagination.Book:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/client.Book'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+    
     client.form.Address:
-      required:
-      - district
-      - fullName
-      - phone
-      - region
-      - ward
       type: object
       properties:
         fullName:
@@ -3315,7 +3375,7 @@ components:
         phone:
           type: string
           description: Số điên thoại người nhận
-          example: "0987654321"
+          example: 0987654321
         region:
           type: string
           description: Tỉnh/Thành phố
@@ -3332,24 +3392,34 @@ components:
           type: string
           description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
           example: 17 Phù Đổng Thiên Vương
+      required: 
+      - fullName
+      - phone
+      - region
+      - district
+      - ward
+          
     client.pagination.Comment:
       allOf:
       - type: object
         properties:
           docs:
             type: array
-            description: Mảng document
             items:
               $ref: '#/components/schemas/client.Comment'
+            description: Mảng document
       - $ref: '#/components/schemas/Pagination'
+      
     client.array.BookLite:
       type: array
       items:
         $ref: '#/components/schemas/client.BookLite'
+        
     client.array.Address:
       type: array
       items:
         $ref: '#/components/schemas/client.Address'
+          
     RatingRate:
       type: object
       properties:
@@ -3361,117 +3431,3 @@ components:
           type: number
           description: Tỷ lệ đánh giá (%)
           example: 33
-    inline_response_200:
-      type: object
-      properties:
-        paths:
-          type: array
-          description: Link hình ảnh
-          example:
-          - https://example.com/example1.png
-          - https://example.com/example2.png
-          items:
-            type: string
-            format: link
-    inline_response_201:
-      allOf:
-      - $ref: '#/components/schemas/Message'
-      - type: object
-        properties:
-          user:
-            $ref: '#/components/schemas/client.User'
-    inline_response_200_1:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token
-          example: eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzRhYmNkIiwidXNlcm5hbWUiOiJhbkBnbWFpbC5leGFtcGxlLmNvbSJ9.nleb-JJz9Di9dL89Ja6PVrjjU-yy3Av95guc2nAtQhM
-        user:
-          $ref: '#/components/schemas/client.User'
-    auth_uploadavatar_body:
-      required:
-      - avatar
-      type: object
-      properties:
-        avatar:
-          type: string
-          description: File ảnh đại diện
-          format: binary
-          example: !!binary |-
-            ZXhhbXBsZS5wbmc=
-    inline_response_200_2:
-      allOf:
-      - $ref: '#/components/schemas/Message'
-      - type: object
-        properties:
-          avatar:
-            type: string
-            description: Link hình ảnh đại diện
-            format: link
-            example: https://example.com/example.png
-    admin.Category_parent:
-      type: object
-      properties:
-        _id:
-          type: string
-          description: ID danh mục cha
-          format: ObjectId
-          example: 634d8da216d1688abe54d40c
-        name:
-          type: string
-          description: Tên danh mục cha
-          example: Văn học
-    admin.Book_category:
-      type: object
-      properties:
-        _id:
-          type: string
-          description: ID danh mục
-          format: ObjectId
-          example: 634d8da516d1688abe54d4ef
-        name:
-          type: string
-          description: Tên danh mục
-          example: Light novel
-    admin.Role_permissions:
-      type: object
-      properties:
-        _id:
-          type: string
-          description: ID vai trò
-          format: ObjectId
-          example: 638c7606e13b091e37dd84d3
-        description:
-          type: string
-          description: Mô tả
-          example: Có thể toàn quyền truy cập tất cả
-    admin.User_roles:
-      type: object
-      properties:
-        _id:
-          type: string
-          description: ID vai trò
-          format: ObjectId
-          example: 638c76f64700d09a7fde9be3
-        name:
-          type: string
-          description: Tên vai trò
-          example: admin
-    client.Comment_user:
-      type: object
-      properties:
-        fullName:
-          type: string
-          description: Họ tên
-          example: Hồng Ánh
-        avatar:
-          type: string
-          description: Ảnh đại diện
-          format: link
-          example: https://ui-avatars.com/api/?name=Ánh&background=random&color=random&length=1&size=96
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT

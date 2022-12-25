@@ -26,6 +26,24 @@ adminSchema
     }
   });
 
+adminSchema
+  .virtual("permissions", {
+    ref: "Role",
+    localField: "roles",
+    foreignField: "_id",
+  })
+  .get(function (values) {
+    if (values) {
+      const set = new Set();
+      values.forEach((value) => {
+        value.permissions.forEach((item) => {
+          set.add(item);
+        });
+      });
+      return Array.from(set, (value) => value.toJson());
+    }
+  });
+
 /**
  * Credential account
  * @param {string} username
@@ -34,7 +52,7 @@ adminSchema
 adminSchema.statics.findByCredentials = async (username, password) => {
   const user = await Admin.findOne({
     $or: [{ username }, { email: username }, { phone: username }],
-  });
+  }).populate({ path: "permissions", populate: { path: "permissions" } });
   if (!user) {
     throw new ErrorHandler(401, "Unable to login");
   }

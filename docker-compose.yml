@@ -1,21 +1,37 @@
 version: '3.8'
 
 services:
-  # nginx:
-  #   image: toi-mua-sach/nginx
-  #   build: nginx
-  #   restart: always
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   depends_on:
-  #     - admin
-  #     - client
-  #     - server
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - api
+    command: certonly --webroot --webroot-path=/var/www/html --email 1914745@dlu.edu.vn --agree-tos --no-eff-email --staging -d api.toimuasach.example
 
   # admin:
   #   image: toi-mua-sach/admin
-  #   build: client_admin
+  #   build: ./client_admin
   #   environment:
   #     NODE_ENV: production
   #   ports:
@@ -25,7 +41,7 @@ services:
 
   # client:
   #   image: toi-mua-sach/client
-  #   build: client
+  #   build: ./client
   #   environment:
   #     NODE_ENV: production
   #   ports:
@@ -33,12 +49,27 @@ services:
   #   depends_on:
   #     - server
 
-  server:
-    image: toi-mua-sach/server
-    build: server
+  api:
+    image: toi-mua-sach/api
+    container_name: api
+    build: ./server
     env_file:
       - ./server/.env
     environment:
       NODE_ENV: production
     ports:
       - 5000:5000
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/user/app/
+  #     o: bind
+
+networks:
+  app-network:
+    driver: bridge
