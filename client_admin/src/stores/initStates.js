@@ -10,6 +10,7 @@ export const products = {
 	limit: limitRow.options[0],
 	totalPages: 10,
 };
+export const product = {};
 export const filterProduct = {
 	typeSearch: BookConfig.options.typeSearch.value[0].id,
 	category: "",
@@ -31,6 +32,13 @@ export const filterCustomer = {
 };
 export const globalState = {
 	isLogin: false,
+	userPermissions: [],
+	permissions: {
+		list: [],
+		actions: [],
+		subjects: [],
+	},
+	profile: {},
 };
 export const categoriesState = {
 	isUpdate: false,
@@ -55,7 +63,6 @@ export const category = {
 	id: "",
 	name: "",
 	level: constants.MAX_LEVEL,
-	parent: "",
 };
 export const role = {
 	id: null,

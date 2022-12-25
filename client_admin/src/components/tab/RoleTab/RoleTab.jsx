@@ -20,9 +20,12 @@ import { AllInbox } from "@mui/icons-material";
 import { copyObject } from "~/utils/util";
 import CreateNUpdateDay from "~/components/CreateNUpdateDay";
 import useForm from "~/hooks/useForm";
+import { useGlobalState } from "~/hooks/useGlobalState";
+import { globalContext } from "~/stores/contexts";
 const cx = classNames.bind(styles);
 function RoleTab(props) {
 	const { role, isEdit, dispatchEditMode } = props;
+	const [globalState, setGlobalState] = useGlobalState(globalContext);
 	const { values, setValues, errors, setErrors, handleInputChange } = useForm(role);
 	const [userRoles, setUserRoles] = useState(copyObject(initStates.permissions));
 	const [tabIndex, setTabIndex] = useState("1");

@@ -6,7 +6,7 @@ import Form from "~/components/Form";
 import useForm from "~/hooks/useForm";
 import Controls from "~/components/controls/";
 import validate, { bookValidation } from "~/utils/validate";
-import styles from "./product.module.scss";
+import styles from "./formProduct.module.scss";
 import categories from "~/components/controls/DropdownTree/sampleData";
 import Editor from "~/components/controls/Editor/Editor";
 import classNames from "classnames/bind";
@@ -23,25 +23,12 @@ import { postProduct, putProduct, upLoadImages } from "~/services/productService
 import { message } from "antd";
 import { ErrorDialog } from "~/utils/dialog";
 import { generatePath, useNavigate } from "react-router-dom";
+import featureType from "~/stores/types/featureType";
+import { actions } from "~/stores";
+import TextFelidCategory from "~/components/TextFelidCategory";
 
 const propsBook = BookConfig.props;
 const cx = classNames.bind(styles);
-const data = {
-	label: "search me",
-	value: "searchme",
-	children: [
-		{
-			label: "search me too",
-			value: "searchmetoo",
-			children: [
-				{
-					label: "No one can get me",
-					value: "anonymous",
-				},
-			],
-		},
-	],
-};
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -55,180 +42,161 @@ const steps = [
 	BookConfig.props.descNImage.title,
 ];
 function FormProduct(props) {
-	const { edit = false, initialValues = propsBook.initialValues } = props;
-	const { values, setValues, errors, setError, handleInputChange } = useForm(initialValues);
-	const [isNew, setIsNew] = useState(window.location.pathname === PageConfig.newProduct.route);
-	const [step, setStep] = useState(0);
-	const [isEdit, setIsEdit] = useState(edit);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	let AddIcon = icons.Button.add;
+	const {
+		editMode,
+		dispatchEditMode,
+		isEdit = false,
+		type = featureType.isEdit,
+		product,
+		setProduct,
+		categories,
+	} = props;
+	const form = useForm(product);
+	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	const navigate = useNavigate();
+	const [step, setStep] = useState(type === featureType.isNew ? 0 : -1);
+	useEffect(() => {
+		if (JSON.stringify(values) !== JSON.stringify(product)) {
+			dispatchEditMode(actions.setIsChange(true));
+		}
+	}, [values]);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (edit) {
-		}
-		if (isNew) {
-			switch (step) {
-				case 0:
-					const createProduct = async () => {
-						let response = {};
-						{
+		switch (type) {
+			case featureType.isNew:
+				switch (step) {
+					case 0:
+						const createProduct = async () => {
+							let response = {};
 							response = await postProduct(values);
 							if (response) {
-								let convert = {
-									target: {
-										name: "id",
-										value: response._id,
-									},
-								};
-								handleInputChange(convert);
-								if (!isError) {
-									setStep(step + 1);
-								}
-							} else {
-								setIsError(true);
+								setProduct(response);
+								setValues(response);
 							}
-							setIsLoading(false);
-						}
-					};
-					if (!values.id) {
-						setIsLoading(true);
-						createProduct();
-					} else {
-						setStep(step + 1);
-					}
-
-					break;
-				case 1:
-					setStep(step + 1);
-					break;
-				case 2:
-					const UpdateProduct = async () => {
-						let response = {};
-						response = await putProduct(values);
-						if (response) {
-							message.success("Thành công");
-
-							navigate(generatePath(PageConfig.product.route, { id: values.id }));
+						};
+						if (!values.id) {
+							dispatchEditMode(actions.setStatusIsLoading);
+							createProduct();
 						} else {
-							message.error("Thất bại");
+							setStep(step + 1);
 						}
-						setIsLoading(false);
-					};
-					setIsLoading(true);
-					UpdateProduct();
-					break;
-				default:
-					ErrorDialog();
-					break;
-			}
+						break;
+					case 1:
+						setStep(step + 1);
+						break;
+					case 2:
+						const UpdateProduct = async () => {
+							let response = {};
+							response = await putProduct(values);
+							if (response) {
+								message.success("Thành công");
+								navigate(generatePath(PageConfig.product.route, { id: values.id }));
+							} else {
+								message.error("Thất bại");
+							}
+						};
+						UpdateProduct();
+						break;
+					default:
+						ErrorDialog();
+						break;
+				}
+				break;
+			case featureType.isEdit:
+				break;
+			default:
+				throw Error("Không có type feature");
 		}
 	};
 	return (
 		<Form onSubmit={handleSubmit}>
 			<FormControl className="form-control">
 				<div className={cx("wrapper")}>
-					{isNew && (
+					{type === featureType.isNew && (
 						<Stepper
 							steps={steps}
 							value={step}
 						/>
 					)}
-					{isNew ? (
-						<CompsStep
-							values={values}
-							step={step}
-							handleInputChange={handleInputChange}
-							error={errors}
-						/>
-					) : (
-						<CompsStep
-							values={values}
-							handleInputChange={handleInputChange}
-							error={errors}
-						/>
-					)}
+					<CompInfo
+						values={values}
+						step={step}
+						form={form}
+						categories={categories}
+					/>
 				</div>
-
-				{isNew && (
-					<div className={cx("new-button")}>
-						{step > 0 && (
-							<Button
-								className={cx("btn-cancel")}
-								type="button"
-								outline
-								onClick={() => {
-									setStep(step - 1);
-								}}
-							>
-								Quay lại
-							</Button>
-						)}
-						<Button
-							primary
-							className={cx("btn-confirm")}
-						>{`${step === 2 ? "Xác nhận" : "Tiếp theo"}`}</Button>
-					</div>
-				)}
-				{edit && (
-					<div className={cx("new-button")}>
-						<Button
-							primary
-							className={cx("btn-confirm")}
-						>{`Xác nhận`}</Button>
-					</div>
-				)}
 			</FormControl>
 		</Form>
 	);
 }
+// function ButtonAction() {
+// 	return;
+// 	<div className={cx("new-button")}>
+// 		{step > 0 && (
+// 			<Button
+// 				className={cx("btn-cancel")}
+// 				type="button"
+// 				outline
+// 				onClick={() => {
+// 					setStep(step - 1);
+// 				}}
+// 			>
+// 				Quay lại
+// 			</Button>
+// 		)}
+// 		<Button
+// 			primary
+// 			className={cx("btn-confirm")}
+// 		>{`${step === 2 ? "Xác nhận" : "Tiếp theo"}`}</Button>
+// 	</div>;
+// }
+// {
+// 	edit && (
+// 		<div className={cx("new-button")}>
+// 			<Button
+// 				primary
+// 				className={cx("btn-confirm")}
+// 			>{`Xác nhận`}</Button>
+// 		</div>
+// 	);
+// }
 
-function CompsStep(props) {
-	const { step, values, handleInputChange, errors } = props;
+function CompInfo(props) {
+	const { form, isEdit, product, step, categories } = props;
 	switch (step) {
 		case 0:
 			return (
 				<CriticalInformation
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
+					form={form}
+					values={form.values}
+					categories={categories}
 				/>
 			);
 		case 1:
 			return (
 				<Details
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
+					form={form}
+					values={form.values}
 				/>
 			);
 		case 2:
 			return (
 				<DescNImage
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
+					form={form}
+					values={form.values}
 				/>
 			);
 		default:
 			return (
 				<>
 					<CriticalInformation
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
+						form={form}
+						values={form.values}
+						categories={categories}
 					/>
-					<Details
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
-					/>
-					<DescNImage
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
-					/>
+					<Details form={form} />
+					<DescNImage form={form} />
 				</>
 			);
 	}
@@ -243,32 +211,9 @@ function Division3({ comp1, comp2, comp3 }) {
 	);
 }
 function CriticalInformation(props) {
-	const { values, handleInputChange, errors } = props;
-	const [languageBook, setLanguageBook] = useState(categories[0].id);
-	const handleLanguageBook = (e, value) => {
-		setLanguageBook(value);
-		setCategory(null);
-	};
-	const handleCategory = (e, node) => {
-		if (node) {
-			setCategory(node.value);
-		} else {
-			setCategory(null);
-		}
-	};
-	const setCategory = (value) => {
-		let convert = {
-			target: {
-				name: "category",
-			},
-		};
-		if (value) {
-			convert.target.value = value.id;
-		} else {
-			convert.target.value = null;
-		}
-		handleInputChange(convert);
-	};
+	const { form, values, categories } = props;
+	const { setValues, errors, setError, handleInputChange } = form;
+	console.log(categories);
 	return (
 		<OutlinedBox
 			label={propsBook.criticalInformation.title}
@@ -285,83 +230,55 @@ function CriticalInformation(props) {
 					error={errors && errors.name ? errors.name : ""}
 				/>
 			</div>
-			<Division3
-				comp1={
-					<Controls.Input
-						label={propsBook.originalPrice.title}
-						fullWidth
-						name="originalPrice"
-						type="number"
-						configNumber={propsBook.originalPrice.config}
-						endAdornment={unit.monetary}
-						value={values.originalPrice}
-						onChange={handleInputChange}
-						error={errors && errors.originalPrice ? errors.originalPrice : ""}
-					/>
-				}
-				comp2={
-					<Controls.Input
-						fullWidth
-						label={propsBook.discountRate.title}
-						name="discountRate"
-						configNumber={propsBook.discountRate.config}
-						endAdornment={unit.percent}
-						type="number"
-						value={values.discountRate}
-						onChange={handleInputChange}
-						error={errors && errors.discountRate ? errors.discountRate : ""}
-					/>
-				}
-				comp3={
-					<Controls.Input
-						fullWidth
-						label={propsBook.price.title}
-						disabled={true}
-						name="price"
-						type="number"
-						configNumber={propsBook.price.config}
-						endAdornment={unit.monetary}
-						value={values.originalPrice * ((100 - values.discountRate) / 100)}
-						onChange={handleInputChange}
-						error={errors && errors.price ? errors.price : ""}
-					/>
-				}
-			/>
+			<div className={cx("division")}>
+				<Controls.Input
+					label={propsBook.originalPrice.title}
+					fullWidth
+					name="originalPrice"
+					type="number"
+					configNumber={propsBook.originalPrice.config}
+					endAdornment={unit.monetary}
+					value={values.originalPrice}
+					onChange={handleInputChange}
+					error={errors && errors.originalPrice ? errors.originalPrice : ""}
+				/>
+				<Controls.Input
+					fullWidth
+					label={propsBook.discountRate.title}
+					name="discountRate"
+					configNumber={propsBook.discountRate.config}
+					endAdornment={unit.percent}
+					type="number"
+					value={values.discountRate}
+					onChange={handleInputChange}
+					error={errors && errors.discountRate ? errors.discountRate : ""}
+				/>
+				<Controls.Input
+					fullWidth
+					label={propsBook.price.title}
+					disabled={true}
+					name="price"
+					type="number"
+					configNumber={propsBook.price.config}
+					endAdornment={unit.monetary}
+					value={values.originalPrice * ((100 - values.discountRate) / 100)}
+					onChange={handleInputChange}
+					error={errors && errors.price ? errors.price : ""}
+				/>
+			</div>
 			<div className={cx("category")}>
-				<OutlinedBox
-					title={propsBook.type.title}
-					type={"small"}
-					className={cx("category")}
-				>
-					<Controls.RadioGroup
-						label={"Ngôn ngữ"}
-						name="language"
-						items={categories}
-						value={languageBook}
-						onChange={handleLanguageBook}
-					/>
-					{categories.map((item) => {
-						return (
-							item.id === languageBook && (
-								<div key={item.id}>
-									<Controls.DropdownTree
-										label={propsBook.category.title}
-										name="category"
-										items={item.children}
-										onChange={handleCategory}
-										error={errors && errors.category ? errors.category : ""}
-									/>
-								</div>
-							)
-						);
-					})}
-				</OutlinedBox>
+				<TextFelidCategory
+					category={values.category ? values.category : ""}
+					list={categories.list}
+					tree={categories.tree}
+				/>
 			</div>
 		</OutlinedBox>
 	);
 }
 function Details(props) {
-	const { values, handleInputChange, errors } = props;
+	const { form } = props;
+	const { values, setValues, errors, setError, handleInputChange } = form;
 	const [status, setStatus] = useState(propsBook.status.optionNew[0].id);
 	const handleStatus = (e, value) => {
 		setStatus(value);
@@ -389,36 +306,30 @@ function Details(props) {
 					error={errors && errors.translators ? errors.translators : ""}
 				/>
 			</div>
+			<div className={cx("division")}>
+				<Controls.Input
+					label={propsBook.sku.title}
+					name="sku"
+					value={values.sku}
+					onChange={handleInputChange}
+					error={errors && errors.sku ? errors.sku : ""}
+				/>
+				<Controls.Input
+					label={propsBook.isbn13.title}
+					name="isbn13"
+					value={values.isbn13}
+					onChange={handleInputChange}
+					error={errors && errors.isbn13 ? errors.isbn13 : ""}
+				/>
+				<Controls.Input
+					label={propsBook.isbn10.title}
+					name="isbn10"
+					value={values.isbn10}
+					onChange={handleInputChange}
+					error={errors && errors.isbn10 ? errors.isbn10 : ""}
+				/>
+			</div>
 
-			<Division3
-				comp1={
-					<Controls.Input
-						label={propsBook.sku.title}
-						name="sku"
-						value={values.sku}
-						onChange={handleInputChange}
-						error={errors && errors.sku ? errors.sku : ""}
-					/>
-				}
-				comp2={
-					<Controls.Input
-						label={propsBook.isbn13.title}
-						name="isbn13"
-						value={values.isbn13}
-						onChange={handleInputChange}
-						error={errors && errors.isbn13 ? errors.isbn13 : ""}
-					/>
-				}
-				comp3={
-					<Controls.Input
-						label={propsBook.isbn10.title}
-						name="isbn10"
-						value={values.isbn10}
-						onChange={handleInputChange}
-						error={errors && errors.isbn10 ? errors.isbn10 : ""}
-					/>
-				}
-			/>
 			<Division3
 				comp1={
 					<Controls.Input
@@ -539,7 +450,8 @@ function Details(props) {
 	);
 }
 function DescNImage(props) {
-	const { values, handleInputChange, errors } = props;
+	const { form } = props;
+	const { values, setValues, errors, setError, handleInputChange } = form;
 	return (
 		<OutlinedBox
 			label={propsBook.descNImage.title}

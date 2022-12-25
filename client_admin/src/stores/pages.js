@@ -1,5 +1,5 @@
 import Home from "~/pages/Home";
-import NewProduct from "~/pages/Product/NewProduct";
+import NewProduct from "~/pages/Product/CreateProduct";
 import Products from "~/pages/Products";
 import TestLayout from "~/pages/test/TestLayout";
 import CustomerPage from "~/pages/CustomerPage";

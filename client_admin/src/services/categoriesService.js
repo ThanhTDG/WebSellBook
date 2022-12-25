@@ -4,9 +4,17 @@ export const getCategoriesTree = async (query) => {
 	const response = await request.get("/categories?tree=true");
 	return response;
 };
-export const getCategories = async (query) => {
+export const getCategoriesList = async (query) => {
 	const response = await request.get("/categories");
 	return response;
+};
+export const getCategories = async () => {
+	const [tree, list] = await Promise.all([getCategoriesTree(), getCategoriesList()]);
+	if (tree && list) {
+		return [tree, list.docs];
+	} else {
+		return null;
+	}
 };
 export const updateCategory = async (query) => {
 	const { id, name, parent } = query;
@@ -27,6 +35,7 @@ export const createCategory = async (query) => {
 	if (parent) {
 		reqData.parent = parent.id;
 	}
+	console.log(reqData);
 	const response = await request.post(`/categories`, reqData);
 	console.log(response);
 	return response;

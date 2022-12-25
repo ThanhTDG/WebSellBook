@@ -99,6 +99,19 @@ function CreateCategory(props) {
 			dispatchEditMode(actions.setStatusIsError());
 		}
 	};
+	const handleChangeParent = (newId) => {
+		if (newId) {
+			setValues({
+				...values,
+				parent: { ...categories.list.find((item) => item.id === newId) },
+			});
+		} else {
+			setValues({
+				...values,
+				parent: "",
+			});
+		}
+	};
 
 	return (
 		<>
@@ -133,7 +146,8 @@ function CreateCategory(props) {
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}
 									levelDisplay={values.level - 1}
-									category={values}
+									category={values.parent}
+									handleIdChange={handleChangeParent}
 									tree={categories.tree}
 									list={categories.list}
 									setCategory={setValues}

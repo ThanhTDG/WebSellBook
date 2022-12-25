@@ -28,19 +28,23 @@ function CategoriesPage() {
 	let displayCategory = category && !editMode.isNew;
 	let levelPick = deepCategory(category, categories.list);
 	useEffect(() => {
-		setValues({ ...category });
+		if (JSON.stringify(values) === JSON.stringify(category)) setValues({ ...category });
 	}, [editMode.enableEdit]);
 	useEffect(() => {
-		if (values !== {} && values.id ? JSON.stringify(values) !== JSON.stringify(category) : false) {
-			dispatchEditMode(actions.setIsChange(true));
-			if (!editMode.enableEdit) dispatchEditMode(actions.setEnableEdit(true));
+		if (values !== {} && values.id) {
+			if (JSON.stringify(values) !== JSON.stringify(category)) {
+				dispatchEditMode(actions.setIsChange(true));
+				if (!editMode.enableEdit) dispatchEditMode(actions.setEnableEdit(true));
+			} else {
+				dispatchEditMode(actions.setIsChange(false));
+			}
 		}
 	}, [values]);
 	const fetchApi = async () => {
 		setIsLoading(true);
 		const [treeCategory, listCategory] = await Promise.all([
 			categoriesService.getCategoriesTree(),
-			categoriesService.getCategories(),
+			categoriesService.getCategoriesList(),
 		]);
 		if (treeCategory && listCategory) {
 			dispatchCategories(actions.setCategories([treeCategory, listCategory.docs]));
@@ -95,17 +99,20 @@ function CategoriesPage() {
 	};
 	const handleChangeParent = (newId) => {
 		if (newId) {
-			setCategory({
-				...category,
+			setValues({
+				...values,
 				parent: { ...categories.list.find((item) => item.id === newId) },
 			});
 		} else {
-			setCategory({
-				...category,
-				parent: "",
+			let temp = { ...values };
+			delete temp.parent;
+			setValues({
+				...temp,
 			});
 		}
+		console.log(newId);
 	};
+	console.log(values);
 	return (
 		<InfoLayout
 			showFeature={displayCategory}
@@ -149,10 +156,11 @@ function CategoriesPage() {
 							PickParent={
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}
-									category={values}
-									setCategory={setValues}
+									category={values.parent}
+									handleIdChange={handleChangeParent}
 									list={categories.list}
 									tree={categories.tree}
+									idVisible={[values.id, values.parent ? values.parent.id : ""]}
 									disabled={constants.MAX_LEVEL - levelPick === 0}
 									levelDisplay={constants.MAX_LEVEL - levelPick - 1}
 								/>
@@ -161,7 +169,6 @@ function CategoriesPage() {
 					</div>
 				)}
 			</div>
-		
 		</InfoLayout>
 	);
 }

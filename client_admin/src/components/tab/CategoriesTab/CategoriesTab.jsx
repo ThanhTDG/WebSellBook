@@ -20,7 +20,7 @@ function CategoriesTab(props) {
 		tree,
 		idSelect,
 		list,
-		idVisible = "",
+		idVisible = [],
 		maxLevel = constants.MAX_LEVEL,
 		onChange,
 		fullScreen = false,

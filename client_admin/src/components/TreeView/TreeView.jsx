@@ -9,13 +9,13 @@ import "./treeView.scss";
 import styles from "./treeView.module.scss";
 
 const cx = classNames.bind(styles);
-const getTreeItemsFromData = (treeItems, maxLevel, idVisible) => {
+const getTreeItemsFromData = (treeItems, maxLevel, idVisible = []) => {
 	return treeItems.map((treeItemData) => {
 		let children = undefined;
 		if (treeItemData.children && treeItemData.children.length > 0) {
 			children = getTreeItemsFromData(treeItemData.children, maxLevel);
 		}
-		if (treeItemData.level <= maxLevel && idVisible !== treeItemData.id)
+		if (treeItemData.level <= maxLevel && !idVisible.find((item) => treeItemData.id === item.id))
 			return (
 				<TreeItem
 					className={cx("tree-item")}
@@ -29,17 +29,7 @@ const getTreeItemsFromData = (treeItems, maxLevel, idVisible) => {
 };
 
 function TreeView(props) {
-	const {
-		treeItems,
-		idSelect,
-		onChange,
-		expanded,
-		className,
-		idVisible = "",
-		handleToggle,
-		maxLevel,
-		...passProp
-	} = props;
+	const { treeItems, idSelect, onChange, expanded, className, idVisible, handleToggle, maxLevel, ...passProp } = props;
 	const handleNodeChange = (e, NID) => {
 		onChange(NID);
 	};

@@ -15,7 +15,7 @@ import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
 import Search from "~/components/SearchBar";
-import { getCategories, getCategoriesTree } from "~/services/categoriesService";
+import { getCategoriesList, getCategoriesTree } from "~/services/categoriesService";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
 
 const listStatus = BookConfig.listStatus;
@@ -110,7 +110,7 @@ function Products() {
 			}
 		};
 		const fetchCategories = async () => {
-			const result = await getCategories();
+			const result = await getCategoriesList();
 			if (result) {
 				setCategories(result.docs);
 			}

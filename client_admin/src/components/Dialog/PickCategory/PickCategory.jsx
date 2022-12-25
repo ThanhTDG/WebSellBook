@@ -18,10 +18,10 @@ function PickCategory(props) {
 		title = "Chọn",
 		list,
 		tree,
-		idVisible = "",
 		className,
 		currentValue,
 		disabled,
+		idVisible,
 		displayText = constants.CHANGE,
 		maxLevel,
 	} = props;
@@ -76,7 +76,7 @@ function PickCategory(props) {
 					)}
 					{newId && (
 						<Change
-							oldValue={currentValue.parent ? currentValue.parent.name : ""}
+							oldValue={currentValue ? currentValue.name : ""}
 							newValue={newId && list.find((item) => item.id === newId).name}
 						/>
 					)}

@@ -14,25 +14,14 @@ function TextFelidCategory(props) {
 		size = "normal",
 		label = "Danh mục",
 		category,
-		setCategory,
 		list,
 		tree,
 		disabled,
+		handleIdChange,
+		idVisible = [],
 		levelDisplay = constants.MAX_LEVEL,
 	} = props;
-
-	const clearCategory = () => {
-		setCategory({
-			...category,
-			parent: null,
-		});
-	};
-	const handlePickCategory = (id) => {
-		setCategory({
-			...category,
-			parent: { ...list.find((item) => item.id === id) },
-		});
-	};
+	console.log(category);
 	return (
 		<div className={cx("wrapper")}>
 			<Controls.Input
@@ -41,32 +30,28 @@ function TextFelidCategory(props) {
 				size={size}
 				autoComplete={"off"}
 				classNames={cx("category-input")}
-				value={category && category.parent ? category.parent.name : ""}
+				value={category ? category.name : ""}
 				endAdornment={
-					category &&
-					category.parent && (
+					category && (
 						<IconButton
 							className={cx("btn", size)}
-							onClick={clearCategory}
+							onClick={() => handleIdChange()}
 						>
 							{icons.Button("icon").delete}
 						</IconButton>
 					)
 				}
-				startAdornment={
-					category && category.parent && category.parent.parent && icons.Button({ className: cx("icon-parent") }).link
-				}
+				startAdornment={category && category.parent && icons.Button({ className: cx("icon-parent") }).link}
 			/>
 			<PickCategory
-				visibleObject={category}
+				idVisible={idVisible}
 				className={cx("btn", "pick", size)}
 				list={list}
 				tree={tree}
-				idVisible={category.id ? category.id : ""}
 				disabled={disabled}
 				currentValue={category}
 				maxLevel={levelDisplay}
-				onOK={handlePickCategory}
+				onOK={(id) => handleIdChange(id)}
 				displayText={icons.Button("icon").list}
 			/>
 		</div>
