@@ -2,11 +2,13 @@ import Home from "~/pages/Home";
 import NewProduct from "~/pages/Product/CreateProduct";
 import Products from "~/pages/Products";
 import TestLayout from "~/pages/test/TestLayout";
-import CustomerPage from "~/pages/CustomerPage";
+import CustomersPage from "~/pages/UserAccount/CustomersPage";
 import ViewProduct from "~/pages/Product/ViewProduct/ViewProduct";
 import LoginPage from "~/pages/Auth/LoginPage/LoginPage";
 import RolePage from "~/pages/RolePage";
 import CategoriesPage from "~/pages/CategoriesPage";
+import AccountAdminPage from "~/pages/UserAccount/AccountAdminPage";
+import CustomerPage from "~/pages/UserAccount/CustomerPage";
 
 const PageConfig = {
 	home: {
@@ -56,11 +58,23 @@ const PageConfig = {
 		component: ViewProduct,
 	},
 	// mgt users
+	accountAdmin: {
+		key: "accountAdmin",
+		route: "/account/admin/:id",
+		label: "Tài khoản quản trị",
+		component: AccountAdminPage,
+	},
 
+	customers: {
+		key: "user-customer",
+		route: "/customers",
+		label: "Quản lý tài khoản khách hàng",
+		component: CustomersPage,
+	},
 	customer: {
 		key: "customer",
-		route: "/customer",
-		label: "Quản lý khách hàng",
+		route: "/customer/:id",
+		label: "Tài khoản khách hàng",
 		component: CustomerPage,
 	},
 	/// order

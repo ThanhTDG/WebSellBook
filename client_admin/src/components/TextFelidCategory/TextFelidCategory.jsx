@@ -51,7 +51,7 @@ function TextFelidCategory(props) {
 				disabled={disabled}
 				currentValue={category}
 				maxLevel={levelDisplay}
-				onOK={(id) => handleIdChange(id)}
+				onOK={handleIdChange}
 				displayText={icons.Button("icon").list}
 			/>
 		</div>

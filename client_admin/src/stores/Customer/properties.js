@@ -179,7 +179,7 @@ const properties = {
 		rules: ["isByteLength"],
 	},
 	page: {
-		title: "Số trang sách",
+		title: "Số trang",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },

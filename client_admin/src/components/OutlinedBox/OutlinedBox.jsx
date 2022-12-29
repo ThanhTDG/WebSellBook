@@ -12,17 +12,19 @@ function OutlinedBox({ icon, label, type = "normal", classNameHeader, className 
 		[className]: className,
 	});
 	return (
-		<div className={cx("wrapper", classNameHeader)}>
-			<div className={cx("header")}>
-				<div className={cx("headerBorderBefore")}></div>
-				{(icon || label) && (
-					<div className={cx("headerTitle")}>
-						{icon && <SvgIcon component={icon} />}
-						{label && <span className={classesTitle}>{label}</span>}
-					</div>
-				)}
-				<div className={cx("headerBorderAfter")}></div>
-			</div>
+		<div className={cx("wrapper", { "all-border": !label }, classNameHeader)}>
+			{label && (
+				<div className={cx("header")}>
+					<div className={cx("headerBorderBefore")}></div>
+					{(icon || label) && (
+						<div className={cx("headerTitle")}>
+							{icon && <SvgIcon component={icon} />}
+							{label && <span className={classesTitle}>{label}</span>}
+						</div>
+					)}
+					<div className={cx("headerBorderAfter")}></div>
+				</div>
+			)}
 			<div className={classNameChildren}>{children}</div>
 		</div>
 	);

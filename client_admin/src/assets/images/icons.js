@@ -35,6 +35,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import SortIcon from "@mui/icons-material/Sort";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -97,11 +101,16 @@ const Button = ({ className }) => {
 		earning: <MonetizationOnOutlinedIcon className={className} />,
 		balance: <AccountBalanceWalletIcon className={className} />,
 		close: <HighlightOffOutlinedIcon className={className} />,
+		closeNoOutline: <CloseIcon className={className} />,
 		search: <SearchIcon className={className} />,
 		delete: <DeleteOutlineIcon className={className} />,
 		link: <InsertLinkIcon className={className} />,
 		list: <SortIcon className={className} />,
 		unless: <UnfoldLessIcon className={className} />,
+		upload: <CloudUploadIcon className={className} />,
+		reset: <LockResetIcon className={className} />,
+		change: <DriveFileRenameOutlineIcon className={className} />,
+		imageChange: <AddPhotoAlternateIcon className={className} />,
 	};
 };
 export { Navbar, Sidebar, Chart, Widget, Button, Dialog };

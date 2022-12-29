@@ -51,7 +51,6 @@ export const editModeState = {
 	enableEdit: false,
 	isChange: false,
 	isNew: false,
-	value: null,
 	statusLoad: "",
 	statusMessage: "",
 };

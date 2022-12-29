@@ -25,6 +25,17 @@ export const DELETE = "Xóa";
 export const PICK = "Chọn";
 export const CURRENT = "Hiện tại";
 export const MAX_LEVEL = 2;
+export const PASS = "Bỏ qua";
+export const NEXT_STEP = "Bước tiếp theo";
+export const FINISH = "Hoàn thành";
+export const UPLOAD_IMAGE = "Tải ảnh";
+export const LAST_SESSION = "Lần cuối truy cập";
+export const LAST_SESSION_SHORT = "Lần cuối";
+export const RESET_PASSWORD = "Đặt lại mật khẩu";
+export const CHANGE_PASSWORD = "Thay đổi mật khẩu";
+export const CHANGE_IMAGE = "Thay đổi hình ảnh";
+export const MALE = "Nam";
+export const FE_MALE = "Nữ";
 /// category
 export const NAME_CATEGORY = "Tên danh mục";
 export const PARENT_CATEGORY = "Danh mục cha";
@@ -64,6 +75,7 @@ export const SET_NEED_UPDATE = "set_need_update";
 
 // edit mode
 export const SET_ENABLE_EDIT = "set_enable_edit";
+export const SET_IS_CHANGE_EDIT = "set_is_change_edit";
 export const SET_IS_NEW = "set_is_new";
 export const SET_IS_CHANGE = "set_is_change";
 export const SET_VALUE_CHANGE = "set_value_change";
@@ -74,3 +86,5 @@ export const SET_STATUS_LOAD = "set_status_load";
 export const SET_STATUS_IS_LOADING = "set_status_is_loading";
 export const SET_STATUS_IS_SUCCESS = "set_status_is_success";
 export const SET_STATUS_IS_ERROR = "set_status_is_error";
+// product
+export const MAX_IMAGES_PER_PRODUCT = 25;

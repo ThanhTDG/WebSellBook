@@ -40,6 +40,7 @@ function PickCategory(props) {
 	return (
 		<>
 			<Controls.Button
+				type={"button"}
 				className={cx("btn-change", className)}
 				primary
 				onClick={handleOpen}

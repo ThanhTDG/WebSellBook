@@ -17,7 +17,7 @@ function Input(props) {
 		type = null,
 		placeholder = null,
 		error = false,
-		autoComplete = "on",
+		autoComplete = "off",
 		endAdornment = null,
 		startAdornment = null,
 		configNumber = null,

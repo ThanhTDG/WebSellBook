@@ -24,8 +24,8 @@ const sidebar = [
 				icon: icons.Sidebar("icon").products,
 			},
 			{
-				key: PageConfig.customer.key,
-				label: <Link to={PageConfig.customer.route}>{constants.CUSTOMER}</Link>,
+				key: PageConfig.customers.key,
+				label: <Link to={PageConfig.customers.route}>{constants.CUSTOMER}</Link>,
 				icon: icons.Sidebar("icon").customer,
 			},
 			{

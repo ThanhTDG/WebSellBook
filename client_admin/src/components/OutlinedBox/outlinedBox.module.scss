@@ -9,6 +9,7 @@ $text-normal-color: #494949;
 	border-left: 1px solid $border-color;
 	border-bottom: 1px solid $border-color;
 	border-right: 1px solid $border-color;
+
 	-webkit-box-shadow: var(--wk-box-shadow);
 	box-shadow: var(--box-shadow);
 	background-color: white;
@@ -63,4 +64,7 @@ $text-normal-color: #494949;
 			border-top-right-radius: 5px;
 		}
 	}
+}
+.all-border {
+	border-top: 1px solid $border-color;
 }

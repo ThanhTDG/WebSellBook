@@ -42,16 +42,7 @@ function Content(props) {
 
 				<div className={cx("short-desc")}>
 					<div className="title">Mô tả</div>
-					<div className={cx("text", "content")}>
-						{product.description}
-						{/* <Controls.Textarea
-							disable={true}
-							max
-							style={{ outline: "none", border: "none", padding: 0, overflow: "hidden" }}
-							maxRows={6}
-							value={`${shortDesc}`}
-						></Controls.Textarea> */}
-					</div>
+					<div className={cx("text", "content")}>{product.description}</div>
 				</div>
 			</div>
 		</div>

@@ -14,7 +14,7 @@ import * as initStates from "~/stores/initStates";
 import * as reducers from "~/stores/reducers";
 import { actions, constants } from "~/stores";
 import useForm from "~/hooks/useForm";
-import featureType from "~/stores/types/featureType";
+import typeFeature from "~/stores/types/typeFeature";
 import { Modal } from "antd";
 const cx = classNames.bind(styles);
 const { confirm } = Modal;
@@ -61,7 +61,7 @@ function RolePage() {
 			typeModel={constants.ROLE.toLocaleLowerCase()}
 			showFeature={idSelect}
 			textConfirm={idSelect ? "" : constants.ADD_NEW}
-			type={idSelect !== null ? featureType.isEdit : featureType.isNew}
+			type={idSelect !== null ? typeFeature.isEdit : typeFeature.isNew}
 		>
 			<Loading isLoading={isLoading}>
 				<div className={cx("wrapper")}>

@@ -13,9 +13,7 @@ import styles from "./categoryForm.module.scss";
 
 const cx = classNames.bind(styles);
 function CategoryFrom(props) {
-	const { className, data, canEdit = true, form, PickParent } = props;
-	const { values, setValues, errors, setError, handleInputChange } = form;
-	const category = canEdit ? values : data;
+	const { className, category, handleChange, PickParent } = props;
 	return (
 		<div className={cx("wrapper", className)}>
 			<div className={cx("form")}>
@@ -23,7 +21,7 @@ function CategoryFrom(props) {
 					name="name"
 					fullWidth
 					label={constants.NAME_CATEGORY}
-					onChange={canEdit ? handleInputChange : () => {}}
+					onChange={handleChange}
 					value={category.name ? category.name : ""}
 				/>
 				<div className={cx("category-parent")}>{PickParent}</div>

@@ -25,21 +25,7 @@ function CategoriesPage() {
 	const [category, setCategory] = useState(null);
 	const formCategory = useForm({}, false);
 	const { values, setValues, errors, setError, handleInputChange } = formCategory;
-	let displayCategory = category && !editMode.isNew;
-	let levelPick = deepCategory(category, categories.list);
-	useEffect(() => {
-		if (JSON.stringify(values) === JSON.stringify(category)) setValues({ ...category });
-	}, [editMode.enableEdit]);
-	useEffect(() => {
-		if (values !== {} && values.id) {
-			if (JSON.stringify(values) !== JSON.stringify(category)) {
-				dispatchEditMode(actions.setIsChange(true));
-				if (!editMode.enableEdit) dispatchEditMode(actions.setEnableEdit(true));
-			} else {
-				dispatchEditMode(actions.setIsChange(false));
-			}
-		}
-	}, [values]);
+
 	const fetchApi = async () => {
 		setIsLoading(true);
 		const [treeCategory, listCategory] = await Promise.all([
@@ -52,12 +38,22 @@ function CategoriesPage() {
 		}
 		setIsLoading(false);
 	};
-	const fetchUpdateCategory = async () => {
-		const response = await categoriesService.updateCategory(editMode.value);
-		if (response) {
-			setCategory(response);
-		} else {
+	useEffect(() => {
+		fetchApi();
+	}, []);
+	useEffect(() => {
+		if (!editMode.enableEdit) {
+			setValues(category);
+			return;
 		}
+		if (JSON.stringify(values) === JSON.stringify(category)) {
+			dispatchEditMode(actions.setIsChange(false));
+		} else {
+			dispatchEditMode(actions.setIsChange(true));
+		}
+	}, [editMode.enableEdit, values]);
+	const emptyFunction = () => {
+		dispatchEditMode(actions.setIsChange(true));
 	};
 	const handleDeleteCategory = () => {
 		deleteCategory();
@@ -87,16 +83,20 @@ function CategoriesPage() {
 			dispatchEditMode(actions.setStatusIsError());
 		}
 	};
-
-	useEffect(() => {
-		fetchApi();
-	}, []);
 	const handleCategoryChange = (id) => {
 		let itemFind = { ...categories.list.find((item) => item.id === id) };
+		if (itemFind.parent) {
+			itemFind = {
+				...itemFind,
+				parent: { ...categories.list.find((item) => item.id === itemFind.parent.id) },
+			};
+		}
 		dispatchEditMode(actions.setResetAll());
 		setCategory(itemFind);
 		setValues(itemFind);
 	};
+	console.log(values, category);
+
 	const handleChangeParent = (newId) => {
 		if (newId) {
 			setValues({
@@ -110,9 +110,12 @@ function CategoriesPage() {
 				...temp,
 			});
 		}
-		console.log(newId);
+		dispatchEditMode(actions.setIsChangeNEdit());
 	};
-	console.log(values);
+
+	let displayCategory = category && !editMode.isNew;
+	let levelPick = deepCategory(category, categories.list);
+	let display = editMode.enableEdit ? values : category;
 	return (
 		<InfoLayout
 			showFeature={displayCategory}
@@ -146,13 +149,9 @@ function CategoriesPage() {
 				{displayCategory && (
 					<div className={cx("display-form")}>
 						<CategoryForm
+							handleChange={editMode.enableEdit ? handleInputChange : emptyFunction}
 							className={cx("form-category")}
-							form={formCategory}
-							editMode={editMode}
-							dispatchEditMode={dispatchEditMode}
-							data={category}
-							categories={categories}
-							canEdit={editMode.enableEdit}
+							category={display}
 							PickParent={
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}

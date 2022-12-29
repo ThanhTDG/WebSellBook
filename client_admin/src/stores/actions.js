@@ -106,6 +106,10 @@ export const setEnableEdit = (payload) => ({
 	type: constants.SET_ENABLE_EDIT,
 	payload,
 });
+export const setIsChangeNEdit = (payload) => ({
+	type: constants.SET_IS_CHANGE_EDIT,
+	payload,
+});
 export const setIsNew = (payload) => ({
 	type: constants.SET_IS_NEW,
 	payload,

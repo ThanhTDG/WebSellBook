@@ -97,7 +97,7 @@ function RowProduct(props) {
 					onMouseOver={handleMouseOver}
 					onMouseOut={handleMouseOut}
 				>
-					<Popper.DetailProduct
+					<Popper.ProductDetail
 						product={product}
 						visible={isHovering}
 					>
@@ -111,7 +111,7 @@ function RowProduct(props) {
 								<div className={"single-line"}>{product.name}</div>
 							</Link>
 						</div>
-					</Popper.DetailProduct>
+					</Popper.ProductDetail>
 				</Table.Cell>
 				<Table.Cell>
 					<div className={cx("row-table", "sold")}>{product.sold}</div>

@@ -131,6 +131,12 @@ export function EditModeReducer(state, action) {
 				...initStates.editModeState,
 				statusLoad: action.payload,
 			};
+		case constants.SET_IS_CHANGE_EDIT:
+			return {
+				...state,
+				enableEdit: true,
+				isChange: true,
+			};
 		case constants.SET_STATUS_IS_LOADING:
 			return {
 				...state,

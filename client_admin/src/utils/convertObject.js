@@ -1,3 +1,5 @@
+import { constants } from "~/stores";
+
 export const productToID = (product) => {
 	let newProduct = {
 		...product,
@@ -103,4 +105,8 @@ export const convertToSearch = (str) => {
 	str = str.trim();
 	str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
 	return str;
+};
+export const convertSexToString = (sex) => {
+	if (sex) return constants.MALE;
+	else return constants.FE_MALE;
 };

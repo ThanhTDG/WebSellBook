@@ -13,8 +13,10 @@ const privateRoutes = [
 	/// categories
 	{ path: PageConfig.categories.route, component: PageConfig.categories.component, layout: OnlyNavLayout },
 
-	/// customer
-	{ path: PageConfig.customer.route, component: PageConfig.customer.component },
+	/// account
+	{ path: PageConfig.accountAdmin.route, component: PageConfig.accountAdmin.component, layout: OnlyNavLayout },
+	{ path: PageConfig.customers.route, component: PageConfig.customers.component, layout: OnlyNavLayout },
+	{ path: PageConfig.customer.route, component: PageConfig.customer.component, layout: OnlyNavLayout },
 
 	/// role
 	{ path: PageConfig.role.route, component: PageConfig.role.component, layout: OnlyNavLayout },

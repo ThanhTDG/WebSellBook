@@ -177,11 +177,7 @@ function Products() {
 						value={state.indexStatus}
 						index={index}
 					>
-						<Loading
-							size={25}
-							height={500}
-							isLoading={isLoading}
-						>
+						<Loading isLoading={isLoading}>
 							<ProductTable
 								categories={categories}
 								state={state}

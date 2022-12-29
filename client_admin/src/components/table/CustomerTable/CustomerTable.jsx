@@ -10,6 +10,8 @@ import PageConfig from "~/stores/pages";
 import { generatePath, Link } from "react-router-dom";
 import Controls from "~/components/controls";
 import styles from "./customerTable.module.scss";
+import Popper from "~/components/Popper";
+import typeUser from "~/stores/types/typeUser";
 
 const cx = classNames.bind(styles);
 const headers = tableConfig.table.customer;
@@ -17,6 +19,7 @@ const sizeCellBody = "small";
 
 function CustomerTable(props) {
 	const { state, customers, onLimitChange, onPageChange } = props;
+	console.log(customers);
 	return (
 		<Paper>
 			<Table.Frame style={{ maxHeight: 700, width: "auto" }}>
@@ -41,14 +44,13 @@ function CustomerTable(props) {
 					<Table.Body>
 						{customers.map((item) => (
 							<CustomerRow
-								key={item._id}
+								key={item.id}
 								customer={item}
 							/>
 						))}
 					</Table.Body>
 				)}
 			</Table.Frame>
-
 			<Footer
 				limitValue={state.limit}
 				limit={tableConfig.limitRow}
@@ -62,6 +64,7 @@ function CustomerTable(props) {
 }
 function CustomerRow(props) {
 	const { customer, key } = props;
+
 	const [isHovering, setIsHovering] = useState(false);
 	const [isEnable, setIsEnable] = useState(customer.status !== status.banned);
 	const handleMouseOut = () => {
@@ -85,14 +88,20 @@ function CustomerRow(props) {
 					onMouseOut={handleMouseOut}
 				>
 					<div className={cx("row-table", "email")}>
-						<Link
-							to={generatePath(PageConfig.customer.route, {
-								id: customer._id,
-							})}
-							target="_blank"
+						<Popper.UserDetail
+							visible={isHovering}
+							user={customer}
+							type={typeUser.customer}
 						>
-							<div className={"single-line"}> {customer.email}</div>
-						</Link>
+							<Link
+								to={generatePath(PageConfig.customer.route, {
+									id: customer.id,
+								})}
+								target="_blank"
+							>
+								<div className={"single-line"}> {customer.email}</div>
+							</Link>
+						</Popper.UserDetail>
 					</div>
 				</Table.Cell>
 				<Table.Cell

@@ -62,7 +62,7 @@
 .img {
 	width: 100%;
 	max-height: 400px;
-	max-width: 600px;
+	max-width: 400px;
 	object-fit: contain;
 }
 .img-default {
@@ -103,4 +103,52 @@
 	display: flex;
 	justify-content: space-between;
 	gap: 32px;
+}
+.image-card {
+	height: 120px !important;
+	width: 120px !important;
+	border-radius: 8px !important;
+}
+.active {
+	border: 2px solid var(--enable) !important;
+}
+.change {
+	border: 2px solid var(--warning) !important;
+}
+
+.wrapper-images {
+	display: flex;
+	flex-direction: column;
+	padding: 0px 16px 16px 16px;
+	gap: 16px;
+	.feature-images {
+		height: 40px;
+		padding: 4px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
+		.btn-upload {
+			width: 142px;
+			.title-upload {
+				display: flex;
+				gap: 16px;
+				align-items: center;
+			}
+		}
+	}
+	.images-outline {
+		gap: 4px;
+		display: flex;
+		flex-direction: column;
+		padding: 16px 0px 16px 16px;
+		.list-image {
+			display: flex;
+			gap: 8px;
+			height: 260px;
+			overflow-y: scroll;
+			flex-wrap: wrap;
+			padding: 8px;
+		}
+	}
 }

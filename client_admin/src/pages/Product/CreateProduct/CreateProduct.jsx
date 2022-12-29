@@ -6,7 +6,7 @@ import FormProduct from "~/components/Form/FormProduct";
 import InfoLayout from "~/layouts/InfoLayout";
 import * as initStates from "~/stores/initStates";
 import * as reducers from "~/stores/reducers";
-import featureType from "~/stores/types/featureType";
+import typeFeature from "~/stores/types/typeFeature";
 import * as categoriesService from "~/services/categoriesService";
 import { actions } from "~/stores";
 import { useEffect } from "react";
@@ -18,6 +18,7 @@ function CreateProduct() {
 	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
 	const [categories, dispatchCategories] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
 	const [isLoading, setIsLoading] = useState(false);
+	const [product, setProduct] = useState(initStates.product);
 	useEffect(() => {
 		fetchApi();
 		setIsLoading(true);
@@ -40,8 +41,9 @@ function CreateProduct() {
 					editMode={editMode}
 					dispatchEditMode={dispatchEditMode}
 					isEdit={true}
-					type={featureType.isNew}
-					product={initStates.product}
+					type={typeFeature.isNew}
+					product={product}
+					setProduct={setProduct}
 					categories={categories}
 				/>
 			</Loading>
