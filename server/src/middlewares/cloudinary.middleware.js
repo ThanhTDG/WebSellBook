@@ -14,7 +14,7 @@ const uploadAvatar = upload("avatars").single("avatar");
 const destroyAvatar = async (req, res, next) => {
   try {
     const user = req.user;
-    const image = user.avatar;
+    const image = user.avatar ?? "";
     const public_id = image.split("/").pop().split(".")[0];
     await destroy(`avatars/${public_id}`);
     next();
