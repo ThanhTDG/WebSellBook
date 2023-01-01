@@ -22,6 +22,21 @@ const orderItemSchema = new Schema({
   discountRate: Number,
 });
 
+const book2Json = ({ _id, name, images }) => ({ _id, name, images });
+
+orderItemSchema
+  .virtual("book", {
+    ref: "Book",
+    localField: "bookId",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      return book2Json(value);
+    }
+  });
+
 orderItemSchema.virtual("price").get(function () {
   const price = this.originalPrice * (1 - this.discountRate / 100);
   return Math.round(price / 1e3) * 1e3;
@@ -30,6 +45,15 @@ orderItemSchema.virtual("price").get(function () {
 orderItemSchema.virtual("total").get(function () {
   return this.quantity * this.price;
 });
+
+orderItemSchema.methods.toJson = function () {
+  const obj = this.toObject();
+  delete obj.bookId;
+  obj.book = this.book;
+  obj.price = this.price;
+  obj.total = this.total;
+  return obj;
+};
 
 const shippingInfoSchema = new Schema(
   {
@@ -88,11 +112,11 @@ const orderSchema = new Schema(
     },
     shippingMethod: {
       type: String,
-      required: true,
+      // required: true,
     },
     paymentMethod: {
       type: String,
-      required: true,
+      // required: true,
     },
     items: [orderItemSchema],
     status: {
@@ -119,5 +143,15 @@ orderSchema.virtual("total").get(function () {
     this.discount
   );
 });
+
+orderSchema.methods.toJson = function () {
+  const obj = this.toObject();
+  delete obj.__v;
+  delete obj.userId;
+  delete obj.updatedAt;
+  obj.items = this.items.map((item) => item.toJson());
+  obj.total = this.total;
+  return obj;
+};
 
 module.exports = mongoose.model("Order", orderSchema);

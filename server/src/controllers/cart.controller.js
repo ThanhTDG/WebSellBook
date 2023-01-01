@@ -1,3 +1,5 @@
+const Order = require("../models/order");
+
 const ErrorHandler = require("../utils/errorHandler");
 
 /**
@@ -7,8 +9,6 @@ const ErrorHandler = require("../utils/errorHandler");
 const getCart = async (req, res) => {
   try {
     const cart = req.cart;
-    await cart.populate(["items.book", "items.total"]);
-
     await res.json(cart.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
@@ -24,9 +24,9 @@ const selectedAll = async (req, res) => {
     const { selected } = req.body;
     const user = req.user;
     const cart = req.cart;
+
     cart.items.forEach((value) => (value.selected = selected));
     await (user ? cart.save() : cart.saveCookie(res));
-    await cart.populate(["items.book", "items.total"]);
 
     await res.json(cart.toJson());
   } catch (error) {
@@ -43,6 +43,7 @@ const addBook = async (req, res) => {
     const bookId = req.params.book;
     const user = req.user;
     const cart = req.cart;
+
     if (cart.items.every((item) => item.bookId != bookId)) {
       cart.items.push({ bookId });
       await (user ? cart.save() : cart.saveCookie(res));
@@ -74,7 +75,6 @@ const updateBook = async (req, res) => {
 
     if (quantity) item.quantity = quantity;
     if (selected) item.selected = selected;
-
     await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 
@@ -93,11 +93,67 @@ const deleteBook = async (req, res) => {
     const bookId = req.params.book;
     const user = req.user;
     const cart = req.cart;
+
     cart.items.pull({ bookId });
     await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 
     await res.json(cart.toJson());
+  } catch (error) {
+    await res.status(error.statusCode || 400).json({ message: error.message });
+  }
+};
+
+/**
+ * @param {Request} req - Request
+ * @param {Response} res - Response
+ */
+const checkout = async (req, res) => {
+  try {
+    const user = req.user;
+    const cart = req.cart;
+
+    const {
+      fullName,
+      phone,
+      region,
+      district,
+      ward,
+      address,
+      shippingMethod,
+      paymentMethod,
+      transportFee,
+      discount,
+    } = req.body;
+
+    const order = {
+      shippingInfo: { fullName, phone, region, district, ward, address },
+      shippingMethod,
+      paymentMethod,
+      transportFee,
+      discount,
+    };
+    if (user) {
+      order.userId = user.id;
+    }
+
+    order.items = cart.items
+      .filter((item) => item.selected)
+      .map((item) => ({
+        bookId: item.bookId,
+        quantity: item.quantity,
+        originalPrice: item.book.originalPrice,
+        discountRate: item.book.discountRate,
+      }));
+
+    const data = new Order(order);
+    await data.save();
+    await data.populate("items.book");
+
+    cart.items = cart.items.filter((item) => !item.selected);
+    await cart.save();
+
+    await res.json(data.toJson());
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
   }
@@ -109,4 +165,5 @@ module.exports = {
   addBook,
   updateBook,
   deleteBook,
+  checkout,
 };
