@@ -787,7 +787,7 @@ paths:
           type: string
           format: ObjectId
         required: true
-        example: 634d8da516d1688abe54d4ef
+        example: 637cc21ce94542c1056e6c68
       responses:
         200:
           description: OK
@@ -2799,10 +2799,22 @@ components:
           format: ObjectId
           description: ID vai trò
           example: 638c7606e13b091e37dd84d3
+        name:
+          type: string
+          description: Tên
+          example: Quyền truy cập tất cả
         description:
           type: string
           description: Mô tả
           example: Có thể toàn quyền truy cập tất cả
+        subject:
+          type: string
+          description: Đối tượng
+          example: all
+        action:
+          type: string
+          description: Hành động
+          example: all
 
     admin.User:
       type: object
@@ -3707,6 +3719,18 @@ components:
           format: date
           description: Lần đăng nhập gần nhất
           example: 2022-11-10
+        roles:
+          type: array
+          items:
+            type: string
+            description: ID vai trò
+            example: 638c76f64700d09a7fde9be3
+          description: Danh sách vai trò được gán (chỉ người quản trị có)
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/admin.Permission'
+          description: Danh sách quyền (chỉ người quản trị có)
           
     client.CartItem:
       type: object
