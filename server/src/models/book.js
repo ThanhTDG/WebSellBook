@@ -108,7 +108,7 @@ const bookSchema = new Schema(
   { timestamps: true }
 );
 
-bookSchema.index({ name: "text" });
+bookSchema.index({ textSearch: "text" });
 
 bookSchema
   .virtual("_category", {

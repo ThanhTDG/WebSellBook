@@ -63,8 +63,13 @@ const configPassport = () => {
     .use("local-admin", createLocalStrategy(Admin.findByCredentials))
     .use("local-customer", createLocalStrategy(Customer.findByCredentials));
 
+  /**
+   * @param {Request} req
+   */
   const cookieExtractor = (req) =>
-    req.signedCookies.token || ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+    req.headers.authorization
+      ? ExtractJwt.fromAuthHeaderAsBearerToken()(req)
+      : req.signedCookies.token;
 
   const jwtOpts = {
     jwtFromRequest: cookieExtractor,

@@ -3,8 +3,8 @@ const Order = require("../models/order");
 const Controller = require("../utils/controller");
 
 const OrderController = class extends Controller {
-  constructor(getData, toJson) {
-    super(Order, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(Order, getData, toJson, populate);
   }
 };
 
@@ -48,7 +48,9 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   obj.id = data.id;
+  obj.items = data.items.map((item) => item.toJson());
+  obj.total = data.total;
   return obj;
 };
 
-module.exports = new OrderController(getData, toJson);
+module.exports = new OrderController(getData, toJson, "items.book");
