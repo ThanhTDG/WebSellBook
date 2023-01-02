@@ -49,8 +49,12 @@ orderItemSchema.virtual("total").get(function () {
 orderItemSchema.methods.toJson = function () {
   const obj = this.toObject();
   delete obj.bookId;
+  delete obj.originalPrice;
+  delete obj.discountRate;
   obj.book = this.book;
-  obj.price = this.price;
+  obj.book.originalPrice = this.originalPrice;
+  obj.book.discountRate = this.discountRate;
+  obj.book.price = this.price;
   obj.total = this.total;
   return obj;
 };

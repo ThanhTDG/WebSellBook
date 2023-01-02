@@ -1,6 +1,7 @@
 const Order = require("../models/order");
 
 const ErrorHandler = require("../utils/errorHandler");
+const { generateBillcode } = require("../utils/generateBillCode");
 
 /**
  * @param {Request} req - Request
@@ -132,6 +133,7 @@ const checkout = async (req, res) => {
       paymentMethod,
       transportFee,
       discount,
+      orderCode: generateBillcode(),
     };
     if (user) {
       order.userId = user.id;
