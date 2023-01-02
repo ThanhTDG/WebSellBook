@@ -9,6 +9,8 @@ const Schema = mongoose.Schema;
 
 const permissionSchema = new Schema(
   {
+    name: String,
+    description: String,
     subject: {
       type: String,
       enum: Object.values(SUBJECT),
@@ -19,7 +21,7 @@ const permissionSchema = new Schema(
       enum: Object.values(ACTION),
       required: true,
     },
-    description: String,
+    dangerous: String,
     weight: Number,
   },
   { timestamps: true }
