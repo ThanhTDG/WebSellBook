@@ -8,19 +8,22 @@ const { ORDER_STATUS } = require("../constants");
 
 const Schema = mongoose.Schema;
 
-const orderItemSchema = new Schema({
-  bookId: {
-    type: Schema.Types.ObjectId,
-    ref: "Book",
-    required: true,
+const orderItemSchema = new Schema(
+  {
+    bookId: {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    originalPrice: Number,
+    discountRate: Number,
   },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-  originalPrice: Number,
-  discountRate: Number,
-});
+  { _id: false }
+);
 
 const book2Json = ({ _id, name, images }) => ({ _id, name, images });
 

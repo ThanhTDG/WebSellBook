@@ -626,6 +626,193 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /orders:
+    get:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để lấy danh sách hóa đơn
+      description: |
+        Lấy danh sách hóa đơn theo trang và giới hạn số lượng lấy.
+        Nếu không có trang hoặc giới hạn số lượng thì sẽ trả về tất cả hóa đơn.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: query
+        name: page
+        description: Trang
+        schema:
+          type: number
+        example: 1
+      - in: query
+        name: limit
+        description: Giới hạn số document trả về
+        schema:
+          type: number
+        example: 12
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.pagination.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /orders/{id}:
+    get:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để lấy hóa đơn
+      description: |
+        Lấy hóa đơn theo ID hóa đơn cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID hóa đơn
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 637cc21ce94542c1056e6c68
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    put:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để sửa thông tin hóa đơn
+      description: |
+        Sửa thông tin hóa đơn theo ID hóa đơn cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID hóa đơn
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 637cc21ce94542c1056e6c68
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin.form.Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/admin.form.Order'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    delete:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để xóa hóa đơn
+      description: |
+        Xóa hóa đơn theo ID hóa đơn cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID hóa đơn
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 634d8da516d1688abe54d4ef
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
                 
   /roles:
     get:
@@ -1878,13 +2065,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
-  /address:
+  /cart/checkout:
+    post:
+      tags:
+      - Quản lý giỏ hàng
+      summary: Sử dụng để thanh toán
+      description: |
+        Thanh toán sách đã chọn trong giỏ hàng.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/client.form.Checkout'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/client.form.Checkout'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Order'
+        400:
+          description: Lỗi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /order:
     get:
       tags:
-      - Quản lý địa chỉ
-      summary: Sử dụng để lấy danh sách địa chỉ giao hàng
+      - Quản lý đơn hàng
+      summary: Sử dụng để lấy danh sách đơn hàng (lịch sử mua hàng)
       description: |
-        Lấy danh sách địa chỉ giao hàng.
+        Lấy danh sách đơn hàng (lịch sử mua hàng).
       security: 
       - BearerAuth: []
       parameters:
@@ -1900,6 +2117,85 @@ paths:
         schema:
           type: number
         example: 12
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.pagination.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /order/{id}:
+    get:
+      tags:
+      - Quản lý đơn hàng
+      summary: Sử dụng để lấy đơn hàng
+      description: |
+        Lấy đơn hàng theo ID đơn hàng cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID danh mục
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 6390023e68b6bce81199e74d
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /address:
+    get:
+      tags:
+      - Quản lý địa chỉ
+      summary: Sử dụng để lấy danh sách địa chỉ giao hàng
+      description: |
+        Lấy danh sách địa chỉ giao hàng.
+      security: 
+      - BearerAuth: []
       responses:
         200:
           description: OK
@@ -2580,6 +2876,67 @@ components:
           format: date
           description: Ngày cập nhật
           example: 2022-11-02
+          
+    admin.Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          example: 637cc21ce94542c1056e6c68
+        shippingInfo:
+          $ref: '#/components/schemas/client.ShippingInfo'
+        orderCode:
+          type: string
+          description: Mã đơn hàng
+          example: '20230102674581'
+        shippingCode:
+          type: string
+          description: Mã vận chuyển
+          example: null
+        shippingMethod:
+          type: string
+          description: Phương thức vận chuyển
+          example: Giao hàng tiêu chuẩn
+        paymentMethod:
+          type: string
+          description: Phương thức thanh toán
+          example: Trả tiền khi giao hàng
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/client.OrderItem'
+        status:
+          type: string
+          description: Trạng thái đơn hàng
+          example: not_processed
+        transportFee:
+          type: number
+          description: Phí vận chuyển
+          example: 20000
+        discount:
+          type: number
+          description: Giảm giá
+          example: 15000
+        total:
+          type: number
+          description: Tổng giá tiền
+          example: 77000
+        purchaseDate:
+          type: string
+          format: date
+          description: Ngày mua hàng
+          example: 2023-01-02
+        createdAt:
+          type: string
+          format: date
+          description: Ngày tạo đơn hàng
+          example: 2023-01-02
+        updatedDate:
+          type: string
+          format: date
+          description: Ngày cập nhật
+          example: 2023-01-02
       
     admin.form.Category:
       type: object
@@ -2772,6 +3129,82 @@ components:
       - email
       - phone
       
+    admin.form.Order:
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Họ tên người nhận
+          example: Nguyễn Văn An
+        phone:
+          type: string
+          description: Số điên thoại người nhận
+          example: '0987654321'
+        region:
+          type: string
+          description: Tỉnh/Thành phố
+          example: Lâm Đồng
+        district:
+          type: string
+          description: Quận/Huyện
+          example: TP. Đà Lạt
+        ward:
+          type: string
+          description: Phường/Xã
+          example: Phường 8
+        address:
+          type: string
+          description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
+          example: 17 Phù Đổng Thiên Vương
+        shippingMethod:
+          type: string
+          description: Phương thức vận chuyển
+          example: Giao hàng tiêu chuẩn
+        paymentMethod:
+          type: string
+          description: Phương thức thanh toán
+          example: Trả tiền khi giao hàng
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              bookId:
+                type: string
+                format: ObjectId
+                description: ID sách
+                example: 634ed8e4f6a3a7266d99276d
+              originalPrice:
+                type: number
+                description: Giá bìa
+                example: 95000
+              discountRate:
+                type: number
+                description: Giảm giá (%)
+                example: 25
+              quantity:
+                type: number
+                description: Số lượng mua
+                example: 1
+        transportFee:
+          type: number
+          description: Phí vận chuyển
+          example: 20000
+        discount:
+          type: number
+          description: Giảm giá
+          example: 15000
+      required: 
+      - fullName
+      - phone
+      - region
+      - district
+      - ward
+      - shippingMethod
+      - paymentMethod
+      - transportFee
+      - discount
+      
     admin.pagination.Category:
       allOf:
       - type: object
@@ -2824,6 +3257,17 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/admin.User'
+            description: Mảng document
+      - $ref: '#/components/schemas/Pagination'
+      
+    admin.pagination.Order:
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/admin.Order'
             description: Mảng document
       - $ref: '#/components/schemas/Pagination'
       
@@ -3298,6 +3742,104 @@ components:
           description: Tổng giá tiền
           example: 0
           
+    client.ShippingInfo:
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Họ tên người nhận
+          example: Nguyễn Văn An
+        phone:
+          type: string
+          description: Số điên thoại người nhận
+          example: '0987654321'
+        region:
+          type: string
+          description: Tỉnh/Thành phố
+          example: Lâm Đồng
+        district:
+          type: string
+          description: Quận/Huyện
+          example: TP. Đà Lạt
+        ward:
+          type: string
+          description: Phường/Xã
+          example: Phường 8
+        address:
+          type: string
+          description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
+          example: 17 Phù Đổng Thiên Vương
+          
+    client.OrderItem:
+      type: object
+      properties:
+        book:
+          $ref: '#/components/schemas/client.BookLite'
+        quantity:
+          type: number
+          description: Số lượng mua
+          example: 1
+        total:
+          type: number
+          description: Tổng giá tiền
+          example: 72000
+          
+    client.Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          example: 637cc21ce94542c1056e6c68
+        shippingInfo:
+          $ref: '#/components/schemas/client.ShippingInfo'
+        orderCode:
+          type: string
+          description: Mã đơn hàng
+          example: '20230102674581'
+        shippingCode:
+          type: string
+          description: Mã vận chuyển
+          example: null
+        shippingMethod:
+          type: string
+          description: Phương thức vận chuyển
+          example: Giao hàng tiêu chuẩn
+        paymentMethod:
+          type: string
+          description: Phương thức thanh toán
+          example: Trả tiền khi giao hàng
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/client.OrderItem'
+        status:
+          type: string
+          description: Trạng thái đơn hàng
+          example: not_processed
+        transportFee:
+          type: number
+          description: Phí vận chuyển
+          example: 20000
+        discount:
+          type: number
+          description: Giảm giá
+          example: 15000
+        purchaseDate:
+          type: string
+          format: date
+          description: Ngày mua hàng
+          example: 2023-01-02
+        createdAt:
+          type: string
+          format: date
+          description: Ngày tạo đơn hàng
+          example: 2023-01-02
+        total:
+          type: number
+          description: Tổng giá tiền
+          example: 77000
+          
     client.Address:
       type: object
       properties:
@@ -3308,7 +3850,7 @@ components:
         fullName:
           type: string
           description: Họ tên người nhận
-          example: Nguyen Van An
+          example: Nguyễn Văn An
         phone:
           type: string
           description: Số điên thoại người nhận
@@ -3353,17 +3895,60 @@ components:
           type: number
           description: Số lượng mua
           example: 2
-    
-    client.pagination.Book:
-      allOf:
-      - type: object
-        properties:
-          docs:
-            type: array
-            items:
-              $ref: '#/components/schemas/client.Book'
-            description: Mảng document
-      - $ref: '#/components/schemas/Pagination'
+      
+    client.form.Checkout:
+      type: object
+      properties:
+        fullName:
+          type: string
+          description: Họ tên người nhận
+          example: Nguyễn Văn An
+        phone:
+          type: string
+          description: Số điên thoại người nhận
+          example: '0987654321'
+        region:
+          type: string
+          description: Tỉnh/Thành phố
+          example: Lâm Đồng
+        district:
+          type: string
+          description: Quận/Huyện
+          example: TP. Đà Lạt
+        ward:
+          type: string
+          description: Phường/Xã
+          example: Phường 8
+        address:
+          type: string
+          description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
+          example: 17 Phù Đổng Thiên Vương
+        shippingMethod:
+          type: string
+          description: Phương thức vận chuyển
+          example: Giao hàng tiêu chuẩn
+        paymentMethod:
+          type: string
+          description: Phương thức thanh toán
+          example: Trả tiền khi giao hàng
+        transportFee:
+          type: number
+          description: Phí vận chuyển
+          example: 20000
+        discount:
+          type: number
+          description: Giảm giá
+          example: 15000
+      required: 
+      - fullName
+      - phone
+      - region
+      - district
+      - ward
+      - shippingMethod
+      - paymentMethod
+      - transportFee
+      - discount
     
     client.form.Address:
       type: object
@@ -3398,6 +3983,17 @@ components:
       - region
       - district
       - ward
+    
+    client.pagination.Book:
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/client.Book'
+            description: Mảng document
+      - $ref: '#/components/schemas/Pagination'
           
     client.pagination.Comment:
       allOf:
@@ -3407,6 +4003,17 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/client.Comment'
+            description: Mảng document
+      - $ref: '#/components/schemas/Pagination'
+          
+    client.pagination.Order:
+      allOf:
+      - type: object
+        properties:
+          docs:
+            type: array
+            items:
+              $ref: '#/components/schemas/client.Order'
             description: Mảng document
       - $ref: '#/components/schemas/Pagination'
       
