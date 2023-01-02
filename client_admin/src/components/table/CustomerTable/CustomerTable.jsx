@@ -9,9 +9,9 @@ import { status } from "~/stores/Customer/customerStatus";
 import PageConfig from "~/stores/pages";
 import { generatePath, Link } from "react-router-dom";
 import Controls from "~/components/controls";
-import styles from "./customerTable.module.scss";
 import Popper from "~/components/Popper";
 import typeUser from "~/stores/types/typeUser";
+import styles from "./customerTable.module.scss";
 
 const cx = classNames.bind(styles);
 const headers = tableConfig.table.customer;

@@ -4,7 +4,7 @@ import { type as typeWidget } from "./typeWidget.js";
 import styles from "./widget.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
-function Widget({ type }) {
+function Widget({ type, value }) {
 	const amount = 100;
 	const diff = 20;
 	let data = typeWidget[type];
@@ -25,10 +25,7 @@ function Widget({ type }) {
 		<div className={cx("widget")}>
 			<div className={cx("left")}>
 				<span className={classTitle}>{data.title}</span>
-				<span className={cx("counter")}>
-					{data.isMoney && "$"}
-					{amount}
-				</span>
+				<span className={cx("counter")}>{value ? value : amount}</span>
 				<Link className={cx("view")}>{data.link}</Link>
 			</div>
 			<div className={cx("right")}>
@@ -36,7 +33,9 @@ function Widget({ type }) {
 					{icons.Chart({ classPercentage })["increase"]}
 					{diff} %
 				</div>
-				<div className={cx("wrap-icon")}>{icons.Widget({ className: classIcon })[data.key]}</div>
+				<div className={cx("wrap-icon")}>
+					{icons.Widget({ className: classIcon })[data.key]}
+				</div>
 			</div>
 		</div>
 	);

@@ -1,0 +1,135 @@
+.wrapper {
+	display: flex;
+	justify-content: center;
+}
+.display {
+	display: grid;
+	max-width: 1080px;
+	width: 1080px;
+	grid-template-columns: 65% 35%;
+	gap: 16px;
+	padding: 16px;
+}
+.wrapper-prop,
+.total-play {
+	display: flex;
+	gap: 4px;
+}
+.other {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.pay-prop {
+	justify-content: space-between;
+}
+.total-play {
+	padding-top: 8px;
+	justify-content: space-between;
+	border-top: 1px solid var(--border);
+	align-items: flex-end;
+	.prop-total-pay {
+		font-size: 18px;
+		font-weight: 500px;
+		color: var(--red-pink);
+	}
+}
+.prop-title {
+	white-space: nowrap;
+}
+.prop-total-pay {
+	font-size: 18px;
+	font-weight: 600px;
+	color: var(--red-pink);
+}
+
+.address,
+.changer,
+.statuses {
+	width: 100%;
+	.title {
+		padding: 8px;
+		font-size: 18px;
+		font-weight: 600;
+		border-top-right-radius: 32px;
+	}
+	.content {
+		border: 1px solid var(--border);
+		padding: 4px 16px 16px 16px;
+		display: flex;
+		border-bottom-left-radius: 32px;
+		flex-direction: column;
+		gap: 8px;
+	}
+}
+.address {
+	.title {
+		color: white;
+		background-color: var(--primaryDark);
+	}
+}
+.changer {
+	.title {
+		color: white;
+		background-color: var(--red-pink);
+	}
+}
+
+.status-header-prop {
+	background-color: var(--border);
+}
+.status-prop,
+.status-header-prop,
+.canceled-prop,
+.completed-prop {
+	display: grid !important;
+	grid-template-columns: 50% 50% !important;
+}
+.canceled-prop,
+.completed-prop {
+	font-size: 16px;
+	font-weight: 600;
+}
+.canceled-prop {
+	color: red;
+}
+.completed-prop {
+	color: var(--enable);
+}
+.statuses {
+	.title {
+		background-color: var(--primary);
+		color: white;
+	}
+}
+.not-processed {
+	.title {
+		background-color: var(--primaryDark);
+	}
+}
+.completed {
+	.title {
+		background-color: var(--enable);
+	}
+}
+.canceled {
+	.title {
+		background-color: red;
+		color: black;
+	}
+}
+.status-header-prop {
+	padding: 8px 16px;
+}
+.actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	.btn-next,
+	.btn-cancel {
+		flex: 1;
+	}
+	.btn-cancel {
+		color: var(--red-pink);
+	}
+}

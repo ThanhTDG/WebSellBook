@@ -25,7 +25,10 @@ const cx = classNames.bind(styles);
 function CreateCategory(props) {
 	const { classNameBtn, categories, category, setCategory, fetchCategories } = props;
 	const formCategory = useForm(category, false);
-	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
+	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, {
+		...initStates.editModeState,
+		enableEdit: true,
+	});
 	const { values, setValues, errors, setError, handleInputChange } = formCategory;
 	const [isOpen, setOpen] = useState(false);
 	const [openCategory, setOpenCategory] = useState(initStates.openCategory);
@@ -137,11 +140,8 @@ function CreateCategory(props) {
 					<div className={cx(openCategory.isOpen ? "wrapper" : "wrapper-expand")}>
 						<CategoryForm
 							className={cx("category-form")}
-							categories={categories}
-							category={category}
-							editMode={editMode}
-							dispatchEditMode={dispatchEditMode}
-							form={formCategory}
+							handleChange={handleInputChange}
+							category={values}
 							PickParent={
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}

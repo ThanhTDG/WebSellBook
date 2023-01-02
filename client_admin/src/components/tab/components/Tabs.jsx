@@ -64,7 +64,14 @@ const AntTab = styled((props) => (
 }));
 
 function Tabs(props) {
-	const { type = "table", value, onChange, items, children, ...passProp } = props;
+	const {
+		type = "table",
+		value,
+		onChange,
+		items,
+		children,
+		...passProp
+	} = props;
 	let Comp = AntTabs;
 	switch (type) {
 		case "info":

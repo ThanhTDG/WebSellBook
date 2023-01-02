@@ -1,50 +1,45 @@
 import "./chart.scss";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+	AreaChart,
+	Area,
+	XAxis,
+	YAxis,
+	CartesianGrid,
+	Tooltip,
+	Legend,
+	ResponsiveContainer,
+} from "recharts";
 import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 
 const data = [
 	{
 		name: "Thứ 2",
-		uv: 4000,
-		pv: 2400,
-		amt: 2400,
+		VND: 400000,
 	},
 	{
 		name: "Thứ 3",
-		uv: 3000,
-		pv: 1398,
-		amt: 2210,
+		VND: 50000,
 	},
 	{
 		name: "Thứ 4",
-		uv: 2000,
-		pv: 9800,
-		amt: 2290,
+		VND: 550000,
 	},
 	{
 		name: "Thứ 5",
-		uv: 2780,
-		pv: 3908,
-		amt: 2000,
+		VND: 257000,
 	},
 	{
 		name: "Thứ 6",
-		uv: 1890,
-		pv: 4800,
-		amt: 2181,
+		VND: 548000,
 	},
 	{
 		name: "Thứ 7",
-		uv: 2390,
-		pv: 3800,
-		amt: 2500,
+		VND: 752000,
 	},
 	{
 		name: "Chủ nhật",
-		uv: 3490,
-		pv: 4300,
-		amt: 2100,
+		VND: 1200000,
 	},
 ];
 let colors = [
@@ -108,7 +103,7 @@ function Chart() {
 					<Tooltip />
 					<Area
 						type="monotone"
-						dataKey="uv"
+						dataKey="VND"
 						stroke="#8884d8"
 						fillOpacity={1}
 						fill="url(#total)"

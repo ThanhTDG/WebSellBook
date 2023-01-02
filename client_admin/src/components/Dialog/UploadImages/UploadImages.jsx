@@ -10,12 +10,10 @@ import Image from "~/components/Image";
 import CardImage from "~/components/CardImage";
 import OutlinedBox from "~/components/OutlinedBox";
 import { constants } from "~/stores";
-
 const cx = classNames.bind(styles);
 
 function UploadImages(props) {
 	const {
-		multiple = true,
 		actionUpload,
 		maxImages = constants.MAX_IMAGES_PER_PRODUCT,
 		title = "Đăng ảnh",
@@ -70,13 +68,21 @@ function UploadImages(props) {
 			>
 				<div className={cx("wrapper")}>
 					<ImageUploading
-						multiple={multiple}
+						multiple
 						value={images}
 						onChange={handleChangeImages}
 						maxNumber={maxImages}
 						dataURLKey="data_url"
 					>
-						{({ imageList, onImageUpload, errors, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
+						{({
+							imageList,
+							onImageUpload,
+							errors,
+							onImageUpdate,
+							onImageRemove,
+							isDragging,
+							dragProps,
+						}) => (
 							<div className={cx("upload-and-list")}>
 								<Controls.Button
 									outline
@@ -85,7 +91,9 @@ function UploadImages(props) {
 									{...dragProps}
 								>
 									{"Nhấn hoặc kéo thả vào vùng này"}
-									{multiple && <div className={cx("")}>{images.length / maxImages}</div>}
+									<div
+										className={cx("")}
+									>{`${images.length} / ${maxImages}`}</div>
 								</Controls.Button>
 								{imageList.length > 0 && (
 									<OutlinedBox
@@ -105,9 +113,15 @@ function UploadImages(props) {
 								)}
 								{errors && (
 									<div className={cx("error-text")}>
-										{errors.maxNumber && <span> Số lượng ảnh có thể đăng lên: {maxImages}</span>}
-										{errors.acceptType && <span>File được đăng tải không được chấp nhận</span>}
-										{errors.maxFileSize && <span>Kích thước ảnh quá mức tối đa</span>}
+										{errors.maxNumber && (
+											<span> Số lượng ảnh có thể đăng lên: {maxImages}</span>
+										)}
+										{errors.acceptType && (
+											<span>File được đăng tải không được chấp nhận</span>
+										)}
+										{errors.maxFileSize && (
+											<span>Kích thước ảnh quá mức tối đa</span>
+										)}
 										{errors.resolution && <span></span>}
 									</div>
 								)}

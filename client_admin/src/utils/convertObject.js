@@ -34,9 +34,13 @@ export const convertTree = (list = [], maxLevel = 3) => {
 	const addList = (item, array, currentLevel, maxLevel) => {
 		if (currentLevel > maxLevel) return;
 		currentLevel += 1;
-		let children = array.filter((child) => child.parent && child.parent.id === item.id);
+		let children = array.filter(
+			(child) => child.parent && child.parent.id === item.id
+		);
 		if (children.length > 0) {
-			children = children.map((child) => addList(child, array, currentLevel, maxLevel));
+			children = children.map((child) =>
+				addList(child, array, currentLevel, maxLevel)
+			);
 		}
 		return {
 			...item,
@@ -79,6 +83,7 @@ export const convertToSlug = (str) => {
 	// return
 	return str;
 };
+
 export const convertToSearch = (str) => {
 	if (!str) return;
 	str = str.toLowerCase();
@@ -103,10 +108,9 @@ export const convertToSearch = (str) => {
 	// Remove extra spaces
 	str = str.replace(/ + /g, " ");
 	str = str.trim();
-	str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
+	str = str.replace(
+		/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
+		" "
+	);
 	return str;
-};
-export const convertSexToString = (sex) => {
-	if (sex) return constants.MALE;
-	else return constants.FE_MALE;
 };

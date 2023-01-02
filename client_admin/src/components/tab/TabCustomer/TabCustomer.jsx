@@ -1,7 +1,6 @@
 import React, { useMemo, useReducer, useState } from "react";
 
 import styles from "./tabCustomer.module.scss";
-import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
@@ -11,20 +10,21 @@ import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
-import Search from "~/components/SearchBar";
+import SearchBar from "~/components/SearchBar";
 import CustomerConfig from "~/stores/Customer";
 import CustomerTable from "~/components/table/CustomerTable";
 import fakeCustomer from "./fakeCustomers";
 import { TabTableReduce } from "~/stores/reducers";
 import * as userService from "~/services/userService";
+import tabStyle from "../tabTable.module.scss";
+const tabTableStyles = classNames.bind(tabStyle);
 
 const listStatus = CustomerConfig.listStatus;
 const options = CustomerConfig.options;
 const constant = stores.constants;
 const actions = stores.actions;
 const initialState = initState.customer;
-const initFilter = initState.filterProduct;
-const tabTableStyles = classNames.bind(tabStyle);
+const initFilter = initState.filterCustomer;
 
 function TabCustomer() {
 	const [state, dispatch] = useReducer(TabTableReduce, initialState);
@@ -78,7 +78,12 @@ function TabCustomer() {
 		dispatch(actions.setPageTable(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
-		dispatch(actions.setStatusTable({ indexStatus: optionSelected, status: listStatus[optionSelected].key }));
+		dispatch(
+			actions.setStatusTable({
+				indexStatus: optionSelected,
+				status: listStatus[optionSelected].key,
+			})
+		);
 	};
 	const handleTypeSearchChange = (e) => {
 		filter.typeSearch = e.target.value;
@@ -140,7 +145,7 @@ function TabCustomer() {
 						onChange={handleTypeSearchChange}
 						value={filter.typeSearch}
 					/>
-					<Search
+					<SearchBar
 						className={tabTableStyles("search-box")}
 						size="small"
 						value={filter.search}

@@ -1,5 +1,6 @@
 import { useContext } from "react";
-export const useGlobalState = (Context) => {
-	const [state, dispatch] = useContext(Context);
+import { globalContext } from "~/stores/contexts";
+export const useGlobalState = () => {
+	const [state, dispatch] = useContext(globalContext);
 	return [state, dispatch];
 };

@@ -15,7 +15,10 @@ import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
 import Search from "~/components/SearchBar";
-import { getCategoriesList, getCategoriesTree } from "~/services/categoriesService";
+import {
+	getCategoriesList,
+	getCategoriesTree,
+} from "~/services/categoriesService";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
 
 const listStatus = BookConfig.listStatus;
@@ -93,6 +96,7 @@ function Products() {
 			destroyTippy();
 			const result = await productService.getProducts(state);
 			handleProducts(result);
+			console.log(result);
 		};
 		setIsLoading(false);
 		if (isUpdate) {
@@ -118,7 +122,6 @@ function Products() {
 		fetchCategoriesTree();
 		fetchCategories();
 	}, []);
-
 	const destroyTippy = () => {
 		if (products && products.length > 0)
 			[...document.querySelectorAll("*")].forEach((node) => {
@@ -141,7 +144,12 @@ function Products() {
 		dispatch(actions.setPageProducts(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
-		dispatch(actions.setStatusProducts({ indexStatus: optionSelected, status: listStatus[optionSelected].key }));
+		dispatch(
+			actions.setStatusProducts({
+				indexStatus: optionSelected,
+				status: listStatus[optionSelected].key,
+			})
+		);
 	};
 	const handleTypeSearchChange = (e) => {
 		filter.typeSearch = e.target.value;

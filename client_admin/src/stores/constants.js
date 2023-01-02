@@ -1,5 +1,6 @@
 // string
 export const WEB_NAME = "Tôi mua sách";
+export const NAME = "Tên";
 export const HOME = "Trang chủ";
 export const PRODUCT = "Sản phẩm";
 export const CUSTOMER = "Khách hàng";
@@ -11,6 +12,7 @@ export const PERMISSIONS = "Cấp quyền";
 export const ACCOUNT = "Tài khoản";
 export const ROLE_NAME = "Tên vai trò";
 export const NEW_ROLE_NAME = "Vai trò mới";
+export const EMAIL = "Email";
 export const CATEGORY = "Danh mục";
 export const DESC = "Mô tả";
 export const CHANGE = "Thay đổi";
@@ -19,23 +21,52 @@ export const EDIT = "Chỉnh sửa";
 export const ADD = "Thêm";
 export const CONFIRM = "Xác nhận";
 export const CANCEL = "Hủy";
+export const CANCEL_ORDER = "Hủy Đơn Hàng";
 export const SAVE_CHANGE = "Lưu thay đổi";
 export const NONE = "Không có";
 export const DELETE = "Xóa";
 export const PICK = "Chọn";
 export const CURRENT = "Hiện tại";
+export const LOGOUT = "Đăng xuất";
 export const MAX_LEVEL = 2;
 export const PASS = "Bỏ qua";
 export const NEXT_STEP = "Bước tiếp theo";
 export const FINISH = "Hoàn thành";
 export const UPLOAD_IMAGE = "Tải ảnh";
 export const LAST_SESSION = "Lần cuối truy cập";
+export const ACCOUNT_ADMIN = "Tài khoản quản trị";
 export const LAST_SESSION_SHORT = "Lần cuối";
 export const RESET_PASSWORD = "Đặt lại mật khẩu";
 export const CHANGE_PASSWORD = "Thay đổi mật khẩu";
 export const CHANGE_IMAGE = "Thay đổi hình ảnh";
 export const MALE = "Nam";
 export const FE_MALE = "Nữ";
+export const RECEIPTS = "Đơn hàng";
+export const PRICE = "Đơn giá";
+export const AMOUNT = "Số lượng";
+export const ALL_PAY = "Tổng cộng";
+export const SUM_ALL_PRODUCT = "Tổng tiền hàng";
+export const VOUCHER = "Giảm giá";
+export const PAY_ALL = "Tổng thanh toán";
+export const RECIPIENT = "Người nhận";
+export const PHONE = "SĐT";
+export const PHONE_NUMBER = "Số điện thoại";
+export const REGION = "Khu vực";
+export const DISTRICT = "Thành phố";
+export const WARD = "Phường";
+export const ADDRESS = "Địa chỉ";
+export const PROVISIONAL = "Tạm tính";
+export const TYPE = "Kiểu";
+export const TOTAL_MONEY = "Tổng tiền";
+export const NOT_PROCESSED = "Chờ xác nhận";
+export const PROCESSING = "Đang xử lý";
+export const SHIPPING = "Đang vận chuyển";
+export const COMPLETED = "Đã giao";
+export const CANCELED = "Đã hủy";
+export const STATUS_ODER = "Trạng thái";
+export const RECORD_TIME = "Thời gian";
+export const RECORD_DAY = "Ghi nhận";
+export const PROFILE = "Thông tin cá nhân";
 /// category
 export const NAME_CATEGORY = "Tên danh mục";
 export const PARENT_CATEGORY = "Danh mục cha";
@@ -66,7 +97,7 @@ export const SET_NEW_PROP_TABLE = "set_new_prop_table";
 
 /// global state
 export const SET_IS_LOGIN = "set_is_login";
-
+export const SET_LOGIN_N_INFO = "set_login_n_info";
 /// categories
 export const SET_TREE_CATEGORIES = "set_tree_categories";
 export const SET_LIST_CATEGORIES = "set_list_categories";

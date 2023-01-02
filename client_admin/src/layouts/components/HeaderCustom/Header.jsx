@@ -7,9 +7,13 @@ import classNames from "classnames/bind";
 import PageConfig from "~/stores/pages.js";
 import { constants } from "~/stores";
 import { Link } from "react-router-dom";
+import Image from "~/components/Image/index.js";
+import { useGlobalState } from "~/hooks/useGlobalState.js";
 const cx = classNames.bind(styles);
 function Header(props) {
 	const { left = null, right = null, showLogo = false } = props;
+	const [state, dispatch] = useGlobalState();
+	console.log(state);
 	return (
 		<div className={cx("wrapper")}>
 			{showLogo && (
@@ -28,11 +32,10 @@ function Header(props) {
 				<div className={cx("middle")}></div>
 				<div className={cx("right")}>
 					<div className={cx("component")}>{right}</div>
-					<div className={cx("item")}>
-						<img
-							src="https://i.pinimg.com/236x/62/9e/92/629e9282db7c2e44d4b6a1790952d11d.jpg"
-							alt={constants.AVATAR}
+					<div className={cx("background")}>
+						<Image
 							className={cx("avatar")}
+							src={state.profile.avatar}
 						/>
 					</div>
 				</div>

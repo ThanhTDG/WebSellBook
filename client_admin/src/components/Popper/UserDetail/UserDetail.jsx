@@ -6,33 +6,75 @@ import styles from "./userDetail.module.scss";
 import Image from "~/components/Image";
 import Controls from "~/components/controls";
 import profileProp from "~/stores/Account/profileProps";
-import { convertSexToString } from "~/utils/convertObject";
-import { displayDay } from "~/utils/util";
+import { displaySex, displayTime } from "~/utils/display";
 import { constants } from "~/stores";
 import typeUser from "~/stores/types/typeUser";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getUserById } from "~/services/userService";
+import Loading from "~/components/Loading";
 const cx = classNames.bind(styles);
-function UserDetail({ user, type = typeUser.customer, children }) {
-	return user ? (
-		<Tippy
-			placement="bottom-start"
-			interactive
-			delay={[700, 200]}
-			render={(attrs) => {
-				return (
-					<div className={cx("wrapper")}>
-						<Content
+function UserDetail({
+	user: initState,
+	id,
+	useTippy = true,
+	type = typeUser.customer,
+	children,
+}) {
+	const [user, setUser] = useState(initState);
+	const [isLoading, setIsLoading] = useState(true);
+	useEffect(() => {
+		if (id) {
+			fetchApi();
+		} else {
+			setIsLoading(false);
+		}
+	}, []);
+	const fetchApi = async () => {
+		setIsLoading(true);
+		const response = await getUserById(id);
+		if (response) {
+			setUser(response);
+			setIsLoading(false);
+		} else {
+		}
+	};
+	return (
+		<>
+			{useTippy ? (
+				<Tippy
+					placement="bottom-start"
+					interactive
+					delay={[700, 200]}
+					render={(attrs) => {
+						return (
+							<div className={cx("wrapper")}>
+								<Loading isLoading={isLoading}>
+									<UserMiniForm
+										user={user}
+										type={type}
+									/>
+								</Loading>
+							</div>
+						);
+					}}
+				>
+					{children}
+				</Tippy>
+			) : (
+				<div className={cx("wrapper")}>
+					<Loading isLoading={isLoading}>
+						<UserMiniForm
 							user={user}
 							type={type}
 						/>
-					</div>
-				);
-			}}
-		>
-			{children}
-		</Tippy>
-	) : null;
+					</Loading>
+				</div>
+			)}
+		</>
+	);
 }
-function Content({ user, type }) {
+function UserMiniForm({ user, type }) {
 	let fail = Math.floor(Math.random() * 6);
 	const getStatus = (value) => {
 		if (value < 3) {
@@ -63,11 +105,19 @@ function Content({ user, type }) {
 							src={user.avatar}
 						/>
 					</div>
-					<div className={cx("full-name")}>{user.fullName ? user.fullName : `${user.lastName} ${user.firstName}`}</div>
+					<div className={cx("full-name")}>
+						{user.fullName
+							? user.fullName
+							: `${user.lastName} ${user.firstName}`}
+					</div>
 				</div>
 				<div className={cx("type-user")}>
 					<div
-						className={cx("title-user", { customer: type === typeUser.customer }, { admin: type === typeUser.admin })}
+						className={cx(
+							"title-user",
+							{ customer: type === typeUser.customer },
+							{ admin: type === typeUser.admin }
+						)}
 					>
 						{handleDisplayType(type)}
 					</div>
@@ -90,7 +140,7 @@ function Content({ user, type }) {
 					/>
 					<Row
 						name={"sex"}
-						value={convertSexToString(user.sex)}
+						value={displaySex(user.sex)}
 					/>
 				</div>
 				{type === typeUser.customer && (
@@ -119,7 +169,7 @@ function Content({ user, type }) {
 				<Row
 					name={"lastSession"}
 					title={constants.LAST_SESSION_SHORT}
-					value={displayDay(user.lastSession)}
+					value={displayTime(user.lastSession)}
 				/>
 			</div>
 		</div>
@@ -129,7 +179,9 @@ function Row({ title, value, name, classNameValue, singleLine = false }) {
 	return (
 		<div className={cx("row", name)}>
 			{title && <div className={cx("title")}>{`${title}:`}</div>}
-			<div className={cx("value", { "single-line": singleLine }, classNameValue)}>{`${value}`}</div>
+			<div
+				className={cx("value", { "single-line": singleLine }, classNameValue)}
+			>{`${value}`}</div>
 		</div>
 	);
 }

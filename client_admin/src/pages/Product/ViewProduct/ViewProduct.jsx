@@ -47,11 +47,14 @@ function ViewProduct() {
 		}
 		setIsLoading(false);
 	};
+
 	return (
 		<InfoLayout
 			id={id}
 			editMode={editMode}
 			dispatchEditMode={dispatchEditMode}
+			onClickChange={handleUpdate}
+			handleDelete={handleUpdate}
 		>
 			<Loading isLoading={isLoading}>
 				<FormProduct

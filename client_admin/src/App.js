@@ -12,11 +12,13 @@ import { getProfile } from "./services/authService";
 import { actions } from "./stores";
 import styles from "./app.module.scss";
 import { getPermission } from "./services/roleService";
+import products from "./utils/fake";
+import { fakeSellBook } from "./utils/util";
 
 const cx = classNames.bind(styles);
 function App() {
-	const [state, dispatch] = useGlobalState(globalContext);
-	
+	const [state, dispatch] = useGlobalState();
+	console.log(fakeSellBook());
 	const [isLoading, setIsLoading] = useState(true);
 	const setPage = (route, index) => {
 		const Page = route.component;
@@ -40,18 +42,30 @@ function App() {
 	};
 	useState(() => {
 		const checkLogin = async () => {
-			const response = await getProfile();
-			const permissions = await getPermission();
-			setIsLoading(false);
-			if (response) {
-				dispatch(actions.setIsLogin(true));
+			const [profile, permissions] = await Promise.all([
+				getProfile(),
+				getPermission(),
+			]);
+			console.log(profile, permissions);
+			if (profile && permissions) {
+				dispatch(
+					actions.setLoginNInfo({
+						profile: profile,
+						permissions: permissions.docs,
+					})
+				);
 			}
+			setIsLoading(false);
 		};
 		checkLogin();
 	}, []);
 
 	const getPathsPrivate = () => {
-		return <Routes>{privateRoutes.map((route, index) => setPage(route, index))}</Routes>;
+		return (
+			<Routes>
+				{privateRoutes.map((route, index) => setPage(route, index))}
+			</Routes>
+		);
 	};
 	const getPathsPublic = () => {
 		return (
@@ -73,7 +87,9 @@ function App() {
 		<div className={cx("app")}>
 			<div className={cx("wrapper")}>
 				<Loading isLoading={isLoading}>
-					<BrowserRouter>{state.isLogin ? getPathsPrivate() : getPathsPublic()}</BrowserRouter>
+					<BrowserRouter>
+						{state.isLogin ? getPathsPrivate() : getPathsPublic()}
+					</BrowserRouter>
 				</Loading>
 			</div>
 		</div>

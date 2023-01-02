@@ -9,11 +9,21 @@ import RolePage from "~/pages/RolePage";
 import CategoriesPage from "~/pages/CategoriesPage";
 import AccountAdminPage from "~/pages/UserAccount/AccountAdminPage";
 import CustomerPage from "~/pages/UserAccount/CustomerPage";
+import ReceiptsPage from "~/pages/Receipt/ReceiptsPage";
+import ProfilePage from "~/pages/Auth/ProfilePage/ProfilePage";
+import AccountAdminsPage from "~/pages/UserAccount/AccountAdminsPage";
+import ReceiptPage from "~/pages/Receipt/ReceiptPage";
 
 const PageConfig = {
 	home: {
 		key: "home",
 		route: "/",
+		label: "Trang chủ",
+		component: Home,
+	},
+	otherHome: {
+		key: "home",
+		route: "/home",
 		label: "Trang chủ",
 		component: Home,
 	},
@@ -30,7 +40,12 @@ const PageConfig = {
 		label: "Trang đăng nhập",
 		component: LoginPage,
 	},
-
+	profile: {
+		key: "profile",
+		route: "/profile",
+		label: "Thông cá nhân",
+		component: ProfilePage,
+	},
 	/// categories
 	categories: {
 		key: "categories",
@@ -64,6 +79,12 @@ const PageConfig = {
 		label: "Tài khoản quản trị",
 		component: AccountAdminPage,
 	},
+	accountAdmins: {
+		key: "accountAdmins",
+		route: "/account/admins",
+		label: "Quản lý tài khoản quản trị",
+		component: AccountAdminsPage,
+	},
 
 	customers: {
 		key: "user-customer",
@@ -78,11 +99,18 @@ const PageConfig = {
 		component: CustomerPage,
 	},
 	/// order
-	order: {
-		key: "order",
-		route: "/order@:id",
+	receipts: {
+		key: "receipts",
+		route: "/receipts",
+		label: "Quản lý đơn hàng",
+		component: ReceiptsPage,
+	},
+	/// order
+	receipt: {
+		key: "receipt",
+		route: "/receipt/:id",
 		label: "Đơn hàng",
-		component: TestLayout,
+		component: ReceiptPage,
 	},
 
 	/// role

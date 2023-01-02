@@ -83,6 +83,10 @@ export const setIsLogin = (payload) => ({
 	type: constants.SET_IS_LOGIN,
 	payload,
 });
+export const setLoginNInfo = (payload) => ({
+	type: constants.SET_LOGIN_N_INFO,
+	payload,
+});
 
 /// categories
 export const setTreeCategories = (payload) => ({

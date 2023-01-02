@@ -15,8 +15,14 @@ import Loading from "~/components/Loading";
 const cx = classNames.bind(styles);
 
 function CreateProduct() {
-	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
-	const [categories, dispatchCategories] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
+	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, {
+		...initStates.editModeState,
+		enableEdit: true,
+	});
+	const [categories, dispatchCategories] = useReducer(
+		reducers.CategoriesReduce,
+		initStates.categoriesState
+	);
 	const [isLoading, setIsLoading] = useState(false);
 	const [product, setProduct] = useState(initStates.product);
 	useEffect(() => {
@@ -35,6 +41,7 @@ function CreateProduct() {
 			editMode={editMode}
 			dispatchEditMode={dispatchEditMode}
 			showFeature={false}
+			current={product}
 		>
 			<Loading isLoading={isLoading}>
 				<FormProduct

@@ -9,6 +9,7 @@ import * as userService from "~/services/userService";
 import { getPermission, getRoles } from "~/services/roleService";
 import ProfileForm from "~/components/Form/ProfileForm";
 import Loading from "~/components/Loading";
+import typeFeature from "~/stores/types/typeFeature";
 
 const cx = classNames.bind(styles);
 function CustomerPage() {
@@ -34,7 +35,10 @@ function CustomerPage() {
 		}
 	};
 	const fetchApi = async () => {
-		const [responseUser, responseRoles] = await Promise.all([userService.getUserById(id), getRoles()]);
+		const [responseUser, responseRoles] = await Promise.all([
+			userService.getUserById(id),
+			getRoles(),
+		]);
 		if (responseUser && responseRoles) {
 			handleUser(responseUser);
 			setRoles(responseRoles.docs);
@@ -45,6 +49,7 @@ function CustomerPage() {
 	return (
 		<InfoLayout
 			id={id}
+			showEdit={false}
 			editMode={editMode}
 			dispatchEditMode={dispatchEditMode}
 		>
@@ -52,7 +57,7 @@ function CustomerPage() {
 				<div className={cx("wrapper")}>
 					<div className={cx("basic")}>
 						<ProfileForm
-							isEdit={editMode.enableEdit}
+							type={typeFeature.isEdit}
 							user={user}
 							editMode={editMode}
 							dispatchEditMode={dispatchEditMode}

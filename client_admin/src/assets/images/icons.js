@@ -39,6 +39,8 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -68,6 +70,8 @@ const Sidebar = ({ className }) => {
 		logs: <SettingsSystemDaydreamIcon className={className} />,
 		profile: <AccountBoxIcon className={className} />,
 		logout: <ExitToAppIcon className={className} />,
+		receipts: <LocalShippingIcon className={className} />,
+		accountAdmins: <RecentActorsIcon className={className} />,
 	};
 };
 const Chart = ({ className }) => {
@@ -111,6 +115,7 @@ const Button = ({ className }) => {
 		reset: <LockResetIcon className={className} />,
 		change: <DriveFileRenameOutlineIcon className={className} />,
 		imageChange: <AddPhotoAlternateIcon className={className} />,
+		view: <RemoveRedEyeIcon className={className} />,
 	};
 };
 export { Navbar, Sidebar, Chart, Widget, Button, Dialog };

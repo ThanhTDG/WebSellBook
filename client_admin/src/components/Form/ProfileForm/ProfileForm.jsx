@@ -4,13 +4,15 @@ import { useEffect } from "react";
 import { icons } from "~/assets/images";
 import Controls from "~/components/controls";
 import CreateNUpdateDay from "~/components/CreateNUpdateDay";
+import UploadAvatar from "~/components/Dialog/UploadAvatar/UploadAvatar";
 import Image from "~/components/Image";
 import OutlinedBox from "~/components/OutlinedBox";
 import useForm from "~/hooks/useForm";
+import { uploadAvatar } from "~/services/authService";
 import { actions, constants } from "~/stores";
 import profileProp from "~/stores/Account/profileProps";
 import typeFeature from "~/stores/types/typeFeature";
-import { displayDay } from "~/utils/util";
+import { displayTime } from "~/utils/display";
 
 import styles from "./profileForm.module.scss";
 const cx = classNames.bind(styles);
@@ -35,11 +37,32 @@ function ProfileForm(props) {
 	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	let typeDisplay = isEdit ? values : user;
 	const emptyFunction = () => {
-		dispatchEditMode(actions.setIsChange(true));
+		if (type === typeFeature.isCurrent) {
+			dispatchEditMode(actions.setIsChange(true));
+		}
+	};
+	const actionUpload = (list) => {
+		if (list && list.length > 0) {
+			handleUpload(list[0].file);
+		}
+	};
+	const handleUpload = async (data) => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await uploadAvatar(data);
+		if (response) {
+			setValues({
+				...values,
+				avatar: response.avatar,
+			});
+			dispatchEditMode(actions.setStatusIsSuccess());
+			dispatchEditMode(actions.setResetAll());
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
 	};
 	useEffect(() => {
 		if (!editMode.enableEdit) {
-			setValues(user);
+			if (JSON.stringify(values) !== JSON.stringify(user)) setValues(user);
 			return;
 		}
 		if (JSON.stringify(values) === JSON.stringify(user)) {
@@ -58,14 +81,9 @@ function ProfileForm(props) {
 						src={typeDisplay.avatar}
 					/>
 				</div>
-
-				<Controls.Button
-					className={cx("btn-change-avatar")}
-					outline
-					rightIcon={icons.Button("").imageChange}
-				>
-					{constants.CHANGE_IMAGE}
-				</Controls.Button>
+				{type === typeFeature.isCurrent && (
+					<UploadAvatar actionUpload={actionUpload} />
+				)}
 			</div>
 
 			<div className={cx("basic")}>
@@ -125,13 +143,13 @@ function ProfileForm(props) {
 							disabled={true}
 							name="lastSession"
 							label={constants.LAST_SESSION}
-							value={displayDay(typeDisplay.lastSession)}
+							value={displayTime(typeDisplay.lastSession)}
 						/>
 					)}
 					{typeDisplay.createdAt && typeDisplay.updatedAt && (
 						<CreateNUpdateDay
-							createdAt={displayDay(typeDisplay.createdAt)}
-							updatedAt={displayDay(typeDisplay.createdAt)}
+							createdAt={displayTime(typeDisplay.createdAt)}
+							updatedAt={displayTime(typeDisplay.createdAt)}
 						/>
 					)}
 				</div>

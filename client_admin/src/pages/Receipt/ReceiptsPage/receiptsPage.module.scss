@@ -1,0 +1,88 @@
+.wrapper {
+	width: 100%;
+	height: 100%;
+}
+.tab-panel {
+	background-color: #ffffff;
+	width: 100%;
+	height: 100%;
+}
+.detail-receipt {
+	column-span: 5;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.spec {
+	font-weight: 600;
+}
+.white {
+	background-color: white;
+}
+.wrapper-contact {
+	width: 400px !important;
+	margin: 8px 0;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	display: flex;
+	flex-direction: column;
+}
+
+.name,
+.customer,
+.recept-user {
+	text-align: start;
+}
+.body,
+.title {
+	width: 200px;
+	white-space: nowrap;
+}
+
+.cancel {
+	color: var(--red-pink);
+}
+.space {
+	display: grid;
+	grid-template-columns: 50% 50%;
+}
+.wrapper-detail {
+	padding: 24px 0;
+	display: grid;
+	grid-template-columns: 60% 40%;
+	.feature {
+		display: flex;
+		height: min-content;
+		flex-direction: column;
+		gap: 8px;
+		align-items: flex-start;
+		.wrapper-action {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			margin-left: 8px;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			white-space: nowrap;
+		}
+		.contact-action {
+			width: 100%;
+			display: flex;
+		}
+	}
+	.wrapper-props-contact {
+		display: flex;
+		gap: 8px;
+		padding: 4px 16px;
+	}
+}
+.view-detail {
+	width: min-content;
+	white-space: nowrap;
+}
+.btn-view {
+	padding: 4px !important;
+	min-width: 40px !important;
+	line-height: 0;
+}

@@ -95,7 +95,6 @@ function CategoriesPage() {
 		setCategory(itemFind);
 		setValues(itemFind);
 	};
-	console.log(values, category);
 
 	const handleChangeParent = (newId) => {
 		if (newId) {
@@ -103,14 +102,15 @@ function CategoriesPage() {
 				...values,
 				parent: { ...categories.list.find((item) => item.id === newId) },
 			});
+			dispatchEditMode(actions.setIsChangeNEdit());
 		} else {
+			emptyFunction();
 			let temp = { ...values };
 			delete temp.parent;
 			setValues({
 				...temp,
 			});
 		}
-		dispatchEditMode(actions.setIsChangeNEdit());
 	};
 
 	let displayCategory = category && !editMode.isNew;
@@ -119,6 +119,8 @@ function CategoriesPage() {
 	return (
 		<InfoLayout
 			showFeature={displayCategory}
+			current={category}
+			newValue={values}
 			editMode={editMode}
 			onClickChange={handleUpdateCategory}
 			dispatchEditMode={dispatchEditMode}
@@ -155,7 +157,7 @@ function CategoriesPage() {
 							PickParent={
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}
-									category={values.parent}
+									category={values.parent ? categories.list.find((item) => item.id === values.parent.id) : null}
 									handleIdChange={handleChangeParent}
 									list={categories.list}
 									tree={categories.tree}

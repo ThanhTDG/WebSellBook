@@ -58,6 +58,32 @@ const table = {
 			engTitle: "Status",
 		},
 	},
+	admin: {
+		email: {
+			key: "email",
+			align: "left",
+			title: "Email",
+			engTitle: "Email",
+		},
+		name: {
+			key: "name",
+			align: "left",
+			title: "Tên",
+			engTitle: "Name",
+		},
+		phone: {
+			key: "phone",
+			align: "right",
+			title: "Số điện thoại",
+			engTitle: "Phone Number",
+		},
+		status: {
+			key: "status",
+			align: "right",
+			title: "Trạng thái",
+			engTitle: "Status",
+		},
+	},
 };
 const limitRow = {
 	title: "Số dòng",

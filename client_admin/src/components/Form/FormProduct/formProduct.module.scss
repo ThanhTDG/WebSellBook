@@ -1,4 +1,5 @@
 .wrapper {
+	margin-bottom: 120px;
 	margin-top: 32px;
 	--space: 32px;
 	min-width: 850px;
@@ -115,6 +116,18 @@
 .change {
 	border: 2px solid var(--warning) !important;
 }
+.feature {
+	display: flex;
+	position: fixed;
+	bottom: 32px;
+	right: 32px;
+	gap: 16px;
+	.pre-step {
+		z-index: 3;
+		background-color: white;
+		color: var(--red-pink);
+	}
+}
 
 .wrapper-images {
 	display: flex;
@@ -151,4 +164,7 @@
 			padding: 8px;
 		}
 	}
+}
+.btn-set-default {
+	color: var(--red-pink);
 }

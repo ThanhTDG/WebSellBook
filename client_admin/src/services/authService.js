@@ -16,3 +16,11 @@ export const getProfile = async () => {
 	const response = await request.get(path);
 	return response;
 };
+export const uploadAvatar = async (file) => {
+	const path = auth + "/uploadavatar";
+	console.log(file);
+	let frm = new FormData();
+	frm.append("avatar", file);
+	const response = await request.put(`${path}`, frm);
+	return response;
+};

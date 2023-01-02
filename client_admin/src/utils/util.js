@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { constants } from "~/stores";
 import { category } from "~/stores/initStates";
 import PageConfig from "~/stores/pages";
+import products from "./fake";
 const getKey = (keyFind, value) => {
 	let key = "";
 	Object.keys(PageConfig).forEach((page) => {
@@ -48,12 +49,16 @@ export const deepCategory = (category, array) => {
 	let list = [];
 	list.push(category);
 	let deep = 0;
-	let children = array.filter((child) => child.parent && child.parent.id === category.id);
+	let children = array.filter(
+		(child) => child.parent && child.parent.id === category.id
+	);
 	if (children.length > 0) {
 		deep++;
 		let haveChild = false;
 		children.map((child) => {
-			let list = array.filter((item) => item.parent && item.parent.id === child.id);
+			let list = array.filter(
+				(item) => item.parent && item.parent.id === child.id
+			);
 			if (list.length > 0) {
 				haveChild = true;
 			}
@@ -65,11 +70,6 @@ export const deepCategory = (category, array) => {
 	return deep;
 };
 
-export const displayDay = (dateString) => {
-	if (!dateString) return "";
-	const dayConvert = dayjs(dateString).format("HH:mm DD/MM/YYYY");
-	return dayConvert;
-};
 export function dataURLtoFile(dataurl, filename) {
 	var arr = dataurl.split(","),
 		mime = arr[0].match(/:(.*?);/)[1],
@@ -83,5 +83,22 @@ export function dataURLtoFile(dataurl, filename) {
 
 	return new File([u8arr], filename, { type: mime });
 }
-
+export const fakeSellBook = () => {
+	let i = 1;
+	let list = products.slice(0, 10).map((item) => {
+		i += 2;
+		return {
+			id: item.id,
+			name: item.name,
+			sold: item.sold - i,
+		};
+	});
+	let labels = list.map((item) => {
+		return `${item.name.slice(0, 25)}${item.name.length > 25 ? "..." : ""}`;
+	});
+	let dataSet = list.map((item) => {
+		return item.sold;
+	});
+	console.log(labels, dataSet);
+};
 export { getKey, convertToTree };

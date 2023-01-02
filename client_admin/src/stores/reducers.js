@@ -9,6 +9,15 @@ export const globalStateReducer = (state, action) => {
 				isLogin: action.payload,
 			};
 		}
+		case constants.SET_LOGIN_N_INFO: {
+			let { profile, permission } = action.payload;
+			return {
+				...state,
+				isLogin: true,
+				profile: profile,
+				permission: permission,
+			};
+		}
 	}
 };
 
