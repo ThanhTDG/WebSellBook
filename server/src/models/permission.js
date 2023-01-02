@@ -44,8 +44,8 @@ permissionSchema.methods.can = function (action, subject) {
 };
 
 permissionSchema.methods.toJson = function () {
-  const { _id, id, subject, action } = this;
-  return { _id, id, subject, action };
+  const { _id, id, name, description, action, subject, dangerous } = this;
+  return { _id, id, name, description, action, subject, dangerous };
 };
 
 module.exports = mongoose.model("Permission", permissionSchema);
