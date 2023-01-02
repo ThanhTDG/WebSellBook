@@ -1,6 +1,7 @@
-import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, BOOK_TYLE_POPULAR, GET_USER_PROFILE, LOGIN_BY_USER, LOGOUT_USER, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, SELEECT_BOOK_SORT_TYPE, SELEECT_USER_TB_INDEX, UPDATE_BOOK_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, BOOK_TYLE_POPULAR, GET_USER_PROFILE, LOGIN_BY_USER, LOGOUT_USER, NEED_UPDATE_FAVORITE_BOOKS, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, SELEECT_BOOK_SORT_TYPE, SELEECT_USER_TB_INDEX, UPDATE_BOOK_IN_CART, UPDATE_TOTAL_BOOKS_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
+
 
 const initState = {
     isLogin: false,
@@ -37,7 +38,9 @@ const initState = {
     },
     userProfile: 'none',
     userCurrentTbIndex: 1,
-    bookSortTyle: BOOK_TYLE_POPULAR
+    bookSortTyle: BOOK_TYLE_POPULAR,
+    booksInCartTotal: 0,
+    needUpdateFavoriteBooks: false
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -54,8 +57,9 @@ function reducer(state, action) {
             }
         case UPDATE_BOOK_IN_CART:
             return {
-                ...state,
-                booksInCart: updateBookInCart(state.booksInCart, action.payload)
+                ...state
+                // ,
+                // booksInCart: updateBookInCart(state.booksInCart, action.payload)
             }
         case REMOVE_BOOK_IN_CART:
             return {
@@ -110,42 +114,24 @@ function reducer(state, action) {
                 ...state,
                 bookSortTyle: action.payload
             }
+        case UPDATE_TOTAL_BOOKS_IN_CART:
+            return{
+                ...state,
+                booksInCartTotal: action.payload
+            }
+        case NEED_UPDATE_FAVORITE_BOOKS:
+            return{
+                ...state,
+                needUpdateFavoriteBooks: action.payload
+            }
+            
         default:
             throw new Error('Invalid actions')
     }
 }
-function addBookToCart(books, book) {
-    var hasAdd = [...books, book]
-    // hasAdd.forEach(item => {
-    //     if (item.book.id === book.book.id) {
-    //         let lIndex = hasAdd.lastIndexOf(item)
-    //         console.log(item)
-    //         console.log(lIndex)
-    //         // item.amount += hasAdd[lIndex].amount
-    //         // hasAdd.splice(lIndex, 1)
-    //     }
-    // });
-    return hasAdd
-}
 
-function updateBookInCart(books, book) {
-    books.forEach(item => {
-        if (item.book.id === book.book.id) {
-            item.amount = book.amount
-            item.isSelected = book.isSelected
-        }
-    });
-    return books
-}
-function removeBookInCart(books, book) {
-    books.forEach(item => {
-        if (item.book.id === book.book.id) {
-            let index = books.indexOf(item)
-            books.splice(index, 1)
-        }
-    });
-    return books
-}
+
+
 function selectAllBookInCart(books, isSelected) {
     books.forEach((item) => {
         item.isSelected = isSelected

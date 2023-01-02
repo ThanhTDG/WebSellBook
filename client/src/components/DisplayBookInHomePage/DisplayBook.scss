@@ -1,0 +1,170 @@
+.display-book-container{
+    border-radius: 12px;
+    padding: 12px;
+    margin: 24px 12px 24px 12px;
+    box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+    .image-container{
+        display: flex;
+        .main-image{
+            display: block;
+            align-items: flex-end;
+            position: relative;
+            .main-image-item{
+                transition: scale 0.4s ease;
+                box-shadow: 0px 1px 3px var(--Pink);
+            }
+            .options-container{
+                padding: 0;
+                visibility: hidden;
+                transition: visibility 0.2s ease;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                .options-spaces{
+                    height: 4px;
+                }
+            }
+            &:hover{
+                .main-image-item{
+                    scale: 1.06;
+                    filter: brightness(0.6);
+                }
+                .options-container{
+                    visibility: visible;
+                }
+            }
+        }
+        .sub-images{
+            padding: 12px;
+            .sub-images1{
+                display: flex;
+            }
+            .sub-images2{
+                display: flex;
+            }
+            .sub-image{
+                margin: 4px 4px 0 0;
+                filter: brightness(0.7);
+            }
+            .content-container{
+                margin-top: 24px;
+                font-family: 'MontserratRegular';
+                .contents{
+                    width: 180px;
+                    height: 80px;
+                    span{
+                        display: block;
+                    }
+                    .display-book-title{
+                        font-size: 16px;
+                        font-family: 'MontserratMedium';
+                    }
+                    .sub-title{
+                        font-size: 12px;
+                        color: var(--Brown);
+                    }
+                }
+                .prices-container{
+                    margin-top: 4px;
+                    .prv-price{
+                        font-size: 16px;
+                        text-decoration: line-through;
+                        color:var(--Gray)
+                    }
+                    .discount-rate{
+                        font-size: 16px;
+                        color: var(--Pink);
+                    }
+                    .cur-price{
+                        font-size: 32px;
+                        color: var(--Pink);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width:1400px ) {
+    
+}
+@media only screen and (max-width:1000px ) {
+    
+}
+@media only screen and (max-width:600px ) {
+    .display-book-container{
+        border-radius: 12px;
+        padding: 12px;
+        margin: 12px 8px 12px 8px;
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+        .image-container{
+            display: block;
+            .main-image{
+                margin-right: 12px !important;
+                width: 100% !important;
+                height: 180px !important;
+                .main-image-item{
+                    margin-right: 12px !important;
+                    width: 100% !important;
+                    height: 180px !important;
+                    box-shadow: 0px 1px 3px var(--Pink);
+                }
+            }
+            .sub-images{
+                padding: 0px;
+                .sub-images-responsive-container{
+                    display: flex;
+                }
+                .sub-images1{
+                    display: flex;
+                }
+                .sub-images2{
+                    display: flex;
+                    display: none;
+                }
+                .sub-image{
+                    margin: 8px 4px 0 0;
+                    filter: brightness(0.7);
+                    width: 40px !important;
+                    height: 40px !important;
+                }
+                .content-container{
+                    margin-top: 8px;
+                    font-family: 'MontserratRegular';
+                    .contents{
+                        width: 100% !important;
+                        height: 86px;
+                        span{
+                            display: block;
+                        }
+                        .display-book-title{
+                            font-size: 16px;
+                            font-family: 'MontserratMedium';
+                        }
+                        .sub-title{
+                            font-size: 12px;
+                            color: var(--Brown);
+                        }
+                    }
+                    .prices-container{
+                        margin-top: 4px;
+                        .prv-price{
+                            font-size: 16px;
+                            text-decoration: line-through;
+                            color:var(--Gray)
+                        }
+                        .discount-rate{
+                            font-size: 16px;
+                            color: var(--Pink);
+                        }
+                        .cur-price{
+                            font-size: 24px;
+                            color: var(--Pink);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

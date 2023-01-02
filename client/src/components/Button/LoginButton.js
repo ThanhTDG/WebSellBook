@@ -62,9 +62,9 @@ const LoginButton = () => {
     function onLoginByUser() {
         let userLoginInfo = getLoginInfo()
         //username = 'khachhang@example.com', password = '1234abcd'
-        //login(userLoginInfo.username, userLoginInfo.password)
+        login(userLoginInfo.username, userLoginInfo.password)
         setIsLoading(true)
-        login('haclamthien@gmail.com', '14092001')
+        //login('haclamthien@gmail.com', '14092001')
         
     }
 

@@ -53,18 +53,23 @@ export const MyVariable = {
         // },
         {
             title: 'Banner 1',
-            url: '/assets/banners/banner1.gif',
-            backColor: 'var(--LightOrange)'
+            url: '/assets/banners/banner01-white.gif',
+            backColor: 'var(--White)'
         },
         {
             title: 'Banner 2',
-            url: '/assets/banners/banner2.gif',
-            backColor: 'var(--LightOrange)'
+            url: '/assets/banners/banner2-white.gif',
+            backColor: 'var(--White)'
         },
         {
             title: 'Banner 3',
-            url: '/assets/banners/banner3.png',
-            backColor: 'var(--LightOrange)'
+            url: '/assets/banners/banner03-white.gif',
+            backColor: 'var(--White)'
+        },
+        {
+            title: 'Banner 4',
+            url: '/assets/banners/banner04.gif',
+            backColor: 'var(--White)'
         },
     ],
     VerticalBanners: [

@@ -12,6 +12,7 @@ import * as AuthServices from '../../apiServices/AuthServices'
 import ChoseAvatarDialog from './ChoseAvatarDialog';
 import ComfirmChangeInfo from './ComfirmChangeInfo';
 import { wait } from '@testing-library/user-event/dist/utils';
+import Address from '../../components/User/Address/Address';
 
 const UserAccount = () => {
     const [state, dispatch] = useStore()
@@ -39,6 +40,10 @@ const UserAccount = () => {
         {
             name: 'Thông tin tài khoản',
             order: 1
+        },
+        {
+            name:'Địa chỉ giao hàng',
+            order:6
         },
         {
             name: 'Thông báo',
@@ -232,7 +237,7 @@ const UserAccount = () => {
                     <div className='row .no-margin-padding'>
                         <div className='col-sm-4 uc-body-left-container .no-margin-padding'>
                             <div className='ucbl-avatar-container'>
-                                <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
+                                <img className='avatar-img' src={state.isLogin?userProfile.avatar:require('../../assets/icons/defaultAvatar.png')} alt='avatar' />
                             </div>
                             <p className='ucbl-name no-margin-padding'>{userProfile.firstName} {userProfile.lastName}</p>
                             <p className='ucbl-email no-margin-padding'>{userProfile.email}</p>
@@ -268,7 +273,7 @@ const UserAccount = () => {
                             <div className='option-page-containers'>
                                 <div className='option-page-1' style={getOptionPageStyle(1)}>
                                     <div className='option-avatar-container'>
-                                        <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
+                                        <img className='avatar-img' src={state.isLogin?userProfile.avatar:require('../../assets/icons/defaultAvatar.png')} alt='avatar' />
                                         <button onClick={onOpenChoseAvatarDialog}><img src={require('../../assets/icons/ic-pen.png')} alt='pen' /></button>
                                         <ChoseAvatarDialog isOpen={isOpenAvatarChose} handleAvatarDialog={onOpenChoseAvatarDialog} onCloseModal={closeChoseAvatarDialog} />
                                     </div>
@@ -388,6 +393,10 @@ const UserAccount = () => {
                                     {
                                         <Favorites />
                                     }
+                                </div>
+                                <div className='option-page-6' style={getOptionPageStyle(6)}>
+                                    <div className='option-page-title'>Danh sách địa chỉ</div>
+                                    <Address />
                                 </div>
                             </div>
                         </div>
