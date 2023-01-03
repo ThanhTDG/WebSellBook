@@ -1,3 +1,4 @@
+const Book = require("../models/book");
 const Order = require("../models/order");
 
 const Controller = require("../utils/controller");
@@ -22,6 +23,61 @@ const OrderController = class extends Controller {
       data.docs = data.docs.map((value) => this.toJson(value));
 
       await res.json(data);
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
+
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  updateItem = async (req, res) => {
+    try {
+      const { id, bookId } = req.params;
+      let { quantity, originalPrice, discountRate } = req.body;
+      if (!originalPrice || !discountRate) {
+        const book = await Book.findById(bookId);
+        originalPrice = originalPrice || book.originalPrice;
+        discountRate = discountRate || book.discountRate;
+      }
+
+      const data = await this.model.findById(id);
+      const item = data.items.find((value) => value.bookId.equals(bookId));
+      if (item) {
+        item.quantity = quantity;
+        item.originalPrice = originalPrice;
+        item.discountRate = discountRate;
+      } else {
+        const newItem = { bookId, quantity, originalPrice, discountRate };
+        data.items.push(newItem);
+      }
+      await data.save();
+      await data.populate(this.populate);
+
+      await res.json(this.toJson(data));
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
+
+  /**
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  deleteItem = async (req, res) => {
+    try {
+      const { id, bookId } = req.params;
+      const data = await this.model.findById(id);
+      data.items = data.items.filter((item) => !item.bookId.equals(bookId));
+      await data.save();
+      await data.populate(this.populate);
+
+      await res.json(this.toJson(data));
     } catch (error) {
       await res
         .status(error.statusCode || 400)

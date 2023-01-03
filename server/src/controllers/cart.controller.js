@@ -45,7 +45,7 @@ const addBook = async (req, res) => {
     const user = req.user;
     const cart = req.cart;
 
-    if (cart.items.every((item) => item.bookId != bookId)) {
+    if (cart.items.every((item) => !item.bookId.equals(bookId))) {
       cart.items.push({ bookId });
       await (user ? cart.save() : cart.saveCookie(res));
     }
@@ -95,7 +95,7 @@ const deleteBook = async (req, res) => {
     const user = req.user;
     const cart = req.cart;
 
-    cart.items.pull({ bookId });
+    cart.items = cart.items.filter((item) => !item.bookId.equals(bookId));
     await (user ? cart.save() : cart.saveCookie(res));
     await cart.populate(["items.book", "items.total"]);
 

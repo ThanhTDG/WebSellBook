@@ -836,6 +836,118 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
                 
+  /orders/{id}/{bookId}:
+    put:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để thêm hoặc sửa thông tin sách trong hóa đơn
+      description: |
+        Thêm hoặc sửa thông tin sách trong hóa đơn theo ID hóa đơn và ID sách cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID hóa đơn
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 637cc21ce94542c1056e6c68
+      - in: path
+        name: bookId
+        description: ID sách
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 634ed8e4f6a3a7266d99276d
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin.form.OrderItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/admin.form.OrderItem'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+    delete:
+      tags:
+      - Quản lý hóa đơn
+      summary: Sử dụng để xóa sách trong hóa đơn
+      description: |
+        Xóa sách trong hóa đơn theo ID hóa đơn và ID sách cho trước.
+      security: 
+      - BearerAuth: []
+      parameters:
+      - in: path
+        name: id
+        description: ID hóa đơn
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 637cc21ce94542c1056e6c68
+      - in: path
+        name: bookId
+        description: ID sách
+        schema:
+          type: string
+          format: ObjectId
+        required: true
+        example: 634ed8e4f6a3a7266d99276d
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin.Order'
+        400:
+          description: Lỗi request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Không xác thực được tài khoản
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Không cho phép truy cập
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
   /roles:
     get:
       tags:
@@ -2929,6 +3041,11 @@ components:
           type: string
           format: ObjectId
           example: 637cc21ce94542c1056e6c68
+        email:
+          type: string
+          format: email
+          description: Email
+          example: nguyenvanan@example.com
         shippingInfo:
           $ref: '#/components/schemas/client.ShippingInfo'
         orderCode:
@@ -3174,6 +3291,24 @@ components:
       - email
       - phone
       
+    admin.form.OrderItem:
+      type: object
+      properties:
+        originalPrice:
+          type: number
+          description: Giá bìa
+          example: 95000
+        discountRate:
+          type: number
+          description: Giảm giá (%)
+          example: 25
+        quantity:
+          type: number
+          description: Số lượng mua
+          example: 1
+      required: 
+      - quantity
+      
     admin.form.Order:
       type: object
       properties:
@@ -3201,6 +3336,9 @@ components:
           type: string
           description: Địa chỉ chi tiết (đường, tổ dân phố, ...)
           example: 17 Phù Đổng Thiên Vương
+        shippingCode:
+          type: string
+          description: Mã vận chuyển
         shippingMethod:
           type: string
           description: Phương thức vận chuyển
@@ -3209,28 +3347,6 @@ components:
           type: string
           description: Phương thức thanh toán
           example: Trả tiền khi giao hàng
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              bookId:
-                type: string
-                format: ObjectId
-                description: ID sách
-                example: 634ed8e4f6a3a7266d99276d
-              originalPrice:
-                type: number
-                description: Giá bìa
-                example: 95000
-              discountRate:
-                type: number
-                description: Giảm giá (%)
-                example: 25
-              quantity:
-                type: number
-                description: Số lượng mua
-                example: 1
         transportFee:
           type: number
           description: Phí vận chuyển
@@ -3239,6 +3355,15 @@ components:
           type: number
           description: Giảm giá
           example: 15000
+        status:
+          type: string
+          description: Trạng thái đơn hàng
+          example: not_processed
+        purchaseDate:
+          type: string
+          format: date
+          description: Ngày thanh toán
+          example: 2023-01-03
       required: 
       - fullName
       - phone
@@ -3249,6 +3374,7 @@ components:
       - paymentMethod
       - transportFee
       - discount
+      - status
       
     admin.pagination.Category:
       allOf:

@@ -55,6 +55,7 @@ orderItemSchema.methods.toJson = function () {
   delete obj.originalPrice;
   delete obj.discountRate;
   obj.book = this.book;
+  obj.book.id = this.book._id;
   obj.book.originalPrice = this.originalPrice;
   obj.book.discountRate = this.discountRate;
   obj.book.price = this.price;
