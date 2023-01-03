@@ -8,11 +8,12 @@ const ErrorHandler = require("../utils/errorHandler");
  */
 const getBills = async (req, res) => {
   try {
-    const { page = 1, limit = 12 } = req.query;
+    const { page = 1, limit = 12, status } = req.query;
     const user = req.user;
 
+    const query = status ? { status } : {};
     const options = { page, limit, populate: "items.book" };
-    const data = await Order.paginate({ userId: user.id }, options);
+    const data = await Order.paginate({ userId: user.id, ...query }, options);
     data.docs = data.docs.map((value) => value.toJson());
 
     await res.json(data);

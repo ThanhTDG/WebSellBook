@@ -324,6 +324,17 @@ paths:
         schema:
           type: number
         example: 12
+      - in: query
+        name: status
+        description: Trạng thái sách
+        schema:
+          type: string
+          enum: 
+          - coming_soon
+          - available
+          - out_of_stock
+          - completed
+          - canceled
       responses:
         200:
           description: OK
@@ -649,6 +660,17 @@ paths:
         schema:
           type: number
         example: 12
+      - in: query
+        name: status
+        description: Trạng thái đơn hàng
+        schema:
+          type: string
+          enum: 
+          - not_processed
+          - processing
+          - shipping
+          - completed
+          - canceled
       responses:
         200:
           description: OK
@@ -2117,6 +2139,17 @@ paths:
         schema:
           type: number
         example: 12
+      - in: query
+        name: status
+        description: Trạng thái đơn hàng
+        schema:
+          type: string
+          enum: 
+          - not_processed
+          - processing
+          - shipping
+          - completed
+          - canceled
       responses:
         200:
           description: OK
