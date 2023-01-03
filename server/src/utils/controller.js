@@ -86,6 +86,8 @@ const Controller = class {
       const body = this.getData(req.body);
       const data = new this.model(body);
       await data.save();
+      await data.populate(this.populate);
+
       await res.status(201).json(this.toJson(data));
     } catch (error) {
       await res
@@ -104,7 +106,9 @@ const Controller = class {
       const id = req.params.id;
       const body = this.getData(req.body);
       const options = { new: true };
-      const data = await this.model.findByIdAndUpdate(id, body, options);
+      const data = await this.model
+        .findByIdAndUpdate(id, body, options)
+        .populate(this.populate);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }

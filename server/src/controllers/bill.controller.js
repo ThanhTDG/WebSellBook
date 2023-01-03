@@ -12,7 +12,7 @@ const getBills = async (req, res) => {
     const user = req.user;
 
     const query = status ? { status } : {};
-    const options = { page, limit, populate: "items.book" };
+    const options = { page, limit, populate: ["items.book", "process"] };
     const data = await Order.paginate({ userId: user.id, ...query }, options);
     data.docs = data.docs.map((value) => value.toJson());
 

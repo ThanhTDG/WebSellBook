@@ -139,9 +139,32 @@ const orderSchema = new Schema(
       type: Number,
       default: 0,
     },
+    process: {
+      type: Map,
+      of: Date,
+      default: function () {
+        const obj = {};
+        Object.values(ORDER_STATUS).forEach((status) => (obj[status] = null));
+        obj[ORDER_STATUS.NOT_PROCESSED] = new Date();
+        return obj;
+      },
+    },
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
+
+orderSchema
+  .virtual("email", {
+    ref: "User",
+    localField: "userId",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      return value.email;
+    }
+  });
 
 orderSchema.virtual("total").get(function () {
   return (
@@ -156,9 +179,23 @@ orderSchema.methods.toJson = function () {
   delete obj.__v;
   delete obj.userId;
   delete obj.updatedAt;
+  obj.process = JSON.parse(JSON.stringify(this.process));
   obj.items = this.items.map((item) => item.toJson());
   obj.total = this.total;
   return obj;
 };
+
+orderSchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  const status = update.status;
+
+  const doc = await this.findOne(this.getQuery()).clone();
+  if (!doc.process.get(status) || doc.status !== status) {
+    doc.process.set(status, new Date());
+  }
+  await doc.save();
+
+  next();
+});
 
 module.exports = mongoose.model("Order", orderSchema);
