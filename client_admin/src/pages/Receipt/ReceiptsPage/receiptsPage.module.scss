@@ -35,10 +35,13 @@
 }
 .body,
 .title {
-	width: 200px;
+	width: 160px;
 	white-space: nowrap;
 }
-
+.recept-payment-method,
+.recept-user {
+	width: 200px;
+}
 .cancel {
 	color: var(--red-pink);
 }
@@ -85,4 +88,7 @@
 	padding: 4px !important;
 	min-width: 40px !important;
 	line-height: 0;
+}
+.link-to {
+	color: #ffffff;
 }

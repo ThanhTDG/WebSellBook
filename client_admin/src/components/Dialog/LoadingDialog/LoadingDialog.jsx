@@ -7,7 +7,10 @@ import * as successAnim from "~/assets/animations/successAnim.json";
 import * as errorAnim from "~/assets/animations/errorAnim.json";
 import * as loadingAnim from "~/assets/animations/loadingAnim.json";
 import { actions } from "~/stores";
+import styles from "./loadingDialog.module.scss";
+import classNames from "classnames";
 
+const cx = classNames.bind(styles);
 const defaultOptions = {
 	loop: true,
 	autoplay: true,
@@ -18,40 +21,39 @@ const defaultOptions = {
 };
 function LoadingDialog(props) {
 	const { editMode, dispatchEditMode } = props;
-	const displayStatus = (status) => {
+	let anim;
+	const displayStatus = (status, message) => {
 		switch (status) {
 			case loadStatus.loading:
-				return (
-					<Player
-						autoplay
-						loop
-						src={loadingAnim}
-					/>
-				);
+				anim = loadingAnim;
+				break;
 			case loadStatus.error:
-				return (
-					<Player
-						autoplay
-						loop
-						src={errorAnim}
-					/>
-				);
+				anim = errorAnim;
+				break;
 			case loadStatus.success:
-				return (
-					<Player
-						autoplay
-						loop
-						src={successAnim}
-					/>
-				);
+				anim = successAnim;
+				break;
 		}
+		return status ? (
+			<div className={cx("")}>
+				<Player
+					style={{ height: "200px", width: "200px" }}
+					autoplay
+					loop
+					src={loadingAnim}
+				/>
+			</div>
+		) : (
+			<div></div>
+		);
 	};
 	useEffect(() => {
 		let timeOut;
 		switch (editMode.statusLoad) {
 			case loadStatus.error:
 			case loadStatus.success:
-				timeOut = setTimeout(() => dispatchEditMode(actions.setStatusLoad("")), 2000);
+				timeOut = setTimeout(() => dispatchEditMode(actions.setStatusLoad("")), 10000);
+				break;
 		}
 		//	return timeOut && clearTimeout(timeOut);
 	}, [editMode.statusLoad]);
@@ -62,7 +64,7 @@ function LoadingDialog(props) {
 			open={editMode.statusLoad !== ""}
 			footer={null}
 		>
-			{displayStatus(editMode.statusLoad)}
+			{editMode.statusLoad && displayStatus(editMode.statusLoad, editMode.statusMessage)}
 		</Modal>
 	);
 }

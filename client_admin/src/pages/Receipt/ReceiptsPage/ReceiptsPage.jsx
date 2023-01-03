@@ -9,7 +9,6 @@ import TabPanel from "~/components/tab/TabPanel";
 import Footer from "~/components/table/Footer";
 import InfoLayout from "~/layouts/InfoLayout";
 import * as tableConfig from "~/stores/ComponentConfigs/table";
-import { actions, constants, cusReducer } from "~/stores";
 import styles from "./receiptsPage.module.scss";
 import Table from "~/components/table/components";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -21,6 +20,9 @@ import { displayTime, displayMoney } from "~/utils/display";
 import { icons } from "~/assets/images";
 import { generatePath, Link } from "react-router-dom";
 import PageConfig from "~/stores/pages";
+import ReceiptTable from "~/components/table/OrderTable";
+import { orderService } from "~/services";
+import { actions, constants, cusReducer } from "~/stores";
 const listStatus = [
 	{
 		key: "all",
@@ -55,25 +57,79 @@ const listStatus = [
 ];
 const cx = classNames.bind(styles);
 function ReceiptsPage() {
-	const [tableTab, dispatchTableTab] = useReducer(
-		cusReducer.reducers.TabTableReduce,
-		cusReducer.initStates.receipts
-	);
+	const [tableTab, dispatchTableTab] = useReducer(cusReducer.reducers.TabTableReduce, cusReducer.initStates.receipts);
+	const [isLoading, setIsLoading] = useState(true);
+	const [loadingTab, setLoadingTab] = useState(true);
+	const [loadingTable, setLoadingTable] = useState(true);
 	const [editMode, dispatchEditMode] = useReducer(
 		cusReducer.reducers.EditModeReducer,
 		cusReducer.initStates.editModeState
 	);
-	const [loadingTab, setLoadingTab] = useState(true);
-	const [loadingTable, setLoadingTable] = useState(true);
+	const [idSelected, setIdSelected] = useState("");
+	const [filter, setFilter] = useState(cusReducer.initStates.filterOrder);
+	const [orders, setOrders] = useState([]);
+	const fetchApi = async () => {
+		setIsLoading(true);
+		destroyTippy();
+		const result = await orderService.getOrders(tableTab);
+		if (result) {
+			handleResponse(result);
+		} else {
+		}
+		setIsLoading(false);
+	};
+	const handleResponse = (response) => {
+		const { status, page, limit, totalPages } = response;
+		dispatchTableTab(actions.setNewPropTable({ status, page, limit, totalPages }));
+		setOrders(response.docs);
+	};
 	useEffect(() => {
-		setLoadingTab(false);
+		fetchApi();
 	}, []);
-	const handlePageChange = (e, optionSelected) => {
-		dispatchTableTab(actions.setPageProducts(optionSelected));
+	const destroyTippy = () => {
+		if (tableTab && tableTab.length > 0)
+			[...document.querySelectorAll("*")].forEach((node) => {
+				if (node._tippy) {
+					node._tippy.destroy();
+				}
+			});
 	};
 	const handleLimitChange = (e) => {
 		dispatchTableTab(actions.setLimitRow(e.target.value));
 	};
+	const handlePageChange = (e, optionSelected) => {
+		dispatchTableTab(actions.setPageTable(optionSelected));
+	};
+	const handleTabChange = (e, optionSelected) => {
+		dispatchTableTab(
+			actions.setStatusTable({
+				indexStatus: optionSelected,
+				status: listStatus[optionSelected].key,
+			})
+		);
+	};
+	const handleTypeSearchChange = (e) => {
+		filter.typeSearch = e.target.value;
+	};
+	const handleSearchChange = (value) => {
+		setFilter({ ...filter, search: value });
+	};
+	const handleSortChange = (e) => {
+		setFilter({
+			...filter,
+			sort: e.target.value,
+		});
+	};
+	const handleConfirm = (e) => {
+		e.preventDefault();
+		handleFilter();
+	};
+	const handleFilter = (e) => {
+		dispatchTableTab(actions.setFilterTable({ ...filter }));
+	};
+	useEffect(() => {
+		setLoadingTab(false);
+	}, []);
 	let displayStatus = false;
 	return (
 		<InfoLayout
@@ -81,9 +137,10 @@ function ReceiptsPage() {
 			dispatchEditMode={dispatchEditMode}
 			showFeature={false}
 		>
-			<Loading isLoading={loadingTab}>
+			<Loading isLoading={isLoading}>
 				<div className={cx("wrapper")}>
 					<Tabs
+						onChange={handleTabChange}
 						value={tableTab.indexStatus}
 						items={listStatus}
 					>
@@ -106,27 +163,23 @@ function ReceiptsPage() {
 												isLast={false}
 												size={"normal"}
 											>
-												<div className={cx("title", "recept-code")}>
-													Mã đơn hàng
-												</div>
+												<div className={cx("title", "recept-code")}>Mã đơn hàng</div>
 											</Table.Cell>
 											<Table.Cell
 												zIndex={4}
 												isLast={false}
 												size={"normal"}
 											>
-												<div className={cx("title", "recept-sum")}>
-													{constants.ALL_PAY}
-												</div>
+												<div className={cx("title", "recept-sum")}>{constants.ALL_PAY}</div>
 											</Table.Cell>
+
 											<Table.Cell
 												zIndex={4}
 												isLast={false}
 												size={"normal"}
+												align={"center"}
 											>
-												<div className={cx("title", "recept-date")}>
-													Ngày tiếp nhận
-												</div>
+												<div className={cx("title", "recept-date")}>Ngày tiếp nhận</div>
 											</Table.Cell>
 											{displayStatus && (
 												<Table.Cell
@@ -134,19 +187,23 @@ function ReceiptsPage() {
 													isLast={false}
 													size={"normal"}
 												>
-													<div className={cx("title", "recept-status")}>
-														Trạng thái
-													</div>
+													<div className={cx("title", "recept-status")}>Trạng thái</div>
 												</Table.Cell>
 											)}
+											<Table.Cell
+												zIndex={4}
+												align={"left"}
+												isLast={false}
+												size={"normal"}
+											>
+												<div className={cx("title", "recept-payment-method")}>{constants.PAY}</div>
+											</Table.Cell>
 											<Table.Cell
 												zIndex={4}
 												isLast={false}
 												size={"normal"}
 											>
-												<div className={cx("title", "recept-user")}>
-													Người mua
-												</div>
+												<div className={cx("title", "recept-user")}>{constants.ACCOUNT}</div>
 											</Table.Cell>
 											<Table.Cell
 												zIndex={4}
@@ -154,10 +211,12 @@ function ReceiptsPage() {
 											/>
 										</Table.Head>
 										<Table.Body>
-											{receipts.map((receipt) => (
-												<RowReceipt
+											{orders.map((order) => (
+												<RowOrder
+													idSelected={idSelected}
+													setIdSelected={setIdSelected}
 													showStatus={displayStatus}
-													receipt={receipt}
+													order={order}
 												/>
 											))}
 										</Table.Body>
@@ -179,9 +238,8 @@ function ReceiptsPage() {
 		</InfoLayout>
 	);
 }
-function RowReceipt(props) {
-	const { receipt, showStatus = false } = props;
-	const [open, setOpen] = React.useState(false);
+function RowOrder(props) {
+	const { idSelected, setIdSelected, order: receipt, showStatus = false } = props;
 	return (
 		<Fragment>
 			<Table.Row size={"normal"}>
@@ -189,9 +247,15 @@ function RowReceipt(props) {
 					<IconButton
 						aria-label="expand row"
 						size="small"
-						onClick={() => setOpen(!open)}
+						onClick={() => {
+							if (idSelected === receipt.id) {
+								setIdSelected("");
+							} else {
+								setIdSelected(receipt.id);
+							}
+						}}
 					>
-						{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+						{idSelected === receipt.id ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 					</IconButton>
 				</Table.Cell>
 				<Table.Cell>
@@ -201,41 +265,34 @@ function RowReceipt(props) {
 						})}
 						target="_blank"
 					>
-						<div className={cx("body", "recept-code")}>{receipt.id}</div>
+						<div className={cx("body", "recept-code")}>{receipt.orderCode}</div>
 					</Link>
 				</Table.Cell>
 				<Table.Cell>
-					<div className={cx("body", "recept-sum")}>
-						{displayMoney(receipt.pay, false)}
-					</div>
+					<div className={cx("body", "recept-sum")}>{displayMoney(receipt.total)}</div>
 				</Table.Cell>
-				<Table.Cell>
-					<div className={cx("body", "recept-date")}>{`${displayTime(
-						Date.now()
-					)}`}</div>
+
+				<Table.Cell align={"center"}>
+					<div className={cx("body", "recept-date")}>{`${displayTime(receipt.createdAt)}`}</div>
 				</Table.Cell>
 				{showStatus && (
 					<Table.Cell>
 						<div className={cx("body", "status")}>{receipt.status}</div>
 					</Table.Cell>
 				)}
+				<Table.Cell align={"left"}>
+					<div className={cx("body", "recept-pay-method")}>{receipt.paymentMethod}</div>
+				</Table.Cell>
 				<Table.Cell isLast={false}>
-					<div className={cx("body", "recept-user")}>{receipt.user.email}</div>
+					<div className={cx("body", "recept-user")}>{"receipt.user.email"}</div>
 				</Table.Cell>
 				<Table.Cell>
-					{open === false && (
+					{idSelected !== receipt.id && (
 						<Controls.Button
 							primary
 							className={cx("btn-view")}
 						>
-							<Link
-								to={generatePath(PageConfig.receipt.route, {
-									id: receipt.id,
-								})}
-								target="_blank"
-							>
-								{icons.Button("").view}
-							</Link>
+							<ViewDetail id={receipt.id}> {icons.Button("").view}</ViewDetail>
 						</Controls.Button>
 					)}
 				</Table.Cell>
@@ -244,21 +301,30 @@ function RowReceipt(props) {
 				<Table.Cell
 					isLast={false}
 					className={cx("detail-receipt")}
-					colSpan={6}
+					colSpan={7}
 				>
 					<Collapse
-						in={open}
+						in={idSelected === receipt.id}
 						timeout="auto"
 						unmountOnExit
 					>
 						<div className={cx("wrapper-detail")}>
-							<ProductsNPrice receipt={receipt} />
+							<ReceiptTable order={receipt} />
 							<div className={cx("feature")}>
 								<div className={cx("contact-action")}>
-									<Contact address={receipt.address} />
+									<Contact
+										shippingInfo={receipt.shippingInfo}
+										shippingMethod={receipt.shippingMethod}
+										user={receipt}
+									/>
 									<Action />
 								</div>
-								<ViewDetail id={receipt.id} />
+								<Controls.Button
+									primary
+									className={cx("btn-view-detail")}
+								>
+									<ViewDetail id={receipt.id}>{`${constants.VIEW_DETAIL} ${constants.ORDER.toLowerCase()}`}</ViewDetail>
+								</Controls.Button>
 							</div>
 						</div>
 					</Collapse>
@@ -267,148 +333,111 @@ function RowReceipt(props) {
 		</Fragment>
 	);
 }
-function ViewDetail({ id }) {
+function ViewDetail(props) {
+	const { id, children } = props;
 	return (
-		<div className={cx("view-detail")}>
-			<Controls.Button
-				primary
-				className={cx("btn-view-detail")}
-			>
-				<Link
-					to={generatePath(PageConfig.receipt.route, {
-						id: id,
-					})}
-					target="_blank"
-				>
-					Chi tiết đơn hàng
-				</Link>
-			</Controls.Button>
-		</div>
+		<Link
+			className={cx("link-to")}
+			to={generatePath(PageConfig.receipt.route, {
+				id: id,
+			})}
+			target="_blank"
+		>
+			{children}
+		</Link>
 	);
 }
-function ProductsNPrice(props) {
-	const { receipt } = props;
-	const color = { backgroundColor: "#FFFfFF", color: "#051e34" };
-	let sumAllProduct = 0;
-	return (
-		<Table.Frame>
-			<Table.Head>
-				<Table.Cell
-					isLast={false}
-					{...color}
-					colSpan={2}
-					align="left"
-				>
-					<div className={cx("title-detail", "name")}>{"Tên"}</div>
-				</Table.Cell>
-				<Table.Cell
-					isLast={false}
-					{...color}
-				>
-					<div className={cx("title-detail", "amount")}>{"Số lượng"}</div>
-				</Table.Cell>
-				<Table.Cell
-					isLast={false}
-					{...color}
-				>
-					<div className={cx("title-detail", "price")}>{"Giá"}</div>
-				</Table.Cell>
-				<Table.Cell
-					isLast={false}
-					{...color}
-				>
-					<div className={cx("title-detail", "sum")}>{"Tổng(VND)"}</div>
-				</Table.Cell>
-			</Table.Head>
-			<Table.Body>
-				{receipt.products.map((product) => {
-					let sum = product.sum ? product.sum : product.price * product.amount;
-					sumAllProduct += sum;
-					return (
-						<Table.Row>
-							<Table.Cell
-								isLast={false}
-								colSpan={2}
-								colorChildren={color}
-								align="left"
-							>
-								<div className={cx("body-detail", "name")}>{product.name}</div>
-							</Table.Cell>
-							<Table.Cell
-								isLast={false}
-								colorChildren={color}
-							>
-								<div className={cx("body-detail", "amount")}>
-									{product.amount}
-								</div>
-							</Table.Cell>
-							<Table.Cell
-								isLast={false}
-								colorChildren={color}
-							>
-								<div className={cx("body-detail", "price")}>
-									{displayMoney(product.price, false)}
-								</div>
-							</Table.Cell>
-							<Table.Cell
-								isLast={false}
-								colorChildren={color}
-							>
-								<div className={cx("body-detail", "sum")}>
-									{`${displayMoney(sum, false)}`}
-								</div>
-							</Table.Cell>
-						</Table.Row>
-					);
-				})}
-				<ItemTotal
-					title={constants.SUM_ALL_PRODUCT}
-					sum={sumAllProduct}
-				/>
-				<ItemTotal title={constants.VOUCHER} />
-				<ItemTotal
-					spec={true}
-					title={constants.PAY_ALL}
-					sum={sumAllProduct}
-				/>
-			</Table.Body>
-		</Table.Frame>
-	);
-}
-function ItemTotal(props) {
-	const { title = "", value = "", sum = "", spec = false } = props;
-	const color = { backgroundColor: "#FFFfFF", color: "#051e34" };
-	return (
-		<Table.Row>
-			<td className={cx("white")}></td>
-			<Table.Cell
-				isLast={false}
-				colorChildren={color}
-				className={cx("title-item-total")}
-			>
-				<div className={cx({ spec: spec })}>{title}</div>
-			</Table.Cell>
-			<Table.Cell
-				isLast={false}
-				colorChildren={color}
-			></Table.Cell>
-			<Table.Cell
-				isLast={false}
-				colorChildren={color}
-				className={cx("value-item-total")}
-			>
-				<div className={cx({ spec: spec })}>{value}</div>
-			</Table.Cell>
-			<Table.Cell
-				isLast={false}
-				colorChildren={color}
-				className={cx("sum-item-total")}
-			>
-				<div className={cx({ spec: spec })}>{sum}</div>
-			</Table.Cell>
-		</Table.Row>
-	);
-}
+
+// function ReceiptTable(props) {
+// 	const { receipt } = props;
+// 	const color = { backgroundColor: "#FFFfFF", color: "#051e34" };
+// 	let sumAllProduct = 0;
+// 	return (
+// 		<Table.Frame>
+// 			<Table.Head>
+// 				<Table.Cell
+// 					isLast={false}
+// 					{...color}
+// 					colSpan={2}
+// 					align="left"
+// 				>
+// 					<div className={cx("title-detail", "name")}>{"Tên"}</div>
+// 				</Table.Cell>
+// 				<Table.Cell
+// 					isLast={false}
+// 					{...color}
+// 				>
+// 					<div className={cx("title-detail", "amount")}>{"Số lượng"}</div>
+// 				</Table.Cell>
+// 				<Table.Cell
+// 					isLast={false}
+// 					{...color}
+// 				>
+// 					<div className={cx("title-detail", "price")}>{"Giá"}</div>
+// 				</Table.Cell>
+// 				<Table.Cell
+// 					isLast={false}
+// 					{...color}
+// 				>
+// 					<div className={cx("title-detail", "sum")}>{"Tổng(VND)"}</div>
+// 				</Table.Cell>
+// 			</Table.Head>
+// 			<Table.Body>
+// 				{receipt.products.map((product) => {
+// 					let sum = product.sum ? product.sum : product.price * product.amount;
+// 					sumAllProduct += sum;
+// 					return (
+// 						<Table.Row>
+// 							<Table.Cell
+// 								isLast={false}
+// 								colSpan={2}
+// 								colorChildren={color}
+// 								align="left"
+// 							>
+// 								<div className={cx("body-detail", "name")}>{product.name}</div>
+// 							</Table.Cell>
+// 							<Table.Cell
+// 								isLast={false}
+// 								colorChildren={color}
+// 							>
+// 								<div className={cx("body-detail", "amount")}>
+// 									{product.amount}
+// 								</div>
+// 							</Table.Cell>
+// 							<Table.Cell
+// 								isLast={false}
+// 								colorChildren={color}
+// 							>
+// 								<div className={cx("body-detail", "price")}>
+// 									{displayMoney(product.price, false)}
+// 								</div>
+// 							</Table.Cell>
+// 							<Table.Cell
+// 								isLast={false}
+// 								colorChildren={color}
+// 							>
+// 								<div className={cx("body-detail", "sum")}>
+// 									{`${displayMoney(sum, false)}`}
+// 								</div>
+// 							</Table.Cell>
+// 						</Table.Row>
+// 					);
+// 				})}
+// 				<ItemTotal
+// 					title={constants.SUM_ALL_PRODUCT}
+// 					sum={sumAllProduct}
+// 				/>
+// 				<ItemTotal title={constants.VOUCHER} />
+// 				<ItemTotal
+// 					spec={true}
+// 					title={constants.PAY_ALL}
+// 					sum={sumAllProduct}
+// 				/>
+// 			</Table.Body>
+// 		</Table.Frame>
+// 	);
+// }
+
 function Action(props) {
 	const { action, cancel } = props;
 	return (
@@ -424,7 +453,7 @@ function Action(props) {
 	);
 }
 function Contact(props) {
-	const { address, user } = props;
+	const { shippingInfo, user, shippingMethod } = props;
 	return (
 		<OutlinedBox
 			label={"Địa chỉ giao hàng"}
@@ -432,30 +461,34 @@ function Contact(props) {
 		>
 			<PropContact
 				title={constants.RECIPIENT}
-				value={address.fullName}
+				value={shippingInfo.fullName}
 			/>
 			<PropContact
 				title={constants.PHONE}
-				value={address.phone}
+				value={shippingInfo.phone}
 			/>
 			<PropContact
 				title={constants.REGION}
-				value={address.region}
+				value={shippingInfo.region}
 			/>
 			<div className={cx("space")}>
 				<PropContact
 					title={constants.DISTRICT}
-					value={address.district}
+					value={shippingInfo.district}
 				/>
 				<PropContact
 					title={constants.WARD}
-					value={address.ward}
+					value={shippingInfo.ward}
 				/>
 			</div>
 
 			<PropContact
 				title={constants.ADDRESS}
-				value={address.address}
+				value={shippingInfo.address}
+			/>
+			<PropContact
+				title={constants.SHIPPING_METHOD}
+				value={shippingMethod}
 			/>
 		</OutlinedBox>
 	);

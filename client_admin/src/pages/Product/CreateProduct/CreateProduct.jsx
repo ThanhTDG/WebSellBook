@@ -7,7 +7,7 @@ import InfoLayout from "~/layouts/InfoLayout";
 import * as initStates from "~/stores/initStates";
 import * as reducers from "~/stores/reducers";
 import typeFeature from "~/stores/types/typeFeature";
-import * as categoriesService from "~/services/categoriesService";
+import * as categoriesService from "~/services/categoryService";
 import { actions } from "~/stores";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -19,10 +19,7 @@ function CreateProduct() {
 		...initStates.editModeState,
 		enableEdit: true,
 	});
-	const [categories, dispatchCategories] = useReducer(
-		reducers.CategoriesReduce,
-		initStates.categoriesState
-	);
+	const [categories, dispatchCategories] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
 	const [isLoading, setIsLoading] = useState(false);
 	const [product, setProduct] = useState(initStates.product);
 	useEffect(() => {

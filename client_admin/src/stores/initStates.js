@@ -26,7 +26,6 @@ export const admins = {
 };
 export const filterAdmins = {
 	typeSearch: CustomerConfig.options.typeSearch.value[0].id,
-	category: "",
 	search: "",
 	sort: "",
 };
@@ -34,6 +33,11 @@ export const product = {};
 export const filterProduct = {
 	typeSearch: BookConfig.options.typeSearch.value[0].id,
 	category: "",
+	search: "",
+	sort: "",
+};
+export const filterOrder = {
+	typeSearch: BookConfig.options.typeSearch.value[0].id,
 	search: "",
 	sort: "",
 };

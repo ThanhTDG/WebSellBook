@@ -8,12 +8,7 @@ import { constants, cusReducer } from "~/stores";
 
 import styles from "./receiptPage.module.scss";
 import fake from "~/pages/Receipt/fakeReceipt";
-import {
-	displayAddress,
-	displayDay,
-	displayMoney,
-	displayTime,
-} from "~/utils/display";
+import { displayAddress, displayDay, displayMoney, displayTime } from "~/utils/display";
 import statusReceipt from "~/stores/Receipt/statusReceipt";
 import Popper from "~/components/Popper";
 import typeUser from "~/stores/types/typeUser";
@@ -96,9 +91,7 @@ function ReceiptPage() {
 												})}
 												target="_blank"
 											>
-												<div className={"single-line"}>
-													{receipt.user.email}
-												</div>
+												<div className={"single-line"}>{receipt.user.email}</div>
 											</Link>
 										</Popper.UserDetail>
 									}
@@ -139,23 +132,17 @@ function ReceiptPage() {
 								<PropDisplay
 									name="pay"
 									tail=""
-									title={constants.VOUCHER}
+									title={constants.PROVISIONAL}
 									value={displayMoney(0)}
 								/>
 								<div className={cx("total-play")}>
-									<div className={cx("prop-title")}>
-										{constants.TOTAL_MONEY}
-									</div>
-									<div className={cx("prop-total-pay")}>
-										{displayMoney(100000)}
-									</div>
+									<div className={cx("prop-title")}>{constants.TOTAL_MONEY}</div>
+									<div className={cx("prop-total-pay")}>{displayMoney(100000)}</div>
 								</div>
 							</div>
 						</div>
 						<div className={cx("statuses", status.replace("_", "-"))}>
-							<div className={cx("title")}>
-								{constants[status.toUpperCase()]}
-							</div>
+							<div className={cx("title")}>{constants[status.toUpperCase()]}</div>
 							<PropDisplay
 								name="status-header"
 								tail=""
@@ -181,29 +168,28 @@ function ReceiptPage() {
 								})}
 							</div>
 						</div>
-						{status !== statusReceipt.canceled &&
-							status !== statusReceipt.completed && (
-								<div className={cx("actions")}>
-									<Controls.Button
-										outline
-										onClick={() => {
-											handleChangeStatus(refList[0].key);
-										}}
-										className={cx("btn-cancel")}
-									>
-										{constants.CANCEL}
-									</Controls.Button>
-									<Controls.Button
-										className={cx("btn-next")}
-										primary
-										onClick={() => {
-											handleChangeStatus(refList[currentIndex + 1].key);
-										}}
-									>
-										{refList[currentIndex + 1].title}
-									</Controls.Button>
-								</div>
-							)}
+						{status !== statusReceipt.canceled && status !== statusReceipt.completed && (
+							<div className={cx("actions")}>
+								<Controls.Button
+									outline
+									onClick={() => {
+										handleChangeStatus(refList[0].key);
+									}}
+									className={cx("btn-cancel")}
+								>
+									{constants.CANCEL}
+								</Controls.Button>
+								<Controls.Button
+									className={cx("btn-next")}
+									primary
+									onClick={() => {
+										handleChangeStatus(refList[currentIndex + 1].key);
+									}}
+								>
+									{refList[currentIndex + 1].title}
+								</Controls.Button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -214,9 +200,7 @@ function PropDisplay(props) {
 	const { title = "", value = "", name = "", tail = ":" } = props;
 	return (
 		<div className={cx(`${name}-prop`, "wrapper-prop")}>
-			<div
-				className={cx(`${name}-title`, "prop-title")}
-			>{`${title}${tail}`}</div>
+			<div className={cx(`${name}-title`, "prop-title")}>{`${title}${tail}`}</div>
 			<div className={cx(`${name}-value`)}>{value}</div>
 		</div>
 	);

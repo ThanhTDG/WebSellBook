@@ -33,9 +33,7 @@ function Widget({ type, value }) {
 					{icons.Chart({ classPercentage })["increase"]}
 					{diff} %
 				</div>
-				<div className={cx("wrap-icon")}>
-					{icons.Widget({ className: classIcon })[data.key]}
-				</div>
+				<div className={cx("wrap-icon")}>{icons.Widget({ className: classIcon })[data.key]}</div>
 			</div>
 		</div>
 	);

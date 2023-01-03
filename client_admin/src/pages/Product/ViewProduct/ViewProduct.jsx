@@ -10,7 +10,7 @@ import * as productServices from "~/services/productService";
 import * as reducers from "~/stores/reducers";
 import styles from "./viewProduct.module.scss";
 import * as initStates from "~/stores/initStates";
-import * as categoriesService from "~/services/categoriesService";
+import * as categoriesService from "~/services/categoryService";
 import InfoLayout from "~/layouts/InfoLayout";
 import * as actions from "~/stores/actions";
 import typeFeature from "~/stores/types/typeFeature";

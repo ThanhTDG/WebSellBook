@@ -4,7 +4,7 @@ import CategoryForm from "~/components/Form/CategoryForm";
 
 import Loading from "~/components/Loading";
 import CategoriesTab from "~/components/tab/CategoriesTab/CategoriesTab";
-import * as categoriesService from "~/services/categoriesService";
+import * as categoriesService from "~/services/categoryService";
 import styles from "./categoryPage.module.scss";
 import * as initStates from "~/stores/initStates";
 import * as reducers from "~/stores/reducers";
@@ -112,7 +112,6 @@ function CategoriesPage() {
 			});
 		}
 	};
-
 	let displayCategory = category && !editMode.isNew;
 	let levelPick = deepCategory(category, categories.list);
 	let display = editMode.enableEdit ? values : category;
@@ -157,11 +156,11 @@ function CategoriesPage() {
 							PickParent={
 								<TextFelidCategory
 									label={constants.PARENT_CATEGORY}
-									category={values.parent ? categories.list.find((item) => item.id === values.parent.id) : null}
+									category={display.parent ? categories.list.find((item) => item.id === display.parent.id) : null}
 									handleIdChange={handleChangeParent}
 									list={categories.list}
 									tree={categories.tree}
-									idVisible={[values.id, values.parent ? values.parent.id : ""]}
+									idVisible={[display.id, display.parent ? display.parent.id : ""]}
 									disabled={constants.MAX_LEVEL - levelPick === 0}
 									levelDisplay={constants.MAX_LEVEL - levelPick - 1}
 								/>

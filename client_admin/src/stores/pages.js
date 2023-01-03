@@ -11,8 +11,8 @@ import AccountAdminPage from "~/pages/UserAccount/AccountAdminPage";
 import CustomerPage from "~/pages/UserAccount/CustomerPage";
 import ReceiptsPage from "~/pages/Receipt/ReceiptsPage";
 import ProfilePage from "~/pages/Auth/ProfilePage/ProfilePage";
-import AccountAdminsPage from "~/pages/UserAccount/AccountAdminsPage";
 import ReceiptPage from "~/pages/Receipt/ReceiptPage";
+import AccountAdminsPage from "~/pages/UserAccount/AccountAdminsPage";
 
 const PageConfig = {
 	home: {

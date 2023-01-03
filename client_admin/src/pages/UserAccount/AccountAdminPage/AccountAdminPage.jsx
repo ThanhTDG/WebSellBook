@@ -37,10 +37,7 @@ function AccountAdminPage() {
 		}
 	};
 	const fetchApi = async () => {
-		const [responseUser, responseRoles] = await Promise.all([
-			userService.getUserById(id),
-			getRoles(),
-		]);
+		const [responseUser, responseRoles] = await Promise.all([userService.getUserById(id), getRoles()]);
 		if (responseUser && responseRoles) {
 			handleUser(responseUser);
 			setRoles(responseRoles.docs);

@@ -15,10 +15,7 @@ import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
 import Search from "~/components/SearchBar";
-import {
-	getCategoriesList,
-	getCategoriesTree,
-} from "~/services/categoriesService";
+import { getCategoriesList, getCategoriesTree } from "~/services/categoryService";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
 
 const listStatus = BookConfig.listStatus;

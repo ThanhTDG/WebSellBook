@@ -13,7 +13,7 @@ import OutlinedBox from "~/components/OutlinedBox";
 import * as initStates from "~/stores/initStates";
 import Change from "~/components/Change";
 import useForm from "~/hooks/useForm";
-import * as categoriesService from "~/services/categoriesService";
+import * as categoriesService from "~/services/categoryService";
 import * as reducers from "~/stores/reducers";
 import { useReducer } from "react";
 import loadStatus from "~/stores/statusLoad";
