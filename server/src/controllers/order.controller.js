@@ -128,11 +128,11 @@ const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
   obj.id = data.id;
-  obj.email = data.email;
+  obj.user = data.user;
   obj.process = JSON.parse(JSON.stringify(data.process));
   obj.items = data.items.map((item) => item.toJson());
   obj.total = data.total;
   return obj;
 };
 
-module.exports = new OrderController(getData, toJson, ["items.book", "email"]);
+module.exports = new OrderController(getData, toJson, ["items.book", "user"]);

@@ -140,6 +140,10 @@ const orderSchema = new Schema(
       type: Number,
       default: 0,
     },
+    paid: {
+      type: Number,
+      default: 0,
+    },
     process: {
       type: Map,
       of: Date,
@@ -154,8 +158,28 @@ const orderSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
+const user2json = ({
+  _id,
+  id,
+  firstName,
+  lastName,
+  email,
+  phone,
+  sex,
+  birthday,
+}) => ({
+  _id,
+  id,
+  firstName,
+  lastName,
+  email,
+  phone,
+  sex,
+  birthday,
+});
+
 orderSchema
-  .virtual("email", {
+  .virtual("user", {
     ref: "User",
     localField: "userId",
     foreignField: "_id",
@@ -163,7 +187,7 @@ orderSchema
   })
   .get(function (value) {
     if (value) {
-      return value.email;
+      return user2json(value);
     }
   });
 
