@@ -167,6 +167,7 @@ const user2json = ({
   phone,
   sex,
   birthday,
+  avatar,
 }) => ({
   _id,
   id,
@@ -176,6 +177,7 @@ const user2json = ({
   phone,
   sex,
   birthday,
+  avatar,
 });
 
 orderSchema
