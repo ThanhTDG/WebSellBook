@@ -9,22 +9,9 @@ import { displayMoney } from "~/utils/display";
 const cx = classNames.bind(styles);
 
 function OrderTable(props) {
-	const { order, showImage = false, showTotal = true } = props;
+	const { maxHeight, order, showTotal = true, classImage } = props;
 	console.log(order);
-	const color = showImage
-		? {
-				book: {
-					_id: "634ed8e4f6a3a7266d99276d",
-					name: "Thiên Sứ Nhà Bên – Tập 3",
-					images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
-					originalPrice: 95000,
-					discountRate: 25,
-					price: 72000,
-				},
-				quantity: 1,
-				total: 72000,
-		  }
-		: { backgroundColor: "#FFFFFF", color: "#051e34" };
+	const color = classImage ? {} : { backgroundColor: "#FFFFFF", color: "#051e34" };
 	let sumAllProduct = (items) => {
 		let sum = 0;
 		items.forEach((item) => {
@@ -32,10 +19,11 @@ function OrderTable(props) {
 		});
 		return sum;
 	};
+	let style = maxHeight ? { maxHeight: maxHeight } : {};
 	return (
-		<Table.Frame>
+		<Table.Frame style={style}>
 			<Table.Head>
-				{showImage && (
+				{classImage && (
 					<Table.Cell
 						isLast={false}
 						{...color}
@@ -74,15 +62,17 @@ function OrderTable(props) {
 				{order.items.map((item) => {
 					return (
 						<Table.Row>
-							{showImage && (
+							{classImage && (
 								<Table.Cell
 									isLast={false}
-									colSpan={2}
 									colorChildren={color}
 									align="left"
 								>
-									<div className={cx("body-detail", "image")}>
-										<Image src={item.book.images && item.book.images.length > 0 ? item.book.images[0] : ""} />
+									<div className={cx("body-detail", classImage)}>
+										<Image
+											className={cx("image")}
+											src={item.book.images && item.book.images.length > 0 ? item.book.images[0] : ""}
+										/>
 									</div>
 								</Table.Cell>
 							)}

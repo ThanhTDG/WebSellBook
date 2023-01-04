@@ -4,16 +4,22 @@ import React, { useState, useReducer } from "react";
 import Controls from "~/components/controls";
 import ItemOrder from "~/components/Items/ItemOrderFull/ItemOrderFull";
 import InfoLayout from "~/layouts/InfoLayout";
-import { constants, cusReducer } from "~/stores";
+import { actions, constants, cusReducer } from "~/stores";
 
 import styles from "./receiptPage.module.scss";
 import fake from "~/pages/Receipt/fakeReceipt";
 import { displayAddress, displayDay, displayMoney, displayTime } from "~/utils/display";
-import statusReceipt from "~/stores/Receipt/statusReceipt";
+import statusOrder from "~/stores/Order/statusOrder";
 import Popper from "~/components/Popper";
 import typeUser from "~/stores/types/typeUser";
 import { generatePath, Link, useParams } from "react-router-dom";
 import PageConfig from "~/stores/pages";
+import OrderTable from "~/components/table/OrderTable";
+import Loading from "~/components/Loading";
+import { orderService, userService } from "~/services";
+import { useEffect } from "react";
+import UpdateShipping from "~/components/Dialog/UpdateShipping/UpdateShipping";
+import ButtonStatusOrder from "~/components/Dialog/ButtonStatusOrder/ButtonStatusOrder";
 const cx = classNames.bind(styles);
 const refList = [
 	{
@@ -38,162 +44,302 @@ const refList = [
 	},
 	{
 		key: "completed",
-		title: "hoàn thành",
+		title: "Giao thành công",
 		engTitle: "completed",
 	},
 ];
+
+function convertListStatus(process) {
+	return Object.keys(process)
+		.map((item) => {
+			if (process[item] != null) {
+				let status = new Object();
+				status.type = item;
+				status.date = process[item];
+				return status;
+			}
+			return null;
+		})
+		.filter((item) => item);
+}
+
 function ReceiptPage() {
 	const { id } = useParams();
-	const [receipt, setReceipt] = useState(fake[0]);
 	const [editMode, dispatchEditMode] = useReducer(
 		cusReducer.reducers.EditModeReducer,
 		cusReducer.initStates.editModeState
 	);
-
-	const [listStatus, setListStatus] = useState(receipt.statuses);
-	const [status, setStatus] = useState(receipt.status);
+	const [order, setOrder] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
+	const [user, setUser] = useState(null);
 	const handleChangeStatus = (newStatus) => {
-		setStatus(newStatus);
-		let currList = listStatus;
-		currList.push({ date: Date.now(), type: newStatus });
-		setListStatus(currList);
+		setOrder({
+			...order,
+			status: newStatus,
+		});
 	};
-	const currentIndex = refList.findIndex((item) => item.key === status);
+	useEffect(() => {
+		fetchAPI();
+	}, []);
+	const fetchAPI = async () => {
+		setIsLoading(true);
+		const response = await orderService.getOrderById(id);
+		if (response) {
+			setOrder(response);
+		} else {
+			console.log("Lỗi");
+		}
+		setIsLoading(false);
+	};
+	const UpdateOrder = async (orderChange) => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await orderService.updateOrder(orderChange, id);
+		if (response) {
+			dispatchEditMode(actions.setStatusIsSuccess());
+			setOrder(response);
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
+	};
+	const handleUpdateOrder = (orderChange) => {
+		if (JSON.stringify(orderChange) !== JSON.stringify(order)) {
+			UpdateOrder(orderChange);
+		}
+	};
+	const currentIndex = order ? refList.findIndex((item) => item.key === order.status) : 0;
 	return (
 		<InfoLayout
 			id={id}
 			editMode={editMode}
 			showFeature={false}
 			dispatchEditMode={dispatchEditMode}
+			moreName={order ? order.orderCode : ""}
 		>
-			<div className={cx("wrapper")}>
-				<div className={cx("display")}>
-					<div className={cx("products")}>
-						{receipt.products.map((product) => (
-							<ItemOrder product={product} />
-						))}
-					</div>
-					<div className={cx("other")}>
-						<div className={cx("address")}>
-							<div className={cx("title")}>Địa chỉ người nhận</div>
-							<div className={cx("content")}>
-								<PropDisplay
-									name="address"
-									title={constants.ACCOUNT}
-									value={
-										<Popper.UserDetail
-											id={receipt.user.id}
-											type={typeUser.customer}
+			<Loading isLoading={isLoading}>
+				{order && (
+					<div className={cx("wrapper")}>
+						<div className={cx("display")}>
+							<div className={cx("products")}>
+								<OrderTable
+									maxHeight={700}
+									order={order}
+									showImage={true}
+									showTotal={false}
+									classImage={cx("image")}
+								/>
+							</div>
+							<div className={cx("other")}>
+								<Address
+									shippingInfo={order.shippingInfo}
+									user={order.user}
+								/>
+								<Changer order={order} />
+								<Transport order={order} />
+								<StatusOrder
+									status={order.status}
+									listStatus={convertListStatus(order.process)}
+								/>
+								{order.status !== statusOrder.canceled && order.status !== statusOrder.completed && (
+									<div className={cx("actions")}>
+										<Controls.Button
+											outline
+											onClick={() => {
+												handleChangeStatus(refList[0].key);
+											}}
+											className={cx("btn-cancel")}
 										>
-											<Link
-												to={generatePath(PageConfig.customer.route, {
-													id: receipt.user.id,
-												})}
-												target="_blank"
-											>
-												<div className={"single-line"}>{receipt.user.email}</div>
-											</Link>
-										</Popper.UserDetail>
-									}
-								/>
-								<PropDisplay
-									name="address"
-									title={constants.NAME}
-									value={receipt.address.fullName}
-								/>
-								<PropDisplay
-									name="address"
-									title={constants.PHONE_NUMBER}
-									value={receipt.address.phone}
-								/>
-
-								<PropDisplay
-									name="address"
-									title={constants.ADDRESS}
-									value={displayAddress(receipt.address)}
-								/>
+											{constants.CANCEL}
+										</Controls.Button>
+										<ButtonStatusOrder
+											status={refList[currentIndex + 1].key}
+											onOk={handleUpdateOrder}
+											order={order}
+											className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
+										></ButtonStatusOrder>
+										{/* <UpdateShipping
+											onOk={handleUpdateOrder}
+											data={order}
+											className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
+										></UpdateShipping> */}
+									</div>
+								)}
 							</div>
 						</div>
-						<div className={cx("changer")}>
-							<div className={cx("title")}>Thanh toán</div>
-							<div className={cx("content")}>
-								<PropDisplay
-									name="type-pay"
-									tail=""
-									title={constants.TYPE}
-									value={"Thanh toán khi nhận hàng"}
-								/>
-								<PropDisplay
-									name="pay"
-									tail=""
-									title={constants.PROVISIONAL}
-									value={displayMoney(100000)}
-								/>
-								<PropDisplay
-									name="pay"
-									tail=""
-									title={constants.PROVISIONAL}
-									value={displayMoney(0)}
-								/>
-								<div className={cx("total-play")}>
-									<div className={cx("prop-title")}>{constants.TOTAL_MONEY}</div>
-									<div className={cx("prop-total-pay")}>{displayMoney(100000)}</div>
-								</div>
-							</div>
-						</div>
-						<div className={cx("statuses", status.replace("_", "-"))}>
-							<div className={cx("title")}>{constants[status.toUpperCase()]}</div>
-							<PropDisplay
-								name="status-header"
-								tail=""
-								title={constants.STATUS_ODER}
-								value={constants.RECORD_TIME}
-							/>
-							<div className={cx("content")}>
-								{listStatus.map((status) => {
-									let name = "status";
-									if (status.type === statusReceipt.canceled) {
-										name = "canceled";
-									} else if (status.type === statusReceipt.completed) {
-										name = "completed";
-									}
-									return (
-										<PropDisplay
-											name={name}
-											tail=""
-											title={constants[status.type.toUpperCase()]}
-											value={displayTime(Date.now())}
-										/>
-									);
-								})}
-							</div>
-						</div>
-						{status !== statusReceipt.canceled && status !== statusReceipt.completed && (
-							<div className={cx("actions")}>
-								<Controls.Button
-									outline
-									onClick={() => {
-										handleChangeStatus(refList[0].key);
-									}}
-									className={cx("btn-cancel")}
-								>
-									{constants.CANCEL}
-								</Controls.Button>
-								<Controls.Button
-									className={cx("btn-next")}
-									primary
-									onClick={() => {
-										handleChangeStatus(refList[currentIndex + 1].key);
-									}}
-								>
-									{refList[currentIndex + 1].title}
-								</Controls.Button>
-							</div>
-						)}
 					</div>
-				</div>
-			</div>
+				)}
+			</Loading>
 		</InfoLayout>
+	);
+}
+function StatusOrder(props) {
+	const { status, listStatus } = props;
+
+	return (
+		<div className={cx("statuses", status.replace("_", "-"))}>
+			<div className={cx("title")}>{constants[status.toUpperCase()]}</div>
+			<PropDisplay
+				name="status-header"
+				tail=""
+				title={constants.STATUS_ODER}
+				value={constants.RECORD_TIME}
+			/>
+			<div className={cx("content")}>
+				{listStatus.map((status) => {
+					console.log(status);
+					let name = "status";
+					if (statusOrder.canceled === status.type) {
+						name = "canceled";
+					} else if (statusOrder.completed === status.type) {
+						name = "completed";
+					}
+					return (
+						<PropDisplay
+							name={name}
+							tail=""
+							title={constants[status.type.toUpperCase()]}
+							value={displayTime(status.date)}
+						/>
+					);
+				})}
+			</div>
+		</div>
+	);
+}
+
+function Changer(props) {
+	const { order } = props;
+	const sumAllProduct = (array) => {
+		let sum = 0;
+		array.forEach((element) => {
+			sum += element.total;
+		});
+		return sum;
+	};
+	return (
+		<div className={cx("changer")}>
+			<div className={cx("title")}>Thanh toán</div>
+			<div className={cx("content")}>
+				<PropDisplay
+					name="type-pay"
+					tail=":"
+					title={constants.PAYMENT_METHOD}
+					value={order.paymentMethod}
+				/>
+				<PropDisplay
+					name="pay"
+					tail=""
+					title={constants.PROVISIONAL}
+					value={displayMoney(sumAllProduct(order.items), false)}
+				/>
+				<PropDisplay
+					name="pay"
+					tail=""
+					title={constants.DISCOUNT}
+					value={order.discount ? `(${displayMoney(order.discount, false)})` : ""}
+				/>
+				<PropDisplay
+					name="pay"
+					tail=""
+					title={constants.TRANSPORT_FEE}
+					value={order.transportFee ? `${displayMoney(order.transportFee, false)}` : ""}
+				/>
+				{order.paymentMethod !== constants.CASH_ON_DELIVERY && (
+					<>
+						<PropDisplay
+							name="total-play"
+							tail=""
+							title={constants.TOTAL_MONEY}
+							value={displayMoney(order.total)}
+						/>
+						<PropDisplay
+							name="pay"
+							tail=""
+							title={constants.PAID}
+							value={`(${displayMoney(order.paid)})`}
+						/>
+					</>
+				)}
+				<PropDisplay
+					name="total-done"
+					tail=""
+					title={constants.TOTAL_DONE}
+					value={displayMoney(order.total - order.paid)}
+				/>
+			</div>
+		</div>
+	);
+}
+function Transport(props) {
+	const { order } = props;
+	return (
+		<div className={cx("transport")}>
+			<div className={cx("title")}>{constants.TRANSPORT}</div>
+			<div className={cx("content")}>
+				<PropDisplay
+					name="transport"
+					title={constants.TRANSPORT}
+					value={order.shippingMethod}
+				/>
+				<PropDisplay
+					name="transport"
+					title={constants.SHIPPING_CODE}
+					value={order.shippingCode}
+				/>
+				<PropDisplay
+					name="transport-fee"
+					title={constants.TRANSPORT_FEE}
+					value={displayMoney(order.transportFee)}
+				/>
+			</div>
+		</div>
+	);
+}
+function Address(props) {
+	const { shippingInfo, user = null } = props;
+	return (
+		<div className={cx("address")}>
+			<div className={cx("title")}>Địa chỉ người nhận</div>
+			<div className={cx("content")}>
+				<PropDisplay
+					name="address"
+					title={constants.ACCOUNT}
+					value={
+						user ? (
+							<Popper.UserDetail
+								user={user}
+								type={typeUser.customer}
+							>
+								<Link
+									to={generatePath(PageConfig.customer.route, {
+										id: user.id,
+									})}
+									target="_blank"
+								>
+									<div className={"single-line"}>{user.email}</div>
+								</Link>
+							</Popper.UserDetail>
+						) : (
+							constants.NOT_HAVE
+						)
+					}
+				/>
+				<PropDisplay
+					name="address"
+					title={constants.NAME}
+					value={shippingInfo.fullName}
+				/>
+				<PropDisplay
+					name="address"
+					title={constants.PHONE_NUMBER}
+					value={shippingInfo.phone}
+				/>
+				<PropDisplay
+					name="address"
+					title={constants.ADDRESS}
+					value={displayAddress(shippingInfo)}
+				/>
+			</div>
+		</div>
 	);
 }
 function PropDisplay(props) {

@@ -4,9 +4,8 @@
 }
 .display {
 	display: grid;
-	max-width: 1080px;
-	width: 1080px;
-	grid-template-columns: 65% 35%;
+	width: 1600px;
+	grid-template-columns: 75% 24%;
 	gap: 16px;
 	padding: 16px;
 }
@@ -23,17 +22,7 @@
 .pay-prop {
 	justify-content: space-between;
 }
-.total-play {
-	padding-top: 8px;
-	justify-content: space-between;
-	border-top: 1px solid var(--border);
-	align-items: flex-end;
-	.prop-total-pay {
-		font-size: 18px;
-		font-weight: 500px;
-		color: var(--red-pink);
-	}
-}
+
 .prop-title {
 	white-space: nowrap;
 }
@@ -45,7 +34,8 @@
 
 .address,
 .changer,
-.statuses {
+.statuses,
+.transport {
 	width: 100%;
 	.title {
 		padding: 8px;
@@ -68,6 +58,7 @@
 		background-color: var(--primaryDark);
 	}
 }
+
 .changer {
 	.title {
 		color: white;
@@ -98,6 +89,13 @@
 }
 .statuses {
 	.title {
+		background-color: var(--primaryDark);
+		color: white;
+	}
+}
+.shipping,
+.transport {
+	.title {
 		background-color: var(--primary);
 		color: white;
 	}
@@ -125,11 +123,39 @@
 	display: flex;
 	justify-content: space-between;
 	gap: 16px;
-	.btn-next,
+	.btn-next {
+		white-space: nowrap;
+		flex: 2;
+	}
 	.btn-cancel {
+		white-space: nowrap;
 		flex: 1;
 	}
 	.btn-cancel {
+		color: var(--red-pink);
+	}
+}
+.btn-completed {
+	background-color: var(--enable);
+}
+.image {
+	width: 100px;
+	height: 100px;
+}
+
+.total-play-prop,
+.total-done-prop {
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 8px;
+	border-top: 1px solid var(--border);
+	.total-play-value {
+		font-weight: 500;
+		color: var(--red-pink);
+	}
+	.total-done-value {
+		font-weight: 600;
+		font-size: 18px;
 		color: var(--red-pink);
 	}
 }

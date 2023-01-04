@@ -40,7 +40,7 @@ function LoadingDialog(props) {
 					style={{ height: "200px", width: "200px" }}
 					autoplay
 					loop
-					src={loadingAnim}
+					src={anim}
 				/>
 			</div>
 		) : (
@@ -52,7 +52,7 @@ function LoadingDialog(props) {
 		switch (editMode.statusLoad) {
 			case loadStatus.error:
 			case loadStatus.success:
-				timeOut = setTimeout(() => dispatchEditMode(actions.setStatusLoad("")), 10000);
+				timeOut = setTimeout(() => dispatchEditMode(actions.setStatusLoad("")), 1500);
 				break;
 		}
 		//	return timeOut && clearTimeout(timeOut);

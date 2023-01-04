@@ -25,6 +25,7 @@ const sexProps = [
 function ProfileForm(props) {
 	const {
 		user,
+		setUser,
 		type = typeFeature.isCurrent,
 		isEdit = false,
 		handleAction,
@@ -33,7 +34,6 @@ function ProfileForm(props) {
 		className,
 	} = props;
 	const form = useForm({ ...user });
-	console.log(user);
 	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	let typeDisplay = isEdit ? values : user;
 	const emptyFunction = () => {
@@ -54,8 +54,12 @@ function ProfileForm(props) {
 				...values,
 				avatar: response.avatar,
 			});
-			dispatchEditMode(actions.setStatusIsSuccess());
+			setUser({
+				...user,
+				avatar: response.avatar,
+			});
 			dispatchEditMode(actions.setResetAll());
+			dispatchEditMode(actions.setStatusIsSuccess());
 		} else {
 			dispatchEditMode(actions.setStatusIsError());
 		}
@@ -81,9 +85,7 @@ function ProfileForm(props) {
 						src={typeDisplay.avatar}
 					/>
 				</div>
-				{type === typeFeature.isCurrent && (
-					<UploadAvatar actionUpload={actionUpload} />
-				)}
+				{type === typeFeature.isCurrent && <UploadAvatar actionUpload={actionUpload} />}
 			</div>
 
 			<div className={cx("basic")}>
@@ -94,6 +96,7 @@ function ProfileForm(props) {
 					onChange={isEdit ? handleInputChange : emptyFunction}
 					required={profileProp.email.required}
 					error={errors && errors.email ? errors.email : ""}
+					disabled={true}
 				/>
 				<div className={cx("last-first-name")}>
 					<Controls.Input

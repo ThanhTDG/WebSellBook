@@ -1,10 +1,10 @@
-import statusReceipt from "~/stores/Receipt/statusReceipt";
+import statusOrder from "~/stores/Order/statusOrder";
 
 const receipts = [
 	{
 		id: 1,
 		pay: 144000,
-		status: statusReceipt.notProcessed,
+		status: statusOrder.notProcessed,
 		address: {
 			id: "6390023e68b6bce81199e74d",
 			fullName: "Nguyen Van An",
@@ -15,7 +15,7 @@ const receipts = [
 			address: "17 Phù Đổng Thiên Vương",
 		},
 		acceptAnOderTime: "",
-		statuses: [{ date: Date.now(), type: statusReceipt.notProcessed }],
+		statuses: [{ date: Date.now(), type: statusOrder.notProcessed }],
 		user: {
 			id: "639208cdc2538b0b44bda379",
 			email: "haclamthien12@gmail.com",
@@ -33,9 +33,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 			{
 				id: "634ed8e4f6a3a7266d99276d",
@@ -46,9 +44,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 			{
 				id: "634ed8e4f6a3a7266d99276d",
@@ -59,9 +55,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 			{
 				id: "634ed8e4f6a3a7266d99276d",
@@ -72,9 +66,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 			{
 				id: "634ed8e4f6a3a7266d99276d",
@@ -85,9 +77,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 			{
 				id: "634ed8e4f6a3a7266d99276d",
@@ -98,16 +88,14 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 		],
 	},
 	{
 		id: 2,
 		total: 144000,
-		status: statusReceipt.processing,
+		status: statusOrder.processing,
 		address: {
 			id: "6390023e68b6bce81199e74d",
 			fullName: "Nguyen Van An",
@@ -134,9 +122,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 		],
 	},
@@ -144,7 +130,7 @@ const receipts = [
 	{
 		id: 3,
 		total: 144000,
-		status: statusReceipt.shipping,
+		status: statusOrder.shipping,
 		address: {
 			id: "6390023e68b6bce81199e74d",
 			fullName: "Nguyen Van An",
@@ -171,16 +157,14 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 		],
 	},
 	{
 		id: 4,
 		total: 144000,
-		status: statusReceipt.completed,
+		status: statusOrder.completed,
 		address: {
 			id: "6390023e68b6bce81199e74d",
 			fullName: "Nguyen Van An",
@@ -207,16 +191,14 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 		],
 	},
 	{
 		id: 5,
 		total: 144000,
-		status: statusReceipt.canceled,
+		status: statusOrder.canceled,
 		address: {
 			id: "6390023e68b6bce81199e74d",
 			fullName: "Nguyen Van An",
@@ -243,9 +225,7 @@ const receipts = [
 					_id: "634d8da516d1688abe54d4ef",
 					name: "Light novel",
 				},
-				images: [
-					"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-				],
+				images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 			},
 		],
 	},

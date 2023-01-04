@@ -34,9 +34,7 @@ export const postProduct = async (value) => {
 		supplier: "Nhà Xuất Bản Kim Đồng",
 		publisher: "NXB Kim Đồng",
 		publisherDate: "2022-04-30",
-		images: [
-			"https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg",
-		],
+		images: ["https://salt.tikicdn.com/ts/product/01/93/08/61e928ce145c06a11a483ed49d826da2.jpg"],
 		weight: 350,
 		height: 19,
 		width: 13,
@@ -72,6 +70,12 @@ export const upLoadImages = async (data = []) => {
 		headers: {
 			"content-type": "multipart/form-data",
 		},
+	});
+	return response;
+};
+export const deleteImages = async (data = []) => {
+	const response = await request.post(`/books/destroy`, {
+		images: data,
 	});
 	return response;
 };

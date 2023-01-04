@@ -12,16 +12,19 @@ import { actions } from "~/stores";
 import { useEffect } from "react";
 import { useState } from "react";
 import Loading from "~/components/Loading";
+import useForm from "~/hooks/useForm";
 const cx = classNames.bind(styles);
 
 function CreateProduct() {
 	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, {
 		...initStates.editModeState,
 		enableEdit: true,
+		isChange: true,
 	});
 	const [categories, dispatchCategories] = useReducer(reducers.CategoriesReduce, initStates.categoriesState);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [product, setProduct] = useState(initStates.product);
+	const form = useForm(product);
 	useEffect(() => {
 		fetchApi();
 		setIsLoading(true);
@@ -47,6 +50,7 @@ function CreateProduct() {
 					isEdit={true}
 					type={typeFeature.isNew}
 					product={product}
+					form={form}
 					setProduct={setProduct}
 					categories={categories}
 				/>

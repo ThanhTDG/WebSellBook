@@ -18,7 +18,6 @@ import { fakeSellBook } from "./utils/util";
 const cx = classNames.bind(styles);
 function App() {
 	const [state, dispatch] = useGlobalState();
-	console.log(fakeSellBook());
 	const [isLoading, setIsLoading] = useState(true);
 	const setPage = (route, index) => {
 		const Page = route.component;
@@ -42,10 +41,7 @@ function App() {
 	};
 	useState(() => {
 		const checkLogin = async () => {
-			const [profile, permissions] = await Promise.all([
-				getProfile(),
-				getPermission(),
-			]);
+			const [profile, permissions] = await Promise.all([getProfile(), getPermission()]);
 			console.log(profile, permissions);
 			if (profile && permissions) {
 				dispatch(
@@ -61,11 +57,7 @@ function App() {
 	}, []);
 
 	const getPathsPrivate = () => {
-		return (
-			<Routes>
-				{privateRoutes.map((route, index) => setPage(route, index))}
-			</Routes>
-		);
+		return <Routes>{privateRoutes.map((route, index) => setPage(route, index))}</Routes>;
 	};
 	const getPathsPublic = () => {
 		return (
@@ -87,9 +79,7 @@ function App() {
 		<div className={cx("app")}>
 			<div className={cx("wrapper")}>
 				<Loading isLoading={isLoading}>
-					<BrowserRouter>
-						{state.isLogin ? getPathsPrivate() : getPathsPublic()}
-					</BrowserRouter>
+					<BrowserRouter>{state.isLogin ? getPathsPrivate() : getPathsPublic()}</BrowserRouter>
 				</Loading>
 			</div>
 		</div>

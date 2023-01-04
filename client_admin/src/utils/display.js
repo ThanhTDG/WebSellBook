@@ -27,11 +27,12 @@ export const displayDay = (date) => {
 };
 export const displayAddress = (address) => {
 	const orderDisplay = ["ward", "district", "region"];
-	let string = `${address.address}`;
-	orderDisplay.forEach((order) => {
-		if (address[order]) {
-			string += `, ${address[order]}`;
+	let string = `${address.address ? `${address.address}, ` : ""}`;
+	orderDisplay.forEach((type) => {
+		if (address[type]) {
+			string += `${address[type] ? `${address[type]}, ` : ""}`;
 		}
 	});
-	return string.trim();
+
+	return string.slice(0, string.length - 2);
 };

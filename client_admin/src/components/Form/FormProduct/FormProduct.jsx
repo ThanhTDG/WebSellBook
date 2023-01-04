@@ -1,10 +1,4 @@
-import React, {
-	useState,
-	useEffect,
-	useLayoutEffect,
-	useReducer,
-	useMemo,
-} from "react";
+import React, { useState, useEffect, useLayoutEffect, useReducer, useMemo } from "react";
 import { Box, FormControl } from "@mui/material";
 import OutlinedBox from "~/components/OutlinedBox";
 import Form from "~/components/Form";
@@ -52,15 +46,7 @@ const steps = [
 ];
 const { confirm } = Modal;
 function FormProduct(props) {
-	const {
-		editMode,
-		dispatchEditMode,
-		type = typeFeature.isEdit,
-		product,
-		setProduct,
-		categories,
-	} = props;
-	const form = useForm(product);
+	const { editMode, dispatchEditMode, form, type = typeFeature.isEdit, product, setProduct, categories } = props;
 	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	const navigate = useNavigate();
 	const [step, setStep] = useState(type === typeFeature.isNew ? 0 : -1);
@@ -113,9 +99,7 @@ function FormProduct(props) {
 							//			response = await putProduct(values);
 							if (response) {
 								dispatchEditMode(actions.setStatusIsSuccess());
-								navigate(
-									generatePath(PageConfig.product.route, { id: values.id })
-								);
+								navigate(generatePath(PageConfig.product.route, { id: values.id }));
 							} else {
 								dispatchEditMode(actions.setStatusIsError());
 								message.error("Thất bại");
@@ -187,6 +171,9 @@ function SwitchStep({ step, setStep, isChange, action }) {
 		<div className={cx("feature")}>
 			{step > 0 && (
 				<Controls.Button
+					onClick={() => {
+						setStep(step - 1);
+					}}
 					outline
 					className={cx("pre-step")}
 				>
@@ -204,15 +191,7 @@ function SwitchStep({ step, setStep, isChange, action }) {
 }
 
 function CompInfo(props) {
-	const {
-		form,
-		product,
-		step,
-		categories,
-		dispatchEditMode,
-		editMode,
-		setProduct,
-	} = props;
+	const { form, product, step, categories, dispatchEditMode, editMode, setProduct } = props;
 	const { values, setValues, errors, setError, handleInputChange } = form;
 	const emptyFunction = () => {
 		dispatchEditMode(actions.setIsChange(true));
@@ -231,14 +210,7 @@ function CompInfo(props) {
 				dispatchEditMode={dispatchEditMode}
 			/>
 		);
-	}, [
-		values.name,
-		values.originalPrice,
-		values.discountRate,
-		values.category,
-		product,
-		editMode.enableEdit,
-	]);
+	}, [values.name, values.originalPrice, values.discountRate, values.category, product, editMode.enableEdit]);
 	const detailsMemo = useMemo(() => {
 		return (
 			<Details
@@ -303,15 +275,7 @@ function CompInfo(props) {
 }
 
 function CriticalInformation(props) {
-	const {
-		product,
-		setValues,
-		errors,
-		setError,
-		handleInputChange,
-		dispatchEditMode,
-		categories,
-	} = props;
+	const { product, setValues, errors, setError, handleInputChange, dispatchEditMode, categories } = props;
 
 	const handleChangeIdCategory = (id) => {
 		dispatchEditMode(actions.setEnableEdit(true));
@@ -388,14 +352,7 @@ function CriticalInformation(props) {
 	);
 }
 function Details(props) {
-	const {
-		product,
-		setValues,
-		errors,
-		setError,
-		handleInputChange,
-		dispatchEditMode,
-	} = props;
+	const { product, setValues, errors, setError, handleInputChange, dispatchEditMode } = props;
 	const [status, setStatus] = useState(propsBook.status.optionNew[0].id);
 	const handleStatus = (e, value) => {
 		setStatus(value);
@@ -556,16 +513,7 @@ function Details(props) {
 	);
 }
 function DescNImage(props) {
-	const {
-		product,
-		setValues,
-		setProduct,
-		errors,
-		setError,
-		handleInputChange,
-		editMode,
-		dispatchEditMode,
-	} = props;
+	const { product, setValues, setProduct, errors, setError, handleInputChange, editMode, dispatchEditMode } = props;
 	const [imagePick, setImagePick] = useState(null);
 	console.log(product);
 	useEffect(() => {
@@ -574,18 +522,31 @@ function DescNImage(props) {
 		}
 	}, [editMode.enableEdit]);
 	const handleRemove = (index) => {
-		let images = product.images.filter(
-			(item) => item !== product.images[index]
-		);
+		let images = product.images.filter((item) => item !== product.images[index]);
 		console.log(images);
 		setValues({
 			...product,
 			images: images,
 		});
 		dispatchEditMode(actions.setIsChange(true));
+		setImagePick(null);
 	};
 	const handleImagePick = (index) => {
 		setImagePick(index);
+	};
+	const handleSetDefault = () => {
+		if (imagePick) {
+			let list = [...product.images];
+			list[0] = product.images[imagePick];
+			list[imagePick] = product.images[0];
+
+			setValues({
+				...product,
+				images: [...list],
+			});
+			dispatchEditMode(actions.setIsChange(true));
+			setImagePick(null);
+		}
 	};
 	const handleUploadImages = (images = []) => {
 		let newListImage = images.map((image) => image);
@@ -595,17 +556,14 @@ function DescNImage(props) {
 		dispatchEditMode(actions.setStatusIsLoading());
 		const response = await productService.upLoadImages(images, product.id);
 		if (response) {
+			setImagePick(null);
 			console.log(response, "image upload");
 			let newImages = product.images.concat(response.paths);
-			console.log(newImages);
 			let newProduct = {
 				...product,
 				images: newImages,
 			};
-			const productResponse = await productService.updateProduct(
-				newProduct,
-				product.id
-			);
+			const productResponse = await productService.updateProduct(newProduct, product.id);
 			if (productResponse) {
 				setProduct(productResponse);
 				dispatchEditMode(actions.setStatusIsSuccess());
@@ -637,11 +595,7 @@ function DescNImage(props) {
 					<div className={cx("img-default")}>
 						<Image
 							className={cx("img")}
-							src={
-								product.images && product.images.length > 0
-									? product.images[0]
-									: ""
-							}
+							src={product.images && product.images.length > 0 ? product.images[0] : ""}
 						></Image>
 					</div>
 					<div className={cx("wrapper-images")}>
@@ -652,15 +606,10 @@ function DescNImage(props) {
 										? constants.MAX_IMAGES_PER_PRODUCT - product.images.length
 										: constants.MAX_IMAGES_PER_PRODUCT
 								}
-								disabled={
-									product.image &&
-									constants.MAX_IMAGES_PER_PRODUCT === product.images.length
-								}
+								disabled={product.image && constants.MAX_IMAGES_PER_PRODUCT === product.images.length}
 								title={
 									<div className={cx("title-upload")}>
-										<div className={cx("text-upload")}>
-											{constants.UPLOAD_IMAGE}
-										</div>
+										<div className={cx("text-upload")}>{constants.UPLOAD_IMAGE}</div>
 										{icons.Button({ className: cx("icon-upload") }).upload}
 									</div>
 								}
@@ -669,10 +618,11 @@ function DescNImage(props) {
 							/>
 							{imagePick && imagePick !== 0 ? (
 								<Controls.Button
+									onClick={handleSetDefault}
 									outline
 									className={cx("btn-set-default")}
 								>
-									Đặt làm mặt định
+									{constants.SET_DEFAULT}
 								</Controls.Button>
 							) : (
 								""
@@ -689,14 +639,7 @@ function DescNImage(props) {
 											viewDetail={index !== 0}
 											onClick={() => handleImagePick(index)}
 											handleRemove={() => handleRemove(index)}
-											className={cx(
-												"image-card",
-												index === 0
-													? "active"
-													: imagePick === index
-													? "change"
-													: ""
-											)}
+											className={cx("image-card", index === 0 ? "active" : imagePick === index ? "change" : "")}
 											src={image}
 										/>
 									))}

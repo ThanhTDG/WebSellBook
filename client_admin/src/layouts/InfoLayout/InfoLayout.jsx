@@ -37,6 +37,7 @@ function InfoLayout(props) {
 		showEdit = true,
 		textConfirm,
 		typeModel = "",
+		moreName = "",
 	} = props;
 	const [navbar, setNavbar] = useState(false);
 	let pageName = "";
@@ -45,11 +46,7 @@ function InfoLayout(props) {
 		console.log(editMode);
 		if (!enable && editMode.isChange === true) {
 			confirm({
-				title: (
-					<div className={cx("title-confirm")}>
-						{"Thoát khỏi chế độ chỉnh sửa ?"}
-					</div>
-				),
+				title: <div className={cx("title-confirm")}>{"Thoát khỏi chế độ chỉnh sửa ?"}</div>,
 				content: `Bạn muốn thoát khỏi chế độ chỉnh sửa ${typeModel} hiện tại? Lưu ý tiến độ và những gì bạn thay đổi sẽ bị loại bỏ !!!`,
 				centered: true,
 				onOk: () => {
@@ -63,9 +60,7 @@ function InfoLayout(props) {
 	useEffect(() => {
 		if (editMode.isChange && !editMode.enableEdit) {
 			confirm({
-				title: (
-					<div className={cx("title-confirm")}>{"Bật chế độ chỉnh sửa ?"}</div>
-				),
+				title: <div className={cx("title-confirm")}>{"Bật chế độ chỉnh sửa ?"}</div>,
 				content: `Bạn bật chế độ chỉnh sửa ${typeModel}. Bật chế độ chỉnh sửa sẽ cho phép bạn chỉnh sửa ${typeModel} hiện tại !!!`,
 				centered: true,
 				onOk: () => {
@@ -87,7 +82,7 @@ function InfoLayout(props) {
 			path = path.replace(id, ":id");
 		}
 		let key = getKey("route", path);
-		return PageConfig[key].label;
+		return `${PageConfig[key].label} ${moreName}`.trim();
 	};
 	pageName = getPageName();
 	const actionFeature = {
@@ -111,11 +106,7 @@ function InfoLayout(props) {
 	};
 	const onClickDelete = () => {
 		confirm({
-			title: (
-				<div
-					className={cx("title-confirm")}
-				>{`Bạn muốn xóa ${typeModel} hiện tại?`}</div>
-			),
+			title: <div className={cx("title-confirm")}>{`Bạn muốn xóa ${typeModel} hiện tại?`}</div>,
 			content: `Bạn muốn xóa ${typeModel} hiện tại? Lưu ý mọi thông tin về ${typeModel} sẽ biến mất`,
 			centered: true,
 			onOk: () => {
@@ -141,11 +132,7 @@ function InfoLayout(props) {
 			<div className={cx("header")}>
 				<Header
 					showLogo={true}
-					left={
-						<div className={cx(navbar ? "title" : "non-display", "page-name")}>
-							{pageName}
-						</div>
-					}
+					left={<div className={cx(navbar ? "title" : "non-display", "page-name")}>{pageName}</div>}
 					right={
 						<div className={cx(navbar ? "title" : "non-display", "feature")}>
 							{newFeature}
@@ -160,23 +147,10 @@ function InfoLayout(props) {
 					{newFeature}
 					{showFeature && typeFeatureComp}
 				</div>
-				<div
-					className={cx(
-						"content",
-						editMode
-							? editMode.enableEdit
-							: false && onClickChange
-							? "more-bottom"
-							: ""
-					)}
-				>
+				<div className={cx("content", editMode ? editMode.enableEdit : false && onClickChange ? "more-bottom" : "")}>
 					{children}
 				</div>
-				{displayAction(
-					type,
-					editMode ? editMode.enableEdit : false,
-					onClickChange
-				) && (
+				{displayAction(type, editMode ? editMode.enableEdit : false, onClickChange) && (
 					<TypeAction
 						isChange={editMode ? editMode.isChange : false}
 						type={type}
@@ -213,9 +187,7 @@ function TypeFeature(props) {
 					)}
 					{showEdit && (
 						<div className={cx("edit", value ? "enable" : "")}>
-							<div className={cx("label-edit", value ? "active" : "")}>
-								{constants.EDIT}
-							</div>
+							<div className={cx("label-edit", value ? "active" : "")}>{constants.EDIT}</div>
 							<div className={cx("switch-edit")}>
 								<Controls.Switch
 									checked={value}
