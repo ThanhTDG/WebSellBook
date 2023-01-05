@@ -5,17 +5,21 @@ const Category = require("../models/category");
 
 const ErrorHandler = require("../utils/errorHandler");
 
+// const util = require('util');
+
+// util.ins
+
 /**
- * @param {Category} value Category
+ * @param {Category} data Category
  */
-const category2Json = (value) => {
-  const obj = value.toObject();
+const category2Json = (data) => {
+  const obj = data.toObject();
   delete obj.__v;
   delete obj.parent;
   delete obj.tree;
   delete obj.createdAt;
   delete obj.updatedAt;
-  obj.children = value.children;
+  obj.children = data.children;
   return obj;
 };
 
@@ -40,7 +44,11 @@ const categories2Json = (array) => {
  */
 const getCategories = async (req, res) => {
   try {
-    const data = await Category.find({ parent: null }).sort("_id");
+    const data = await Category.find(
+      { parent: null },
+      {},
+      { hasChildren: true }
+    ).sort("_id");
     await res.json(categories2Json(data));
   } catch (error) {
     await res.status(error.statusCode || 400).json({ message: error.message });
@@ -48,10 +56,10 @@ const getCategories = async (req, res) => {
 };
 
 /**
- * @param {Book} value Book
+ * @param {Book} data Book
  */
-const book2Json = (value) => {
-  let obj = value.toObject();
+const book2Json = (data) => {
+  let obj = data.toObject();
   delete obj.__v;
   delete obj.category;
   delete obj.tree;
@@ -60,7 +68,7 @@ const book2Json = (value) => {
   delete obj.textSearch;
   // delete obj.createdAt;
   delete obj.updatedAt;
-  const { shortDes, dimension, numOfReviews, rating, ratingRate } = value;
+  const { shortDes, dimension, numOfReviews, rating, ratingRate } = data;
   obj = {
     ...obj,
     shortDes,

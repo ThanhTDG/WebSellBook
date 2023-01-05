@@ -1,8 +1,7 @@
-require("dotenv").config();
-
 const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
 
-const SALT = parseInt(process.env.SALT);
+dotenv.config();
 
 /**
  * Hash password
@@ -10,6 +9,7 @@ const SALT = parseInt(process.env.SALT);
  * @return A promise to be either resolved with the encrypted password salt or rejected with an Error
  */
 const hashPassword = async (password) => {
+  const SALT = parseInt(process.env.SALT);
   const salt = await bcrypt.genSalt(SALT);
   return await bcrypt.hash(password, salt);
 };

@@ -4,9 +4,30 @@ const Controller = require("../utils/controller");
 const { isEmpty } = require("../utils/utils");
 
 const BookController = class extends Controller {
-  constructor(getData, toJson) {
-    super(Book, getData, toJson);
+  constructor(getData, toJson, populate) {
+    super(Book, getData, toJson, populate);
   }
+
+  getAll = async (req, res) => {
+    try {
+      const { page = 0, limit = 0, status } = req.query;
+      const query = status ? { status } : {};
+      const options = {
+        page,
+        limit,
+        pagination: page && limit,
+        populate: this.populate,
+      };
+      const data = await this.model.paginate(query, options);
+      data.docs = data.docs.map((value) => this.toJson(value));
+
+      await res.json(data);
+    } catch (error) {
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
+    }
+  };
 
   /**
    * Upload images
@@ -25,14 +46,13 @@ const BookController = class extends Controller {
     }
   };
 
-  methods = () => ({
-    getAll: this.getAll,
-    get: this.get,
-    create: this.create,
-    update: this.update,
-    remove: this.remove,
-    uploadImgs: this.uploadImgs,
-  });
+  /**
+   * Destroy images
+   * @param {Request} req Request
+   * @param {Response} res Response
+   */
+  destroyImgs = async (req, res) =>
+    await res.json({ message: "Delete image successfully" });
 };
 
 /**
@@ -99,10 +119,11 @@ const getData = ({
 const toJson = (data) => {
   const obj = data.toObject();
   delete obj.__v;
+  delete obj.tree;
+  delete obj.textSearch;
   obj.id = data._id;
+  obj.category = data._category;
   return obj;
 };
 
-const controller = new BookController(getData, toJson);
-
-module.exports = controller.methods();
+module.exports = new BookController(getData, toJson, "_category");

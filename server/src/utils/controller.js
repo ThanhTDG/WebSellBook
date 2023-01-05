@@ -6,7 +6,7 @@ const ErrorHandler = require("./errorHandler");
  * Callback get data from body of request
  * @callback GetData
  * @param {Object} body Body of request
- * @returns {void}
+ * @returns {Object}
  */
 
 /**
@@ -21,11 +21,13 @@ const Controller = class {
    * @param {mongoose.Model} model
    * @param {GetData} getData
    * @param {ToJson} toJson
+   * @param {string|string[]} populate
    */
-  constructor(model, getData, toJson) {
+  constructor(model, getData, toJson, populate) {
     this.model = model;
-    this.getData = getData;
-    this.toJson = toJson;
+    this.getData = getData || ((body) => body);
+    this.toJson = toJson || ((data) => data);
+    this.populate = populate;
   }
 
   /**
@@ -40,15 +42,16 @@ const Controller = class {
         page,
         limit,
         pagination: page && limit,
+        populate: this.populate,
       };
       const data = await this.model.paginate({}, options);
-      if (this.toJson) {
-        data.docs = data.docs.map((value) => this.toJson(value));
-      }
+      data.docs = data.docs.map((value) => this.toJson(value));
 
       await res.json(data);
     } catch (error) {
-      await res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 
@@ -60,7 +63,7 @@ const Controller = class {
   get = async (req, res) => {
     try {
       const id = req.params.id;
-      const data = await this.model.findById(id);
+      const data = await this.model.findById(id).populate(this.populate);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
@@ -82,10 +85,14 @@ const Controller = class {
     try {
       const body = this.getData(req.body);
       const data = new this.model(body);
-      const newData = await data.save();
-      await res.status(201).json(this.toJson(newData));
+      await data.save();
+      await data.populate(this.populate);
+
+      await res.status(201).json(this.toJson(data));
     } catch (error) {
-      await res.status(400).json({ message: error.message });
+      await res
+        .status(error.statusCode || 400)
+        .json({ message: error.message });
     }
   };
 
@@ -99,7 +106,9 @@ const Controller = class {
       const id = req.params.id;
       const body = this.getData(req.body);
       const options = { new: true };
-      const data = await this.model.findByIdAndUpdate(id, body, options);
+      const data = await this.model
+        .findByIdAndUpdate(id, body, options)
+        .populate(this.populate);
       if (!data) {
         throw new ErrorHandler(400, `Document with {_id: '${id}'} not found`);
       }
@@ -134,14 +143,6 @@ const Controller = class {
         .json({ message: error.message });
     }
   };
-
-  methods = () => ({
-    getAll: this.getAll,
-    get: this.get,
-    create: this.create,
-    update: this.update,
-    remove: this.remove,
-  });
 };
 
 module.exports = Controller;

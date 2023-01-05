@@ -1,15 +1,10 @@
-require("dotenv").config();
-
-const {
-  NODE_ENV: { PROC },
-} = require("../constants");
-
+const Cart = require("../models/cart");
+const Customer = require("../models/customer");
 const User = require("../models/user");
 
+const { saveCookie, clearCookie } = require("../utils/cookie");
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
-
-const NODE_ENV = process.env.NODE_ENV;
 
 const user2json = ({
   _id,
@@ -22,6 +17,8 @@ const user2json = ({
   birthday,
   avatar,
   lastSession,
+  roles,
+  permissions,
 }) => ({
   _id,
   firstName,
@@ -33,6 +30,8 @@ const user2json = ({
   birthday,
   avatar,
   lastSession,
+  roles,
+  permissions,
 });
 
 /**
@@ -45,10 +44,10 @@ const signUp = async (req, res) => {
     const { firstName, lastName, email, phone, password } = req.body;
     const avatar = generateAvatar(firstName);
     const body = { firstName, lastName, email, phone, password, avatar };
-    const data = new User(body);
-    const newData = await data.save();
+    const data = new Customer(body);
+    await data.save();
 
-    const user = user2json(newData);
+    const user = user2json(data);
     await res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     await res.status(400).json({ message: error.message });
@@ -63,18 +62,20 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const user = req.user;
-    const token = user.generateAuthToken();
-    const cookieOpts = {
-      signed: true,
-      httpOnly: true,
-      secure: NODE_ENV === PROC,
-      maxAge: process.env.JWT_EXPIRES,
-      sameSite: NODE_ENV === PROC ? "none" : "lax",
-    };
 
-    await res
-      .cookie("token", token, cookieOpts)
-      .json({ token, user: user2json(user) });
+    if (!user.isAdmin()) {
+      const cart =
+        (await Cart.findOne({ userId: user.id })) ||
+        new Cart({ userId: user.id });
+      const cookieCart = new Cart(req.cookies.cart || null);
+      cart.merge(cookieCart);
+      cookieCart.clearCookie(res);
+    }
+
+    const token = user.generateAuthToken();
+    await saveCookie(res, "token", token, true);
+
+    await res.json({ token, user: user2json(user) });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -94,19 +95,11 @@ const signOut = async (req, res) => {
           .json({ message: err.message });
       }
 
-      const cookieOpts = {
-        httpOnly: true,
-        secure: NODE_ENV === PROC,
-        maxAge: process.env.JWT_EXPIRES,
-        sameSite: NODE_ENV === PROC ? "none" : "lax",
-      };
-
-      await res
-        .clearCookie("token", cookieOpts)
-        .json({ message: "Log out successful" });
+      await clearCookie(res, "token", false);
+      await res.json({ message: "Log out successful" });
     });
   } catch (error) {
-    await res.status(401).json({ message: error.message });
+    await res.status(error.statusCode || 401).json({ message: error.message });
   }
 };
 
@@ -153,15 +146,20 @@ const setProfile = async (req, res) => {
   try {
     const { firstName, lastName, email, phone, sex, birthday } = req.body;
     const user = req.user;
+    if (user.isRootAdmin()) {
+      throw new ErrorHandler(403, "Cannot modified admin account");
+    }
+
     const data = await User.findByIdAndUpdate(
       user._id,
       { firstName, lastName, email, phone, sex, birthday },
       { new: true }
     );
 
-    await res
-      .status(200)
-      .json({ message: "User modified successfully", user: user2json(data) });
+    await res.json({
+      message: "User modified successfully",
+      user: user2json(data),
+    });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });
   }
@@ -178,6 +176,7 @@ const uploadAvatar = async (req, res) => {
     const user = req.user;
     user.avatar = file.path;
     await user.save();
+
     await res.json({
       message: "Avatar uploaded successfully",
       avatar: user.avatar,
@@ -203,6 +202,7 @@ const changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
+
     await res.json({ message: "Change password successfully" });
   } catch (error) {
     await res.status(error.statusCode || 401).json({ message: error.message });

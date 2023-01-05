@@ -1,10 +1,10 @@
 FROM node:lts-alpine
 
-ENV NODE_ENV=production
-
 LABEL authors="Nhu Van Huu"
 LABEL description="Client website ToiMuaSach"
 LABEL version="0.0.1"
+
+ENV NODE_ENV=production
 
 WORKDIR /usr/app/toi-mua-sach/client
 

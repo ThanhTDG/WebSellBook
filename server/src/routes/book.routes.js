@@ -1,18 +1,40 @@
 const express = require("express");
 
+const {
+  ACTION,
+  SUBJECT: { BOOK },
+} = require("../constants");
+
 const controller = require("../controllers/book.controller");
 
-const { uploadBookImgs } = require("../middlewares/upload.middleware");
+const { access } = require("../middlewares/access.middleware");
+const {
+  uploadImgs,
+  destroyImgs,
+} = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
 
-router.get("/", controller.getAll);
-router.post("/", controller.create);
+const canAccess = access(BOOK);
 
-router.get("/:id", controller.get);
-router.put("/:id", controller.update);
-router.delete("/:id", controller.remove);
+router.get("/", canAccess(ACTION.READ), controller.getAll);
+router.post("/", canAccess(ACTION.CREATE), controller.create);
 
-router.post("/:id/upload", uploadBookImgs, controller.uploadImgs);
+router.post(
+  "/upload",
+  canAccess(ACTION.UPDATE),
+  uploadImgs("books"),
+  controller.uploadImgs
+);
+router.post(
+  "/destroy",
+  canAccess(ACTION.UPDATE),
+  destroyImgs("books"),
+  controller.destroyImgs
+);
+
+router.get("/:id", canAccess(ACTION.READ), controller.get);
+router.put("/:id", canAccess(ACTION.UPDATE), controller.update);
+router.delete("/:id", canAccess(ACTION.DELETE), controller.remove);
 
 module.exports = router;

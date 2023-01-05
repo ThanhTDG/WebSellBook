@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const paginate = require("mongoose-paginate-v2");
 const validator = require("validator").default;
 
-const { ROLE } = require("../constants");
-
 const ErrorHandler = require("../utils/errorHandler");
 const { generateAvatar } = require("../utils/generateAvatar");
 const { hashPassword, validatePassword } = require("../utils/hashPassword");
@@ -12,38 +10,6 @@ const { signToken } = require("../utils/jwt");
 mongoose.plugin(paginate);
 
 const Schema = mongoose.Schema;
-
-const addressSchema = new Schema({
-  phone: {
-    type: String,
-    require: true,
-    trim: true,
-    validate(value) {
-      if (!validator.isMobilePhone(value, "vi-VN")) {
-        throw new Error("Phone number is invalid");
-      }
-    },
-  },
-  region: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  district: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  ward: {
-    type: String,
-    require: true,
-    trim: true,
-  },
-  address: {
-    type: String,
-    trim: true,
-  },
-});
 
 const userSchema = new Schema(
   {
@@ -66,7 +32,7 @@ const userSchema = new Schema(
       lowercase: true,
       require: true,
       trim: true,
-      unique: true,
+      // unique: true,
       validate: {
         validator: (value) => validator.isEmail(value),
         message: "Email is invalid",
@@ -76,7 +42,7 @@ const userSchema = new Schema(
       type: String,
       require: true,
       trim: true,
-      unique: true,
+      // unique: true,
       validate: {
         validator: (value) => validator.isMobilePhone(value, "vi-VN"),
         message: "Phone number is invalid",
@@ -110,21 +76,9 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: function () {
-        return generateAvatar(this.firstName);
-      },
-    },
-    addresses: [addressSchema],
-    favorites: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Book",
-      },
-    ],
-    role: {
-      type: String,
-      enum: Object.values(ROLE),
-      default: ROLE.MEMBER,
+      // default: function () {
+      //   return generateAvatar(this.firstName);
+      // },
     },
     lastSession: {
       type: Date,
@@ -134,17 +88,33 @@ const userSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
+userSchema.index({ email: 1, __t: 1 }, { unique: true });
+userSchema.index({ phone: 1, __t: 1 }, { unique: true });
+
 userSchema.virtual("fullName").get(function () {
   return `${this.lastName} ${this.firstName}`;
 });
 
 /**
  * Generate token
- * @returns {string}
  */
 userSchema.methods.generateAuthToken = function () {
   const token = signToken({ id: this.id });
   return token;
+};
+
+/**
+ * Is admin
+ */
+userSchema.methods.isAdmin = function () {
+  return this.__t === "Admin";
+};
+
+/**
+ * Is root admin
+ */
+userSchema.methods.isRootAdmin = function () {
+  return this.isAdmin() && this.username === "admin";
 };
 
 /**
