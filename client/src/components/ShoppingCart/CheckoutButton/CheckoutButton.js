@@ -22,7 +22,7 @@ const CheckoutButton = (props) => {
 
     const [haveGuide, setHaveGuide] = useState(false)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(1)
-    const [guideData, setGuideData]= useState({
+    const [guideData, setGuideData] = useState({
         orderCode: 20230104199524,
         total: 117600,
         fullName: 'User Name'
@@ -41,9 +41,11 @@ const CheckoutButton = (props) => {
     const [transportFee, setTransportFee] = useState(20000)
 
     const getAllAddress = async (page, limit) => {
-        const response = await AddressServices.getAll(page, limit)
-        setAddressDate(response)
-        console.log('all address', response)
+        try {
+            const response = await AddressServices.getAll(page, limit)
+            setAddressDate(response)
+            console.log('all address', response)
+        } catch (ex) { }
     }
     useEffect(() => {
         getAllAddress(1, 12)
@@ -119,14 +121,14 @@ const CheckoutButton = (props) => {
         var checkoutRes = await CheckoutServices.checkout(checkoutInfo)
         setIsLoading(false)
         console.log(checkoutRes)
-        if(checkoutRes.paymentMethod === paymentMethod[1]){
+        if (checkoutRes.paymentMethod === paymentMethod[1]) {
             setHaveGuide(true)
             setGuideData({
                 orderCode: checkoutRes.orderCode,
                 fullName: checkoutRes.shippingInfo.fullName,
                 total: checkoutRes.total
             })
-        }else{
+        } else {
             setIsOpen(!isOpen)
             props.refrestData()
         }
@@ -144,12 +146,38 @@ const CheckoutButton = (props) => {
             color: isActive ? 'white' : 'var(--Darkest)'
         }
     }
-    const handleAccept = ()=>{
+    const handleAccept = () => {
         setIsOpen(!isOpen)
         props.refrestData()
     }
-    const bankNameItemStyle={
-        display: selectedPaymentMethod === 3?'flex':'none'
+    const bankNameItemStyle = {
+        display: selectedPaymentMethod === 3 ? 'flex' : 'none'
+    }
+    const renderAddress = () => {
+        var toRenders = []
+        console.log(addressData)
+        if (addressData !== undefined) {
+            if (addressData.length > 0) {
+                toRenders.push(
+                    <div>
+                        <div className='add-address-items'>
+                            <button onClick={onLeftAddressChange}><img src={require('../../../assets/icons/ic-previou.png')} alt='ic-previous' /></button>
+                            <div id='slider-addres-container'>
+                                {
+                                    addressData.length > 0 ?
+                                        <AddressItem haveMinWidth={true} canRemove={false} addressData={addressData[currentAddressIndex]} hidePagniation={handleVisibilityPagniated} refrestData={refrestData} />
+                                        : ''
+                                }
+                            </div>
+                            <button onClick={onRightAddressChange}><img src={require('../../../assets/icons/ic-next.png')} alt='ic-next' /></button>
+                        </div>
+                    </div>
+                )
+            }
+        } else {
+            toRenders.push('')
+        }
+        return toRenders
     }
     return (
         <div className='add-address'>
@@ -223,21 +251,22 @@ const CheckoutButton = (props) => {
                             <div className='add-address-title'>Thông tin thanh toán</div>
                             <div className='add-address-contents'>
                                 {
-                                    addressData.length > 0 ?
-                                        <div>
-                                            {/* <div>Địa chỉ giao hàng</div> */}
-                                            <div className='add-address-items'>
-                                                <button onClick={onLeftAddressChange}><img src={require('../../../assets/icons/ic-previou.png')} alt='ic-previous' /></button>
-                                                <div id='slider-addres-container'>
-                                                    {
-                                                        addressData.length > 0 ?
-                                                            <AddressItem haveMinWidth={true} canRemove={false} addressData={addressData[currentAddressIndex]} hidePagniation={handleVisibilityPagniated} refrestData={refrestData} />
-                                                            : ''
-                                                    }
-                                                </div>
-                                                <button onClick={onRightAddressChange}><img src={require('../../../assets/icons/ic-next.png')} alt='ic-next' /></button>
-                                            </div>
-                                        </div> : ''
+                                    // addressData.length > 0 ?
+                                    //     <div>
+                                    //         <div className='add-address-items'>
+                                    //             <button onClick={onLeftAddressChange}><img src={require('../../../assets/icons/ic-previou.png')} alt='ic-previous' /></button>
+                                    //             <div id='slider-addres-container'>
+                                    //                 {
+                                    //                     addressData.length > 0 ?
+                                    //                         <AddressItem haveMinWidth={true} canRemove={false} addressData={addressData[currentAddressIndex]} hidePagniation={handleVisibilityPagniated} refrestData={refrestData} />
+                                    //                         : ''
+                                    //                 }
+                                    //             </div>
+                                    //             <button onClick={onRightAddressChange}><img src={require('../../../assets/icons/ic-next.png')} alt='ic-next' /></button>
+                                    //         </div>
+                                    //     </div>
+                                    //     : ''
+                                    renderAddress()
                                 }
                             </div>
                             <div className='checkout-method-container'>

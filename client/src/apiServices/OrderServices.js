@@ -4,7 +4,7 @@ export const getAll =async (page, limit, status)=>{
     try{
         const rq = await request.get(`order`, 
         {
-            params: {status: status}
+            params: {page:1, limit:48, status: status}
         })
         return rq.data
     }catch(err){

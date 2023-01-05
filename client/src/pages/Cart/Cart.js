@@ -91,10 +91,13 @@ const Cart = () => {
         setApiBooksInCart(booksInCart.items)
         setApiTotalPricesBooksInCart(booksInCart.total)
         setIsLoading(false)
+        console.log(booksInCart)
 
-        setIsSelectedAllBooks(booksInCart.isSelectedAll)
-        let ipSelectedAllBook = document.getElementById('cart-select-all-book')
-        ipSelectedAllBook.checked = booksInCart.isSelectedAll
+        setIsSelectedAllBooks(booksInCart.isSelectedAll === null ? false : booksInCart.isSelectedAll)
+        try {
+            let ipSelectedAllBook = document.getElementById('cart-select-all-book')
+            ipSelectedAllBook.checked = booksInCart.isSelectedAll
+        } catch (ex) { }
     }
 
     const updateApiBooksInCart = async (isSelected) => {
@@ -142,9 +145,9 @@ const Cart = () => {
     });
 
     const [isActiveCheckout, setIsActiveCheckout] = useState(false)
-    useEffect(()=>{
+    useEffect(() => {
         console.log('total', apiTotalPricesBooksInCart)
-        setIsActiveCheckout(apiTotalPricesBooksInCart>0?true:false)
+        setIsActiveCheckout(apiTotalPricesBooksInCart > 0 ? true : false)
     }, [apiTotalPricesBooksInCart])
 
 
