@@ -8,6 +8,7 @@ import { useStore, actions } from '../../store';
 import * as CartServices from '../../apiServices/CartServices';
 import './Cart.scss';
 import LoadingShoppingCart from '../../components/ShoppingCart/LoadingShoppingCart';
+import CheckoutButton from '../../components/ShoppingCart/CheckoutButton/CheckoutButton';
 
 const Cart = () => {
     //const [state, dispatch] = useStore()
@@ -74,8 +75,8 @@ const Cart = () => {
     useEffect(() => {
         setIsLoading(true)
         fetchBooksInCart()
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // useEffect(()=>{
@@ -112,7 +113,7 @@ const Cart = () => {
         fetchBooksInCart()
     }
 
-    const refrestData = () =>{
+    const refrestData = () => {
         setIsLoading(true)
         fetchBooksInCart()
     }
@@ -130,7 +131,7 @@ const Cart = () => {
         var context = isLoading ? renderLoading() :
             <div style={booksInCartContainerStyle} className='col-sm-8'>
                 {apiBooksInCart.map((book) => (
-                    <ShoppingCart bookData={book} refrestBooksInCart={reFreshBooksInCart} removeBookInCart={removeBookInCart} refrestData={refrestData}/>
+                    <ShoppingCart bookData={book} refrestBooksInCart={reFreshBooksInCart} removeBookInCart={removeBookInCart} refrestData={refrestData} />
                 ))}
             </div>
         return context
@@ -139,6 +140,12 @@ const Cart = () => {
         style: 'currency',
         currency: 'VND',
     });
+
+    const [isActiveCheckout, setIsActiveCheckout] = useState(false)
+    useEffect(()=>{
+        console.log('total', apiTotalPricesBooksInCart)
+        setIsActiveCheckout(apiTotalPricesBooksInCart>0?true:false)
+    }, [apiTotalPricesBooksInCart])
 
 
     return (
@@ -150,9 +157,9 @@ const Cart = () => {
                     <div className='col-sm-8'>
                         <div style={shoppingCartToolbarStyle} className='row'>
                             <div style={toolbarCheckboxContainer} className='col-sm-7'>
-                                <input id='cart-select-all-book' className='cart-responsive-checkbox' style={checkboxStyle} type='checkbox' 
-                                defaultChecked = {isSelectedAllBooks}
-                                onChange={(e) => (onSelectedAllBook(e))}></input>
+                                <input id='cart-select-all-book' className='cart-responsive-checkbox' style={checkboxStyle} type='checkbox'
+                                    defaultChecked={isSelectedAllBooks}
+                                    onChange={(e) => (onSelectedAllBook(e))}></input>
                                 <div className='cart-responsive-toolbar' style={toolbarSelectAllTextStyle}>Chọn tất cả ({apiBooksInCart.length} sản phẩm)</div>
                             </div>
                             <div className='col-sm-2 none-margin-padding amount-title'>
@@ -193,11 +200,16 @@ const Cart = () => {
                                 </div>
                                 <div>
                                     <span className='checkount-count-text checkount-count-darker-text'>Thành tiền</span>
-                                    <span className='checkount-count-value'>{formatter.format(parseInt(apiTotalPricesBooksInCart - ((apiTotalPricesBooksInCart / 100) * 20) + ((apiTotalPricesBooksInCart / 100) * 10))) }</span>
+                                    <span className='checkount-count-value'>{formatter.format(parseInt(apiTotalPricesBooksInCart - ((apiTotalPricesBooksInCart / 100) * 20) + ((apiTotalPricesBooksInCart / 100) * 10)))}</span>
                                 </div>
                             </div>
                             <div className='checkount-buttons'>
-                                <button className='btn-checkout'>Thanh toán</button>
+                                {/* <button className='btn-checkout'>Thanh toán</button> */}
+                                <CheckoutButton
+                                    isActive={isActiveCheckout}
+                                    refrestData={refrestData}
+                                    discount={parseInt((apiTotalPricesBooksInCart / 100) * 20)}
+                                    productPrices={parseInt(apiTotalPricesBooksInCart - ((apiTotalPricesBooksInCart / 100) * 20) + ((apiTotalPricesBooksInCart / 100) * 10))} />
                                 <button className='btn-cont-shopping'>Tiếp tục mua sách</button>
                             </div>
                         </div>

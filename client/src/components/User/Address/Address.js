@@ -37,7 +37,7 @@ const Address = (props) => {
         <div>
             {
                 addressData.length > 0 ? addressData.map((data) => (
-                    <AddressItem addressData={data} hidePagniation={handleVisibilityPagniated} refrestData = {refrestData}/>))
+                    <AddressItem haveMinWidth={false} canRemove={true} addressData={data} hidePagniation={handleVisibilityPagniated} refrestData = {refrestData}/>))
                     : ''
             }
             <AddAddressButton hidePagniation={handleVisibilityPagniated} refrestData = {refrestData}/>

@@ -23,5 +23,7 @@ export const UPDATE_TOTAL_BOOKS_IN_CART = 'update-book-in-cart'
 
 export const NEED_UPDATE_FAVORITE_BOOKS = 'need-update-favorite-books'
 
+export const SELECT_ADDRESS = 'select-address';
+
 
 

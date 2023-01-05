@@ -8,9 +8,18 @@
     align-items: center;
     justify-content: space-between;
     transition: box-shadow 0.4s ease;
+    
     span{
         color: var(--Brown);
         font-size: 12px;
+    }
+    .select-address-checkbox{
+        width: 24px;
+        height: 24px;
+        accent-color: var(--Blue);
+        &:hover{
+            accent-color: var(--Blue)
+        }
     }
     .address-item-contents{
         cursor: pointer;

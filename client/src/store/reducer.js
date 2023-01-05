@@ -1,4 +1,4 @@
-import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, BOOK_TYLE_POPULAR, GET_USER_PROFILE, LOGIN_BY_USER, LOGOUT_USER, NEED_UPDATE_FAVORITE_BOOKS, REMOVE_BOOK_IN_CART, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, SELEECT_BOOK_SORT_TYPE, SELEECT_USER_TB_INDEX, UPDATE_BOOK_IN_CART, UPDATE_TOTAL_BOOKS_IN_CART } from "./constants"
+import { ADD_BOOK_TO_CART, BOOKS_NAVIGATION_BUTTONS, BOOK_TYLE_POPULAR, GET_USER_PROFILE, LOGIN_BY_USER, LOGOUT_USER, NEED_UPDATE_FAVORITE_BOOKS, REMOVE_BOOK_IN_CART, SELECT_ADDRESS, SELECT_ALL_BOOK_IN_CART, SELECT_BOOKS_NAVIGATION_BUTTON, SELECT_CATEGORY, SELECT_CATEGORY_CHILD, SELEECT_BOOK_SORT_TYPE, SELEECT_USER_TB_INDEX, UPDATE_BOOK_IN_CART, UPDATE_TOTAL_BOOKS_IN_CART } from "./constants"
 import { FakeData } from "../variables/FakeData"
 import { BooksInShoppingCart } from "../components/ShoppingCart/BooksInShoppingCart"
 
@@ -40,7 +40,8 @@ const initState = {
     userCurrentTbIndex: 1,
     bookSortTyle: BOOK_TYLE_POPULAR,
     booksInCartTotal: 0,
-    needUpdateFavoriteBooks: false
+    needUpdateFavoriteBooks: false,
+    selectedAddress: '',
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -124,7 +125,11 @@ function reducer(state, action) {
                 ...state,
                 needUpdateFavoriteBooks: action.payload
             }
-            
+        case SELECT_ADDRESS:
+            return{
+                ...state,
+                selectedAddress: action.payload
+            }  
         default:
             throw new Error('Invalid actions')
     }

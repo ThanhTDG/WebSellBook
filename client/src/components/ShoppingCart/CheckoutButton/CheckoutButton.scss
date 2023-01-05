@@ -1,0 +1,185 @@
+.payment-method-container{
+  display: flex;
+  justify-content: space-between;
+  .payment-method-item{
+    border: none;
+    background-color: white;
+    font-family: 'MontserratMedium';
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    margin: 0px 8px 0px 8px;
+    padding: 4px;
+    transition-duration: 0.4s;
+    img{
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      background-color: white;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    span{
+      padding: 0px 8px 0px 8px;
+    }
+  }
+}
+
+.btn-accept-container{
+  display: flex;
+  justify-content: right;
+  margin: 32px -8px 0px 0px;
+}
+
+.payment-guides{
+  font-family: 'MontserratRegular';
+  padding: 48px 8px;
+  .paymentPrices{
+    font-family: 'MontserratBold';
+    font-size: 32px;
+    color: var(--Pink);
+    text-align: center;
+  }
+  .sub-hight-light{
+  }
+  .hight-light{
+    color: var(--Pink) !important;
+  }
+  .payment-guide-item{
+    display: flex;
+    justify-content: space-between;
+    
+    .payment-guide-title{
+      color: var(--Brown);
+    }
+    .payment-guide-value{
+      color: var(--Brown);
+    }
+  }
+}
+
+
+button:disabled,
+button[disabled]{
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
+
+.btn-checkout {
+    margin-top: 24px;
+    background-color: var(--Pink);
+    color: var(--White);
+    
+  }
+  .btn-checkout:hover {
+    background-color: var(--Pink);
+    box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+  }
+  .add-address-items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0px 0px 24px 0px;
+    button{
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      margin: 0px 24px 0px 24px;
+      transition-duration: 0.4s;
+      img{
+        width: 40px;
+        height: 40px;
+      }
+      &:hover{
+        background-color: var(--Pink);
+        img{
+          filter: invert(93%) sepia(20%) saturate(26%) hue-rotate(101deg) brightness(106%) contrast(106%);
+        }
+      }
+    }
+  }
+  .checkout-method-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 24px 4px 24px;
+    align-items: center;
+    select{
+      height: 40px;
+      border: none;
+      box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      min-width: 280px;
+      padding: 0px 8px 0px 8px;
+      transition: box-shadow 0.4s ease;
+      cursor: pointer;
+      option{
+        background-color: var(--LightGray);
+        
+      }
+      option:hover{
+        background-color: var(--Pink) !important;
+      }
+      &:hover{
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+      }
+    }
+
+  }
+  .check-method-prices{
+    margin-top: 24px;
+  }
+  .checkout-prices-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .sub-prices-container{
+      .sub-prices-item{
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--Brown);
+        .sub-prices-value{
+          padding: 0px 8px;
+        }
+        .sub-prices-title{
+          padding: 0px 8px;
+        }
+      }
+    }
+    .checkout-prices{
+      font-size: 40px;
+      color: var(--Pink);
+      font-family: 'MontserratBold';
+    }
+  }
+  .checkout-final-btn{
+    border: none;
+    background-color: var(--Pink);
+    color: white;
+    border-radius: 8px;
+    padding: 0px 24px 0px 24px;
+    transition: box-shadow 0.4s ease;
+    height: 56px;
+    font-size: 24px;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+    &:hover{
+      box-shadow: 0px 1px 8px rgba(0,0,0,0.3);
+    }
+  }
+
+  .animate {
+    animation: fadeIn 500ms ease-out backwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      transform: translateX(250px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+  

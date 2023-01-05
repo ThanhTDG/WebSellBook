@@ -35,10 +35,17 @@ const AddressItem = (props) => {
         setIsLoading(false)
         props.refrestData()
         toggleModal()
+    }
 
+    const removeButtonStyle = {
+        display: props.canRemove === true? 'block': 'none'
+    }
+
+    const addressItemStyle = {
+        minWidth: props.haveMinWidth === true? '520px': ''
     }
     return (
-        <div className='address-item'>
+        <div className='address-item' style={addressItemStyle}>
             <div className='address-item-contents' onClick={toggleModal}>
                 <div className='address-item-content'><span>Họ và tên</span> {addressData.fullName}</div>
                 <div className='address-item-content'><span>Số điện thoại</span> {addressData.phone}</div>
@@ -48,7 +55,7 @@ const AddressItem = (props) => {
                 <div className='address-item-content'><span>Địa chỉ nhà</span> {addressData.address}</div>
             </div>
             <div className='address-item-option'>
-                <button className='remove-address-item-button' onClick={handleRemoveAddress}>
+                <button className='remove-address-item-button' style={removeButtonStyle} onClick={handleRemoveAddress}>
                     <img src={require('../../../../assets/icons/ic-trash-gray.png')} alt='remove' />
                 </button>
             </div>
