@@ -121,11 +121,13 @@ function CheckInfoOrder(props) {
 							<div className={cx("title-address")}>{constants.ADDRESS}</div>
 							<div className={cx("value-address")}>{displayAddress(order.shippingInfo)}</div>
 						</div>
-						<PaidForm
-							order={order}
-							setOrder={setOrder}
-							paid={paid}
-						/>
+						{order.paymentMethod !== constants.CASH_ON_DELIVERY && (
+							<PaidForm
+								order={order}
+								setOrder={setOrder}
+								paid={paid}
+							/>
+						)}
 					</div>
 				)}
 			</Modal>
