@@ -7,7 +7,7 @@ import { useProductMgt, actions } from "~/stores";
 import { SelectNumberOfRows } from "~/components/Widget";
 import styles from "./tabProduct.module.scss";
 import classNames from "classnames/bind";
-import { limitRowsBook } from "~/config/table";
+import { limitRowsBook } from "~/stores/table";
 import { Paper } from "@mui/material";
 
 const cx = classNames.bind(styles);
@@ -18,7 +18,6 @@ function TabProduct() {
 		dispatch(actions.setTabMgtProduct(tabSelected));
 	};
 
-	console.log(state);
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("title-tab")}>
@@ -32,7 +31,6 @@ function TabProduct() {
 					allowScrollButtonsMobile
 				>
 					{TitleTabProducts.map((title, index) => {
-						consolt.log(title);
 						return (
 							<Tab
 								sx={{ fontSize: "subtitle1.fontSize" }}

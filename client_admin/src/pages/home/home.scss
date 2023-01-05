@@ -5,13 +5,30 @@
 	gap: 20px;
 }
 .charts {
+	display: grid;
+	grid-template-columns: 50% 50%;
 }
 .listContainer {
 	-webkit-box-shadow: 2px 4px 10px 1 rgba(0, 0, 0, 0.47);
 	box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
 	margin: 20px;
 	.listTitle {
+		padding: 64px;
 		font-weight: 500px;
 		color: gray;
+	}
+}
+.home {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: flex-start;
+	justify-content: center;
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		width: 95%;
+		min-width: 1080px;
 	}
 }

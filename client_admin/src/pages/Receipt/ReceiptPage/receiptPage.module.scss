@@ -1,0 +1,189 @@
+.wrapper {
+	display: flex;
+	justify-content: center;
+}
+.display {
+	display: grid;
+	width: 1600px;
+	grid-template-columns: 75% 24%;
+	gap: 16px;
+	padding: 16px;
+}
+.wrapper-prop,
+.total-play {
+	display: flex;
+	gap: 4px;
+}
+.other {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.pay-prop {
+	justify-content: space-between;
+}
+
+.prop-title {
+	white-space: nowrap;
+}
+.prop-total-pay {
+	font-size: 18px;
+	font-weight: 600px;
+	color: var(--red-pink);
+}
+
+.address,
+.changer,
+.statuses,
+.transport {
+	width: 100%;
+	.title {
+		padding: 8px;
+		font-size: 18px;
+		font-weight: 600;
+		border-top-right-radius: 32px;
+	}
+	.content {
+		border: 1px solid var(--border);
+		padding: 4px 16px 16px 16px;
+		display: flex;
+		border-bottom-left-radius: 32px;
+		flex-direction: column;
+		gap: 8px;
+	}
+}
+.address {
+	.title {
+		color: white;
+		background-color: var(--primaryDark);
+	}
+}
+
+.changer {
+	.title {
+		color: white;
+		background-color: var(--red-pink);
+	}
+}
+
+.status-header-prop {
+	background-color: var(--border);
+}
+.status-prop,
+.status-header-prop,
+.canceled-prop,
+.completed-prop {
+	display: grid !important;
+	grid-template-columns: 50% 50% !important;
+}
+.canceled-prop,
+.completed-prop {
+	font-size: 16px;
+	font-weight: 600;
+}
+.canceled-prop {
+	color: red;
+}
+.completed-prop {
+	color: var(--enable);
+}
+.statuses {
+	.title {
+		background-color: var(--primaryDark);
+		color: white;
+	}
+}
+.shipping,
+.transport {
+	.title {
+		background-color: var(--primary);
+		color: white;
+	}
+}
+.not-processed {
+	.title {
+		background-color: var(--primaryDark);
+	}
+}
+.completed {
+	.title {
+		background-color: var(--enable);
+	}
+}
+.canceled {
+	.title {
+		background-color: red;
+		color: black;
+	}
+}
+.status-header-prop {
+	padding: 8px 16px;
+}
+.actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	.btn-next {
+		white-space: nowrap;
+		flex: 2;
+	}
+	.btn-cancel {
+		white-space: nowrap;
+		flex: 1;
+	}
+	.btn-cancel {
+		color: var(--red-pink);
+	}
+}
+.btn-completed {
+	background-color: var(--enable);
+}
+.image {
+	width: 100px;
+	height: 100px;
+}
+
+.total-play-prop,
+.total-done-prop {
+	justify-content: space-between;
+	align-items: flex-end;
+	padding-top: 8px;
+	border-top: 1px solid var(--border);
+	.total-play-value {
+		font-weight: 500;
+		color: var(--red-pink);
+	}
+	.total-done-value {
+		font-weight: 600;
+		font-size: 18px;
+		color: var(--red-pink);
+	}
+}
+.cash-on-delivery {
+	text-align: end;
+	color: var(--primary);
+}
+.paid {
+	text-align: end;
+	color: var(--warning);
+}
+.wrapper-payment {
+	gap: 8px;
+	display: flex;
+	white-space: nowrap;
+	align-items: center;
+}
+
+.payment-method-prop,
+.status-order-prop {
+	display: flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.status-order-value {
+	flex: 3;
+}
+.status-order-title {
+	flex: 2;
+}

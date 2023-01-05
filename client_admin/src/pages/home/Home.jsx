@@ -4,21 +4,37 @@ import Featured from "~/components/Featured";
 import Widget from "~/components/Widget";
 import { Button } from "~/components/controls/Button";
 import "./home.scss";
+import ColumChart from "~/components/Charts/ColumChart";
+import OutlinedBox from "~/components/OutlinedBox";
+import { displayMoney } from "~/utils/display";
 function Home() {
 	return (
 		<div className="home">
-			<div className="widgets">
-				<Widget type="user" />
-				<Widget type="order" />
-				<Widget type="earning" />
-				<Widget type="balance" />
-			</div>
-			<div className="charts">
-				<Featured />
-				<Chart />
-			</div>
-			<div className="listContainer">
-				<div className="listTitle"></div>
+			<div className="content">
+				<div className="widgets">
+					<Widget
+						type="user"
+						value={72}
+					/>
+					<Widget
+						type="order"
+						value={16}
+					/>
+					<Widget
+						type="earning"
+						value={displayMoney(1975000)}
+					/>
+					<Widget
+						type="balance"
+						value={displayMoney(981000)}
+					/>
+				</div>
+				<div className="charts">
+					<OutlinedBox title="Sách bán chạy">
+						<ColumChart />
+					</OutlinedBox>
+					<Chart />
+				</div>
 			</div>
 		</div>
 	);

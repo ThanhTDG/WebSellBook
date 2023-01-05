@@ -7,10 +7,10 @@ import LocationProviderMui from "./LocationProviderMui";
 function DatePicker(props) {
 	const { name, className = null, label, value, onChange, fullWidth = true } = props;
 	const convertDayjs = (value) => {
-		if (typeof value === "string") {
+		if (value && typeof value === "string") {
 			return dayjs(value);
 		}
-		return dayjs();
+		return null;
 	};
 	const convertDefPara = (name, value) => ({
 		target: {
@@ -26,7 +26,12 @@ function DatePicker(props) {
 				label={label}
 				value={convertDayjs(value)}
 				onChange={(value) => onChange(convertDefPara(name, value.toISOString()))}
-				renderInput={(params) => <TextField fullWidth={fullWidth} {...params} />}
+				renderInput={(params) => (
+					<TextField
+						fullWidth={fullWidth}
+						{...params}
+					/>
+				)}
 			/>
 		</LocationProviderMui>
 	);

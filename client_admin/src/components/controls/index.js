@@ -1,4 +1,4 @@
-import Input from "./Input/Input";
+import Input from "./Input";
 import RadioGroup from "./RadioGroup";
 import CheckBox from "./CheckBox";
 import DropdownTree from "./DropdownTree";

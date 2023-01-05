@@ -15,7 +15,6 @@ function Select(props) {
 		labelInside = false,
 		noneLabel = "",
 	} = props;
-
 	return (
 		<FormControl
 			variant={variant}

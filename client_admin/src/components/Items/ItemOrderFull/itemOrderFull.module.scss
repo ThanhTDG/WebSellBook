@@ -1,0 +1,49 @@
+.wrapper {
+	--height: 120px;
+	width: 100%;
+	max-height: var(--height);
+	display: flex;
+	border: 1px solid var(--border);
+	.image-bg {
+		width: var(--height);
+		border-top-left-radius: 8px;
+		border-bottom-left-radius: 8px;
+		.image {
+			border-top-left-radius: 8px;
+			border-bottom-left-radius: 8px;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.info {
+		padding: 4px;
+		flex: 4;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+}
+.wrapper-price,
+.wrapper-amount,
+.wrapper-all-pay {
+	gap: 4px;
+	display: flex;
+}
+.wrapper-amount,
+.wrapper-price {
+	font-size: 16px;
+}
+.name {
+	color: var(--primary);
+	font-size: 20px;
+	font-weight: 500;
+}
+.wrapper-all-pay {
+	font-size: 18px;
+	font-weight: 500;
+	color: var(--red-pink);
+}
+.value-amount {
+	font-size: 18px;
+	font-weight: 500;
+}

@@ -11,6 +11,7 @@
 	--white: #fff;
 	--gray: #788097;
 	--border: #c3cfdd;
+	--red-pink: rgba(254, 44, 85, 1);
 	--purple: linear-gradient(180deg, #bb67ff 0%, #c484f3 100%);
 	--pink: #ff919d;
 	--glass: rgba(255, 255, 255, 0.486);
@@ -20,10 +21,13 @@
 	--activeItem: rgba(255, 255, 255, 0.1);
 	--holdItem: rgba(255, 255, 255, 0.5);
 	--blackPurple: #0f0f33;
+	--nav-color: #002140;
 	--text-color: rgb(32, 32, 32);
-	--vertical-navbar: 64px;
+	--vertical-navbar: 56px;
 	--max-width-sidebar: 200px;
 	--min-width-sidebar: 80px;
+	--enable: #65c466;
+	--warning: #cd9a00;
 }
 * {
 	padding: 0;
@@ -50,4 +54,15 @@ input,
 
 a[href] {
 	text-decoration: none;
+}
+div#root {
+	height: 100vh;
+}
+.single-line {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: pre;
+}
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+	-webkit-text-fill-color: rgba(0, 0, 0, 0.7);
 }

@@ -1,0 +1,48 @@
+.wrapper {
+	min-height: 300px;
+	width: 100%;
+	padding: 0px 4px;
+	height: 100%;
+}
+.loading {
+	min-width: 270px;
+	width: 100%;
+	height: 320px;
+	border-radius: 0px 0px 15px 15px;
+	background-color: white;
+	border: 1px solid var(--primaryDark);
+}
+.search-bar {
+	width: 100%;
+	background-color: white;
+}
+.full-screen {
+	height: 80vh;
+}
+.future {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 40px;
+}
+.btn-control-tree {
+	min-width: 0px !important;
+	width: 40px !important;
+	height: 100%;
+	line-height: 0;
+}
+.add-category {
+	height: 48px;
+	width: 100%;
+	padding: 8px;
+	display: flex;
+	align-content: center;
+	justify-content: flex-end;
+	.btn-add {
+		padding: 0px 4px;
+		* {
+			font-size: 16px;
+			font-weight: 500;
+		}
+	}
+}

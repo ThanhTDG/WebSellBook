@@ -1,0 +1,21 @@
+.wrapper {
+	width: 100%;
+	display: flex;
+	gap: 8px;
+	flex-direction: column;
+}
+.total-name {
+	font-size: 16px;
+}
+.division {
+	display: flex;
+	gap: 4px;
+}
+.total-value,
+.total-all {
+	font-size: 18px;
+	color: var(--red-pink);
+}
+.total-all {
+	font-weight: 600;
+}
