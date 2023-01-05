@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import React from "react";
+import PaidForm from "~/components/Form/PaidForm";
 import { constants } from "~/stores";
 
 import styles from "./updatePaid.module.scss";
@@ -7,24 +8,8 @@ const cx = classNames.bind(styles);
 function UpdatePaid(order) {
 	const { data, title = `${constants.PAID}`, children, onOk, className } = props;
 	const [order, setOrder] = useState(data);
+	const [paid, setPaid] = useState(data.paid);
 	const [isOpen, setIsOpen] = useState(false);
-	const handleInputChange = (e) => {
-		let name = e.target.name;
-		let value = e.target.value;
-		if (e.target.type === "number") {
-			if (value) {
-				setOrder({
-					...order,
-					[name]: value,
-				});
-			}
-		} else {
-			setOrder({
-				...order,
-				[name]: value,
-			});
-		}
-	};
 	const handleOpen = () => {
 		if (!isOpen) {
 			setIsOpen(true);
@@ -38,7 +23,7 @@ function UpdatePaid(order) {
 	};
 	const handleOk = () => {
 		handleClose();
-		onOk({ ...order, status: statusOrder.shipping });
+		onOk({ ...order });
 	};
 	return (
 		<>
@@ -56,15 +41,11 @@ function UpdatePaid(order) {
 				onOk={handleOk}
 				onCancel={handleClose}
 			>
-				<div className={cx("wrapper")}>
-					<Controls.Input
-						type="number"
-						name="paid"
-						label={constants.PAID}
-						value={order.paid}
-						onChange={handleInputChange}
-					/>
-				</div>
+				<PaidForm
+					order={order}
+					setOrder={setOrder}
+					paid={paid}
+				/>
 			</Modal>
 		</>
 	);

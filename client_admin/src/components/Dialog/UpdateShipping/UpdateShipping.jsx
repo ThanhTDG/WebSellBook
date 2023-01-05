@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import React from "react";
 import { useState } from "react";
 import Controls from "~/components/controls";
+import PaidForm from "~/components/Form/PaidForm";
 import useForm from "~/hooks/useForm";
 import { constants } from "~/stores";
 import unit from "~/stores/ComponentConfigs/unit";
@@ -91,6 +92,7 @@ function UpdateShipping(props) {
 						onChange={handleInputChange}
 						type={"number"}
 					/>
+				
 				</div>
 			</Modal>
 		</>

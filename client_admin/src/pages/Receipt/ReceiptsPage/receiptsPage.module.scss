@@ -19,14 +19,6 @@
 .white {
 	background-color: white;
 }
-.wrapper-contact {
-	width: 400px !important;
-	margin: 8px 0;
-	border-radius: 8px;
-	border: 1px solid var(--border);
-	display: flex;
-	flex-direction: column;
-}
 
 .name,
 .customer,
@@ -91,4 +83,30 @@
 }
 .link-to {
 	color: #ffffff;
+}
+.wrapper-contact {
+	flex: 7.5;
+	width: 400px !important;
+	margin: 8px 0;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	display: flex;
+	flex-direction: column;
+}
+.wrapper-action {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	margin-top: 10px;
+	flex: 2.5;
+	gap: 16px;
+	.btn-next,
+	.btn-cancel {
+		width: 100%;
+		white-space: nowrap;
+		height: 36px;
+	}
+}
+.loading {
+	height: 700px;
 }

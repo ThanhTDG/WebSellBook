@@ -19,7 +19,7 @@ function ButtonStatusOrder(props) {
 				<CheckInfoOrder
 					data={order}
 					onOk={onOk}
-					className={className}
+					className={cx("btn-check-info", className)}
 				>
 					{children}
 				</CheckInfoOrder>
@@ -128,7 +128,7 @@ function UpdateCancel(props) {
 		<>
 			<Controls.Button
 				outline
-				className={className}
+				className={cx("btn-cancel", className)}
 				onClick={handleOpen}
 			>
 				{constants.CANCEL}

@@ -41,6 +41,12 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
+import PaymentIcon from "@mui/icons-material/Payment";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddCardIcon from "@mui/icons-material/AddCard";
+import PriceChangeIcon from "@mui/icons-material/PriceChange";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 const Navbar = ({ className }) => {
 	return {
 		search: <SearchIcon className={className} />,
@@ -115,7 +121,12 @@ const Button = ({ className }) => {
 		reset: <LockResetIcon className={className} />,
 		change: <DriveFileRenameOutlineIcon className={className} />,
 		imageChange: <AddPhotoAlternateIcon className={className} />,
+		notPaid: <MonetizationOnIcon className={className} />,
+		paidFull: <CheckCircleIcon className={className} />,
+		onePartPaid: <PriceChangeIcon className={className} />,
+		cashOnDelivery: <LocalShippingIcon className={className} />,
 		view: <RemoveRedEyeIcon className={className} />,
+		paid: <LocalAtmIcon className={className} />,
 	};
 };
 export { Navbar, Sidebar, Chart, Widget, Button, Dialog };

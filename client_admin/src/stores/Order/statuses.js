@@ -1,18 +1,20 @@
-const statusOrder = {
+const status = {
+	all: "",
 	notProcessed: "not_processed",
 	processing: "processing",
 	shipping: "shipping",
 	completed: "completed",
 	canceled: "canceled",
 };
-export const refListStatus = [
+
+const listStatus = [
 	{
-		key: "canceled",
-		title: "Bị hủy",
-		engTitle: "Canceled",
+		key: "all",
+		title: "Tất cả",
+		engTitle: "All",
 	},
 	{
-		key: "not_processed",
+		key: "notProcessed",
 		title: "Chờ xử lý",
 		engTitle: "waiting for processed",
 	},
@@ -28,9 +30,13 @@ export const refListStatus = [
 	},
 	{
 		key: "completed",
-		title: "Giao thành công",
-		engTitle: "completed",
+		title: "hoàn thành",
+		engTitle: "Completed",
+	},
+	{
+		key: "canceled",
+		title: "Bị hủy",
+		engTitle: "Canceled",
 	},
 ];
-
-export default statusOrder;
+export { status, listStatus };

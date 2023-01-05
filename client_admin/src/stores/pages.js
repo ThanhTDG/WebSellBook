@@ -13,6 +13,7 @@ import ReceiptsPage from "~/pages/Receipt/ReceiptsPage";
 import ProfilePage from "~/pages/Auth/ProfilePage/ProfilePage";
 import ReceiptPage from "~/pages/Receipt/ReceiptPage";
 import AccountAdminsPage from "~/pages/UserAccount/AccountAdminsPage";
+import Logout from "~/pages/Logout/Logout";
 
 const PageConfig = {
 	home: {
@@ -32,6 +33,12 @@ const PageConfig = {
 		route: "/",
 		label: "Bảng điều khiển",
 		component: Home,
+	},
+	logout: {
+		key: "logout",
+		route: "/logout",
+		label: "Bảng điều khiển",
+		component: Logout,
 	},
 	/// auth
 	login: {

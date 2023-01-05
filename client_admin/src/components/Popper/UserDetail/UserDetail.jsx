@@ -14,13 +14,7 @@ import { useEffect } from "react";
 import { getUserById } from "~/services/userService";
 import Loading from "~/components/Loading";
 const cx = classNames.bind(styles);
-function UserDetail({
-	user: initState,
-	id,
-	useTippy = true,
-	type = typeUser.customer,
-	children,
-}) {
+function UserDetail({ user: initState, id, useTippy = true, type = typeUser.customer, children }) {
 	const [user, setUser] = useState(initState);
 	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
@@ -105,19 +99,11 @@ function UserMiniForm({ user, type }) {
 							src={user.avatar}
 						/>
 					</div>
-					<div className={cx("full-name")}>
-						{user.fullName
-							? user.fullName
-							: `${user.lastName} ${user.firstName}`}
-					</div>
+					<div className={cx("full-name")}>{user.fullName ? user.fullName : `${user.lastName} ${user.firstName}`}</div>
 				</div>
 				<div className={cx("type-user")}>
 					<div
-						className={cx(
-							"title-user",
-							{ customer: type === typeUser.customer },
-							{ admin: type === typeUser.admin }
-						)}
+						className={cx("title-user", { customer: type === typeUser.customer }, { admin: type === typeUser.admin })}
 					>
 						{handleDisplayType(type)}
 					</div>
@@ -165,12 +151,13 @@ function UserMiniForm({ user, type }) {
 						/>
 					</>
 				)}
-
-				<Row
-					name={"lastSession"}
-					title={constants.LAST_SESSION_SHORT}
-					value={displayTime(user.lastSession)}
-				/>
+				{user.lastSession && (
+					<Row
+						name={"lastSession"}
+						title={constants.LAST_SESSION_SHORT}
+						value={displayTime(user.lastSession)}
+					/>
+				)}
 			</div>
 		</div>
 	);
@@ -179,9 +166,7 @@ function Row({ title, value, name, classNameValue, singleLine = false }) {
 	return (
 		<div className={cx("row", name)}>
 			{title && <div className={cx("title")}>{`${title}:`}</div>}
-			<div
-				className={cx("value", { "single-line": singleLine }, classNameValue)}
-			>{`${value}`}</div>
+			<div className={cx("value", { "single-line": singleLine }, classNameValue)}>{`${value}`}</div>
 		</div>
 	);
 }

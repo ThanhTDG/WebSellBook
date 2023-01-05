@@ -9,7 +9,7 @@ import { actions, constants, cusReducer } from "~/stores";
 import styles from "./receiptPage.module.scss";
 import fake from "~/pages/Receipt/fakeReceipt";
 import { displayAddress, displayDay, displayMoney, displayTime } from "~/utils/display";
-import statusOrder from "~/stores/Order/statusOrder";
+import statusOrder, { refListStatus } from "~/stores/Order/statusOrder";
 import Popper from "~/components/Popper";
 import typeUser from "~/stores/types/typeUser";
 import { generatePath, Link, useParams } from "react-router-dom";
@@ -20,35 +20,11 @@ import { orderService, userService } from "~/services";
 import { useEffect } from "react";
 import UpdateShipping from "~/components/Dialog/UpdateShipping/UpdateShipping";
 import ButtonStatusOrder from "~/components/Dialog/ButtonStatusOrder/ButtonStatusOrder";
+import { icons } from "~/assets/images";
+import StatusPayment from "~/components/Dialog/StatusPayment/StatusPayment";
 const cx = classNames.bind(styles);
-const refList = [
-	{
-		key: "canceled",
-		title: "Bị hủy",
-		engTitle: "Canceled",
-	},
-	{
-		key: "not_processed",
-		title: "Chờ xử lý",
-		engTitle: "waiting for processed",
-	},
-	{
-		key: "processing",
-		title: "Chờ xác nhận",
-		engTitle: "Processing",
-	},
-	{
-		key: "shipping",
-		title: "Đang giao hàng",
-		engTitle: "Shipping",
-	},
-	{
-		key: "completed",
-		title: "Giao thành công",
-		engTitle: "completed",
-	},
-];
 
+const refList = refListStatus;
 function convertListStatus(process) {
 	return Object.keys(process)
 		.map((item) => {
@@ -72,12 +48,7 @@ function ReceiptPage() {
 	const [order, setOrder] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState(null);
-	const handleChangeStatus = (newStatus) => {
-		setOrder({
-			...order,
-			status: newStatus,
-		});
-	};
+
 	useEffect(() => {
 		fetchAPI();
 	}, []);
@@ -107,6 +78,7 @@ function ReceiptPage() {
 		}
 	};
 	const currentIndex = order ? refList.findIndex((item) => item.key === order.status) : 0;
+	console.log(currentIndex);
 	return (
 		<InfoLayout
 			id={id}
@@ -133,7 +105,10 @@ function ReceiptPage() {
 									shippingInfo={order.shippingInfo}
 									user={order.user}
 								/>
-								<Changer order={order} />
+								<Changer
+									order={order}
+									handleChange={handleUpdateOrder}
+								/>
 								<Transport order={order} />
 								<StatusOrder
 									status={order.status}
@@ -141,26 +116,18 @@ function ReceiptPage() {
 								/>
 								{order.status !== statusOrder.canceled && order.status !== statusOrder.completed && (
 									<div className={cx("actions")}>
-										<Controls.Button
-											outline
-											onClick={() => {
-												handleChangeStatus(refList[0].key);
-											}}
-											className={cx("btn-cancel")}
-										>
-											{constants.CANCEL}
-										</Controls.Button>
+										<ButtonStatusOrder
+											status={refList[0].key}
+											onOk={handleUpdateOrder}
+											order={order}
+											className={cx("btn-cancel", `btn-${refList[0].key.replace("_", "-")}`)}
+										></ButtonStatusOrder>
 										<ButtonStatusOrder
 											status={refList[currentIndex + 1].key}
 											onOk={handleUpdateOrder}
 											order={order}
 											className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
 										></ButtonStatusOrder>
-										{/* <UpdateShipping
-											onOk={handleUpdateOrder}
-											data={order}
-											className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
-										></UpdateShipping> */}
 									</div>
 								)}
 							</div>
@@ -206,7 +173,7 @@ function StatusOrder(props) {
 	);
 }
 
-function Changer(props) {
+function Changer(props, handleChange) {
 	const { order } = props;
 	const sumAllProduct = (array) => {
 		let sum = 0;
@@ -222,7 +189,7 @@ function Changer(props) {
 				<PropDisplay
 					name="type-pay"
 					tail=":"
-					title={constants.PAYMENT_METHOD}
+					title={constants.METHOD}
 					value={order.paymentMethod}
 				/>
 				<PropDisplay
@@ -265,6 +232,38 @@ function Changer(props) {
 					title={constants.TOTAL_DONE}
 					value={displayMoney(order.total - order.paid)}
 				/>
+
+				<PropDisplay
+					name="payment-method"
+					tail=""
+					title={constants.METHOD}
+					value={
+						<div className={cx("wrapper-payment")}>
+							<div className={cx("title-payment")}>{order.paymentMethod}</div>
+							{order.paymentMethod !== constants.CASH_ON_DELIVERY
+								? icons.Button({ className: cx("paid") }).paid
+								: icons.Button({ className: cx("cash-on-delivery") }).cashOnDelivery}
+						</div>
+					}
+				/>
+				{order.paymentMethod !== constants.CASH_ON_DELIVERY &&
+					order.status !== statusOrder.canceled &&
+					order.status !== statusOrder.completed && (
+						<>
+							<PropDisplay
+								name="status-order"
+								tail=""
+								title={constants.STATUS_ORDER}
+								value={
+									<StatusPayment
+										data={order}
+										className={""}
+										onOk={handleChange}
+									/>
+								}
+							/>
+						</>
+					)}
 			</div>
 		</div>
 	);
@@ -335,7 +334,7 @@ function Address(props) {
 				/>
 				<PropDisplay
 					name="address"
-					title={constants.ADDRESS}
+					title={constants.STREET}
 					value={displayAddress(shippingInfo)}
 				/>
 			</div>

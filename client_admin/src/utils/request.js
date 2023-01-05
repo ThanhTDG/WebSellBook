@@ -20,7 +20,6 @@ const handleResponse = (response) => {
 				//	ErrorDialog("Đăng nhập");
 				return;
 			default:
-				ErrorDialog("unknown Error");
 				return null;
 		}
 	}

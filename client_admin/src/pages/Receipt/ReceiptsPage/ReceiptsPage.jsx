@@ -20,53 +20,33 @@ import { displayTime, displayMoney } from "~/utils/display";
 import { icons } from "~/assets/images";
 import { generatePath, Link } from "react-router-dom";
 import PageConfig from "~/stores/pages";
-import ReceiptTable from "~/components/table/OrderTable";
+import OrderTable from "~/components/table/OrderTable";
 import { orderService } from "~/services";
 import { actions, constants, cusReducer } from "~/stores";
-const listStatus = [
-	{
-		key: "all",
-		title: "Tất cả",
-		engTitle: "All",
-	},
-	{
-		key: "notProcessed",
-		title: "Chờ xử lý",
-		engTitle: "waiting for processed",
-	},
-	{
-		key: "processing",
-		title: "Chờ xác nhận",
-		engTitle: "Processing",
-	},
-	{
-		key: "shipping",
-		title: "Đang giao hàng",
-		engTitle: "Shipping",
-	},
-	{
-		key: "competed",
-		title: "hoàn thành",
-		engTitle: "Competed",
-	},
-	{
-		key: "canceled",
-		title: "Bị hủy",
-		engTitle: "Canceled",
-	},
-];
+import statusOrder, { refListStatus } from "~/stores/Order/statusOrder";
+import ButtonStatusOrder from "~/components/Dialog/ButtonStatusOrder/ButtonStatusOrder";
+import Popper from "~/components/Popper";
+import typeUser from "~/stores/types/typeUser";
+import tabStyle from "~/components/tab/tabTable.module.scss";
+import orderConfig from "~/stores/Order";
+import SearchBar from "~/components/SearchBar";
+
+const statuses = orderConfig.status;
+const listStatus = orderConfig.listStatus;
+const options = orderConfig.options;
+const refList = refListStatus;
 const cx = classNames.bind(styles);
+const tabTableStyles = classNames.bind(tabStyle);
 function ReceiptsPage() {
 	const [tableTab, dispatchTableTab] = useReducer(cusReducer.reducers.TabTableReduce, cusReducer.initStates.receipts);
 	const [isLoading, setIsLoading] = useState(true);
-	const [loadingTab, setLoadingTab] = useState(true);
-	const [loadingTable, setLoadingTable] = useState(true);
 	const [editMode, dispatchEditMode] = useReducer(
 		cusReducer.reducers.EditModeReducer,
 		cusReducer.initStates.editModeState
 	);
 	const [idSelected, setIdSelected] = useState("");
 	const [filter, setFilter] = useState(cusReducer.initStates.filterOrder);
+	const [isUpdate, setIsUpdate] = useState(true);
 	const [orders, setOrders] = useState([]);
 	const fetchApi = async () => {
 		setIsLoading(true);
@@ -79,13 +59,17 @@ function ReceiptsPage() {
 		setIsLoading(false);
 	};
 	const handleResponse = (response) => {
-		const { status, page, limit, totalPages } = response;
-		dispatchTableTab(actions.setNewPropTable({ status, page, limit, totalPages }));
+		const { page, limit, totalPages } = response;
+		dispatchTableTab(actions.setNewPropTable({ page, limit, totalPages }));
 		setOrders(response.docs);
 	};
 	useEffect(() => {
-		fetchApi();
-	}, []);
+		if (isUpdate) {
+			fetchApi();
+		}
+		setIsUpdate(!isUpdate);
+	}, [tableTab]);
+
 	const destroyTippy = () => {
 		if (tableTab && tableTab.length > 0)
 			[...document.querySelectorAll("*")].forEach((node) => {
@@ -101,15 +85,16 @@ function ReceiptsPage() {
 		dispatchTableTab(actions.setPageTable(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
+		console.log(optionSelected);
 		dispatchTableTab(
 			actions.setStatusTable({
 				indexStatus: optionSelected,
-				status: listStatus[optionSelected].key,
+				status: statuses[listStatus[optionSelected].key],
 			})
 		);
 	};
 	const handleTypeSearchChange = (e) => {
-		filter.typeSearch = e.target.value;
+		setFilter({ ...filter, typeSearch: e.target.value });
 	};
 	const handleSearchChange = (value) => {
 		setFilter({ ...filter, search: value });
@@ -127,22 +112,62 @@ function ReceiptsPage() {
 	const handleFilter = (e) => {
 		dispatchTableTab(actions.setFilterTable({ ...filter }));
 	};
-	useEffect(() => {
-		setLoadingTab(false);
-	}, []);
-	let displayStatus = false;
+	let displayStatus = tableTab.indexStatus === 0;
 	return (
 		<InfoLayout
 			editMode={editMode}
 			dispatchEditMode={dispatchEditMode}
 			showFeature={false}
 		>
-			<Loading isLoading={isLoading}>
-				<div className={cx("wrapper")}>
-					<Tabs
-						onChange={handleTabChange}
-						value={tableTab.indexStatus}
-						items={listStatus}
+			<div className={cx("wrapper")}>
+				<Tabs
+					onChange={handleTabChange}
+					value={tableTab.indexStatus}
+					items={listStatus}
+				>
+					<div className={tabTableStyles("tool-filter")}>
+						<div className={tabTableStyles("top")}>
+							<Controls.Select
+								size="small"
+								labelInside={true}
+								label={options.typeSearch.name}
+								className={tabTableStyles("type-search")}
+								items={options.typeSearch.value}
+								onChange={handleTypeSearchChange}
+								value={filter.typeSearch}
+							/>
+							<SearchBar
+								className={tabTableStyles("search-box")}
+								size="small"
+								value={filter.search}
+								onChange={handleSearchChange}
+							/>
+							<Controls.Button
+								primary
+								onClick={handleConfirm}
+								className={tabTableStyles("confirm")}
+							>
+								{constants.CONFIRM}
+							</Controls.Button>
+						</div>
+
+						<div className={tabTableStyles("bottom")}>
+							<Controls.Select
+								none={true}
+								noneLabel="Không"
+								size="small"
+								labelInside={true}
+								label={options.typeSort.name}
+								className={tabTableStyles("sort-select")}
+								items={options.typeSort.value}
+								onChange={handleSortChange}
+								value={filter.sort}
+							/>
+						</div>
+					</div>
+					<Loading
+						isLoading={isLoading}
+						className={cx("loading")}
 					>
 						{listStatus.map((item, index) => (
 							<TabPanel
@@ -213,6 +238,8 @@ function ReceiptsPage() {
 										<Table.Body>
 											{orders.map((order) => (
 												<RowOrder
+													dispatchEditMode={dispatchEditMode}
+													editMode={editMode}
 													idSelected={idSelected}
 													setIdSelected={setIdSelected}
 													showStatus={displayStatus}
@@ -232,14 +259,31 @@ function ReceiptsPage() {
 								</div>
 							</TabPanel>
 						))}
-					</Tabs>
-				</div>
-			</Loading>
+					</Loading>
+				</Tabs>
+			</div>
 		</InfoLayout>
 	);
 }
 function RowOrder(props) {
-	const { idSelected, setIdSelected, order: receipt, showStatus = false } = props;
+	const { idSelected, setIdSelected, dispatchEditMode, order, showStatus = false } = props;
+	const [receipt, setReceipt] = useState(order);
+	const UpdateOrder = async (orderChange) => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await orderService.updateOrder(orderChange, order.id);
+		if (response) {
+			dispatchEditMode(actions.setStatusIsSuccess());
+			setReceipt(response);
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
+	};
+	const handleUpdateOrder = (orderChange) => {
+		if (JSON.stringify(orderChange) !== JSON.stringify(order)) {
+			UpdateOrder(orderChange);
+		}
+	};
+	const currentIndex = receipt ? refList.findIndex((item) => item.key === receipt.status) : 0;
 	return (
 		<Fragment>
 			<Table.Row size={"normal"}>
@@ -277,14 +321,32 @@ function RowOrder(props) {
 				</Table.Cell>
 				{showStatus && (
 					<Table.Cell>
-						<div className={cx("body", "status")}>{receipt.status}</div>
+						<div className={cx("body", "status")}>{constants[receipt.status.toUpperCase()]}</div>
 					</Table.Cell>
 				)}
 				<Table.Cell align={"left"}>
 					<div className={cx("body", "recept-pay-method")}>{receipt.paymentMethod}</div>
 				</Table.Cell>
 				<Table.Cell isLast={false}>
-					<div className={cx("body", "recept-user")}>{"receipt.user.email"}</div>
+					<div className={cx("body", "recept-user")}>
+						{order.user ? (
+							<Popper.UserDetail
+								user={order.user}
+								type={typeUser.customer}
+							>
+								<Link
+									to={generatePath(PageConfig.customer.route, {
+										id: order.user.id,
+									})}
+									target="_blank"
+								>
+									<div className={"single-line"}>{order.user.email}</div>
+								</Link>
+							</Popper.UserDetail>
+						) : (
+							constants.NOT_HAVE
+						)}
+					</div>
 				</Table.Cell>
 				<Table.Cell>
 					{idSelected !== receipt.id && (
@@ -309,7 +371,11 @@ function RowOrder(props) {
 						unmountOnExit
 					>
 						<div className={cx("wrapper-detail")}>
-							<ReceiptTable order={receipt} />
+							<OrderTable
+								handleChange={handleUpdateOrder}
+								maxHeight={450}
+								order={receipt}
+							/>
 							<div className={cx("feature")}>
 								<div className={cx("contact-action")}>
 									<Contact
@@ -317,7 +383,22 @@ function RowOrder(props) {
 										shippingMethod={receipt.shippingMethod}
 										user={receipt}
 									/>
-									<Action />
+									{order.status !== statusOrder.canceled && order.status !== statusOrder.completed && (
+										<div className={cx("wrapper-action")}>
+											<ButtonStatusOrder
+												status={refList[currentIndex + 1].key}
+												onOk={handleUpdateOrder}
+												order={order}
+												className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
+											></ButtonStatusOrder>
+											<ButtonStatusOrder
+												status={refList[0].key}
+												onOk={handleUpdateOrder}
+												order={order}
+												className={cx("btn-cancel", `btn-${refList[0].key.replace("_", "-")}`)}
+											></ButtonStatusOrder>
+										</div>
+									)}
 								</div>
 								<Controls.Button
 									primary
@@ -348,116 +429,12 @@ function ViewDetail(props) {
 	);
 }
 
-// function ReceiptTable(props) {
-// 	const { receipt } = props;
-// 	const color = { backgroundColor: "#FFFfFF", color: "#051e34" };
-// 	let sumAllProduct = 0;
-// 	return (
-// 		<Table.Frame>
-// 			<Table.Head>
-// 				<Table.Cell
-// 					isLast={false}
-// 					{...color}
-// 					colSpan={2}
-// 					align="left"
-// 				>
-// 					<div className={cx("title-detail", "name")}>{"Tên"}</div>
-// 				</Table.Cell>
-// 				<Table.Cell
-// 					isLast={false}
-// 					{...color}
-// 				>
-// 					<div className={cx("title-detail", "amount")}>{"Số lượng"}</div>
-// 				</Table.Cell>
-// 				<Table.Cell
-// 					isLast={false}
-// 					{...color}
-// 				>
-// 					<div className={cx("title-detail", "price")}>{"Giá"}</div>
-// 				</Table.Cell>
-// 				<Table.Cell
-// 					isLast={false}
-// 					{...color}
-// 				>
-// 					<div className={cx("title-detail", "sum")}>{"Tổng(VND)"}</div>
-// 				</Table.Cell>
-// 			</Table.Head>
-// 			<Table.Body>
-// 				{receipt.products.map((product) => {
-// 					let sum = product.sum ? product.sum : product.price * product.amount;
-// 					sumAllProduct += sum;
-// 					return (
-// 						<Table.Row>
-// 							<Table.Cell
-// 								isLast={false}
-// 								colSpan={2}
-// 								colorChildren={color}
-// 								align="left"
-// 							>
-// 								<div className={cx("body-detail", "name")}>{product.name}</div>
-// 							</Table.Cell>
-// 							<Table.Cell
-// 								isLast={false}
-// 								colorChildren={color}
-// 							>
-// 								<div className={cx("body-detail", "amount")}>
-// 									{product.amount}
-// 								</div>
-// 							</Table.Cell>
-// 							<Table.Cell
-// 								isLast={false}
-// 								colorChildren={color}
-// 							>
-// 								<div className={cx("body-detail", "price")}>
-// 									{displayMoney(product.price, false)}
-// 								</div>
-// 							</Table.Cell>
-// 							<Table.Cell
-// 								isLast={false}
-// 								colorChildren={color}
-// 							>
-// 								<div className={cx("body-detail", "sum")}>
-// 									{`${displayMoney(sum, false)}`}
-// 								</div>
-// 							</Table.Cell>
-// 						</Table.Row>
-// 					);
-// 				})}
-// 				<ItemTotal
-// 					title={constants.SUM_ALL_PRODUCT}
-// 					sum={sumAllProduct}
-// 				/>
-// 				<ItemTotal title={constants.VOUCHER} />
-// 				<ItemTotal
-// 					spec={true}
-// 					title={constants.PAY_ALL}
-// 					sum={sumAllProduct}
-// 				/>
-// 			</Table.Body>
-// 		</Table.Frame>
-// 	);
-// }
-
-function Action(props) {
-	const { action, cancel } = props;
-	return (
-		<div className={cx("wrapper-action")}>
-			<Controls.Button primary>{constants.CONFIRM}</Controls.Button>
-			<Controls.Button
-				outline
-				className={cx("cancel")}
-			>
-				{constants.CANCEL}
-			</Controls.Button>
-		</div>
-	);
-}
 function Contact(props) {
 	const { shippingInfo, user, shippingMethod } = props;
 	return (
 		<OutlinedBox
 			label={"Địa chỉ giao hàng"}
-			classNames={cx("wrapper-contact")}
+			classNameHeader={cx("wrapper-contact")}
 		>
 			<PropContact
 				title={constants.RECIPIENT}
@@ -483,7 +460,7 @@ function Contact(props) {
 			</div>
 
 			<PropContact
-				title={constants.ADDRESS}
+				title={constants.STREET}
 				value={shippingInfo.address}
 			/>
 			<PropContact

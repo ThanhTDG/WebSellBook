@@ -15,9 +15,7 @@ const sidebar = [
 		children: [
 			{
 				key: PageConfig.categories.key,
-				label: (
-					<Link to={PageConfig.categories.route}>{constants.CATEGORY}</Link>
-				),
+				label: <Link to={PageConfig.categories.route}>{constants.CATEGORY}</Link>,
 				icon: icons.Sidebar("icon").categories,
 			},
 			{
@@ -27,18 +25,12 @@ const sidebar = [
 			},
 			{
 				key: PageConfig.customers.key,
-				label: (
-					<Link to={PageConfig.customers.route}>{constants.CUSTOMER}</Link>
-				),
+				label: <Link to={PageConfig.customers.route}>{constants.CUSTOMER}</Link>,
 				icon: icons.Sidebar("icon").customer,
 			},
 			{
 				key: PageConfig.accountAdmins.key,
-				label: (
-					<Link to={PageConfig.accountAdmins.route}>
-						{constants.ACCOUNT_ADMIN}
-					</Link>
-				),
+				label: <Link to={PageConfig.accountAdmins.route}>{constants.ACCOUNT_ADMIN}</Link>,
 				icon: icons.Sidebar("icon").accountAdmins,
 			},
 			{
@@ -59,8 +51,8 @@ const sidebar = [
 		icon: icons.Sidebar("icon").profile,
 	},
 	{
-		key: "logout",
-		label: constants.LOGOUT,
+		key: PageConfig.logout.key,
+		label: <Link to={PageConfig.logout.route}>{constants.LOGOUT}</Link>,
 		icon: icons.Sidebar("icon").logout,
 	},
 ];

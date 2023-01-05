@@ -159,3 +159,31 @@
 		color: var(--red-pink);
 	}
 }
+.cash-on-delivery {
+	text-align: end;
+	color: var(--primary);
+}
+.paid {
+	text-align: end;
+	color: var(--warning);
+}
+.wrapper-payment {
+	gap: 8px;
+	display: flex;
+	white-space: nowrap;
+	align-items: center;
+}
+
+.payment-method-prop,
+.status-order-prop {
+	display: flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.status-order-value {
+	flex: 3;
+}
+.status-order-title {
+	flex: 2;
+}

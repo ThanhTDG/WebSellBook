@@ -16,6 +16,11 @@ export const getProfile = async () => {
 	const response = await request.get(path);
 	return response;
 };
+export const logout = async () => {
+	const path = auth + "/signout";
+	const response = await request.post(path);
+	return response;
+};
 export const uploadAvatar = async (file) => {
 	const path = auth + "/uploadavatar";
 	console.log(file);

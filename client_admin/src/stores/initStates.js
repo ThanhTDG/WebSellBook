@@ -3,6 +3,7 @@ import { constants } from ".";
 import BookConfig from "./Book";
 import { limitRow } from "./ComponentConfigs/table";
 import CustomerConfig from "./Customer";
+import orderConfig from "./Order";
 export const products = {
 	indexStatus: 0,
 	status: BookConfig.listStatus[0].key,
@@ -12,7 +13,7 @@ export const products = {
 };
 export const receipts = {
 	indexStatus: 1,
-	status: BookConfig.listStatus[0].key,
+	status: orderConfig.status.notProcessed,
 	page: 1,
 	limit: limitRow.options[0],
 	totalPages: 10,
@@ -37,7 +38,7 @@ export const filterProduct = {
 	sort: "",
 };
 export const filterOrder = {
-	typeSearch: BookConfig.options.typeSearch.value[0].id,
+	typeSearch: orderConfig.options.typeSearch.value[0].id,
 	search: "",
 	sort: "",
 };

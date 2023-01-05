@@ -22,6 +22,11 @@ const privateRoutes = [
 		layout: OnlyNavLayout,
 	},
 	{
+		path: PageConfig.logout.route,
+		component: PageConfig.logout.component,
+		layout: OnlyNavLayout,
+	},
+	{
 		path: PageConfig.product.route,
 		component: PageConfig.product.component,
 		layout: OnlyNavLayout,
