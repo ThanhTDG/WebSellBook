@@ -13,7 +13,6 @@ function ProfilePage() {
 		cusReducer.reducers.EditModeReducer,
 		cusReducer.initStates.editModeState
 	);
-	console.log(state);
 	return (
 		<InfoLayout
 			editMode={editMode}
@@ -26,6 +25,7 @@ function ProfilePage() {
 					editMode={editMode}
 					dispatchEditMode={dispatchEditMode}
 					user={state.profile}
+					dispatch={dispatch}
 				/>
 			</div>
 		</InfoLayout>

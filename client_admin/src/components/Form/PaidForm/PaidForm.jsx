@@ -17,22 +17,18 @@ function PaidForm(props) {
 	const handleChangePaidState = (e, value) => {
 		let id = e.target.value;
 		setPaidState(e.target.value);
-
 		if (id === "0") {
 			setOrder({
 				...order,
 				paid: order.total,
-				a: "a",
 			});
 		} else {
 			setOrder({
 				...order,
 				paid: paid,
-				a: "b",
 			});
 		}
 	};
-	console.log(paid);
 	const handleInputChange = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;

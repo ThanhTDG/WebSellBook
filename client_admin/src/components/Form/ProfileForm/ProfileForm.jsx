@@ -8,7 +8,7 @@ import UploadAvatar from "~/components/Dialog/UploadAvatar/UploadAvatar";
 import Image from "~/components/Image";
 import OutlinedBox from "~/components/OutlinedBox";
 import useForm from "~/hooks/useForm";
-import { uploadAvatar } from "~/services/authService";
+import { getProfile, uploadAvatar } from "~/services/authService";
 import { actions, constants } from "~/stores";
 import profileProp from "~/stores/Account/profileProps";
 import typeFeature from "~/stores/types/typeFeature";
@@ -31,6 +31,7 @@ function ProfileForm(props) {
 		handleAction,
 		editMode,
 		dispatchEditMode,
+		dispatch,
 		className,
 	} = props;
 	const form = useForm({ ...user });
@@ -54,10 +55,22 @@ function ProfileForm(props) {
 				...values,
 				avatar: response.avatar,
 			});
-			setUser({
-				...user,
-				avatar: response.avatar,
-			});
+			if (setUser) {
+				setUser({
+					...user,
+					avatar: response.avatar,
+				});
+			} else {
+				const profile = await getProfile();
+				dispatch(
+					actions.setLoginNInfo({
+						profile: profile,
+					})
+				);
+				setValues({
+					...profile,
+				});
+			}
 			dispatchEditMode(actions.setResetAll());
 			dispatchEditMode(actions.setStatusIsSuccess());
 		} else {
