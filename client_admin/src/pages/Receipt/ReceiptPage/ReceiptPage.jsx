@@ -73,9 +73,7 @@ function ReceiptPage() {
 		}
 	};
 	const handleUpdateOrder = (orderChange) => {
-		if (JSON.stringify(orderChange) !== JSON.stringify(order)) {
-			UpdateOrder(orderChange);
-		}
+		UpdateOrder(orderChange);
 	};
 	const currentIndex = order ? refList.findIndex((item) => item.key === order.status) : 0;
 	console.log(currentIndex);
