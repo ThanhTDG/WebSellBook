@@ -104,6 +104,7 @@ const getData = ({
   status,
   transportFee,
   discount,
+  paid,
 }) => {
   const data = {
     userId,
@@ -115,6 +116,7 @@ const getData = ({
     status,
     transportFee,
     discount,
+    paid,
   };
   Object.keys(data).forEach((key) => isEmpty(data[key]) && delete data[key]);
   return data;
