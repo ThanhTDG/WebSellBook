@@ -136,7 +136,7 @@ const BookDetail = () => {
                         <span className='bd-value-price'>{formatter.format(parseInt(apiBookDetail.price))}</span>
                     </div>
                     <div className='bd-options-container'>
-                        <AddToCardButton />
+                        <AddToCardButton bookId ={apiBookDetail._id}/>
                         <div className='white-space' />
                         <AddToFavoriteButton />
                     </div>

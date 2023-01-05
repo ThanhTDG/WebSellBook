@@ -112,7 +112,7 @@
     height: 424px;
     border-radius: 8px;
     position: absolute;
-    top: 76px;
+    top: 100px;
     right: 36px;
     background-color: var(--White);
     z-index: 10;
@@ -286,6 +286,7 @@
             color: var(--Darkest);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
             transition: box-shadow 0.4s ease;
+            padding-right: 96px;
         }
         input:hover{
             box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);

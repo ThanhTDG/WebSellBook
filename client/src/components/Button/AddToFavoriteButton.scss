@@ -1,7 +1,19 @@
-.btn-add-to-favorite:hover{
-    .btn-add-to-favorite-img{
-        //content: url('http://localhost:3000/assets/icons/ic-active-favorite.png')
+.btn-add-to-favorite{
+    display: flex;
+    align-items: center;
+    .btn-add-to-favorite-content{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 0 0 -32px;
     }
+    img{
+        margin: 0 0 0 8px;
+    }
+
+}
+
+.btn-add-to-favorite:hover{
     img{
         transition-duration: 0.4s;
     }
@@ -10,6 +22,18 @@
     .btn-add-to-favorite{
         font-size: 12px !important;
         margin-left: 2px !important;
-        width: 160px !important;
+        width: 140px !important;
+        height: 40px !important;
+        img{
+            width: 24px !important;
+            height: 24px !important;
+            margin: 0 0 0 4px;
+        }
+        .btn-add-to-favorite-content{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 0 0 -24px;
+        }
     }
 }

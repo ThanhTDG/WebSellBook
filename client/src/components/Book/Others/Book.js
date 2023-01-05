@@ -29,9 +29,9 @@ const BookStyleSmall = (props) => {
                 <div className='user-favorite-book-img' style={userFavoriteBookImageStyle}>
                 </div>
                 <div className='user-favorite-book-options' onMouseOver={() => setIsHoverOptionButtons(true)}>
-                    <AddToCardButton bookData={bookData} />
+                    <AddToCardButton bookId={bookData._id} />
                     <div className='user-spacing' />
-                    <AddToFavoriteButton />
+                    <AddToFavoriteButton bookId={bookData._id} isSelected={false} isFavoritePage={false}/>
                 </div>
             </div>
             <div className='book-style-nav-container'>

@@ -25,9 +25,9 @@ const FavoriteBook = (props) => {
                 <div className='user-favorite-book-img' style={userFavoriteBookImageStyle}>
                 </div>
                 <div className='user-favorite-book-options' onMouseOver={()=>setIsHoverOptionButtons(true)}>
-                    <AddToCardButton bookData={bookData} />
+                    <AddToCardButton bookId = {bookData._id} />
                     <div className='user-spacing'/>
-                    <AddToFavoriteButton />
+                    <AddToFavoriteButton bookId = {bookData._id} isSelected={true} isFavoritePage={true}/>
                 </div>
             </div>
             <Link to='/bookdetail' state={{ bookId: bookData._id }}>

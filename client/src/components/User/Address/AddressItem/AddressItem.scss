@@ -1,0 +1,46 @@
+.address-item{
+    margin: 0 0 12px 0;
+    padding: 12px 12px 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
+    font-family: 'MontserratRegular';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow 0.4s ease;
+    
+    span{
+        color: var(--Brown);
+        font-size: 12px;
+    }
+    .select-address-checkbox{
+        width: 24px;
+        height: 24px;
+        accent-color: var(--Blue);
+        &:hover{
+            accent-color: var(--Blue)
+        }
+    }
+    .address-item-contents{
+        cursor: pointer;
+    }
+    .address-item-option{
+        button{
+            border: none;
+            background-color: transparent;
+            img{
+                width: 32px;
+                height: 32px;
+                object-fit: contain;
+            }
+            &:hover{
+                img{
+                    filter: invert(38%) sepia(93%) saturate(2413%) hue-rotate(349deg) brightness(96%) contrast(97%);
+                }
+            }
+        }
+    }
+    &:hover{
+        box-shadow: 0px 1px 8px rgba(0,0,0,0.4);
+    }
+}

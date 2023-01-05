@@ -75,3 +75,29 @@
         }
     }
 }
+
+@media only screen and (max-width:600px ){
+    .page-link{
+        font-size: 12px;
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+    }
+    
+    .books-nav-buttons-container{
+        .books-nav-button{
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+        .books-nav-option-button{
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            img{
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}
