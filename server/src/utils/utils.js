@@ -10,13 +10,12 @@ const isEmpty = (obj) => {
 /**
  * @param {string} str String
  */
-const normalizeStr = (str) => {
-  return str
+const normalizeStr = (str) =>
+  str
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/Đ/g, "D")
     .replace(/đ/g, "d");
-};
 
 module.exports = {
   isEmpty,

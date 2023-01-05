@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const { saveCookie, clearCookie } = require("../utils/cookie");
+
 const Schema = mongoose.Schema;
 
 const cartItemSchema = new Schema(
@@ -58,7 +60,7 @@ cartItemSchema
     return this.quantity * value.price;
   });
 
-cartItemSchema.methods.toJSON = function () {
+cartItemSchema.methods.toJson = function () {
   const obj = this.toObject();
   delete obj.bookId;
   obj.book = this.book;
@@ -77,11 +79,11 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-cartSchema.virtual("user", {
-  ref: "User",
-  localField: "userId",
-  foreignField: "_id",
-  justOne: true,
+cartSchema.virtual("isSelectedAll").get(function () {
+  return (
+    this.items.length !== 0 &&
+    this.items.every((value) => value.selected === true)
+  );
 });
 
 cartSchema.virtual("total").get(function () {
@@ -90,14 +92,56 @@ cartSchema.virtual("total").get(function () {
     .reduce((sum, value) => sum + value.total, 0);
 });
 
-cartSchema.methods.toJSON = function () {
+cartSchema.virtual("user", {
+  ref: "User",
+  localField: "userId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+/**
+ * Clear cookie
+ * @param {Response} res Response
+ */
+cartSchema.methods.clearCookie = async function (res) {
+  return await clearCookie(res, "cart", false);
+};
+
+/**
+ * Merge cart
+ * @param {Cart} cart
+ */
+cartSchema.methods.merge = async function (cart) {
+  cart.items.forEach((item) => {
+    const cartItem = this.items.find((i) => (i.bookId = item.bookId));
+    if (cartItem) {
+      cartItem.$set(item);
+    } else {
+      this.items.addToSet(item);
+    }
+  });
+  await this.save();
+};
+
+/**
+ * Save to cookie
+ * @param {Response} res Response
+ */
+cartSchema.methods.saveCookie = async function (res) {
+  return await saveCookie(res, "cart", this, false);
+};
+
+cartSchema.methods.toJson = function () {
   const obj = this.toObject();
   delete obj.__v;
   delete obj.createdAt;
   delete obj.updatedAt;
-  obj.items = this.items;
+  obj.items = this.items.map((item) => item.toJson());
+  obj.isSelectedAll = this.isSelectedAll;
   obj.total = this.total;
   return obj;
 };
 
-module.exports = mongoose.model("Cart", cartSchema);
+const Cart = mongoose.model("Cart", cartSchema);
+
+module.exports = Cart;

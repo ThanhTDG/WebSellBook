@@ -24,21 +24,44 @@ const categorySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Category",
     },
-    tree: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
+    tree: {
+      type: [Schema.Types.ObjectId],
+      ref: "Category",
+    },
   },
   { timestamps: true }
 );
+
+categorySchema
+  .virtual("_parent", {
+    ref: "Category",
+    localField: "parent",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      const { _id, id, name } = value;
+      return { _id, id, name };
+    }
+  });
 
 categorySchema.virtual("children", {
   ref: "Category",
   localField: "_id",
   foreignField: "parent",
 });
+
+categorySchema
+  .virtual("level", {
+    ref: "Category",
+    localField: "parent",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    return value ? 1 + value.level : 0;
+  });
 
 categorySchema.pre("save", async function (next) {
   try {
@@ -53,13 +76,18 @@ categorySchema.pre("save", async function (next) {
   }
 });
 
-categorySchema.pre("find", async function (next) {
+categorySchema.pre(/find|findOne/, async function (next) {
   try {
-    this.populate("children");
+    if (this.options.hasChildren === true) {
+      this.populate({ path: "children", options: { hasChildren: true } });
+    }
+    this.populate("level");
     next();
   } catch (error) {
     next(error);
   }
 });
+
+categorySchema.pre("update", async function (next) {});
 
 module.exports = mongoose.model("Category", categorySchema);

@@ -2,14 +2,17 @@ import React, { useState, useEffect, setState } from 'react';
 import './ShoppingCart.scss'
 import { useStore, actions } from '../../store';
 import { BooksInShoppingCart } from './BooksInShoppingCart';
+import * as CartServices from '../../apiServices/CartServices'
 
 const ShoppingCart = (props) => {
     const [isHoverTrash, setIsHoverTrash] = useState(false)
 
-    const bookData = props.bookData.book
-    const [bookAmount, setbookAmount] = useState(props.bookData.amount)
-    const [isSelectedBook, setIsSelectedBook] = useState(props.bookData.isSelected)
+    const [bookData, setBookData] = useState(props.bookData.book)
+    const [bookAmount, setbookAmount] = useState(props.bookData.quantity)
+    const [isSelectedBook, setIsSelectedBook] = useState(props.bookData.selected)
+    const [bookTotal, setBookTotal] = useState(props.bookData.total)
 
+    const [isLoading, setIsLoading] = useState(false)
 
     const [state, dispatch] = useStore()
     // const { booksInCart } = state
@@ -27,7 +30,7 @@ const ShoppingCart = (props) => {
         setIsHoverTrash(false)
     }
     const bookInCartImageStyle = {
-        backgroundImage: `url('${bookData.image}')`,
+        backgroundImage: `url('${bookData.images[0]}')`,
         backgroundPosition:'center',
         width: '124px',
         height: '164px',
@@ -51,79 +54,66 @@ const ShoppingCart = (props) => {
         position: 'relative'
     }
 
-    function onDecreaseBookAmount() {
-        setbookAmount(bookAmount === 1 ? 1 : bookAmount - 1)
+    async function onDecreaseBookAmount() {
+        let temp = bookAmount === 1 ? 1 : bookAmount - 1
+        setbookAmount(temp)
+        console.log('book amount de' , temp)
+        await updateBookInCart(getBook(bookData._id, isSelectedBook, temp))
+        props.refrestData()
     }
-    function onIncreaseBookAmount() {
-        setbookAmount(bookAmount + 1)
+    async function onIncreaseBookAmount() {
+        let temp = bookAmount + 1
+        setbookAmount(temp)
+        console.log('book amount in', temp)
+        await updateBookInCart(getBook(bookData._id, isSelectedBook, temp))
+        props.refrestData()
     }
-    function onChangeCheckbox(e) {
+    async function onChangeCheckbox(e) {
         setIsSelectedBook(e.target.checked)
+        let checked = e.target.checked
+        console.log('checked', checked)
+        await updateBookInCart(getBook(bookData._id, checked, bookAmount))
+        props.refrestData()
     }
-    function onRemoveBookInCart() {
-        dispatch(actions.removeBookInCart(getBookInCart()))
-        BooksInShoppingCart.forEach(item => {
-            if (item.book.id === props.bookData.book.id) {
-                let index = BooksInShoppingCart.indexOf(item)
-                BooksInShoppingCart.splice(index, 1)
-                props.refrestBooksInCart()
-            }
-        })
-    }
-    function getBookInCart() {
-        return {
-            book: bookData,
-            amount: bookAmount,
-            isSelected: isSelectedBook
-        }
-    }
-    function updateBooksInCart() {
-        let book = getBookInCart()
-        BooksInShoppingCart.forEach(item => {
-            if (item.book.id === book.book.id) {
-                item.amount = book.amount
-                item.isSelected = book.isSelected
-            }
-        })
-        console.log(BooksInShoppingCart)
-    }
-    useEffect(() => {
-        updateBooksInCart()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [bookAmount])
-    useEffect(() => {
-        updateBooksInCart()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSelectedBook])
 
-    // useEffect(() => {
-    //     dispatch(actions.updateBookInCart(getBookInCart()))
+    // useEffect(()=>{
+    //     updateBookInCart(getBook(bookData._id, isSelectedBook, bookAmount))
     // // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [bookAmount])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // useEffect(()=>{
-    //     dispatch(actions.updateBookInCart(getBookInCart()))
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isSelectedBook])
+    const getBook = (id, isSelected, quantity)=>{
+        return{
+            id: id,
+            isSelected: isSelected,
+            quantity: quantity
+        }
+    }
+
+    const updateBookInCart = async (book) =>{
+        console.log('get book', book)
+        setIsLoading(true)
+        const request = await CartServices.updateBookInCart(book)
+        console.log('update book in cart', request)
+        //setBookData(request.book)
+    }
 
 
     return (
         <div className='book-in-cart-container'>
             <div style={bookInCartContainer} className='row responsive-row'>
                 <div className='col-sm-3 responsive-col-1'>
-                    <input className='responsive-checkbox' id={`cb-selecte-book-in-cart-${bookData.id}`} style={checkboxStyle} type='checkbox' defaultChecked={isSelectedBook} onChange={(e) => (onChangeCheckbox(e))}></input>
+                    <input className='responsive-checkbox' id={`cb-selecte-book-in-cart-${bookData._id}`} style={checkboxStyle} type='checkbox' defaultChecked={isSelectedBook} onChange={(e) => (onChangeCheckbox(e))}></input>
                     <div style={bookInCartImageStyle} className='responsice-book-image-in-cart'></div>
                 </div>
                 <div style={priceContainerStyle} className='col-sm-4 responsive-col-2'>
                     <div className='book-in-cart-contents'>
-                        <p className='book-in-cart-title'>{bookData.title}</p>
-                        <p className='book-in-cart-author'>{bookData.author}</p>
+                        <p className='book-in-cart-title'>{bookData.name}</p>
+                        {/* <p className='book-in-cart-author'>{bookData.author}</p> */}
                     </div>
                     <div className='book-in-cart-prices'>
-                        <span className='book-in-cart-prv-price'>{formatter.format(parseInt(bookData.prvPrice))}</span>
-                        <span className='book-in-cart-discount-rate'> -{bookData.discountrate}</span>
-                        <span className='book-in-cart-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
+                        <span className='book-in-cart-prv-price'>{formatter.format(parseInt(bookData.originalPrice))}</span>
+                        <span className='book-in-cart-discount-rate'> -{bookData.discountRate}%</span>
+                        <span className='book-in-cart-cur-price'>{formatter.format(parseInt(bookData.price))}</span>
                     </div>
                 </div>
                 <div className='col-sm-2 book-in-cart-amount-container responsive-col-3'>
@@ -134,8 +124,8 @@ const ShoppingCart = (props) => {
                     </div>
                 </div>
                 <div className='col-sm-3 book-in-cart-price-container responsive-col-4'>
-                    <span className='book-in-cart-price-cur-price'>{formatter.format(parseInt(bookData.curPrice))}</span>
-                    <button className='responsive-remove-btn' onClick={() => (onRemoveBookInCart())} onMouseEnter={onHoverTrash} onMouseLeave={onNoneHoverTrash}><img src={require(`../../assets/icons/${isHoverTrash === true ? 'ic-trash.png' : 'ic-trash-gray.png'}`)} alt='ic-close' /></button>
+                    <span className='book-in-cart-price-cur-price'>{formatter.format(parseInt(bookTotal))}</span>
+                    <button className='responsive-remove-btn' onClick={() => (props.removeBookInCart(bookData._id))} onMouseEnter={onHoverTrash} onMouseLeave={onNoneHoverTrash}><img src={require(`../../assets/icons/${isHoverTrash === true ? 'ic-trash.png' : 'ic-trash-gray.png'}`)} alt='ic-close' /></button>
                 </div>
             </div>
         </div>

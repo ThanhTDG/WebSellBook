@@ -1,0 +1,14 @@
+.shimmer-book-container{
+    box-shadow: none !important;
+    .shimmer-main-image{
+        box-shadow: none !important;
+    }
+    .shimmer-sub-image{
+        filter: none !important;
+    }
+}
+@media only screen and (max-width:600px ) {
+    .shimmer-sub-image-last{
+        display: none;
+    }
+}

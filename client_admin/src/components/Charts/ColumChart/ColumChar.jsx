@@ -1,10 +1,42 @@
 import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend
+);
 
 export const options = {
+	x: {
+		ticks: {
+			callback: function (value, index, ticks_array) {
+				let characterLimit = 12;
+				let label = this.getLabelForValue(value);
+				if (label.length >= characterLimit) {
+					return (
+						label
+							.slice(0, label.length)
+							.substring(0, characterLimit - 1)
+							.trim() + "..."
+					);
+				}
+				return label;
+			},
+		},
+	},
 	indexAxis: "y",
 	elements: {
 		bar: {
@@ -37,10 +69,21 @@ export const options = {
 };
 
 export const data = {
-	labels: ["Sách 1 ", "Sách 2", "Sách 3", "Sách 4", "Answered", "Abandoned", "Waiting"],
+	labels: [
+		"Công Chúa Ma Cà Rồng Quyề...",
+		"Chuyện Tình Thanh Xuân Bi...",
+		"Liệu Có Sai Lầm Khi Tìm K...",
+		"Fate/Zero 5 - Mạch Ngầm B...",
+		"Miền Đất Hứa - The Promis...",
+		"Lời Nói Đùa 2 - Kẻ Siết C...",
+		"Cuộc Chiến Siêu Nhiên Giữ...",
+		"Lịch Sử Văn Học Thế Giới ...",
+		"Nho Giáo",
+		"Nhà văn và Cuộc sống số 8...",
+	],
 	datasets: [
 		{
-			data: [90, 80, 75, 65, 50, 46, 44, 40],
+			data: [96, 94, 92, 90, 88, 86, 84, 82, 80, 78],
 			backgroundColor: ["gray", "blue", "yellow"],
 		},
 	],

@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { FakeData } from '../../../variables/FakeData';
 import * as booksServies from '../../../apiServices/booksServices';
+import * as FavoriteServices from '../../../apiServices/FavoriteServices'
 import LoadingBookFavorite from '../../Loading/LoadingBookFavorite/LoadingBookFavorite';
 import FavoriteBook from './FavoriteBook';
+import { useStore, actions } from '../../../store';
 import './FavoriteBook.scss'
 
 const Favorites = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [apiBooks, setApiBooks] = useState([])
+    const [state, dispatch] = useStore()
+
     useEffect(() => {
         setIsLoading(true)
-        fetchApi()
+        getFavoriteBooks()
     }, [])
 
-    const fetchApi = async () => {
-        const booksResult = await booksServies.books()
+    // useEffect(() => {
+    //     setIsLoading(true)
+    //     getFavoriteBooks()
+    //     console.log('reload favorite')
+    // }, [state.needUpdateFavoriteBooks])
+
+    const getFavoriteBooks = async () => {
+        const booksResult = await FavoriteServices.getFavoriteBooks()
         setIsLoading(false)
-        setApiBooks(booksResult.docs)
+        console.log('get favorite books', booksResult)
+        setApiBooks(booksResult)
     }
-    
+
     return (
         <div className='option-page-favorites'>
             {

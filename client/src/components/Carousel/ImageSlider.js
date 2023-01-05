@@ -70,7 +70,7 @@ const ImageSlider = ({ slides }) => {
       margin: "0 3px",
       cursor: "pointer",
       fontSize: "20px",
-      color: currentIndex === index ? 'var(--Pink)' : 'var(--LightOrange)',
+      color: currentIndex === index ? 'var(--Pink)' : 'var(--LightGray)',
     }
   }
 
@@ -87,10 +87,10 @@ const ImageSlider = ({ slides }) => {
     <div style={sliderStyles}>
       <div>
         <div onClick={goToPrevious} style={leftArrowStyles}>
-          <img src={require('../../assets/icons/ic-previou-white.png')} alt='left arrow' />
+          <img src={require('../../assets/icons/ic-previou.png')} alt='left arrow' />
         </div>
         <div onClick={goToNext} style={rightArrowStyles}>
-          <img src={require('../../assets/icons/ic-next-white.png')} alt='right arrow' />
+          <img src={require('../../assets/icons/ic-next.png')} alt='right arrow' />
         </div>
       </div>
       <div style={slideStylesWidthBackground}></div>

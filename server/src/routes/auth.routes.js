@@ -6,7 +6,10 @@ const {
   authenticate,
   requiredLogin,
 } = require("../middlewares/auth.middleware");
-const { uploadAvatar } = require("../middlewares/upload.middleware");
+const {
+  uploadAvatar,
+  destroyAvatar,
+} = require("../middlewares/cloudinary.middleware");
 
 const router = express.Router();
 
@@ -23,6 +26,7 @@ router.put(
   "/uploadavatar",
   authenticate,
   uploadAvatar,
+  destroyAvatar,
   controller.uploadAvatar
 );
 router.put("/changepassword", authenticate, controller.changePassword);

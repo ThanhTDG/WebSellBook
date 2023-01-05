@@ -1,0 +1,170 @@
+.wrapper {
+	margin-bottom: 120px;
+	margin-top: 32px;
+	--space: 32px;
+	min-width: 850px;
+	max-width: 1280px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--space) * 1);
+}
+
+.critical-information,
+.details,
+.descNImage {
+	width: 100%;
+	padding: 4px (var(--space)) !important;
+	margin: 16px 0px;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space);
+	.name {
+		width: 100%;
+	}
+}
+.more-info {
+	width: 100%;
+}
+.code,
+.writer,
+.wrapper-status,
+.properties-book,
+.producer,
+.dimension,
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	flex: 3;
+	gap: calc(var(--space));
+	.status,
+	.publisher {
+		flex-grow: 1;
+	}
+	.colum {
+		width: 33.33%;
+	}
+
+	.dateNCount,
+	.publish-date {
+		flex-grow: 3;
+	}
+}
+.wrapper-status {
+	align-items: center;
+}
+.gallery {
+	display: grid;
+	width: 100%;
+	grid-template-columns: 40% 60%;
+}
+.img {
+	width: 100%;
+	max-height: 400px;
+	max-width: 400px;
+	object-fit: contain;
+}
+.img-default {
+	width: 100%;
+}
+
+.img-upload {
+	width: 100%;
+	height: 100%;
+	padding: 16px;
+}
+.new-button {
+	position: fixed;
+	bottom: 16px;
+	right: 16px;
+	display: flex;
+}
+.btn-cancel,
+.btn-confirm {
+	min-width: 124px;
+	margin-right: 24px;
+}
+.childrenContainer {
+	margin: 16px 0px;
+}
+.category {
+	margin: 16px;
+}
+.wrapper-box {
+	display: flex;
+	margin: 16px;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 16px;
+}
+
+.division {
+	display: flex;
+	justify-content: space-between;
+	gap: 32px;
+}
+.image-card {
+	height: 120px !important;
+	width: 120px !important;
+	border-radius: 8px !important;
+}
+.active {
+	border: 2px solid var(--enable) !important;
+}
+.change {
+	border: 2px solid var(--warning) !important;
+}
+.feature {
+	display: flex;
+	position: fixed;
+	bottom: 32px;
+	right: 32px;
+	gap: 16px;
+	.pre-step {
+		z-index: 3;
+		background-color: white;
+		color: var(--red-pink);
+	}
+}
+
+.wrapper-images {
+	display: flex;
+	flex-direction: column;
+	padding: 0px 16px 16px 16px;
+	gap: 16px;
+	.feature-images {
+		height: 40px;
+		padding: 4px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
+		.btn-upload {
+			width: 142px;
+			.title-upload {
+				display: flex;
+				gap: 16px;
+				align-items: center;
+			}
+		}
+	}
+	.images-outline {
+		gap: 4px;
+		display: flex;
+		flex-direction: column;
+		padding: 16px 0px 16px 16px;
+		.list-image {
+			display: flex;
+			gap: 8px;
+			height: 260px;
+			overflow-y: scroll;
+			flex-wrap: wrap;
+			padding: 8px;
+		}
+	}
+}
+.btn-set-default {
+	color: var(--enable);
+}

@@ -2,6 +2,7 @@ const properties = {
 	initialValues: {
 		id: "",
 		name: "",
+		category: null,
 		description: "",
 		authors: "",
 		translators: "",
@@ -22,7 +23,6 @@ const properties = {
 		countInStock: 0,
 		originalPrice: 0,
 		discountRate: 0,
-		category: null,
 	},
 
 	language: {
@@ -30,28 +30,28 @@ const properties = {
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	criticalInformation: {
 		title: "Thông tin quan trọng",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	type: {
 		title: "Thể loại",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	specification: {
 		title: "Thông số kỹ thuật",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 
 	details: {
@@ -59,140 +59,140 @@ const properties = {
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	name: {
 		title: "Tên sách",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	category: {
 		title: "Danh mục",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	originalPrice: {
 		title: "Giá gốc",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "999999999999", step: "100" },
-		rules: ["isByteLength"],
+	
 	},
 	price: {
 		title: "Giá",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "999999999999", step: "100" },
-		rules: ["isByteLength"],
+	
 	},
 	discountRate: {
 		title: "Tỉ lệ giảm giá",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	authors: {
 		title: "Tác giả",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	translators: {
 		title: "Dịch giả",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	sku: {
 		title: "SKU",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	isbn10: {
 		title: "ISBN 10",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	isbn13: {
 		title: "ISBN 13",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	supplier: {
 		title: "Nhà cung cấp",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	publisher: {
 		title: "Nhà xuất bản",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	publisherDate: {
 		title: "Ngày xuất bản",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	weight: {
 		title: "Cân nặng",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	height: {
 		title: "Chiều cao",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	width: {
 		title: "Chiều rộng",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	page: {
-		title: "Số trang sách",
+		title: "Số trang",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	bookCover: {
 		title: "Loại bìa",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	expectedDate: {
 		title: "Ngày dự kiến",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	status: {
 		title: "Trạng thái",
@@ -203,14 +203,14 @@ const properties = {
 			{ id: "isActive", name: "Đã có trong kho" },
 			{ id: "comingSoon", name: "Chưa có trong kho" },
 		],
-		rules: ["isByteLength"],
+	
 	},
 	countInStock: {
 		title: "Số lượng hàng trong kho",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 
 	descNImage: {
@@ -218,7 +218,7 @@ const properties = {
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 
 	description: {
@@ -226,14 +226,14 @@ const properties = {
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 	images: {
-		title: "Ảnh minh họa",
+		title: "Danh sách ảnh",
 		desc: "Khoảng n ký tự đóa",
 		require: true,
 		config: { min: "0", max: "100", step: "1" },
-		rules: ["isByteLength"],
+	
 	},
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useReducer } from "react";
+import React, { useState, useEffect, useLayoutEffect, useReducer, useMemo } from "react";
 import { Box, FormControl } from "@mui/material";
 import OutlinedBox from "~/components/OutlinedBox";
 import Form from "~/components/Form";
@@ -6,42 +6,32 @@ import Form from "~/components/Form";
 import useForm from "~/hooks/useForm";
 import Controls from "~/components/controls/";
 import validate, { bookValidation } from "~/utils/validate";
-import styles from "./product.module.scss";
+import styles from "./formProduct.module.scss";
 import categories from "~/components/controls/DropdownTree/sampleData";
 import Editor from "~/components/controls/Editor/Editor";
 import classNames from "classnames/bind";
 import "./formMuiCustom.scss";
 import { icons } from "~/assets/images";
 import Button from "~/components/controls/Button";
-import unit from "~/stores/unit";
+import unit from "~/stores/ComponentConfigs/unit";
 import BookConfig from "~/stores/Book";
 import UpLoadImage from "~/components/UpLoadImage";
 import Image from "~/components/Image";
 import PageConfig from "~/stores/pages";
 import Stepper from "~/components/Stepper/Stepper";
-import { postProduct, putProduct, upLoadImages } from "~/services/productService";
 import { message } from "antd";
 import { ErrorDialog } from "~/utils/dialog";
 import { generatePath, useNavigate } from "react-router-dom";
+import typeFeature from "~/stores/types/typeFeature";
+import { actions, constants } from "~/stores";
+import TextFelidCategory from "~/components/TextFelidCategory";
+import UploadImages from "~/components/Dialog/UploadImages";
+import CardImage from "~/components/CardImage";
+import * as productService from "~/services/productService";
+import { Modal } from "antd";
 
 const propsBook = BookConfig.props;
 const cx = classNames.bind(styles);
-const data = {
-	label: "search me",
-	value: "searchme",
-	children: [
-		{
-			label: "search me too",
-			value: "searchmetoo",
-			children: [
-				{
-					label: "No one can get me",
-					value: "anonymous",
-				},
-			],
-		},
-	],
-};
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -54,226 +44,255 @@ const steps = [
 	BookConfig.props.details.title,
 	BookConfig.props.descNImage.title,
 ];
+const { confirm } = Modal;
 function FormProduct(props) {
-	const { edit = false, initialValues = propsBook.initialValues } = props;
-	const { values, setValues, errors, setError, handleInputChange } = useForm(initialValues);
-	const [isNew, setIsNew] = useState(window.location.pathname === PageConfig.newProduct.route);
-	const [step, setStep] = useState(0);
-	const [isEdit, setIsEdit] = useState(edit);
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
-	let AddIcon = icons.Button.add;
+	const { editMode, dispatchEditMode, form, type = typeFeature.isEdit, product, setProduct, categories } = props;
+	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	const navigate = useNavigate();
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (edit) {
-		}
-		if (isNew) {
-			switch (step) {
-				case 0:
-					const createProduct = async () => {
-						let response = {};
-						{
-							response = await postProduct(values);
-							if (response) {
-								console.log(response._id);
-								let convert = {
-									target: {
-										name: "id",
-										value: response._id,
-									},
-								};
-								handleInputChange(convert);
-								if (!isError) {
-									setStep(step + 1);
-								}
-							} else {
-								setIsError(true);
-							}
-							setIsLoading(false);
-						}
-					};
-					if (!values.id) {
-						setIsLoading(true);
-						createProduct();
-					} else {
-						setStep(step + 1);
-					}
-
-					break;
-				case 1:
-					setStep(step + 1);
-					break;
-				case 2:
-					const UpdateProduct = async () => {
-						let response = {};
-						response = await putProduct(values);
-						if (response) {
-							message.success("Thành công");
-
-							navigate(generatePath(PageConfig.product.route, { id: values.id }));
-						} else {
-							message.error("Thất bại");
-						}
-						setIsLoading(false);
-					};
-					setIsLoading(true);
-					UpdateProduct();
-					break;
-				default:
-					ErrorDialog();
-					break;
+	const [step, setStep] = useState(type === typeFeature.isNew ? 0 : -1);
+	useEffect(() => {
+		if (!editMode.enableEdit) {
+			if (JSON.stringify(values) !== JSON.stringify(product)) {
+				console.log("setAll");
+				setValues({ ...product });
+				return;
 			}
 		}
-	};
+		if (JSON.stringify(values) === JSON.stringify(product)) {
+			dispatchEditMode(actions.setIsChange(false));
+		} else {
+			dispatchEditMode(actions.setIsChange(true));
+		}
+	}, [editMode.enableEdit, values]);
 	console.log(values);
+	const handleSubmit = (e) => {
+		console.log("new");
+		e.preventDefault();
+		switch (type) {
+			case typeFeature.isNew:
+				switch (step) {
+					case 0:
+						const createProduct = async () => {
+							let response = {};
+							console.log(values);
+							response = await productService.postProduct(values);
+							if (response) {
+								setProduct(response);
+								setValues(response);
+								dispatchEditMode(actions.setStatusIsSuccess());
+								setStep(step + 1);
+							}
+						};
+						if (!values.id) {
+							dispatchEditMode(actions.setStatusIsLoading());
+							createProduct();
+						} else {
+							setStep(step + 1);
+						}
+						break;
+					case 1:
+						setStep(step + 1);
+						break;
+					case 2:
+						const UpdateProduct = async () => {
+							let response = {};
+							//			response = await putProduct(values);
+							if (response) {
+								dispatchEditMode(actions.setStatusIsSuccess());
+								navigate(generatePath(PageConfig.product.route, { id: values.id }));
+							} else {
+								dispatchEditMode(actions.setStatusIsError());
+								message.error("Thất bại");
+							}
+						};
+						dispatchEditMode(actions.setStatusIsLoading());
+						UpdateProduct();
+						break;
+					default:
+						ErrorDialog();
+						break;
+				}
+				break;
+			case typeFeature.isEdit:
+				break;
+			default:
+				throw Error("Không có type feature");
+		}
+	};
+
 	return (
-		<Form onSubmit={handleSubmit}>
+		<Form>
 			<FormControl className="form-control">
 				<div className={cx("wrapper")}>
-					{isNew && (
-						<Stepper
-							steps={steps}
-							value={step}
-						/>
+					{type === typeFeature.isNew && (
+						<>
+							<Stepper
+								steps={steps}
+								value={step}
+							/>
+							<SwitchStep
+								action={handleSubmit}
+								step={step}
+								setStep={setStep}
+								isChange={editMode.isChange}
+							/>
+						</>
 					)}
-					{isNew ? (
-						<CompsStep
-							values={values}
-							step={step}
-							handleInputChange={handleInputChange}
-							error={errors}
-						/>
-					) : (
-						<CompsStep
-							values={values}
-							handleInputChange={handleInputChange}
-							error={errors}
-						/>
-					)}
+					<CompInfo
+						product={product}
+						form={form}
+						editMode={editMode}
+						dispatchEditMode={dispatchEditMode}
+						categories={categories}
+						setProduct={setProduct}
+						step={step}
+					/>
 				</div>
-
-				{isNew && (
-					<div className={cx("new-button")}>
-						{step > 0 && (
-							<Button
-								className={cx("btn-cancel")}
-								type="button"
-								outline
-								onClick={() => {
-									setStep(step - 1);
-								}}
-							>
-								Quay lại
-							</Button>
-						)}
-						<Button
-							primary
-							className={cx("btn-confirm")}
-						>{`${step === 2 ? "Xác nhận" : "Tiếp theo"}`}</Button>
-					</div>
-				)}
-				{edit && (
-					<div className={cx("new-button")}>
-						<Button
-							primary
-							className={cx("btn-confirm")}
-						>{`Xác nhận`}</Button>
-					</div>
-				)}
 			</FormControl>
 		</Form>
 	);
 }
+function SwitchStep({ step, setStep, isChange, action }) {
+	const getStringDisplay = (step) => {
+		switch (step) {
+			case 0:
+				return constants.NEXT_STEP;
+			case 1:
+				if (!isChange) return constants.PASS;
+				else return constants.NEXT_STEP;
+			case 2:
+				return constants.FINISH;
+			default:
+				return constants.NEXT_STEP;
+		}
+	};
+	let title = getStringDisplay(step);
+	return (
+		<div className={cx("feature")}>
+			{step > 0 && (
+				<Controls.Button
+					onClick={() => {
+						setStep(step - 1);
+					}}
+					outline
+					className={cx("pre-step")}
+				>
+					{"Bước trước"}
+				</Controls.Button>
+			)}
+			<Controls.Button
+				onClick={action}
+				primary
+			>
+				{title}
+			</Controls.Button>
+		</div>
+	);
+}
 
-function CompsStep(props) {
-	const { step, values, handleInputChange, errors } = props;
+function CompInfo(props) {
+	const { form, product, step, categories, dispatchEditMode, editMode, setProduct } = props;
+	const { values, setValues, errors, setError, handleInputChange } = form;
+	const emptyFunction = () => {
+		dispatchEditMode(actions.setIsChange(true));
+	};
+	let displayValues = editMode.enableEdit ? values : product;
+	let funcHandle = editMode.enableEdit ? handleInputChange : emptyFunction;
+	const criticalInformationMemo = useMemo(() => {
+		return (
+			<CriticalInformation
+				product={displayValues}
+				categories={categories}
+				handleInputChange={funcHandle}
+				setValues={setValues}
+				errors={errors}
+				setError={setError}
+				dispatchEditMode={dispatchEditMode}
+			/>
+		);
+	}, [values.name, values.originalPrice, values.discountRate, values.category, product, editMode.enableEdit]);
+	const detailsMemo = useMemo(() => {
+		return (
+			<Details
+				product={displayValues}
+				handleInputChange={funcHandle}
+				setValues={setValues}
+				errors={errors}
+				setError={setError}
+				dispatchEditMode={dispatchEditMode}
+			/>
+		);
+	}, [
+		values.authors,
+		values.translators,
+		values.sku,
+		values.isbn13,
+		values.isbn10,
+		values.supplier,
+		values.publisher,
+		values.publisherDate,
+		values.countInStock,
+		values.expectedDate,
+		values.width,
+		values.height,
+		values.weight,
+		values.page,
+		values.bookCover,
+		product,
+		editMode.enableEdit,
+	]);
+	const descNImageMemo = useMemo(() => {
+		return (
+			<DescNImage
+				product={displayValues}
+				categories={categories}
+				handleInputChange={funcHandle}
+				setValues={setValues}
+				errors={errors}
+				setError={setError}
+				editMode={editMode}
+				dispatchEditMode={dispatchEditMode}
+				setProduct={setProduct}
+			/>
+		);
+	}, [product, editMode.enableEdit, values.images, values.description]);
 	switch (step) {
 		case 0:
-			return (
-				<CriticalInformation
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
-				/>
-			);
+			return <>{criticalInformationMemo}</>;
 		case 1:
-			return (
-				<Details
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
-				/>
-			);
+			return <>{detailsMemo}</>;
 		case 2:
-			return (
-				<DescNImage
-					values={values}
-					handleInputChange={handleInputChange}
-					error={errors}
-				/>
-			);
+			return <>{descNImageMemo}</>;
 		default:
 			return (
 				<>
-					<CriticalInformation
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
-					/>
-					<Details
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
-					/>
-					<DescNImage
-						values={values}
-						handleInputChange={handleInputChange}
-						error={errors}
-					/>
+					{criticalInformationMemo}
+					{detailsMemo}
+					{descNImageMemo}
 				</>
 			);
 	}
 }
-function Division3({ comp1, comp2, comp3 }) {
-	return (
-		<div className={cx("row")}>
-			<div className={cx("colum")}>{comp1}</div>
-			<div className={cx("colum")}>{comp2}</div>
-			<div className={cx("colum")}>{comp3}</div>
-		</div>
-	);
-}
+
 function CriticalInformation(props) {
-	const { values, handleInputChange, errors } = props;
-	const [languageBook, setLanguageBook] = useState(categories[0].id);
-	const handleLanguageBook = (e, value) => {
-		setLanguageBook(value);
-		setCategory(null);
+	const { product, setValues, errors, setError, handleInputChange, dispatchEditMode, categories } = props;
+
+	const handleChangeIdCategory = (id) => {
+		dispatchEditMode(actions.setEnableEdit(true));
+		setValues({
+			...product,
+			category: { ...categories.list.find((category) => category.id === id) },
+		});
 	};
-	const handleCategory = (e, node) => {
-		if (node) {
-			setCategory(node.value);
-		} else {
-			setCategory(null);
-		}
+	const getCategoryId = (product) => {
+		return product.category ? product.category.id : "";
 	};
-	const setCategory = (value) => {
-		let convert = {
-			target: {
-				name: "category",
-			},
-		};
-		if (value) {
-			convert.target.value = value.id;
-		} else {
-			convert.target.value = null;
-		}
-		handleInputChange(convert);
+	const getCategoryById = (list, id) => {
+		return list.find((category) => category.id === id);
 	};
 	return (
 		<OutlinedBox
-			title={propsBook.criticalInformation.title}
+			label={propsBook.criticalInformation.title}
 			className={cx("critical-information")}
 		>
 			<div className={cx("name")}>
@@ -282,87 +301,58 @@ function CriticalInformation(props) {
 					fullWidth
 					name="name"
 					require={propsBook.name.require}
-					value={values.name}
+					value={product.name}
 					onChange={handleInputChange}
 					error={errors && errors.name ? errors.name : ""}
 				/>
 			</div>
-			<Division3
-				comp1={
-					<Controls.Input
-						label={propsBook.originalPrice.title}
-						fullWidth
-						name="originalPrice"
-						type="number"
-						configNumber={propsBook.originalPrice.config}
-						endAdornment={unit.monetary}
-						value={values.originalPrice}
-						onChange={handleInputChange}
-						error={errors && errors.originalPrice ? errors.originalPrice : ""}
-					/>
-				}
-				comp2={
-					<Controls.Input
-						fullWidth
-						label={propsBook.discountRate.title}
-						name="discountRate"
-						configNumber={propsBook.discountRate.config}
-						endAdornment={unit.percent}
-						type="number"
-						value={values.discountRate}
-						onChange={handleInputChange}
-						error={errors && errors.discountRate ? errors.discountRate : ""}
-					/>
-				}
-				comp3={
-					<Controls.Input
-						fullWidth
-						label={propsBook.price.title}
-						disabled={true}
-						name="price"
-						type="number"
-						configNumber={propsBook.price.config}
-						endAdornment={unit.monetary}
-						value={values.originalPrice * ((100 - values.discountRate) / 100)}
-						onChange={handleInputChange}
-						error={errors && errors.price ? errors.price : ""}
-					/>
-				}
-			/>
-			<div className={cx("category")}>
-				<OutlinedBox
-					title={propsBook.type.title}
-					type={"small"}
-				>
-					<Controls.RadioGroup
-						label={"Ngôn ngữ"}
-						name="language"
-						items={categories}
-						value={languageBook}
-						onChange={handleLanguageBook}
-					/>
-					{categories.map((item) => {
-						return (
-							item.id === languageBook && (
-								<div key={item.id}>
-									<Controls.DropdownTree
-										label={propsBook.category.title}
-										name="category"
-										items={item.children}
-										onChange={handleCategory}
-										error={errors && errors.category ? errors.category : ""}
-									/>
-								</div>
-							)
-						);
-					})}
-				</OutlinedBox>
+			<div className={cx("division")}>
+				<Controls.Input
+					label={propsBook.originalPrice.title}
+					fullWidth
+					name="originalPrice"
+					type="number"
+					configNumber={propsBook.originalPrice.config}
+					endAdornment={unit.monetary}
+					value={product.originalPrice}
+					onChange={handleInputChange}
+					error={errors && errors.originalPrice ? errors.originalPrice : ""}
+				/>
+				<Controls.Input
+					fullWidth
+					label={propsBook.discountRate.title}
+					name="discountRate"
+					configNumber={propsBook.discountRate.config}
+					endAdornment={unit.percent}
+					type="number"
+					value={product.discountRate}
+					onChange={handleInputChange}
+					error={errors && errors.discountRate ? errors.discountRate : ""}
+				/>
+				<Controls.Input
+					fullWidth
+					label={propsBook.price.title}
+					disabled={true}
+					name="price"
+					type="number"
+					configNumber={propsBook.price.config}
+					endAdornment={unit.monetary}
+					value={product.originalPrice * ((100 - product.discountRate) / 100)}
+					onChange={handleInputChange}
+					error={errors && errors.price ? errors.price : ""}
+				/>
 			</div>
+			<TextFelidCategory
+				category={getCategoryById(categories.list, getCategoryId(product))}
+				handleIdChange={handleChangeIdCategory}
+				list={categories.list}
+				tree={categories.tree}
+			/>
 		</OutlinedBox>
 	);
 }
 function Details(props) {
-	const { values, handleInputChange, errors } = props;
+	const { product, setValues, errors, setError, handleInputChange, dispatchEditMode } = props;
 	const [status, setStatus] = useState(propsBook.status.optionNew[0].id);
 	const handleStatus = (e, value) => {
 		setStatus(value);
@@ -371,116 +361,99 @@ function Details(props) {
 
 	return (
 		<OutlinedBox
-			title={propsBook.details.title}
+			label={propsBook.details.title}
 			className={cx("details")}
 		>
 			<div className={cx("writer")}>
 				<Controls.Input
 					label={propsBook.authors.title}
 					name="authors"
-					value={values.authors}
+					value={product.authors}
 					onChange={handleInputChange}
 					error={errors && errors.authors ? errors.authors : ""}
 				/>
 				<Controls.Input
 					label={propsBook.translators.title}
 					name="translators"
-					value={values.translators}
+					value={product.translators}
 					onChange={handleInputChange}
 					error={errors && errors.translators ? errors.translators : ""}
 				/>
 			</div>
-
-			<Division3
-				comp1={
-					<Controls.Input
-						label={propsBook.sku.title}
-						name="sku"
-						value={values.sku}
-						onChange={handleInputChange}
-						error={errors && errors.sku ? errors.sku : ""}
-					/>
-				}
-				comp2={
-					<Controls.Input
-						label={propsBook.isbn13.title}
-						name="isbn13"
-						value={values.isbn13}
-						onChange={handleInputChange}
-						error={errors && errors.isbn13 ? errors.isbn13 : ""}
-					/>
-				}
-				comp3={
-					<Controls.Input
-						label={propsBook.isbn10.title}
-						name="isbn10"
-						value={values.isbn10}
-						onChange={handleInputChange}
-						error={errors && errors.isbn10 ? errors.isbn10 : ""}
-					/>
-				}
-			/>
-			<Division3
-				comp1={
-					<Controls.Input
-						label={propsBook.supplier.title}
-						name="supplier"
-						value={values.supplier}
-						onChange={handleInputChange}
-						error={errors && errors.supplier ? errors.supplier : ""}
-					/>
-				}
-				comp2={
-					<Controls.Input
-						label={propsBook.publisher.title}
-						name="publisher"
-						value={values.publisher}
-						onChange={handleInputChange}
-						error={errors && errors.publisher ? errors.publisher : ""}
-					/>
-				}
-				comp3={
-					<Controls.DatePicker
-						label={propsBook.publisherDate.title}
-						name="publisherDate"
-						value={values.publisherDate}
-						onChange={handleInputChange}
-					/>
-				}
-			/>
-			<Division3
-				comp1={
-					<Controls.RadioGroup
-						row={false}
-						label={propsBook.status.title}
-						name="status"
-						items={propsBook.status.optionNew}
-						value={status}
-						onChange={handleStatus}
-						error={errors && errors.status ? errors.status : ""}
-					/>
-				}
-				comp2={
-					status === propsBook.status.optionNew[0].id ? (
-						<Controls.Input
-							label={propsBook.countInStock.title}
-							name="countInStock"
-							value={values.countInStock}
-							type="number"
-							endAdornment={unit.book}
-							onChange={handleInputChange}
-							error={errors && errors.countInStock ? errors.countInStock : ""}
-						/>
-					) : (
-						<Controls.DatePicker
-							label={propsBook.expectedDate.title}
-							name="expectedDate"
-							value={values.expectedDate}
-							onChange={handleInputChange}
-						/>
-					)
-				}
-			/>
+			<div className={cx("division")}>
+				<Controls.Input
+					label={propsBook.sku.title}
+					name="sku"
+					value={product.sku}
+					onChange={handleInputChange}
+					error={errors && errors.sku ? errors.sku : ""}
+				/>
+				<Controls.Input
+					label={propsBook.isbn13.title}
+					name="isbn13"
+					value={product.isbn13}
+					onChange={handleInputChange}
+					error={errors && errors.isbn13 ? errors.isbn13 : ""}
+				/>
+				<Controls.Input
+					label={propsBook.isbn10.title}
+					name="isbn10"
+					value={product.isbn10}
+					onChange={handleInputChange}
+					error={errors && errors.isbn10 ? errors.isbn10 : ""}
+				/>
+			</div>
+			<div className={cx("division")}>
+				<Controls.Input
+					label={propsBook.supplier.title}
+					name="supplier"
+					value={product.supplier}
+					onChange={handleInputChange}
+					error={errors && errors.supplier ? errors.supplier : ""}
+				/>
+				<Controls.Input
+					label={propsBook.publisher.title}
+					name="publisher"
+					value={product.publisher}
+					onChange={handleInputChange}
+					error={errors && errors.publisher ? errors.publisher : ""}
+				/>
+				<Controls.DatePicker
+					label={propsBook.publisherDate.title}
+					name="publisherDate"
+					value={product.publisherDate}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div className={cx("division")}>
+				<Controls.RadioGroup
+					row={false}
+					label={propsBook.status.title}
+					name="status"
+					items={propsBook.status.optionNew}
+					value={status}
+					onChange={handleStatus}
+					error={errors && errors.status ? errors.status : ""}
+				/>
+			</div>
+			{status === propsBook.status.optionNew[0].id ? (
+				<Controls.Input
+					label={propsBook.countInStock.title}
+					name="countInStock"
+					value={product.countInStock}
+					type="number"
+					endAdornment={unit.book}
+					onChange={handleInputChange}
+					error={errors && errors.countInStock ? errors.countInStock : ""}
+				/>
+			) : (
+				<Controls.DatePicker
+					label={propsBook.expectedDate.title}
+					name="expectedDate"
+					value={product.expectedDate}
+					onChange={handleInputChange}
+				/>
+			)}
 
 			<OutlinedBox
 				className={cx("wrapper-box")}
@@ -493,7 +466,7 @@ function Details(props) {
 					type="number"
 					name="width"
 					configNumber={propsBook.width.config}
-					value={values.width}
+					value={product.width}
 					onChange={handleInputChange}
 					error={errors && errors.width ? errors.width : ""}
 				/>
@@ -503,7 +476,7 @@ function Details(props) {
 					name="height"
 					configNumber={propsBook.height.config}
 					endAdornment={unit.dimension}
-					value={values.height}
+					value={product.height}
 					onChange={handleInputChange}
 					error={errors && errors.height ? errors.height : ""}
 				/>
@@ -513,7 +486,7 @@ function Details(props) {
 					name="weight"
 					configNumber={propsBook.weight.config}
 					endAdornment={unit.weight}
-					value={values.weight}
+					value={product.weight}
 					onChange={handleInputChange}
 					error={errors && errors.weight ? errors.weight : ""}
 				/>
@@ -523,7 +496,7 @@ function Details(props) {
 					endAdornment={unit.page}
 					type="number"
 					name="page"
-					value={values.page}
+					value={product.page}
 					configNumber={propsBook.page.config}
 					onChange={handleInputChange}
 					error={errors && errors.page ? errors.page : ""}
@@ -531,7 +504,7 @@ function Details(props) {
 				<Controls.Input
 					label={propsBook.bookCover.title}
 					name="bookCover"
-					value={values.bookCover}
+					value={product.bookCover}
 					onChange={handleInputChange}
 					error={errors && errors.bookCover ? errors.bookCover : ""}
 				/>
@@ -540,10 +513,68 @@ function Details(props) {
 	);
 }
 function DescNImage(props) {
-	const { values, handleInputChange, errors } = props;
+	const { product, setValues, setProduct, errors, setError, handleInputChange, editMode, dispatchEditMode } = props;
+	const [imagePick, setImagePick] = useState(null);
+	console.log(product);
+	useEffect(() => {
+		if (!editMode.enableEdit) {
+			setImagePick(null);
+		}
+	}, [editMode.enableEdit]);
+	const handleRemove = (index) => {
+		let images = product.images.filter((item) => item !== product.images[index]);
+		console.log(images);
+		setValues({
+			...product,
+			images: images,
+		});
+		dispatchEditMode(actions.setIsChange(true));
+		setImagePick(null);
+	};
+	const handleImagePick = (index) => {
+		setImagePick(index);
+	};
+	const handleSetDefault = () => {
+		if (imagePick) {
+			let list = [...product.images];
+			list[0] = product.images[imagePick];
+			list[imagePick] = product.images[0];
+
+			setValues({
+				...product,
+				images: [...list],
+			});
+			dispatchEditMode(actions.setIsChange(true));
+			setImagePick(null);
+		}
+	};
+	const handleUploadImages = (images = []) => {
+		let newListImage = images.map((image) => image);
+		upDateImage(newListImage);
+	};
+	const upDateImage = async (images) => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await productService.upLoadImages(images, product.id);
+		if (response) {
+			setImagePick(null);
+			console.log(response, "image upload");
+			let newImages = product.images.concat(response.paths);
+			let newProduct = {
+				...product,
+				images: newImages,
+			};
+			const productResponse = await productService.updateProduct(newProduct, product.id);
+			if (productResponse) {
+				setProduct(productResponse);
+				dispatchEditMode(actions.setStatusIsSuccess());
+			}
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
+	};
 	return (
 		<OutlinedBox
-			title={propsBook.descNImage.title}
+			label={propsBook.descNImage.title}
 			className={cx("descNImage")}
 		>
 			<div className={cx("title-desc")}>
@@ -551,33 +582,71 @@ function DescNImage(props) {
 				<Controls.Textarea
 					label={propsBook.description.title}
 					name="description"
-					value={values.description}
+					value={product.description}
 					onChange={handleInputChange}
 					error={errors && errors.description ? errors.description : ""}
 				/>
 			</div>
-
 			<div className={cx("img-manager")}>
 				<OutlinedBox
-					title={propsBook.images.title}
+					label={"Ảnh minh họa"}
 					className={cx("gallery")}
 				>
 					<div className={cx("img-default")}>
 						<Image
 							className={cx("img")}
-							src={values ? values.images : ""}
+							src={product.images && product.images.length > 0 ? product.images[0] : ""}
 						></Image>
 					</div>
-					<OutlinedBox
-						title={propsBook.images.title}
-						className={cx("img-upload")}
-					>
-						<UpLoadImage
-							action={upLoadImages}
-							id={values.id}
-							listImage={values.images}
-						></UpLoadImage>
-					</OutlinedBox>
+					<div className={cx("wrapper-images")}>
+						<div className={cx("feature-images")}>
+							<UploadImages
+								maxImages={
+									product.image
+										? constants.MAX_IMAGES_PER_PRODUCT - product.images.length
+										: constants.MAX_IMAGES_PER_PRODUCT
+								}
+								disabled={product.image && constants.MAX_IMAGES_PER_PRODUCT === product.images.length}
+								title={
+									<div className={cx("title-upload")}>
+										<div className={cx("text-upload")}>{constants.UPLOAD_IMAGE}</div>
+										{icons.Button({ className: cx("icon-upload") }).upload}
+									</div>
+								}
+								className={cx("btn-upload")}
+								actionUpload={handleUploadImages}
+							/>
+							{imagePick && imagePick !== 0 ? (
+								<Controls.Button
+									onClick={handleSetDefault}
+									outline
+									className={cx("btn-set-default")}
+								>
+									{constants.SET_DEFAULT}
+								</Controls.Button>
+							) : (
+								""
+							)}
+						</div>
+						{product.images && (
+							<OutlinedBox
+								label={propsBook.images.title}
+								className={cx("images-outline")}
+							>
+								<div className={cx("list-image")}>
+									{product.images.map((image, index) => (
+										<CardImage
+											viewDetail={index !== 0}
+											onClick={() => handleImagePick(index)}
+											handleRemove={() => handleRemove(index)}
+											className={cx("image-card", index === 0 ? "active" : imagePick === index ? "change" : "")}
+											src={image}
+										/>
+									))}
+								</div>
+							</OutlinedBox>
+						)}
+					</div>
 				</OutlinedBox>
 			</div>
 		</OutlinedBox>

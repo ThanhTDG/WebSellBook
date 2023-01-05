@@ -1,0 +1,8 @@
+.tree-item > div {
+	&:hover {
+		background-color: var(--border);
+	}
+}
+.tree-view {
+	overflow: auto;
+}

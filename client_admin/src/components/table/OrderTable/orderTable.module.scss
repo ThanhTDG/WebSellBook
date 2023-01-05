@@ -1,0 +1,44 @@
+.spec {
+	font-weight: 600;
+}
+.name {
+	min-width: 300px;
+}
+.body-detail-image {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.title-detail {
+	width: 120px;
+}
+.amount {
+	max-width: 64px;
+}
+.stt {
+	max-width: 40px;
+}
+.wrapper-payment {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	align-items: center;
+	.cash-on-delivery {
+		color: var(--primary);
+	}
+	.paid {
+		color: var(--warning);
+	}
+}
+.title-item-total {
+	white-space: nowrap;
+}
+.total-done-sum {
+	font-weight: 700;
+	font-size: 16px;
+	color: var(--red-pink);
+}
+.total-money-sum {
+	font-weight: 600;
+	color: var(--red-pink);
+}

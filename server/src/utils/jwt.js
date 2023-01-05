@@ -1,6 +1,7 @@
-require("dotenv").config();
-
+const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
+
+dotenv.config();
 
 const SECRET = process.env.JWT_SECRET;
 const EXPIRES = process.env.JWT_EXPIRES;

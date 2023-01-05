@@ -22,12 +22,14 @@ function Content(props) {
 			<div className={cx("info")}>
 				<div className={cx("text", "name-product")}>{product.name}</div>
 				<div className={cx("category")}>
-					<div className={cx("title")}>{}</div>
+					<div className={cx("title")}>{product.category.name}</div>
 				</div>
 				<div className={cx("rating")}>
 					<div className={cx("rating-value")}>
 						<div className={cx("title")}>Đánh giá:</div>
-						<div className={cx("value")}>{product.rating ? product.rating : "-"}</div>
+						<div className={cx("value")}>
+							{product.rating ? product.rating : "-"}
+						</div>
 						<Image
 							className={cx("rating-img")}
 							src={images.star}
@@ -36,22 +38,15 @@ function Content(props) {
 					</div>
 					<div className={cx("reviews")}>
 						<div className={cx("title")}>Số lượng:</div>
-						<div className={cx("reviews-value")}>{product.numOfReviews ? product.numOfReviews : "-"}</div>
+						<div className={cx("reviews-value")}>
+							{product.numOfReviews ? product.numOfReviews : "-"}
+						</div>
 					</div>
 				</div>
 
 				<div className={cx("short-desc")}>
 					<div className="title">Mô tả</div>
-					<div className={cx("text", "content")}>
-						{product.description}
-						{/* <Controls.Textarea
-							disable={true}
-							max
-							style={{ outline: "none", border: "none", padding: 0, overflow: "hidden" }}
-							maxRows={6}
-							value={`${shortDesc}`}
-						></Controls.Textarea> */}
-					</div>
+					<div className={cx("text", "content")}>{product.description}</div>
 				</div>
 			</div>
 		</div>

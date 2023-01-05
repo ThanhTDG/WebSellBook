@@ -18,7 +18,6 @@ function TabProduct() {
 		dispatch(actions.setTabMgtProduct(tabSelected));
 	};
 
-	console.log(state);
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("title-tab")}>
@@ -32,7 +31,6 @@ function TabProduct() {
 					allowScrollButtonsMobile
 				>
 					{TitleTabProducts.map((title, index) => {
-						consolt.log(title);
 						return (
 							<Tab
 								sx={{ fontSize: "subtitle1.fontSize" }}

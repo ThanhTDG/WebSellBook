@@ -12,6 +12,9 @@ import * as AuthServices from '../../apiServices/AuthServices'
 import ChoseAvatarDialog from './ChoseAvatarDialog';
 import ComfirmChangeInfo from './ComfirmChangeInfo';
 import { wait } from '@testing-library/user-event/dist/utils';
+import Address from '../../components/User/Address/Address';
+import OrderProducts from '../../components/User/OrderProducts/OrderProducts';
+import * as OrderServices from '../../apiServices/OrderServices'
 
 const UserAccount = () => {
     const [state, dispatch] = useStore()
@@ -29,8 +32,11 @@ const UserAccount = () => {
             NonRead: 'select-non-read-notification'
         },
         Product: {
-            OnGoing: 'products-on-going',
-            HaveReceived: 'product-have-received'
+            OnGoing: 'shipping',
+            HaveReceived: 'completed',
+            Processing: 'processing',
+            NotProcessed: 'not_processed',
+            Canceled: 'canceled'
         }
     }
     const [isOpenAvatarChose, setIsOpenAvatarChose] = useState(false)
@@ -39,6 +45,10 @@ const UserAccount = () => {
         {
             name: 'Thông tin tài khoản',
             order: 1
+        },
+        {
+            name: 'Địa chỉ giao hàng',
+            order: 6
         },
         {
             name: 'Thông báo',
@@ -74,17 +84,44 @@ const UserAccount = () => {
 
     var productStatus = [
         {
-            name: 'Đang giao',
+            name: 'Chờ xử lý',
             order: 1,
+            option: options.Product.NotProcessed
+        },
+        {
+            name: 'Chờ xác nhận',
+            order: 2,
+            option: options.Product.Processing
+        },
+        {
+            name: 'Đang giao hàng',
+            order: 3,
             option: options.Product.OnGoing
         },
         {
-            name: 'Lịch sử mua hàng',
-            order: 1,
+            name: 'Đã nhận',
+            order: 4,
             option: options.Product.HaveReceived
-        }
+        },
+        {
+            name: 'Đã hủy',
+            order: 5,
+            option: options.Product.Canceled
+        },
     ]
-    const [productsStatus, setProductStatus] = useState(options.Product.OnGoing)
+    const [productsStatus, setProductStatus] = useState(options.Product.NotProcessed)
+    const [productData, setProductData] = useState([])
+
+    useEffect(() => {
+        console.log(productsStatus)
+        fetchOrder(productsStatus)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productsStatus])
+    const fetchOrder = async (status) => {
+        var orderResponse = await OrderServices.getAll(1, 12, status)
+        setProductData(orderResponse.docs)
+        console.log(orderResponse.docs)
+    }
     function getStyleToolbarItem(item) {
         return {
             color: item.order === currentToolbarItem ? 'var(--Pink)' : 'var(--Darkest)',
@@ -232,7 +269,7 @@ const UserAccount = () => {
                     <div className='row .no-margin-padding'>
                         <div className='col-sm-4 uc-body-left-container .no-margin-padding'>
                             <div className='ucbl-avatar-container'>
-                                <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
+                                <img className='avatar-img' src={state.isLogin ? userProfile.avatar : require('../../assets/icons/defaultAvatar.png')} alt='avatar' />
                             </div>
                             <p className='ucbl-name no-margin-padding'>{userProfile.firstName} {userProfile.lastName}</p>
                             <p className='ucbl-email no-margin-padding'>{userProfile.email}</p>
@@ -268,7 +305,7 @@ const UserAccount = () => {
                             <div className='option-page-containers'>
                                 <div className='option-page-1' style={getOptionPageStyle(1)}>
                                     <div className='option-avatar-container'>
-                                        <img className='avatar-img' src={userProfile.avatar} alt='avatar' />
+                                        <img className='avatar-img' src={state.isLogin ? userProfile.avatar : require('../../assets/icons/defaultAvatar.png')} alt='avatar' />
                                         <button onClick={onOpenChoseAvatarDialog}><img src={require('../../assets/icons/ic-pen.png')} alt='pen' /></button>
                                         <ChoseAvatarDialog isOpen={isOpenAvatarChose} handleAvatarDialog={onOpenChoseAvatarDialog} onCloseModal={closeChoseAvatarDialog} />
                                     </div>
@@ -339,9 +376,10 @@ const UserAccount = () => {
                                     </div>
                                     <div className='product-status-container'>
                                         {
-                                            FakeData.books.map((book) => (
-                                                <HistoryItem HistoryItemData={book} />
+                                            productData.map((order) => (
+                                                <OrderProducts orderData={order} />
                                             ))
+
                                         }
                                     </div>
                                 </div>
@@ -388,6 +426,10 @@ const UserAccount = () => {
                                     {
                                         <Favorites />
                                     }
+                                </div>
+                                <div className='option-page-6' style={getOptionPageStyle(6)}>
+                                    <div className='option-page-title'>Danh sách địa chỉ</div>
+                                    <Address />
                                 </div>
                             </div>
                         </div>

@@ -4,18 +4,18 @@ import styles from "./product.module.scss";
 import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
 import BookConfig from "~/stores/Book";
-import { TableProduct } from "~/components/table/product";
+import ProductTable from "~/components/table/ProductTable";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
 import * as productService from "~/services/productService";
 import * as stores from "~/stores";
-import * as initState from "~/stores/initialStates";
+import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
-import Search from "~/components/Search";
-import { getCategories, getCategoriesTree } from "~/services/categoriesSerivce";
+import Search from "~/components/SearchBar";
+import { getCategoriesList, getCategoriesTree } from "~/services/categoryService";
 import { convertToSlug, convertTreeObject } from "~/utils/convertObject";
 
 const listStatus = BookConfig.listStatus;
@@ -93,6 +93,7 @@ function Products() {
 			destroyTippy();
 			const result = await productService.getProducts(state);
 			handleProducts(result);
+			console.log(result);
 		};
 		setIsLoading(false);
 		if (isUpdate) {
@@ -110,7 +111,7 @@ function Products() {
 			}
 		};
 		const fetchCategories = async () => {
-			const result = await getCategories();
+			const result = await getCategoriesList();
 			if (result) {
 				setCategories(result.docs);
 			}
@@ -118,7 +119,6 @@ function Products() {
 		fetchCategoriesTree();
 		fetchCategories();
 	}, []);
-
 	const destroyTippy = () => {
 		if (products && products.length > 0)
 			[...document.querySelectorAll("*")].forEach((node) => {
@@ -141,7 +141,12 @@ function Products() {
 		dispatch(actions.setPageProducts(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
-		dispatch(actions.setStatusProducts({ indexStatus: optionSelected, status: listStatus[optionSelected].key }));
+		dispatch(
+			actions.setStatusProducts({
+				indexStatus: optionSelected,
+				status: listStatus[optionSelected].key,
+			})
+		);
 	};
 	const handleTypeSearchChange = (e) => {
 		filter.typeSearch = e.target.value;
@@ -177,20 +182,15 @@ function Products() {
 						value={state.indexStatus}
 						index={index}
 					>
-						{isLoading ? (
-							<Loading
-								size={25}
-								height={500}
-							/>
-						) : (
-							<TableProduct
+						<Loading isLoading={isLoading}>
+							<ProductTable
 								categories={categories}
 								state={state}
 								products={products}
 								onPageChange={handlePageChange}
 								onLimitChange={handleLimitChange}
 							/>
-						)}
+						</Loading>
 					</TabPanel>
 				);
 			});
@@ -224,7 +224,7 @@ function Products() {
 						onClick={handleConfirm}
 						className={tabTableStyles("confirm")}
 					>
-						Xác nhận
+						{stores.constants.CONFIRM}
 					</Controls.Button>
 				</div>
 

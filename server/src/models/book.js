@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 const paginate = require("mongoose-paginate-v2");
 const slug = require("mongoose-slug-updater");
 
@@ -8,7 +7,6 @@ const Category = require("./category");
 const { BOOK_STATUS } = require("../constants");
 const { normalizeStr } = require("../utils/utils");
 
-// mongoose.plugin(aggregatePaginate);
 mongoose.plugin(paginate);
 mongoose.plugin(slug);
 
@@ -102,17 +100,29 @@ const bookSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    tree: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-      },
-    ],
+    tree: {
+      type: [Schema.Types.ObjectId],
+      ref: "Category",
+    },
   },
   { timestamps: true }
 );
 
-bookSchema.index({ name: "text" });
+bookSchema.index({ textSearch: "text" });
+
+bookSchema
+  .virtual("_category", {
+    ref: "Category",
+    localField: "category",
+    foreignField: "_id",
+    justOne: true,
+  })
+  .get(function (value) {
+    if (value) {
+      const { _id, id, name } = value;
+      return { _id, id, name };
+    }
+  });
 
 bookSchema.virtual("shortDes").get(function () {
   const des = this.description;

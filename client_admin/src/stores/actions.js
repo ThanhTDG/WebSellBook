@@ -76,3 +76,79 @@ export const setCategoryTable = (payload) => ({
 	type: constants.SET_CATEGORY_TABLE,
 	payload,
 });
+
+/// global state
+
+export const setIsLogin = (payload) => ({
+	type: constants.SET_IS_LOGIN,
+	payload,
+});
+export const setLoginNInfo = (payload) => ({
+	type: constants.SET_LOGIN_N_INFO,
+	payload,
+});
+
+/// categories
+export const setTreeCategories = (payload) => ({
+	type: constants.SET_TREE_CATEGORIES,
+	payload,
+});
+export const setListCategories = (payload) => ({
+	type: constants.SET_LIST_CATEGORIES,
+	payload,
+});
+export const setCategories = (payload) => ({
+	type: constants.SET_CATEGORIES,
+	payload,
+});
+export const setNeedUpdate = (payload) => ({
+	type: constants.SET_NEED_UPDATE,
+	payload,
+});
+/// edit mode
+export const setEnableEdit = (payload) => ({
+	type: constants.SET_ENABLE_EDIT,
+	payload,
+});
+export const setIsChangeNEdit = (payload) => ({
+	type: constants.SET_IS_CHANGE_EDIT,
+	payload,
+});
+export const setIsNew = (payload) => ({
+	type: constants.SET_IS_NEW,
+	payload,
+});
+export const setIsChange = (payload) => ({
+	type: constants.SET_IS_CHANGE,
+	payload,
+});
+export const setValueChange = (payload) => ({
+	type: constants.SET_VALUE_CHANGE,
+	payload,
+});
+export const setResetAll = (payload) => ({
+	type: constants.SET_RESET_ALL,
+	payload,
+});
+export const setValue = (payload) => ({
+	type: constants.SET_VALUE,
+	payload,
+});
+
+export const setStatusLoad = (payload) => ({
+	type: constants.SET_STATUS_LOAD,
+	payload,
+});
+export const setStatusIsLoading = (payload) => ({
+	type: constants.SET_STATUS_IS_LOADING,
+	payload,
+});
+export const setStatusIsSuccess = (payload) => ({
+	type: constants.SET_STATUS_IS_SUCCESS,
+	payload,
+});
+
+export const setStatusIsError = (payload) => ({
+	type: constants.SET_STATUS_IS_ERROR,
+	payload,
+});

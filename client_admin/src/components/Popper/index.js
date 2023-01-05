@@ -1,5 +1,7 @@
-import DetailProduct from "./DetailProduct";
+import UserDetail from "./UserDetail";
+import ProductDetail from "./DetailProduct";
 const Popper = {
-	DetailProduct: DetailProduct,
+	ProductDetail: ProductDetail,
+	UserDetail: UserDetail,
 };
 export default Popper;

@@ -12,6 +12,7 @@ import LoadingUserProfile from './Loadding/LoadingUserProfile';
 import { render } from '@testing-library/react';
 import * as AuthServices from '../../apiServices/AuthServices'
 import SearchSuggest from './SearchSuggest/SearchSuggest';
+import * as CartServices from '../../apiServices/CartServices'
 
 const Menu = (props) => {
     const navigate = useNavigate()
@@ -20,13 +21,34 @@ const Menu = (props) => {
     //const [booksInCartAmount, setBooksInCartAmount] = useState(BooksInShoppingCart.length)
     const [state, dispatch] = useStore()
     var { isLogin } = state
-    const { booksInCartAmount } = state
+    const { booksInCartTotal } = state
 
     const [isUseUserPopupMenu, setIsUseUserPopupMenu] = useState(false)
 
     const [searchResult, setSearchResult] = useState([1, 2, 3, 4, 5])
     const [isSuggestSearch, setIsSuggestSearch] = useState(false)
     const [inputSearchValue, setInputSearchValue] = useState('')
+
+    const [userProfile, setUserProfile] = useState(state.userProfile)
+
+    useEffect(()=>{
+        checkLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
+    async function checkLogin() {
+        try {
+            const profile = await AuthServices.profile()
+            console.log('re get profile', profile)
+            if(profile !== undefined){
+                dispatch(actions.setUserProfile(profile))
+                dispatch(actions.loginByUser('user account'))
+            }
+            
+        } catch (err) {
+            console.log('no token login')
+        }
+    }
 
     function onSearch() {
         var searchInput = document.getElementById('search-bar');
@@ -160,14 +182,31 @@ const Menu = (props) => {
         }
     }
 
-    const removeSearchValueButtonStyle={
-        display: inputSearchValue.length>0? 'flex': 'none'
+    const removeSearchValueButtonStyle = {
+        display: inputSearchValue.length > 0 ? 'flex' : 'none'
     }
 
-    function onSelectSuggestSearch(suggest){
+    function onSelectSuggestSearch(suggest) {
         setInputSearchValue(suggest)
         setSearchResult([])
     }
+
+    const getBookInCart = async () => {
+        const respone = await CartServices.getBooksInCart()
+        setBookInCartTotal(respone.items.length)
+        dispatch(actions.updateTotalBookInCart(respone.items.length))
+    }
+
+    const [bookInCartTotal, setBookInCartTotal] = useState(state.booksInCartTotal)
+
+    useEffect(() => {
+        getBookInCart()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // useEffect(()=>{
+    //     setBookInCartTotal(state.booksInCartTotal)
+    // },[state.booksInCartTotal])
 
     return (
         <div id='menu-bounder'>
@@ -183,11 +222,11 @@ const Menu = (props) => {
                         appendTo={document.body}
                         render={(attrs) => (
                             <div className='poper-search-result-container' style={getSuggestSearchItemsStyle()} tabIndex='-1' {...attrs}>
-                                {
+                                {/* {
                                     searchResult.map((item) => (
                                         <SearchSuggest title={item} key={item} onSelectSuggestSearch={onSelectSuggestSearch}/>
                                     ))
-                                }
+                                } */}
                             </div>
                         )}>
                         <input type='text' id='search-bar'
@@ -199,8 +238,8 @@ const Menu = (props) => {
                         />
                     </Tippy>
                     {/* <input type='text' id='search-bar' placeholder={MyVariable.PlacseHolderForSearchBar} /> */}
-                    <button style={removeSearchValueButtonStyle} onClick={()=>{setInputSearchValue('')}}>
-                        <img src={require('../../assets/icons/ic-close.png')} alt='remove'/>
+                    <button style={removeSearchValueButtonStyle} onClick={() => { setInputSearchValue('') }}>
+                        <img src={require('../../assets/icons/ic-close.png')} alt='remove' />
                     </button>
                     <img className='search-bar-btn-search' src={require('../../assets/icons/ic-search.png')} alt='search icon' onClick={() => onSearch()} />
                 </div>
@@ -243,8 +282,8 @@ const Menu = (props) => {
                         id={menu.active === 'true' ? 'active-menu-parent' : 'inactive-menu-parent'}
                     >
                         <Link to={menu.path} state={{ stateName: MyConstVariable.myNullVariable }}><a href='/'>{menu.title}
-                            <div style={menu.title === 'Giỏ Hàng' ? displayCartNotifyStyle : noneDisplayCartNotifyStyle}>
-                                {booksInCartAmount}
+                            <div style={menu.title === 'Giỏ Hàng' && bookInCartTotal > 0 ? displayCartNotifyStyle : noneDisplayCartNotifyStyle}>
+                                {bookInCartTotal}
                             </div>
                         </a></Link>
                     </div>

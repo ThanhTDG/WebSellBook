@@ -17,6 +17,7 @@ function Input(props) {
 		type = null,
 		placeholder = null,
 		error = false,
+		autoComplete = "off",
 		endAdornment = null,
 		startAdornment = null,
 		configNumber = null,
@@ -48,19 +49,18 @@ function Input(props) {
 	if (configNumber) {
 		inputProps.inputProps = configNumber;
 	}
-	console.log("Loi ne", name, error);
 	return (
 		// <FormControl
 		// 	fullWidth={fullWidth}
 		// 	className={className}
 		// >
 		<TextField
-			{...(error && { error: true, helperText: error })}
 			fullWidth={fullWidth}
 			placeholder={placeholder}
 			variant={variant}
 			label={label}
 			disabled={disabled}
+			autoComplete={autoComplete}
 			id={id}
 			size={size}
 			name={name}
@@ -69,6 +69,7 @@ function Input(props) {
 			type={type}
 			required={required}
 			InputProps={{ ...inputProps }}
+			{...(error && { error: true, helperText: error })}
 		/>
 		// </FormControl>
 	);

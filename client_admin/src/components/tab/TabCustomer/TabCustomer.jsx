@@ -1,55 +1,53 @@
 import React, { useMemo, useReducer, useState } from "react";
 
 import styles from "./tabCustomer.module.scss";
-import tabStyle from "../tabTable.module.scss";
 import Tabs from "../components/Tabs";
-import { TableProduct } from "~/components/table/product";
 import TabPanel from "../TabPanel";
 import { useDebounce } from "~/hooks";
 import { useEffect } from "react";
-import * as customerService from "~/services/customerService";
 import * as stores from "~/stores";
-import * as initState from "~/stores/initialStates";
+import * as initState from "~/stores/initStates";
 import Loading from "~/components/Loading";
 import classNames from "classnames/bind";
 import Controls from "~/components/controls";
-import Search from "~/components/Search";
+import SearchBar from "~/components/SearchBar";
 import CustomerConfig from "~/stores/Customer";
-import { reducer } from "../reducer";
 import CustomerTable from "~/components/table/CustomerTable";
 import fakeCustomer from "./fakeCustomers";
+import { TabTableReduce } from "~/stores/reducers";
+import * as userService from "~/services/userService";
+import tabStyle from "../tabTable.module.scss";
+const tabTableStyles = classNames.bind(tabStyle);
 
 const listStatus = CustomerConfig.listStatus;
 const options = CustomerConfig.options;
 const constant = stores.constants;
 const actions = stores.actions;
 const initialState = initState.customer;
-const initFilter = initState.filterProduct;
-const tabTableStyles = classNames.bind(tabStyle);
+const initFilter = initState.filterCustomer;
 
 function TabCustomer() {
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(TabTableReduce, initialState);
 	const [filter, setFilter] = useState(initFilter);
 	const [customers, setCustomers] = useState([]);
 	const [isUpdate, setIsUpdate] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
+	const [status, setStatus] = useState(null);
 
 	useEffect(() => {
+		setIsLoading(true);
 		const fetchApi = async () => {
 			destroyTippy();
-
-			// const result = await customerService.getCustomers(state);
-			// handleCustomers(result);
+			const result = await userService.getAllCustomer(state);
+			if (result) {
+				handleCustomers(result);
+			}
 		};
-
+		setIsLoading(false);
 		if (isUpdate) {
 			setIsLoading(true);
-			//fetchApi();
+			fetchApi();
 		}
-
-		setCustomers(fakeCustomer);
-		setIsLoading(false);
-		return;
 		setIsUpdate(!isUpdate);
 	}, [state]);
 
@@ -63,11 +61,13 @@ function TabCustomer() {
 	};
 	const handleCustomers = (result) => {
 		if (result) {
+			console.log(result);
 			const { status, page, limit, totalPages } = result;
+			setStatus({
+				all: result.totalDocs,
+			});
 			dispatch(actions.setNewPropTable({ status, page, limit, totalPages }));
 			setCustomers(result.docs);
-		} else {
-			setCustomers(fakeCustomer);
 			setIsLoading(false);
 		}
 	};
@@ -78,7 +78,12 @@ function TabCustomer() {
 		dispatch(actions.setPageTable(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
-		dispatch(actions.setStatusTable({ indexStatus: optionSelected, status: listStatus[optionSelected].key }));
+		dispatch(
+			actions.setStatusTable({
+				indexStatus: optionSelected,
+				status: listStatus[optionSelected].key,
+			})
+		);
 	};
 	const handleTypeSearchChange = (e) => {
 		filter.typeSearch = e.target.value;
@@ -101,34 +106,28 @@ function TabCustomer() {
 		dispatch(actions.setFilterTable({ ...filter }));
 	};
 
-	// const Content = useMemo(() => {
-	// 	{
-	// 		return listStatus.map((item, index) => {
-	// 			return (
-	// 				<TabPanel
-	// 					key={index}
-	// 					value={state.indexStatus}
-	// 					index={index}
-	// 				>
-	// 					{isLoading ? (
-	// 						<Loading
-	// 							size={25}
-	// 							height={500}
-	// 						/>
-	// 					) : (
-	// 						<CustomerTable
-	// 							state={state}
-	// 							customers={customers}
-	// 							onPageChange={handlePageChange}
-	// 							onLimitChange={handleLimitChange}
-	// 						/>
-	// 					)}
-	// 				</TabPanel>
-	// 			);
-	// 		});
-	// 	}
-	// }, [isLoading]);
-
+	const Content = useMemo(() => {
+		{
+			return listStatus.map((item, index) => {
+				return (
+					<TabPanel
+						key={index}
+						value={state.indexStatus}
+						index={index}
+					>
+						<Loading isLoading={isLoading}>
+							<CustomerTable
+								state={state}
+								customers={customers}
+								onPageChange={handlePageChange}
+								onLimitChange={handleLimitChange}
+							/>
+						</Loading>
+					</TabPanel>
+				);
+			});
+		}
+	}, [isLoading]);
 	return (
 		<Tabs
 			value={state.indexStatus}
@@ -146,7 +145,7 @@ function TabCustomer() {
 						onChange={handleTypeSearchChange}
 						value={filter.typeSearch}
 					/>
-					<Search
+					<SearchBar
 						className={tabTableStyles("search-box")}
 						size="small"
 						value={filter.search}
@@ -175,30 +174,7 @@ function TabCustomer() {
 					/>
 				</div>
 			</div>
-			{/* {Content} */}
-			{listStatus.map((item, index) => {
-				return (
-					<TabPanel
-						key={index}
-						value={state.indexStatus}
-						index={index}
-					>
-						{isLoading ? (
-							<Loading
-								size={25}
-								height={500}
-							/>
-						) : (
-							<CustomerTable
-								state={state}
-								customers={customers}
-								onPageChange={handlePageChange}
-								onLimitChange={handleLimitChange}
-							/>
-						)}
-					</TabPanel>
-				);
-			})}
+			{Content}
 		</Tabs>
 	);
 }

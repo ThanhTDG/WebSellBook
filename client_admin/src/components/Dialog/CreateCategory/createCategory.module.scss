@@ -1,0 +1,73 @@
+.wrapper {
+	width: 640px;
+	display: flex;
+	height: 160px;
+}
+.wrapper-expand {
+	width: 640px;
+	display: flex;
+	height: 160px;
+}
+.dialog {
+	width: max-content !important;
+	height: 320px !important;
+	max-height: 320px !important;
+}
+.none-display {
+	display: none;
+}
+.category-tab,
+.outline-outside {
+	min-height: 480px;
+	max-height: 100%;
+	width: 310px;
+}
+.outline-inside {
+	height: 456px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.tree-view {
+	overflow: auto;
+	max-height: 320px;
+	min-height: 320px;
+	height: 320px;
+}
+.change,
+.feature {
+	max-width: 320px;
+}
+
+.change {
+	padding: 4px;
+}
+.value-change {
+	height: 44px;
+}
+.category-form {
+	min-width: 348px;
+	background-color: rgba(0, 0, 0, 0) !important;
+	padding: 8px;
+}
+.category-tab {
+	z-index: 1;
+	width: 100%;
+}
+.feature {
+	display: flex;
+	justify-content: space-between;
+	padding: 4px 4px;
+	.btn {
+		font-size: 12px;
+		font-weight: 400;
+		min-width: 80px;
+	}
+	.cancel {
+		color: var(--red-pink);
+	}
+	.delete {
+		background-color: var(--red-pink);
+		color: white;
+	}
+}
