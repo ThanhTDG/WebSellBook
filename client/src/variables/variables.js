@@ -66,11 +66,11 @@ export const MyVariable = {
             url: '/assets/banners/banner03-white.gif',
             backColor: 'var(--White)'
         },
-        {
-            title: 'Banner 4',
-            url: '/assets/banners/banner04.gif',
-            backColor: 'var(--White)'
-        },
+        // {
+        //     title: 'Banner 4',
+        //     url: '/assets/banners/banner04.gif',
+        //     backColor: 'var(--White)'
+        // },
     ],
     VerticalBanners: [
         {
