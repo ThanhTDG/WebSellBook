@@ -4,7 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { TableProduct } from "~/components/table/Product";
 import { useProductMgt, actions } from "~/stores";
-import { SelectNumberOfRows } from "~/components/T-A-Widget";
+import { SelectNumberOfRows } from "~/components/Widget";
 import styles from "./tabProduct.module.scss";
 import classNames from "classnames/bind";
 import { limitRowsBook } from "~/stores/table";

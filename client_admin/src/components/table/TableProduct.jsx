@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import { optionRowPerPage, useProductMgt, actions } from "../../store";
-import SelectNumberOfRows from "../T-A-Widget/SelectNumOfRows";
+import SelectNumberOfRows from "../Widget/SelectNumOfRows";
 
 const columns = [
 	{ id: "name", label: "Name", minWidth: 170 },

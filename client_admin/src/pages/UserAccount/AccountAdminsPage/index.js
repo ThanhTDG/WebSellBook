@@ -1,1 +1,1 @@
-export { default } from "./T-A-AccountAdminsPage";
+export { default } from "./AccountAdminsPage";
