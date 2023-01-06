@@ -43,7 +43,6 @@ function InfoLayout(props) {
 	let pageName = "";
 	const handleIsEditChange = (e) => {
 		let enable = e.target.checked;
-		console.log(editMode);
 		if (!enable && editMode.isChange === true) {
 			confirm({
 				title: <div className={cx("title-confirm")}>{"Thoát khỏi chế độ chỉnh sửa ?"}</div>,

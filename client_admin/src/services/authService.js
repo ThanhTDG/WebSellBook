@@ -16,6 +16,11 @@ export const getProfile = async () => {
 	const response = await request.get(path);
 	return response;
 };
+export const updateProfile = async (data) => {
+	const path = auth + "/profile";
+	const response = await request.put(path, data);
+	return response;
+};
 export const logout = async () => {
 	const path = auth + "/signout";
 	const response = await request.post(path);
@@ -23,7 +28,6 @@ export const logout = async () => {
 };
 export const uploadAvatar = async (file) => {
 	const path = auth + "/uploadavatar";
-	console.log(file);
 	let frm = new FormData();
 	frm.append("avatar", file);
 	const response = await request.put(`${path}`, frm);

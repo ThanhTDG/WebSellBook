@@ -4,7 +4,7 @@ import { useReducer } from "react";
 import TabsCustomer from "~/components/tab/TabCustomer";
 import InfoLayout from "~/layouts/InfoLayout";
 import LayoutHeaderButton from "~/layouts/LayoutHeaderButton";
-import { cusReducer } from "~/stores";
+import { constants, cusReducer } from "~/stores";
 
 function CustomersPage() {
 	const [editMode, dispatchEditMode] = useReducer(
@@ -16,6 +16,7 @@ function CustomersPage() {
 			editMode={editMode}
 			dispatchEditMode={dispatchEditMode}
 			showFeature={null}
+		
 		>
 			<TabsCustomer />;
 		</InfoLayout>

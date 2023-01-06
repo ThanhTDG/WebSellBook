@@ -52,7 +52,6 @@ function RolePage() {
 			setIdSelect(id);
 		}
 	};
-	console.log(editMode);
 	return (
 		<InfoLayout
 			editMode={editMode}

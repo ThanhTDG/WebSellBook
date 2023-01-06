@@ -16,51 +16,49 @@ function ProductTable(props) {
 	const { state, products, categories, onLimitChange, onPageChange } = props;
 	return (
 		<Paper>
-			{products && products.length > 0 && (
-				<Table.Frame style={{ maxHeight: 700 }}>
-					<Table.Head>
-						<Table.Cell
-							size={"normal"}
-							isLast={false}
-							align={configHeader.name.align}
-						>
-							<div className={cx("header", "name")}>{configHeader.name.title}</div>
-						</Table.Cell>
-						<Table.Cell
-							size={"normal"}
-							align={configHeader.sold.align}
-						>
-							<div className={cx("header", "sold")}>{configHeader.sold.title}</div>
-						</Table.Cell>
-						<Table.Cell
-							size={"normal"}
-							align={configHeader.countInStock.align}
-						>
-							<div className={cx("header", "countInStock")}>{configHeader.countInStock.title}</div>
-						</Table.Cell>
-						<Table.Cell
-							size={"normal"}
-							align={configHeader.price.align}
-						>
-							<div className={cx("header", "price")}>{configHeader.price.title}</div>
-						</Table.Cell>
-						<Table.Cell
-							size={"normal"}
-							align={configHeader.status.align}
-						>
-							<div className={cx("header", "status")}>{configHeader.status.title}</div>
-						</Table.Cell>
-					</Table.Head>
-					<Table.Body>
-						{products.map((item) => (
-							<RowProduct
-								key={item.id}
-								product={item}
-							/>
-						))}
-					</Table.Body>
-				</Table.Frame>
-			)}
+			<Table.Frame style={{ maxHeight: 700 }}>
+				<Table.Head>
+					<Table.Cell
+						size={"normal"}
+						isLast={false}
+						align={configHeader.name.align}
+					>
+						<div className={cx("header", "name")}>{configHeader.name.title}</div>
+					</Table.Cell>
+					<Table.Cell
+						size={"normal"}
+						align={configHeader.sold.align}
+					>
+						<div className={cx("header", "sold")}>{configHeader.sold.title}</div>
+					</Table.Cell>
+					<Table.Cell
+						size={"normal"}
+						align={configHeader.countInStock.align}
+					>
+						<div className={cx("header", "countInStock")}>{configHeader.countInStock.title}</div>
+					</Table.Cell>
+					<Table.Cell
+						size={"normal"}
+						align={configHeader.price.align}
+					>
+						<div className={cx("header", "price")}>{configHeader.price.title}</div>
+					</Table.Cell>
+					<Table.Cell
+						size={"normal"}
+						align={configHeader.status.align}
+					>
+						<div className={cx("header", "status")}>{configHeader.status.title}</div>
+					</Table.Cell>
+				</Table.Head>
+				<Table.Body>
+					{products.map((item) => (
+						<RowProduct
+							key={item.id}
+							product={item}
+						/>
+					))}
+				</Table.Body>
+			</Table.Frame>
 			<Footer
 				limitValue={state.limit}
 				limit={tableConfig.limitRow}

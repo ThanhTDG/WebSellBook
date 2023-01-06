@@ -66,6 +66,7 @@ function ReceiptsPage() {
 	useEffect(() => {
 		if (isUpdate) {
 			fetchApi();
+			setIdSelected("");
 		}
 		setIsUpdate(!isUpdate);
 	}, [tableTab]);
@@ -85,7 +86,6 @@ function ReceiptsPage() {
 		dispatchTableTab(actions.setPageTable(optionSelected));
 	};
 	const handleTabChange = (e, optionSelected) => {
-		console.log(optionSelected);
 		dispatchTableTab(
 			actions.setStatusTable({
 				indexStatus: optionSelected,
@@ -363,7 +363,7 @@ function RowOrder(props) {
 				<Table.Cell
 					isLast={false}
 					className={cx("detail-receipt")}
-					colSpan={7}
+					colSpan={showStatus ? 8 : 7}
 				>
 					<Collapse
 						in={idSelected === receipt.id}
@@ -383,18 +383,18 @@ function RowOrder(props) {
 										shippingMethod={receipt.shippingMethod}
 										user={receipt}
 									/>
-									{order.status !== statusOrder.canceled && order.status !== statusOrder.completed && (
+									{receipt.status !== statusOrder.canceled && receipt.status !== statusOrder.completed && (
 										<div className={cx("wrapper-action")}>
 											<ButtonStatusOrder
 												status={refList[currentIndex + 1].key}
 												onOk={handleUpdateOrder}
-												order={order}
+												order={receipt}
 												className={cx("btn-next", `btn-${refList[currentIndex + 1].key.replace("_", "-")}`)}
 											></ButtonStatusOrder>
 											<ButtonStatusOrder
 												status={refList[0].key}
 												onOk={handleUpdateOrder}
-												order={order}
+												order={receipt}
 												className={cx("btn-cancel", `btn-${refList[0].key.replace("_", "-")}`)}
 											></ButtonStatusOrder>
 										</div>

@@ -76,12 +76,12 @@ function ReceiptPage() {
 		UpdateOrder(orderChange);
 	};
 	const currentIndex = order ? refList.findIndex((item) => item.key === order.status) : 0;
-	console.log(currentIndex);
 	return (
 		<InfoLayout
 			id={id}
 			editMode={editMode}
 			showFeature={false}
+			typeModel={constants.ORDER}
 			dispatchEditMode={dispatchEditMode}
 			moreName={order ? order.orderCode : ""}
 		>
@@ -150,7 +150,6 @@ function StatusOrder(props) {
 			/>
 			<div className={cx("content")}>
 				{listStatus.map((status) => {
-					console.log(status);
 					let name = "status";
 					if (statusOrder.canceled === status.type) {
 						name = "canceled";
@@ -171,8 +170,8 @@ function StatusOrder(props) {
 	);
 }
 
-function Changer(props, handleChange) {
-	const { order } = props;
+function Changer(props) {
+	const { order, handleChange } = props;
 	const sumAllProduct = (array) => {
 		let sum = 0;
 		array.forEach((element) => {
@@ -184,12 +183,6 @@ function Changer(props, handleChange) {
 		<div className={cx("changer")}>
 			<div className={cx("title")}>Thanh toán</div>
 			<div className={cx("content")}>
-				<PropDisplay
-					name="type-pay"
-					tail=":"
-					title={constants.METHOD}
-					value={order.paymentMethod}
-				/>
 				<PropDisplay
 					name="pay"
 					tail=""

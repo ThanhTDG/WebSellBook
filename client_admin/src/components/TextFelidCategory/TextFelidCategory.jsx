@@ -21,7 +21,6 @@ function TextFelidCategory(props) {
 		idVisible = [],
 		levelDisplay = constants.MAX_LEVEL,
 	} = props;
-	console.log(category);
 	return (
 		<div className={cx("wrapper")}>
 			<Controls.Input

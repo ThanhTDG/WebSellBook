@@ -3,12 +3,17 @@ import * as request from "~/utils/request";
 import { dataURLtoFile } from "~/utils/util";
 
 export const getProducts = async (query) => {
-	const { limit, page } = query;
-
+	const { limit, page, status } = query;
+	let params = {
+		limit,
+		page,
+	};
+	if (status) {
+		params.status = status;
+	}
 	const response = await request.get("/books", {
 		params: {
-			limit,
-			page,
+			...params,
 		},
 	});
 	return response;
@@ -19,7 +24,6 @@ export const getProductById = async (id) => {
 };
 export const postProduct = async (value) => {
 	let book = convertBookModel(value);
-	// const response = await request.post(`/books`, book);
 	return {
 		id: "634ed8e4f6a3a7266d99276d",
 		name: "Thiên Sứ Nhà Bên – Tập 3",
@@ -54,9 +58,7 @@ export const postProduct = async (value) => {
 	};
 };
 export const updateProduct = async (value, id) => {
-	console.log(value);
 	let book = convertBookModel(value);
-	console.log(book);
 	const response = await request.put(`/books/${id}`, book);
 	return response;
 };
@@ -65,7 +67,6 @@ export const upLoadImages = async (data = []) => {
 	data.forEach((item) => {
 		formData.append("images", item.file);
 	});
-	console.log(formData);
 	const response = await request.post(`/books/upload`, formData, {
 		headers: {
 			"content-type": "multipart/form-data",

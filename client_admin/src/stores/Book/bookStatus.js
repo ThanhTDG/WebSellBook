@@ -1,8 +1,9 @@
 const status = {
+	all: "",
 	comingSoon: "coming_soon", // sắp ra mắt
 	available: "available", // còn hàng
 	outOfStock: "out_of_stock", // hết hàng
-	disable: "disable",
+	disable: "canceled",
 };
 
 const listBookStatus = [

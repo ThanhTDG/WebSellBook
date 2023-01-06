@@ -19,7 +19,6 @@ const sizeCellBody = "small";
 
 function CustomerTable(props) {
 	const { state, customers, onLimitChange, onPageChange } = props;
-	console.log(customers);
 	return (
 		<Paper>
 			<Table.Frame style={{ maxHeight: 700, width: "auto" }}>

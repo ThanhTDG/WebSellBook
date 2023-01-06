@@ -4,7 +4,6 @@ const path = "/orders";
 
 export const getOrders = async (query) => {
 	const { limit, page, status } = query;
-	console.log(query);
 	let params = {
 		limit,
 		page,
@@ -12,7 +11,6 @@ export const getOrders = async (query) => {
 	if (status) {
 		params.status = status;
 	}
-	console.log(params, "params");
 	const response = await request.get(path, {
 		params: { ...params },
 	});
@@ -29,6 +27,7 @@ export const createOrder = async (order, id) => {
 };
 export const updateOrder = async (order, id) => {
 	const data = convertOrder(order);
+	console.log(data);
 	const response = await request.put(`${path}/${id}`, data);
 	return response;
 };
@@ -78,7 +77,7 @@ const convertOrder = (order) => {
 	if (order.purchaseDate) {
 		object.purchaseDate = order.purchaseDate;
 	}
-	if (order.paid) {
+	if (order.paid > -1) {
 		object.paid = order.paid;
 	}
 	return object;

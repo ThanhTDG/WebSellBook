@@ -8,11 +8,13 @@ import UploadAvatar from "~/components/Dialog/UploadAvatar/UploadAvatar";
 import Image from "~/components/Image";
 import OutlinedBox from "~/components/OutlinedBox";
 import useForm from "~/hooks/useForm";
+import { userService } from "~/services";
 import { getProfile, uploadAvatar } from "~/services/authService";
 import { actions, constants } from "~/stores";
 import profileProp from "~/stores/Account/profileProps";
 import typeFeature from "~/stores/types/typeFeature";
 import { displayTime } from "~/utils/display";
+import { Modal } from "antd";
 
 import styles from "./profileForm.module.scss";
 const cx = classNames.bind(styles);
@@ -21,7 +23,7 @@ const sexProps = [
 	{ id: true, name: "Nam" },
 	{ id: false, name: "Nữ" },
 ];
-
+const { confirm } = Modal;
 function ProfileForm(props) {
 	const {
 		user,
@@ -33,8 +35,9 @@ function ProfileForm(props) {
 		dispatchEditMode,
 		dispatch,
 		className,
+		form,
 	} = props;
-	const form = useForm({ ...user });
+
 	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	let typeDisplay = isEdit ? values : user;
 	const emptyFunction = () => {
@@ -55,20 +58,19 @@ function ProfileForm(props) {
 				...values,
 				avatar: response.avatar,
 			});
-			if (setUser) {
+			if (dispatch) {
+				dispatch(
+					actions.setLoginNInfo({
+						profile: {
+							...values,
+							avatar: response.avatar,
+						},
+					})
+				);
+			} else {
 				setUser({
 					...user,
 					avatar: response.avatar,
-				});
-			} else {
-				const profile = await getProfile();
-				dispatch(
-					actions.setLoginNInfo({
-						profile: profile,
-					})
-				);
-				setValues({
-					...profile,
 				});
 			}
 			dispatchEditMode(actions.setResetAll());
@@ -89,6 +91,33 @@ function ProfileForm(props) {
 		}
 	}, [editMode.enableEdit, values]);
 	let fullName = `${typeDisplay.lastName} ${typeDisplay.firstName}`;
+	const handleClick = () => {
+		if (type === typeFeature.isCurrent) {
+			changePassword();
+		} else if (type === typeFeature.isEdit) {
+			handleResetPassword();
+		}
+	};
+	const resetPassword = async () => {
+		dispatchEditMode(actions.setStatusIsLoading());
+		const response = await userService.resetPassword(user.id);
+		if (response) {
+			dispatchEditMode(actions.setStatusIsSuccess());
+		} else {
+			dispatchEditMode(actions.setStatusIsError());
+		}
+	};
+	const changePassword = () => {};
+	const handleResetPassword = () => {
+		confirm({
+			title: <div className={cx("title-confirm")}>{`Reset mật khẩu`}</div>,
+			content: `Bạn muốn thay đổi mật khẩu của tài khoản này thành mặc định?`,
+			centered: true,
+			onOk: () => {
+				resetPassword();
+			},
+		});
+	};
 	return (
 		<div className={cx("wrapper")}>
 			<div className={cx("avatar-feature")}>
@@ -135,6 +164,7 @@ function ProfileForm(props) {
 					label={profileProp.fullName.label}
 					value={fullName}
 				/>
+
 				<Controls.Input
 					name={"phone"}
 					label={profileProp.phone.label}
@@ -152,7 +182,13 @@ function ProfileForm(props) {
 						value={typeDisplay.sex}
 					/>
 				</OutlinedBox>
-
+				<Controls.DatePicker
+					disabled={!dispatch}
+					name={"birthday"}
+					label={profileProp.birthday.label}
+					value={typeDisplay.birthday}
+					onChange={isEdit ? handleInputChange : emptyFunction}
+				/>
 				<div className={cx("date")}>
 					{typeDisplay.lastSession && (
 						<Controls.Input
@@ -171,7 +207,7 @@ function ProfileForm(props) {
 				</div>
 				<Action
 					type={type}
-					action={handleAction}
+					action={handleClick}
 				/>
 			</div>
 		</div>

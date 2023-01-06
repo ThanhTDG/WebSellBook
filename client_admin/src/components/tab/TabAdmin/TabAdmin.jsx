@@ -58,7 +58,6 @@ function TabAdmin() {
 	};
 	const handleAdmins = (result) => {
 		if (result) {
-			console.log(result);
 			const { status, page, limit, totalPages } = result;
 			setStatus({
 				all: result.totalDocs,
@@ -102,7 +101,6 @@ function TabAdmin() {
 	const handleFilter = (e) => {
 		dispatch(actions.setFilterTable({ ...filter }));
 	};
-	console.log(admins);
 	const Content = useMemo(() => {
 		{
 			return listStatus.map((item, index) => {
