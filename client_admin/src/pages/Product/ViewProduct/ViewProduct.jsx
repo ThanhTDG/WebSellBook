@@ -18,7 +18,6 @@ import useForm from "~/hooks/useForm";
 const cx = classNames.bind(styles);
 function ViewProduct() {
 	const { id } = useParams();
-	console.log(id);
 	const [isLoading, setIsLoading] = useState(true);
 	const [product, setProduct] = useState({});
 	const form = useForm(product);

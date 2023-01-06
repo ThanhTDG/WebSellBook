@@ -6,14 +6,14 @@ import CustomerConfig from "./Customer";
 import orderConfig from "./Order";
 export const products = {
 	indexStatus: 0,
-	status: BookConfig.listStatus[0].key,
+	status: BookConfig.status.all,
 	page: 1,
 	limit: limitRow.options[0],
 	totalPages: 10,
 };
 export const receipts = {
-	indexStatus: 1,
-	status: orderConfig.status.notProcessed,
+	indexStatus: 0,
+	status: orderConfig.status.all,
 	page: 1,
 	limit: limitRow.options[0],
 	totalPages: 10,

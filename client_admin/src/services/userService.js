@@ -21,6 +21,10 @@ export async function getAllAdmin(query) {
 	});
 	return response;
 }
+export async function resetPassword(id) {
+	const response = await request.put(`${path}/${id}/resetpassword`);
+	return response;
+}
 export async function getAllCustomer(query) {
 	const { limit, page } = query;
 	const response = await request.get(`${path}/customer`, {

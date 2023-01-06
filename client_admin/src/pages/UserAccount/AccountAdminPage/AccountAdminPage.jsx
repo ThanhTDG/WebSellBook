@@ -8,11 +8,12 @@ import classNames from "classnames/bind";
 import ProfileForm from "~/components/Form/ProfileForm";
 import InfoLayout from "~/layouts/InfoLayout";
 import { getRoles } from "~/services/roleService";
-import { cusReducer } from "~/stores";
+import { constants, cusReducer } from "~/stores";
 import typeFeature from "~/stores/types/typeFeature";
 import * as userService from "~/services/userService";
 import styles from "./accountAdminPage.module.scss";
 import Loading from "~/components/Loading";
+import useForm from "~/hooks/useForm";
 const cx = classNames.bind(styles);
 function AccountAdminPage() {
 	const [editMode, dispatchEditMode] = useReducer(
@@ -23,6 +24,8 @@ function AccountAdminPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [user, setUser] = useState({});
 	const [roles, setRoles] = useState([]);
+	const form = useForm(user);
+	const { values, setValues, errors, setErrors, handleInputChange } = form;
 	useEffect(() => {
 		setIsLoading(true);
 		fetchApi();
@@ -34,6 +37,7 @@ function AccountAdminPage() {
 				...result,
 				id: id,
 			});
+			setValues({ ...result });
 		}
 	};
 	const fetchApi = async () => {
@@ -50,6 +54,7 @@ function AccountAdminPage() {
 			id={id}
 			editMode={editMode}
 			showEdit={false}
+			typeModel={constants.ACCOUNT_ADMIN}
 			dispatchEditMode={dispatchEditMode}
 		>
 			<Loading isLoading={isLoading}>
@@ -58,8 +63,10 @@ function AccountAdminPage() {
 						<ProfileForm
 							type={typeFeature.isEdit}
 							user={user}
+							setUser={setUser}
 							editMode={editMode}
 							dispatchEditMode={dispatchEditMode}
+							form={form}
 						/>
 					</div>
 				</div>

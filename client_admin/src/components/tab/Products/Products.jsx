@@ -129,8 +129,8 @@ function Products() {
 	};
 	const handleProducts = (result) => {
 		if (result) {
-			const { status, page, limit, totalPages } = result;
-			dispatch(actions.setNewPropProducts({ status, page, limit, totalPages }));
+			const { page, limit, totalPages } = result;
+			dispatch(actions.setNewPropProducts({ page, limit, totalPages }));
 			setProducts(result.docs);
 		}
 	};
@@ -144,7 +144,7 @@ function Products() {
 		dispatch(
 			actions.setStatusProducts({
 				indexStatus: optionSelected,
-				status: listStatus[optionSelected].key,
+				status: BookConfig.status[listStatus[optionSelected].key],
 			})
 		);
 	};

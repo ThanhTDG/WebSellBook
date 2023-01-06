@@ -49,16 +49,12 @@ export const deepCategory = (category, array) => {
 	let list = [];
 	list.push(category);
 	let deep = 0;
-	let children = array.filter(
-		(child) => child.parent && child.parent.id === category.id
-	);
+	let children = array.filter((child) => child.parent && child.parent.id === category.id);
 	if (children.length > 0) {
 		deep++;
 		let haveChild = false;
 		children.map((child) => {
-			let list = array.filter(
-				(item) => item.parent && item.parent.id === child.id
-			);
+			let list = array.filter((item) => item.parent && item.parent.id === child.id);
 			if (list.length > 0) {
 				haveChild = true;
 			}
@@ -99,6 +95,5 @@ export const fakeSellBook = () => {
 	let dataSet = list.map((item) => {
 		return item.sold;
 	});
-	console.log(labels, dataSet);
 };
 export { getKey, convertToTree };

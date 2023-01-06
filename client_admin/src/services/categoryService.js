@@ -35,9 +35,7 @@ export const createCategory = async (query) => {
 	if (parent) {
 		reqData.parent = parent.id;
 	}
-	console.log(reqData);
 	const response = await request.post(`/categories`, reqData);
-	console.log(response);
 	return response;
 };
 export const deleteCategory = async (id) => {

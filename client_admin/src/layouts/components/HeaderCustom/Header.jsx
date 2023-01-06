@@ -13,7 +13,6 @@ const cx = classNames.bind(styles);
 function Header(props) {
 	const { left = null, right = null, showLogo = false } = props;
 	const [state, dispatch] = useGlobalState();
-	console.log(state);
 	return (
 		<div className={cx("wrapper")}>
 			{showLogo && (

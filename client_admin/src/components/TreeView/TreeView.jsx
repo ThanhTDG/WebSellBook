@@ -33,7 +33,6 @@ function TreeView(props) {
 	const handleNodeChange = (e, NID) => {
 		onChange(NID);
 	};
-	console.log(maxLevel);
 	return (
 		<TreeViewMui
 			className={className}

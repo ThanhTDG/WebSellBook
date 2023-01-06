@@ -24,6 +24,7 @@ function DatePicker(props) {
 				className={className}
 				name={name}
 				label={label}
+				inputFormat="DD/MM/YYYY"
 				value={convertDayjs(value)}
 				onChange={(value) => onChange(convertDefPara(name, value.toISOString()))}
 				renderInput={(params) => (

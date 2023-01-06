@@ -20,19 +20,18 @@ function PaidForm(props) {
 		if (id === "0") {
 			setOrder({
 				...order,
-				paid: order.total,
+				paid: parseInt(order.total),
 			});
 		} else {
 			setOrder({
 				...order,
-				paid: paid,
+				paid: parseInt(0),
 			});
 		}
 	};
 	const handleInputChange = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;
-		console.log(e.target.max);
 		if (e.target.type === "number") {
 			console.log(value);
 			if (parseInt(e.target.max) < parseInt(value)) {
@@ -43,7 +42,7 @@ function PaidForm(props) {
 			if (value) {
 				setOrder({
 					...order,
-					[name]: value,
+					[name]: parseInt(value),
 				});
 			}
 		} else {

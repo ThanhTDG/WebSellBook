@@ -14,7 +14,10 @@ import Cookies from "js-cookie";
 import { Window } from "@mui/icons-material";
 import { useGlobalState } from "~/hooks/useGlobalState";
 import { globalContext } from "~/stores/contexts";
-import { actions } from "~/stores";
+import { actions, constants } from "~/stores";
+import { initStates, reducers } from "~/stores/cusReducer";
+import LoadingDialog from "~/components/Dialog/LoadingDialog";
+import { useReducer } from "react";
 
 const cx = classNames.bind(styles);
 const initialUser = {
@@ -27,6 +30,7 @@ const stateHandling = {
 };
 function LoginForm() {
 	const navigate = useNavigate();
+	const [editMode, dispatchEditMode] = useReducer(reducers.EditModeReducer, initStates.editModeState);
 	const [handling, setHandling] = useState(stateHandling);
 	const [globalState, dispatch] = useGlobalState(globalContext);
 	const { values, setValues, errors, setError, handleInputChange } = Hooks.useForm(initialUser);
@@ -39,14 +43,17 @@ function LoginForm() {
 		handleLogin();
 	};
 	const handleLogin = async () => {
+		dispatchEditMode(actions.setStatusIsLoading());
 		const response = await login(values.username, values.password);
 		if (response) {
 			if (response.token) {
+				dispatchEditMode(actions.setStatusIsSuccess());
 				setHandling({
 					isSuccess: true,
 					isLoading: false,
 				});
 			} else {
+				dispatchEditMode(actions.setStatusIsError());
 				setHandling({
 					isSuccess: false,
 					isLoading: false,
@@ -54,6 +61,7 @@ function LoginForm() {
 			}
 		}
 	};
+
 	useEffect(() => {
 		if (handling.isSuccess) {
 			dispatch(actions.setIsLogin(true));
@@ -68,32 +76,38 @@ function LoginForm() {
 		const profile = await getProfile();
 	};
 	return (
-		<Form onSubmit={handleSubmit}>
-			<div className={cx("wrapper")}>
-				<FormControl className={cx("form-control")}>
-					<Controls.Input
-						label="username"
-						value={values.username}
-						name="username"
-						onChange={handleInputChange}
-					/>
-					<Controls.Input
-						label="password"
-						value={values.password}
-						type="password"
-						name="password"
-						onChange={handleInputChange}
-					/>
-				</FormControl>
-				<Controls.Button
-					type="submit"
-					className={cx("btn-login")}
-					primary
-				>
-					Đăng nhập
-				</Controls.Button>
-			</div>
-		</Form>
+		<>
+			<Form onSubmit={handleSubmit}>
+				<div className={cx("wrapper")}>
+					<FormControl className={cx("form-control")}>
+						<Controls.Input
+							label="username"
+							value={values.username}
+							name="username"
+							onChange={handleInputChange}
+						/>
+						<Controls.Input
+							label="password"
+							value={values.password}
+							type="password"
+							name="password"
+							onChange={handleInputChange}
+						/>
+					</FormControl>
+					<Controls.Button
+						type="submit"
+						className={cx("btn-login")}
+						primary
+					>
+						Đăng nhập
+					</Controls.Button>
+				</div>
+			</Form>
+			<LoadingDialog
+				editMode={editMode}
+				dispatchEditMode={dispatchEditMode}
+			/>
+		</>
 	);
 }
 

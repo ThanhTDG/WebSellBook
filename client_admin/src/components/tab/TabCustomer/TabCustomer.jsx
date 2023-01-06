@@ -61,7 +61,6 @@ function TabCustomer() {
 	};
 	const handleCustomers = (result) => {
 		if (result) {
-			console.log(result);
 			const { status, page, limit, totalPages } = result;
 			setStatus({
 				all: result.totalDocs,

@@ -42,7 +42,6 @@ function App() {
 	useState(() => {
 		const checkLogin = async () => {
 			const [profile, permissions] = await Promise.all([getProfile(), getPermission()]);
-			console.log(profile, permissions);
 			if (profile && permissions) {
 				dispatch(
 					actions.setLoginNInfo({

@@ -6,7 +6,6 @@ const request = axios.create({
 	withCredentials: true,
 });
 const handleResponse = (response) => {
-	console.log(request);
 	if (response) {
 		switch (response.status) {
 			///2xx
