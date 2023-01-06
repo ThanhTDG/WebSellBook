@@ -148,6 +148,7 @@ const CheckoutButton = (props) => {
     }
     const handleAccept = () => {
         setIsOpen(!isOpen)
+        setHaveGuide(false)
         props.refrestData()
     }
     const bankNameItemStyle = {
