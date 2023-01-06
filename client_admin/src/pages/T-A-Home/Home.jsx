@@ -1,7 +1,7 @@
 import React, { Component, useRef, useEffect } from "react";
 import Chart from "~/components/Charts/Chart";
-import Featured from "~/components/Featured";
-import Widget from "~/components/Widget";
+import Featured from "~/components/T-A-Featured";
+import Widget from "~/components/T-A-Widget";
 import { Button } from "~/components/controls/Button";
 import "./home.scss";
 import ColumChart from "~/components/Charts/ColumChart";
