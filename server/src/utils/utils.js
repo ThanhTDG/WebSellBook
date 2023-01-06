@@ -4,7 +4,7 @@ const isEmpty = (obj) => {
     return JSON.stringify(obj) === JSON.stringify({});
   }
   if (obj instanceof Array) return obj.length === 0;
-  return obj === 0 ? true : !obj;
+  return obj === 0 ? false : !obj;
 };
 
 /**
